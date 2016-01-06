@@ -1,0 +1,19 @@
+﻿@model RAMS.ViewModels.ConfirmationViewModel
+<!-- ERROR PARTIAL -->
+@if (Model != null)
+{
+    if (Model.RefreshEditForm)
+    {
+        <script type="text/javascript">$(function () { RefreshEditForm("@Model.UserName", "@Model.UserType"); });</script>
+    }
+
+    if (Model.RefreshUserList)
+    {
+        <script type="text/javascript">$(function () { LoadAction("user-list-div", "@Url.Action("UserList", "User", new { Area = "SystemAdmin" })"); });</script>
+    }
+
+    <div class="alert alert-danger bottom-margin-0" role="alert" >
+        @Html.Raw(Model.Message)
+    </div>   
+}
+<!-- END OF ERROR PARTIAL -->

@@ -1,0 +1,64 @@
+C:\Users\IBM\Seneca College\PRJ666\Project\RAMS\RAMS.Service\bin\Debug\RAMS.Service.dll
+C:\Users\IBM\Seneca College\PRJ666\Project\RAMS\RAMS.Service\bin\Debug\RAMS.Service.pdb
+C:\Users\IBM\Seneca College\PRJ666\Project\RAMS\RAMS.Service\bin\Debug\RAMS.Data.dll
+C:\Users\IBM\Seneca College\PRJ666\Project\RAMS\RAMS.Service\bin\Debug\RAMS.Models.dll
+C:\Users\IBM\Seneca College\PRJ666\Project\RAMS\RAMS.Service\bin\Debug\EntityFramework.dll
+C:\Users\IBM\Seneca College\PRJ666\Project\RAMS\RAMS.Service\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\IBM\Seneca College\PRJ666\Project\RAMS\RAMS.Service\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+C:\Users\IBM\Seneca College\PRJ666\Project\RAMS\RAMS.Service\bin\Debug\RAMS.Data.pdb
+C:\Users\IBM\Seneca College\PRJ666\Project\RAMS\RAMS.Service\bin\Debug\RAMS.Models.pdb
+C:\Users\IBM\Seneca College\PRJ666\Project\RAMS\RAMS.Service\bin\Debug\EntityFramework.xml
+C:\Users\IBM\Seneca College\PRJ666\Project\RAMS\RAMS.Service\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\IBM\Seneca College\PRJ666\Project\RAMS\RAMS.Service\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+C:\Users\IBM\Seneca College\PRJ666\Project\RAMS\RAMS.Service\obj\Debug\RAMS.Service.csprojResolveAssemblyReference.cache
+C:\Users\IBM\Seneca College\PRJ666\Project\RAMS\RAMS.Service\obj\Debug\RAMS.Service.dll
+C:\Users\IBM\Seneca College\PRJ666\Project\RAMS\RAMS.Service\obj\Debug\RAMS.Service.pdb
+C:\Users\IBM\Seneca College\PRJ666\Project\RAMS 2.8 WebAPI is configured\RAMS.Service\bin\Debug\RAMS.Service.dll
+C:\Users\IBM\Seneca College\PRJ666\Project\RAMS 2.8 WebAPI is configured\RAMS.Service\bin\Debug\RAMS.Service.pdb
+C:\Users\IBM\Seneca College\PRJ666\Project\RAMS 2.8 WebAPI is configured\RAMS.Service\bin\Debug\RAMS.Data.dll
+C:\Users\IBM\Seneca College\PRJ666\Project\RAMS 2.8 WebAPI is configured\RAMS.Service\bin\Debug\RAMS.Models.dll
+C:\Users\IBM\Seneca College\PRJ666\Project\RAMS 2.8 WebAPI is configured\RAMS.Service\bin\Debug\EntityFramework.dll
+C:\Users\IBM\Seneca College\PRJ666\Project\RAMS 2.8 WebAPI is configured\RAMS.Service\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\IBM\Seneca College\PRJ666\Project\RAMS 2.8 WebAPI is configured\RAMS.Service\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+C:\Users\IBM\Seneca College\PRJ666\Project\RAMS 2.8 WebAPI is configured\RAMS.Service\bin\Debug\RAMS.Data.pdb
+C:\Users\IBM\Seneca College\PRJ666\Project\RAMS 2.8 WebAPI is configured\RAMS.Service\bin\Debug\RAMS.Models.pdb
+C:\Users\IBM\Seneca College\PRJ666\Project\RAMS 2.8 WebAPI is configured\RAMS.Service\bin\Debug\EntityFramework.xml
+C:\Users\IBM\Seneca College\PRJ666\Project\RAMS 2.8 WebAPI is configured\RAMS.Service\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\IBM\Seneca College\PRJ666\Project\RAMS 2.8 WebAPI is configured\RAMS.Service\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+C:\Users\IBM\Seneca College\PRJ666\Project\RAMS 2.8 WebAPI is configured\RAMS.Service\obj\Debug\RAMS.Service.csprojResolveAssemblyReference.cache
+C:\Users\IBM\Seneca College\PRJ666\Project\RAMS 2.8 WebAPI is configured\RAMS.Service\obj\Debug\RAMS.Service.dll
+C:\Users\IBM\Seneca College\PRJ666\Project\RAMS 2.8 WebAPI is configured\RAMS.Service\obj\Debug\RAMS.Service.pdb
+C:\Users\at0mic\Desktop\PRJ666\Project\RAMS\RAMS.Service\bin\Debug\RAMS.Service.dll
+C:\Users\at0mic\Desktop\PRJ666\Project\RAMS\RAMS.Service\bin\Debug\RAMS.Service.pdb
+C:\Users\at0mic\Desktop\PRJ666\Project\RAMS\RAMS.Service\bin\Debug\EntityFramework.dll
+C:\Users\at0mic\Desktop\PRJ666\Project\RAMS\RAMS.Service\bin\Debug\RAMS.Data.dll
+C:\Users\at0mic\Desktop\PRJ666\Project\RAMS\RAMS.Service\bin\Debug\RAMS.Models.dll
+C:\Users\at0mic\Desktop\PRJ666\Project\RAMS\RAMS.Service\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\at0mic\Desktop\PRJ666\Project\RAMS\RAMS.Service\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+C:\Users\at0mic\Desktop\PRJ666\Project\RAMS\RAMS.Service\bin\Debug\RAMS.Data.pdb
+C:\Users\at0mic\Desktop\PRJ666\Project\RAMS\RAMS.Service\bin\Debug\RAMS.Models.pdb
+C:\Users\at0mic\Desktop\PRJ666\Project\RAMS\RAMS.Service\bin\Debug\EntityFramework.xml
+C:\Users\at0mic\Desktop\PRJ666\Project\RAMS\RAMS.Service\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\at0mic\Desktop\PRJ666\Project\RAMS\RAMS.Service\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+C:\Users\at0mic\Desktop\PRJ666\Project\RAMS\RAMS.Service\obj\Debug\RAMS.Service.csprojResolveAssemblyReference.cache
+C:\Users\at0mic\Desktop\PRJ666\Project\RAMS\RAMS.Service\obj\Debug\RAMS.Service.dll
+C:\Users\at0mic\Desktop\PRJ666\Project\RAMS\RAMS.Service\obj\Debug\RAMS.Service.pdb
+C:\Users\at0mic\Desktop\PRJ666\Project\RAMS\RAMS.Service\bin\Debug\RAMS.Helpers.dll
+C:\Users\at0mic\Desktop\PRJ666\Project\RAMS\RAMS.Service\bin\Debug\RAMS.Helpers.pdb
+C:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Service\bin\Debug\RAMS.Service.dll
+C:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Service\bin\Debug\RAMS.Service.pdb
+C:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Service\bin\Debug\EntityFramework.dll
+C:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Service\bin\Debug\RAMS.Data.dll
+C:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Service\bin\Debug\RAMS.Models.dll
+C:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Service\bin\Debug\RAMS.Helpers.dll
+C:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Service\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Service\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+C:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Service\bin\Debug\RAMS.Data.pdb
+C:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Service\bin\Debug\RAMS.Models.pdb
+C:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Service\bin\Debug\EntityFramework.xml
+C:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Service\bin\Debug\RAMS.Helpers.pdb
+C:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Service\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Service\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+C:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Service\obj\Debug\RAMS.Service.csprojResolveAssemblyReference.cache
+C:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Service\obj\Debug\RAMS.Service.dll
+C:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Service\obj\Debug\RAMS.Service.pdb

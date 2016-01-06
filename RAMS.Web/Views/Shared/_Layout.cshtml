@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+@using System.Web.Optimization;
+@using RAMS.Helpers;
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon" href="@Url.Content("~/Content/favicon.ico")" />
+    <title>Recruiting Agency Management System</title>    
+    @Styles.Render("~/bootstrap/css")
+</head>
+<body>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Recruiting Agency Management System</p>
+        </footer>
+    </div>
+    @Scripts.Render("~/bootstrap/js")
+</body>
+</html>

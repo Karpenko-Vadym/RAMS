@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+@using System.Web.Optimization;
+@using RAMS.Helpers;
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon" href="@Url.Content("~/Content/favicon.ico")" />
+    <title>Recruiting Agency Management System</title>
+    <!-- RENDER STYLES -->
+    @Styles.Render("~/bootstrap/css")
+    @Styles.Render("~/dataTables/css")
+    @Styles.Render("~/isLoading/css")
+
+    <!-- END OF RENDER STYLES -->
+    <!-- RENDER SCRIPTS -->
+    @Scripts.Render("~/bootstrap/js")
+    @Scripts.Render("~/dataTables/js")
+    @Scripts.Render("~/isLoading/js")
+
+    <!-- END OF RENDER SCRIPTS -->
+</head>
+<body>
+
+    <!-- TOP NAVBAR -->
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#rams-navbar-collapse" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">RAMS</a>
+            </div>
+            <div class="collapse navbar-collapse" id="rams-navbar-collapse">
+                <div class="navbar-form navbar-left">
+                    <!-- SEARCH FIELD -->
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                    </div>
+                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#search-error-modal">Search</button>
+                    <!-- END OF SEARCH FIELD -->
+                </div>
+                <ul class="nav navbar-nav">
+                    <li class='@Html.IsActive("Help", "Index")'>
+                        @Html.ActionLink("API", "Index", "Help", new { area = "HelpPage" }, new { @class = "" })
+                    </li>
+                </ul>
+                
+                <div class="navbar-form navbar-right">
+
+                    
+                    @Html.Partial("_AccessControl")
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- END OF TOP NAVBAR -->
+    
+    <div class="container body-content">
+        <div class="well well-lg">
+            @RenderBody()
+        </div>
+
+        <!-- MODALS -->
+
+        <!-- SEARCH ERROR MODAL -->
+        <div class="modal fade" id="search-error-modal" tabindex="-1" role="dialog" aria-labelledby="search-error-modal-label">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="search-error-modal-label">What are you trying to search?</h4>
+                    </div>
+                    <div class="modal-body">
+                        <span>There is nothing here... So please don't do it again!</span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END OF SEARCH ERROR MODAL -->
+
+        <!-- EDIT PROFILE MODAL -->
+        <div id="edit-profile-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <!-- MODAL CONTENT -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#edit-profile-modal').modal('hide')">&times;</button>
+                        <h4 class="modal-title text-center">Edit Profile</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="well well-lg bottom-margin-0">
+
+                            <div class="well well-lg bottom-margin-0 background-white" role="alert">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" onclick="$('#edit-profile-modal').modal('hide')">Close</button>
+                    </div>
+                </div>
+                <!-- END OF MODAL CONTENT -->
+            </div>
+        </div>
+        <!-- END OF EDIT PROFILE MODAL -->
+
+        <!-- END OF MODALS -->
+
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Recruiting Agency Management System</p>
+        </footer>
+    </div>
+</body>
+</html>

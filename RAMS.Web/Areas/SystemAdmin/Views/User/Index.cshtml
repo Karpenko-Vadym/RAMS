@@ -1,0 +1,102 @@
+﻿@{
+    ViewBag.Title = "Users";
+}
+
+<button type="button" class="btn btn-info" data-toggle="modal" data-target="#new-user-modal">New User</button>
+
+<button type="button" class="btn btn-info pull-right" onclick="LoadAction('user-list-div', '@Url.Action("UserList", "User", new { Area = "SystemAdmin" })' );">Refresh List</button>
+
+<div class="vertical-padding-24"></div>
+
+<div id="user-list-div"></div>
+
+<!-- NEW USER MODAL -->
+<div id="new-user-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- MODAL CONTENT -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" onclick="$('#new-user-modal').modal('hide');">&times;</button>
+                <h4 class="modal-title text-center">New User</h4>
+            </div>
+            <div class="modal-body">
+                <div class="well well-lg bottom-margin-0">
+                    <div id="new-user-modal-body-div"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" onclick="$('#new-user-modal').modal('hide');">Close</button>
+            </div>
+        </div>
+        <!-- END OF MODAL CONTENT-->
+    </div>
+</div>
+<!-- END OF NEW USER MODAL -->
+
+<!-- EDIT USER MODAL -->
+<div id="edit-user-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- MODAL CONTENT -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" onclick="$('#edit-user-modal').modal('hide');">&times;</button>
+                <h4 id="edit-user-modal-title" class="modal-title text-center">Edit User</h4>
+            </div>
+            <div class="modal-body">
+                <div id="edit-user-message-modal-body-div"></div> 
+                <div class="well well-lg bottom-margin-0">
+                         
+                    <div id="edit-user-modal-body-div"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" onclick="$('#edit-user-modal').modal('hide');">Close</button>
+            </div>
+        </div>
+        <!-- END OF MODAL CONTENT-->
+    </div>
+</div>
+<!-- EDIT OF NEW USER MODAL -->
+
+<!-- RESET PASSWORD MODAL -->
+<div id="reset-password-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- MODAL CONTENT -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" onclick="$('#reset-password-modal').modal('hide');">&times;</button>
+                <h4 class="modal-title text-center">Reset Password</h4>
+            </div>
+            <div class="modal-body">
+                <div class="well well-lg bottom-margin-0">
+                    <div id="password-reset-div"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" onclick="$('#reset-password-modal').modal('hide');">Close</button>
+            </div>
+        </div>
+        <!-- END OF MODAL CONTENT-->
+    </div>
+</div>
+<!-- EDIT OF RESET PASSWORD MODAL -->
+
+<!-- BLOCK DELETE USER MODAL -->
+<div id="block-delete-user-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- MODAL CONTENT -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" onclick="$('#block-delete-user-modal').modal('hide');">&times;</button>
+                <h4 id="block-delete-user-modal-title" class="modal-title text-center">Block/Delete User</h4>
+            </div>
+            <div class="modal-body">         
+                <div id="block-delete-user-div"></div>   
+            </div>
+        </div>
+        <!-- END OF MODAL CONTENT-->
+    </div>
+</div>
+<!-- EDIT OF BLOCK DELETE USER MODAL -->
+
+<script type="text/javascript">$(function () { LoadAction("user-list-div", "@Url.Action("UserList", "User", new { Area = "SystemAdmin" })"); SystemAdminModalControls(); });</script>

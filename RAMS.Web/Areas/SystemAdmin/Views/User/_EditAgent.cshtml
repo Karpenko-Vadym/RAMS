@@ -1,0 +1,161 @@
+﻿@model RAMS.ViewModels.EditAgentViewModel
+<!-- EDIT AGENT PARTIAL -->
+@{
+    AjaxOptions ajaxOptions = new AjaxOptions
+    {
+        UpdateTargetId = "edit-user-modal-body-div",
+        OnBegin = "OnAjaxBegin",
+        OnSuccess = "OnAjaxSuccess",
+        OnFailure = "OnAjaxFailure",
+        OnComplete = "OnAjaxComplete", 
+        HttpMethod = "POST"
+    };
+}
+
+@if(Model != null)
+{ 
+    <div class="btn-group btn-group-justified" role="group">
+        <div class="btn-group" role="group">
+            <input type="button" class="btn btn-info" data-user-name="@Model.UserName" data-user-type="@Model.UserType" data-email="@Model.Email" data-first-name="@Model.FirstName" data-toggle="modal" data-target="#reset-password-modal" value="Reset Password" />
+        </div>
+        @if (@Model.UserStatus == RAMS.Enums.UserStatus.Blocked)
+        {
+            <script type="text/javascript">$(function () { DisableEditForm(); });</script>
+        
+            <div class="btn-group" role="group">
+                <input id="unblock-user-button" type="button" class="btn btn-danger" data-user-name="@Model.UserName" data-user-type="@Model.UserType" data-action="unblock" data-toggle="modal" data-target="#block-delete-user-modal" value="Unblock User" />
+            </div>
+        }
+        else
+        {
+            <div class="btn-group" role="group">
+                <input type="button" class="btn btn-danger" data-user-name="@Model.UserName" data-user-type="@Model.UserType" data-action="block" data-toggle="modal" data-target="#block-delete-user-modal" value="Block User" />
+            </div>
+        }
+
+        <div class="btn-group" role="group">
+            <input type="button" class="btn btn-danger" data-user-name="@Model.UserName" data-user-type="@Model.UserType" data-action="delete" data-toggle="modal" data-target="#block-delete-user-modal" value="Delete User" />
+        </div>
+    </div>
+
+    <div class="vertical-padding-24"></div>
+
+    <div class="well well-lg bottom-margin-0 background-white">
+    
+        @using (Ajax.BeginForm("EditAgent", "User", new { Area = "SystemAdmin" }, ajaxOptions, new { id = "edit-agent-form" }))
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.HiddenFor(model => model.AgentId)
+            @Html.HiddenFor(model => model.UserType)
+            @Html.HiddenFor(model => model.UserStatus)
+            @Html.HiddenFor(model => model.CurrentUserName)
+            @Html.HiddenFor(model => model.CurrentEmail)
+            @Html.HiddenFor(model => model.CurrentFullName)
+            @Html.HiddenFor(model => model.CurrentRole)
+            @Html.HiddenFor(model => model.Timestamp)           
+
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.JobTitle, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.JobTitle, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.JobTitle, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Company, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.Company, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Company, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DepartmentId, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-7">
+                        @Html.DropDownListFor(model => model.DepartmentId, Model.Departments, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.DepartmentId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SelectedRole, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-7">
+                        @Html.DropDownListFor(model => model.SelectedRole, new SelectList(new[] { "" }.Concat(Enum.GetNames(typeof(RAMS.Enums.Role))), Enum.GetName(typeof(RAMS.Enums.Role), Model.Role)), new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.SelectedRole, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SelectedAgentStatus, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-7">
+                        @Html.DropDownListFor(model => model.SelectedAgentStatus, new SelectList(new[] { "" }.Concat(Enum.GetNames(typeof(RAMS.Enums.AgentStatus))), Enum.GetName(typeof(RAMS.Enums.AgentStatus), Model.AgentStatus)), new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.SelectedAgentStatus, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group bottom-margin-0">
+                    <div class="col-md-offset-3 col-lg-offset-3 col-md-6 col-lg-6">
+                        <input type="submit" value="Update User Details" class="btn btn-danger btn-block" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <script type="text/javascript">$(function () { DisableEmptyOptions(); });</script>
+}
+else
+{
+    <div class='alert alert-danger bottom-margin-0' role='alert'>
+        <div class='text-center'><h4><strong>User information is not available.</strong></h4></div>
+        <div class="row">
+            <div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>User could have been deleted from the system, or recently updated causing user name mismatch.</div>
+            <div class='col-md-offset-1 col-md-11'>Please refresh the list and try again in a moment.</div>
+        </div>
+    </div>
+}
+<!-- END OF EDIT AGENT PARTIAL -->

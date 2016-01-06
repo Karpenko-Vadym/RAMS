@@ -1,0 +1,32 @@
+﻿<!-- ACCESS CONTROL PARTIAL -->
+@{
+    if (User.Identity.IsAuthenticated)
+    {
+        var identity = (System.Security.Claims.ClaimsIdentity)User.Identity;
+
+        var displayName = User.Identity.Name;
+
+        if (!RAMS.Helpers.Utilities.IsEmpty(identity.Claims))
+        {
+            foreach (var claim in identity.Claims)
+            {
+                if (claim.Type == "FullName")
+                {
+                    if (!String.IsNullOrEmpty(claim.Value))
+                    {
+                        displayName = claim.Value;
+                    }
+                }
+            }
+        }
+
+        <span>Welcome <a href="#" data-toggle="modal" data-target="#edit-profile-modal"><strong>@displayName</strong></a>! </span>
+
+        @Html.ActionLink("Logout", "LogOff", "Account", new { area = "" }, new { @class = "btn btn-danger" })
+    }
+    else
+    {
+        @Html.ActionLink("Login", "Login", "Account", new { area = "" }, new { @class = "btn btn-danger" })
+    }
+}
+<!-- END OF ACCESS CONTROL PARTIAL -->

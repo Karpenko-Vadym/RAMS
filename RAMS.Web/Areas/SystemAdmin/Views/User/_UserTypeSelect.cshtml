@@ -1,0 +1,34 @@
+﻿@model RAMS.ViewModels.UserTypeViewModel
+<!-- USER TYPE SELECT PARTIAL -->
+@{
+    AjaxOptions ajaxOptions = new AjaxOptions
+    {
+        UpdateTargetId = "new-user-div",
+        OnBegin = "OnAjaxBegin",
+        OnSuccess = "OnAjaxSuccess",
+        OnFailure = "OnAjaxFailure",
+        OnComplete = "OnAjaxComplete"
+    };
+}
+
+@using (Ajax.BeginForm("UserTypeSelect", "User", new { Area = "SystemAdmin" }, ajaxOptions, new { id = "user-type-select-form" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <div class="form-group bottom-margin-0">
+            @Html.LabelFor(model => Model.SelectedValue, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-7">
+                <div class="input-group">
+                    @Html.DropDownListFor(model => Model.SelectedValue, new SelectList(new[] { "" }.Concat(Enum.GetNames(typeof(RAMS.Enums.UserType)))), new { @class = "form-control" })
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-info">Select</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">$(function () { DisableEmptyOptions(); });</script>
+<!-- END OF USER TYPE SELECT PARTIAL -->

@@ -1,0 +1,11 @@
+﻿Dear %name%,
+
+Your account has been successfully updated.
+
+Please login to the application to review account changes at your earliest convenience.
+
+You may access the application using following username: %username%
+
+Thank you!
+
+RAMS Administration

@@ -1,0 +1,44 @@
+﻿@model RAMS.ViewModels.ConfirmationViewModel
+<!-- UNBLOCK USER PARTIAL -->
+@{
+    AjaxOptions ajaxOptions = new AjaxOptions
+    {
+        UpdateTargetId = "edit-user-message-modal-body-div",
+        OnBegin = "OnAjaxBegin",
+        OnSuccess = "OnAjaxSuccess",
+        OnFailure = "OnAjaxFailure",
+        OnComplete = "OnAjaxComplete"
+    };
+
+}
+
+@using (Ajax.BeginForm("UnblockUser", "User", new { Area = "SystemAdmin" }, ajaxOptions, new { id = "unblock-user-form" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(model => model.UserName)
+    @Html.HiddenFor(model => model.UserType)
+    @Html.HiddenFor(model => model.UserStatus)
+
+    <div class="well well-lg bottom-margin-0">
+        <div class="alert alert-warning bottom-margin-0" role="alert">
+            <p>Are you sure that you want to <strong>UNBLOCK</strong> user @Model.UserName?</p>
+            <p><strong>NOTE: </strong>This action can be undone from Edit User page.</p>
+        </div>
+    </div>
+
+    <div class="vertical-padding-24"></div>
+
+    <div class="form-group bottom-margin-0">
+        <div class="col-md-offset-0 col-lg-offset-0 col-md-3 col-lg-3">
+            <input type="submit" value="Unblock User" class="btn btn-danger btn-block" onclick="$('#block-delete-user-modal').modal('hide');" />
+        </div>
+
+        <div class="col-md-offset-6 col-lg-offset-6 col-md-3 col-lg-3">
+            <input type="button" value="Cancel" class="btn btn-info btn-block" onclick="$('#block-delete-user-modal').modal('hide');" />
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+}
+<!-- END OF UNBLOCK USER PARTIAL -->

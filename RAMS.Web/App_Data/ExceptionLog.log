@@ -1,0 +1,223 @@
+Logged on: 02/01/2016 8:02:38 PM
+Exception of type 'DbUpdateConcurrencyException' has been caught.
+Message: Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+********************* Stack Trace **********************
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at RAMS.Data.DataContext.Commit() in c:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Data\DataContext.cs:line 54
+   at RAMS.Data.Infrastructure.UnitOfWork.Commit() in c:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Data\Infrastructure\UnitOfWork.cs:line 41
+   at RAMS.Service.AdminService.SaveChanges() in c:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Service\AdminService.cs:line 163
+   at RAMS.Web.Controllers.WebAPI.AdminController.PutAdmin(Admin admin) in c:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Web\Controllers\WebAPI\AdminController.cs:line 141
+****************** End of Stack Trace ******************
+******************* Inner Exception ********************
+Exception of type 'OptimisticConcurrencyException' has been caught.
+Message: Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+********************* Stack Trace **********************
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.ValidateRowsAffected(Int64 rowsAffected, UpdateCommand source)
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.Update()
+   at System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesToStore(SaveOptions options, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction)
+   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesInternal(SaveOptions options, Boolean executeInExistingTransaction)
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+****************** End of Stack Trace ******************
+**************** End of Inner Exception ****************
+
+
+Logged on: 02/01/2016 8:03:09 PM
+Exception of type 'EmployeeUpdateException' has been caught.
+Message: Employee profile could not be updated. Status Code: Conflict
+********************* Stack Trace **********************
+   at RAMS.Web.Areas.SystemAdmin.Controllers.UserController.<EditAdmin>d__6e.MoveNext() in c:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Web\Areas\SystemAdmin\Controllers\UserController.cs:line 1529
+****************** End of Stack Trace ******************
+
+
+Logged on: 02/01/2016 8:04:16 PM
+Exception of type 'DbUpdateConcurrencyException' has been caught.
+Message: Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+********************* Stack Trace **********************
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at RAMS.Data.DataContext.Commit() in c:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Data\DataContext.cs:line 54
+   at RAMS.Data.Infrastructure.UnitOfWork.Commit() in c:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Data\Infrastructure\UnitOfWork.cs:line 41
+   at RAMS.Service.AdminService.SaveChanges() in c:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Service\AdminService.cs:line 163
+   at RAMS.Web.Controllers.WebAPI.AdminController.PutAdmin(Admin admin) in c:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Web\Controllers\WebAPI\AdminController.cs:line 141
+****************** End of Stack Trace ******************
+******************* Inner Exception ********************
+Exception of type 'OptimisticConcurrencyException' has been caught.
+Message: Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+********************* Stack Trace **********************
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.ValidateRowsAffected(Int64 rowsAffected, UpdateCommand source)
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.Update()
+   at System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesToStore(SaveOptions options, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction)
+   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesInternal(SaveOptions options, Boolean executeInExistingTransaction)
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+****************** End of Stack Trace ******************
+**************** End of Inner Exception ****************
+
+
+Logged on: 02/01/2016 8:13:40 PM
+Exception of type 'DbUpdateConcurrencyException' has been caught.
+Message: Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+********************* Stack Trace **********************
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at RAMS.Data.DataContext.Commit() in c:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Data\DataContext.cs:line 54
+   at RAMS.Data.Infrastructure.UnitOfWork.Commit() in c:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Data\Infrastructure\UnitOfWork.cs:line 41
+   at RAMS.Service.AdminService.SaveChanges() in c:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Service\AdminService.cs:line 163
+   at RAMS.Web.Controllers.WebAPI.AdminController.PutAdmin(Admin admin) in c:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Web\Controllers\WebAPI\AdminController.cs:line 141
+****************** End of Stack Trace ******************
+******************* Inner Exception ********************
+Exception of type 'OptimisticConcurrencyException' has been caught.
+Message: Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+********************* Stack Trace **********************
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.ValidateRowsAffected(Int64 rowsAffected, UpdateCommand source)
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.Update()
+   at System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesToStore(SaveOptions options, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction)
+   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesInternal(SaveOptions options, Boolean executeInExistingTransaction)
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+****************** End of Stack Trace ******************
+**************** End of Inner Exception ****************
+
+
+Logged on: 02/01/2016 8:13:50 PM
+Exception of type 'EmployeeUpdateException' has been caught.
+Message: Employee profile could not be updated. Status Code: Conflict
+********************* Stack Trace **********************
+   at RAMS.Web.Areas.SystemAdmin.Controllers.UserController.<EditAdmin>d__6e.MoveNext() in c:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Web\Areas\SystemAdmin\Controllers\UserController.cs:line 1529
+****************** End of Stack Trace ******************
+
+
+Logged on: 02/01/2016 8:16:00 PM
+Exception of type 'DbUpdateConcurrencyException' has been caught.
+Message: Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+********************* Stack Trace **********************
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at RAMS.Data.DataContext.Commit() in c:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Data\DataContext.cs:line 54
+   at RAMS.Data.Infrastructure.UnitOfWork.Commit() in c:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Data\Infrastructure\UnitOfWork.cs:line 41
+   at RAMS.Service.AdminService.SaveChanges() in c:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Service\AdminService.cs:line 163
+   at RAMS.Web.Controllers.WebAPI.AdminController.PutAdmin(Admin admin) in c:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Web\Controllers\WebAPI\AdminController.cs:line 141
+****************** End of Stack Trace ******************
+******************* Inner Exception ********************
+Exception of type 'OptimisticConcurrencyException' has been caught.
+Message: Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+********************* Stack Trace **********************
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.ValidateRowsAffected(Int64 rowsAffected, UpdateCommand source)
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.Update()
+   at System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesToStore(SaveOptions options, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction)
+   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesInternal(SaveOptions options, Boolean executeInExistingTransaction)
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+****************** End of Stack Trace ******************
+**************** End of Inner Exception ****************
+
+
+Logged on: 02/01/2016 8:16:14 PM
+Exception of type 'EmployeeUpdateException' has been caught.
+Message: Employee profile could not be updated. Status Code: Conflict
+********************* Stack Trace **********************
+   at RAMS.Web.Areas.SystemAdmin.Controllers.UserController.<EditAdmin>d__6e.MoveNext() in c:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Web\Areas\SystemAdmin\Controllers\UserController.cs:line 1529
+****************** End of Stack Trace ******************
+
+
+Logged on: 02/01/2016 8:40:20 PM
+Exception of type 'DbUpdateConcurrencyException' has been caught.
+Message: Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+********************* Stack Trace **********************
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at RAMS.Data.DataContext.Commit() in c:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Data\DataContext.cs:line 54
+   at RAMS.Data.Infrastructure.UnitOfWork.Commit() in c:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Data\Infrastructure\UnitOfWork.cs:line 41
+   at RAMS.Service.AgentService.SaveChanges() in c:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Service\AgentService.cs:line 224
+   at RAMS.Web.Controllers.WebAPI.AgentController.PutAgent(Agent agent) in c:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Web\Controllers\WebAPI\AgentController.cs:line 171
+****************** End of Stack Trace ******************
+******************* Inner Exception ********************
+Exception of type 'OptimisticConcurrencyException' has been caught.
+Message: Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+********************* Stack Trace **********************
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.ValidateRowsAffected(Int64 rowsAffected, UpdateCommand source)
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.Update()
+   at System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesToStore(SaveOptions options, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction)
+   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesInternal(SaveOptions options, Boolean executeInExistingTransaction)
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+****************** End of Stack Trace ******************
+**************** End of Inner Exception ****************
+
+
+Logged on: 02/01/2016 8:40:20 PM
+Exception of type 'EmployeeUpdateException' has been caught.
+Message: Employee profile could not be updated. Status Code: Conflict
+********************* Stack Trace **********************
+   at RAMS.Web.Areas.SystemAdmin.Controllers.UserController.<EditAgent>d__58.MoveNext() in c:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Web\Areas\SystemAdmin\Controllers\UserController.cs:line 1180
+****************** End of Stack Trace ******************
+
+
+Logged on: 02/01/2016 11:06:18 PM
+Exception of type 'DbUpdateConcurrencyException' has been caught.
+Message: Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+********************* Stack Trace **********************
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at RAMS.Data.DataContext.Commit() in c:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Data\DataContext.cs:line 54
+   at RAMS.Data.Infrastructure.UnitOfWork.Commit() in c:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Data\Infrastructure\UnitOfWork.cs:line 41
+   at RAMS.Service.AdminService.SaveChanges() in c:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Service\AdminService.cs:line 163
+   at RAMS.Web.Controllers.WebAPI.AdminController.PutAdmin(Admin admin) in c:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Web\Controllers\WebAPI\AdminController.cs:line 141
+****************** End of Stack Trace ******************
+******************* Inner Exception ********************
+Exception of type 'OptimisticConcurrencyException' has been caught.
+Message: Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+********************* Stack Trace **********************
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.ValidateRowsAffected(Int64 rowsAffected, UpdateCommand source)
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.Update()
+   at System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesToStore(SaveOptions options, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction)
+   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesInternal(SaveOptions options, Boolean executeInExistingTransaction)
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+****************** End of Stack Trace ******************
+**************** End of Inner Exception ****************
+
+
+Logged on: 02/01/2016 11:06:26 PM
+Exception of type 'EmployeeUpdateException' has been caught.
+Message: Employee profile could not be updated. Status Code: Conflict
+********************* Stack Trace **********************
+   at RAMS.Web.Areas.SystemAdmin.Controllers.UserController.<EditAdmin>d__6a.MoveNext() in c:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Web\Areas\SystemAdmin\Controllers\UserController.cs:line 1548
+****************** End of Stack Trace ******************
+
+
+Logged on: 03/01/2016 12:35:21 AM
+Exception of type 'DbUpdateConcurrencyException' has been caught.
+Message: Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+********************* Stack Trace **********************
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at RAMS.Data.DataContext.Commit() in c:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Data\DataContext.cs:line 54
+   at RAMS.Data.Infrastructure.UnitOfWork.Commit() in c:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Data\Infrastructure\UnitOfWork.cs:line 41
+   at RAMS.Service.AgentService.SaveChanges() in c:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Service\AgentService.cs:line 224
+   at RAMS.Web.Controllers.WebAPI.AgentController.PutAgent(Agent agent) in c:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Web\Controllers\WebAPI\AgentController.cs:line 171
+****************** End of Stack Trace ******************
+******************* Inner Exception ********************
+Exception of type 'OptimisticConcurrencyException' has been caught.
+Message: Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+********************* Stack Trace **********************
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.ValidateRowsAffected(Int64 rowsAffected, UpdateCommand source)
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.Update()
+   at System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesToStore(SaveOptions options, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction)
+   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesInternal(SaveOptions options, Boolean executeInExistingTransaction)
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+****************** End of Stack Trace ******************
+**************** End of Inner Exception ****************
+
+
+Logged on: 03/01/2016 12:35:22 AM
+Exception of type 'EmployeeUpdateException' has been caught.
+Message: Employee profile could not be updated. Status Code: Conflict
+********************* Stack Trace **********************
+   at RAMS.Web.Areas.SystemAdmin.Controllers.UserController.<EditAgent>d__58.MoveNext() in c:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Web\Areas\SystemAdmin\Controllers\UserController.cs:line 1278
+****************** End of Stack Trace ******************
+
+

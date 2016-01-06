@@ -1,0 +1,1170 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>RAMS.Web</name>
+    </assembly>
+    <members>
+        <member name="T:RAMS.Web.App_Start.BundleConfig">
+            <summary>
+            BundleConfig class allows to register multiple css and js files under one bundle
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.App_Start.BundleConfig.RegisterBundles(System.Web.Optimization.BundleCollection)">
+            <summary>
+            RegisterBundles method is called when application starts in order to register bundles
+            </summary>
+            <param name="bundles">Collection of bundles</param>
+        </member>
+        <member name="T:RAMS.Web.ApplicationUserManager">
+            <summary>
+            Configure the application user manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application
+            </summary>
+        </member>
+        <member name="T:RAMS.Web.ApplicationSignInManager">
+            <summary>
+            Configure the application sign-in manager which is used in this application
+            </summary>
+        </member>
+        <member name="T:RAMS.Web.App_Start.InitializationConfig">
+            <summary>
+            InitializationConfig class allows to run (Configure) all custom configurations
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.App_Start.InitializationConfig.Initialize">
+            <summary>
+            Initialize method runs all the custom configurations once application starts
+            </summary>
+        </member>
+        <member name="T:RAMS.Web.RouteConfig">
+            <summary>
+            RouteConfig class allow to configure URL routing for the application
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.RouteConfig.RegisterRoutes(System.Web.Routing.RouteCollection)">
+            <summary>
+            RegisterRoutes method register default/custom URL routes
+            </summary>
+            <param name="routes">Route collection</param>
+        </member>
+        <member name="T:RAMS.Web.Startup">
+            <summary>
+            Startup class allows to configure OWIN application pipeline
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Startup.Configuration(Owin.IAppBuilder)">
+            <summary>
+            Configuration method is executed when WebAPI is invoked
+            </summary>
+            <param name="app">IAppBuilder is used to add components into the Owin application pipeline</param>
+        </member>
+        <member name="M:WebApiConfig.Register(System.Web.Http.HttpConfiguration)">
+            <summary>
+            Register method allows to register "api/ControllerName/Parameters" path for WebAPI
+            </summary>
+            <param name="configuration">Http configuration that allows to register path for WebAPI</param>    
+        </member>
+        <member name="M:RAMS.Web.Areas.HelpPage.ApiDescriptionExtensions.GetFriendlyId(System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Generates an URI-friendly ID for the <see cref="T:System.Web.Http.Description.ApiDescription"/>. E.g. "Get-Values-id_name" instead of "GetValues/{id}?name={name}"
+            </summary>
+            <param name="description">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <returns>The ID as a string.</returns>
+        </member>
+        <member name="T:RAMS.Web.Areas.HelpPage.HelpPageConfig">
+            <summary>
+            Use this class to customize the Help Page.
+            For example you can set a custom <see cref="T:System.Web.Http.Description.IDocumentationProvider"/> to supply the documentation
+            or you can provide the samples for the requests/responses.
+            </summary>
+        </member>
+        <member name="T:RAMS.Web.Areas.HelpPage.Controllers.HelpController">
+            <summary>
+            The controller that will handle requests for the help page.
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Areas.HelpPage.HelpPageConfigurationExtensions.SetDocumentationProvider(System.Web.Http.HttpConfiguration,System.Web.Http.Description.IDocumentationProvider)">
+            <summary>
+            Sets the documentation provider for help page.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="documentationProvider">The documentation provider.</param>
+        </member>
+        <member name="M:RAMS.Web.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleObjects(System.Web.Http.HttpConfiguration,System.Collections.Generic.IDictionary{System.Type,System.Object})">
+            <summary>
+            Sets the objects that will be used by the formatters to produce sample requests/responses.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sampleObjects">The sample objects.</param>
+        </member>
+        <member name="M:RAMS.Web.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleRequest(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.String,System.String)">
+            <summary>
+            Sets the sample request directly for the specified media type and action.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample request.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+        </member>
+        <member name="M:RAMS.Web.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleRequest(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.String,System.String,System.String[])">
+            <summary>
+            Sets the sample request directly for the specified media type and action with parameters.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample request.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:RAMS.Web.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleResponse(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.String,System.String)">
+            <summary>
+            Sets the sample request directly for the specified media type of the action.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample response.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+        </member>
+        <member name="M:RAMS.Web.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleResponse(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.String,System.String,System.String[])">
+            <summary>
+            Sets the sample response directly for the specified media type of the action with specific parameters.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample response.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:RAMS.Web.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleForMediaType(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue)">
+            <summary>
+            Sets the sample directly for all actions with the specified media type.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample.</param>
+            <param name="mediaType">The media type.</param>
+        </member>
+        <member name="M:RAMS.Web.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleForType(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.Type)">
+            <summary>
+            Sets the sample directly for all actions with the specified type and media type.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="type">The parameter type or return type of an action.</param>
+        </member>
+        <member name="M:RAMS.Web.Areas.HelpPage.HelpPageConfigurationExtensions.SetActualRequestType(System.Web.Http.HttpConfiguration,System.Type,System.String,System.String)">
+            <summary>
+            Specifies the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> passed to the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action.
+            The help page will use this information to produce more accurate request samples.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="type">The type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+        </member>
+        <member name="M:RAMS.Web.Areas.HelpPage.HelpPageConfigurationExtensions.SetActualRequestType(System.Web.Http.HttpConfiguration,System.Type,System.String,System.String,System.String[])">
+            <summary>
+            Specifies the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> passed to the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action.
+            The help page will use this information to produce more accurate request samples.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="type">The type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:RAMS.Web.Areas.HelpPage.HelpPageConfigurationExtensions.SetActualResponseType(System.Web.Http.HttpConfiguration,System.Type,System.String,System.String)">
+            <summary>
+            Specifies the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> returned as part of the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action.
+            The help page will use this information to produce more accurate response samples.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="type">The type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+        </member>
+        <member name="M:RAMS.Web.Areas.HelpPage.HelpPageConfigurationExtensions.SetActualResponseType(System.Web.Http.HttpConfiguration,System.Type,System.String,System.String,System.String[])">
+            <summary>
+            Specifies the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> returned as part of the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action.
+            The help page will use this information to produce more accurate response samples.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="type">The type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:RAMS.Web.Areas.HelpPage.HelpPageConfigurationExtensions.GetHelpPageSampleGenerator(System.Web.Http.HttpConfiguration)">
+            <summary>
+            Gets the help page sample generator.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <returns>The help page sample generator.</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.HelpPage.HelpPageConfigurationExtensions.SetHelpPageSampleGenerator(System.Web.Http.HttpConfiguration,RAMS.Web.Areas.HelpPage.HelpPageSampleGenerator)">
+            <summary>
+            Sets the help page sample generator.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sampleGenerator">The help page sample generator.</param>
+        </member>
+        <member name="M:RAMS.Web.Areas.HelpPage.HelpPageConfigurationExtensions.GetModelDescriptionGenerator(System.Web.Http.HttpConfiguration)">
+            <summary>
+            Gets the model description generator.
+            </summary>
+            <param name="config">The configuration.</param>
+            <returns>The <see cref="T:RAMS.Web.Areas.HelpPage.ModelDescriptions.ModelDescriptionGenerator"/></returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.HelpPage.HelpPageConfigurationExtensions.GetHelpPageApiModel(System.Web.Http.HttpConfiguration,System.String)">
+            <summary>
+            Gets the model that represents an API displayed on the help page. The model is initialized on the first call and cached for subsequent calls.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="apiDescriptionId">The <see cref="T:System.Web.Http.Description.ApiDescription"/> ID.</param>
+            <returns>
+            An <see cref="T:RAMS.Web.Areas.HelpPage.Models.HelpPageApiModel"/>
+            </returns>
+        </member>
+        <member name="T:RAMS.Web.Areas.HelpPage.ModelDescriptions.ModelDescription">
+            <summary>
+            Describes a type model.
+            </summary>
+        </member>
+        <member name="T:RAMS.Web.Areas.HelpPage.ModelDescriptions.ModelDescriptionGenerator">
+            <summary>
+            Generates model descriptions for given types.
+            </summary>
+        </member>
+        <member name="T:RAMS.Web.Areas.HelpPage.ModelDescriptions.ModelNameAttribute">
+            <summary>
+            Use this attribute to change the name of the <see cref="T:RAMS.Web.Areas.HelpPage.ModelDescriptions.ModelDescription"/> generated for a type.
+            </summary>
+        </member>
+        <member name="T:RAMS.Web.Areas.HelpPage.Models.HelpPageApiModel">
+            <summary>
+            The model that represents an API displayed on the help page.
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Areas.HelpPage.Models.HelpPageApiModel.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:RAMS.Web.Areas.HelpPage.Models.HelpPageApiModel"/> class.
+            </summary>
+        </member>
+        <member name="P:RAMS.Web.Areas.HelpPage.Models.HelpPageApiModel.ApiDescription">
+            <summary>
+            Gets or sets the <see cref="P:RAMS.Web.Areas.HelpPage.Models.HelpPageApiModel.ApiDescription"/> that describes the API.
+            </summary>
+        </member>
+        <member name="P:RAMS.Web.Areas.HelpPage.Models.HelpPageApiModel.UriParameters">
+            <summary>
+            Gets or sets the <see cref="T:RAMS.Web.Areas.HelpPage.ModelDescriptions.ParameterDescription"/> collection that describes the URI parameters for the API.
+            </summary>
+        </member>
+        <member name="P:RAMS.Web.Areas.HelpPage.Models.HelpPageApiModel.RequestDocumentation">
+            <summary>
+            Gets or sets the documentation for the request.
+            </summary>
+        </member>
+        <member name="P:RAMS.Web.Areas.HelpPage.Models.HelpPageApiModel.RequestModelDescription">
+            <summary>
+            Gets or sets the <see cref="T:RAMS.Web.Areas.HelpPage.ModelDescriptions.ModelDescription"/> that describes the request body.
+            </summary>
+        </member>
+        <member name="P:RAMS.Web.Areas.HelpPage.Models.HelpPageApiModel.RequestBodyParameters">
+            <summary>
+            Gets the request body parameter descriptions.
+            </summary>
+        </member>
+        <member name="P:RAMS.Web.Areas.HelpPage.Models.HelpPageApiModel.ResourceDescription">
+            <summary>
+            Gets or sets the <see cref="T:RAMS.Web.Areas.HelpPage.ModelDescriptions.ModelDescription"/> that describes the resource.
+            </summary>
+        </member>
+        <member name="P:RAMS.Web.Areas.HelpPage.Models.HelpPageApiModel.ResourceProperties">
+            <summary>
+            Gets the resource property descriptions.
+            </summary>
+        </member>
+        <member name="P:RAMS.Web.Areas.HelpPage.Models.HelpPageApiModel.SampleRequests">
+            <summary>
+            Gets the sample requests associated with the API.
+            </summary>
+        </member>
+        <member name="P:RAMS.Web.Areas.HelpPage.Models.HelpPageApiModel.SampleResponses">
+            <summary>
+            Gets the sample responses associated with the API.
+            </summary>
+        </member>
+        <member name="P:RAMS.Web.Areas.HelpPage.Models.HelpPageApiModel.ErrorMessages">
+            <summary>
+            Gets the error messages associated with this model.
+            </summary>
+        </member>
+        <member name="T:RAMS.Web.Areas.HelpPage.HelpPageSampleGenerator">
+            <summary>
+            This class will generate the samples for the help page.
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Areas.HelpPage.HelpPageSampleGenerator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:RAMS.Web.Areas.HelpPage.HelpPageSampleGenerator"/> class.
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Areas.HelpPage.HelpPageSampleGenerator.GetSampleRequests(System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Gets the request body samples for a given <see cref="T:System.Web.Http.Description.ApiDescription"/>.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <returns>The samples keyed by media type.</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.HelpPage.HelpPageSampleGenerator.GetSampleResponses(System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Gets the response body samples for a given <see cref="T:System.Web.Http.Description.ApiDescription"/>.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <returns>The samples keyed by media type.</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.HelpPage.HelpPageSampleGenerator.GetSample(System.Web.Http.Description.ApiDescription,RAMS.Web.Areas.HelpPage.SampleDirection)">
+            <summary>
+            Gets the request or response body samples.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <param name="sampleDirection">The value indicating whether the sample is for a request or for a response.</param>
+            <returns>The samples keyed by media type.</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.HelpPage.HelpPageSampleGenerator.GetActionSample(System.String,System.String,System.Collections.Generic.IEnumerable{System.String},System.Type,System.Net.Http.Formatting.MediaTypeFormatter,System.Net.Http.Headers.MediaTypeHeaderValue,RAMS.Web.Areas.HelpPage.SampleDirection)">
+            <summary>
+            Search for samples that are provided directly through <see cref="P:RAMS.Web.Areas.HelpPage.HelpPageSampleGenerator.ActionSamples"/>.
+            </summary>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+            <param name="type">The CLR type.</param>
+            <param name="formatter">The formatter.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="sampleDirection">The value indicating whether the sample is for a request or for a response.</param>
+            <returns>The sample that matches the parameters.</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.HelpPage.HelpPageSampleGenerator.GetSampleObject(System.Type)">
+            <summary>
+            Gets the sample object that will be serialized by the formatters. 
+            First, it will look at the <see cref="P:RAMS.Web.Areas.HelpPage.HelpPageSampleGenerator.SampleObjects"/>. If no sample object is found, it will try to create
+            one using <see cref="M:RAMS.Web.Areas.HelpPage.HelpPageSampleGenerator.DefaultSampleObjectFactory(RAMS.Web.Areas.HelpPage.HelpPageSampleGenerator,System.Type)"/> (which wraps an <see cref="T:RAMS.Web.Areas.HelpPage.ObjectGenerator"/>) and other
+            factories in <see cref="P:RAMS.Web.Areas.HelpPage.HelpPageSampleGenerator.SampleObjectFactories"/>.
+            </summary>
+            <param name="type">The type.</param>
+            <returns>The sample object.</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.HelpPage.HelpPageSampleGenerator.ResolveHttpRequestMessageType(System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Resolves the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> passed to the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <returns>The type.</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.HelpPage.HelpPageSampleGenerator.ResolveType(System.Web.Http.Description.ApiDescription,System.String,System.String,System.Collections.Generic.IEnumerable{System.String},RAMS.Web.Areas.HelpPage.SampleDirection,System.Collections.ObjectModel.Collection{System.Net.Http.Formatting.MediaTypeFormatter}@)">
+            <summary>
+            Resolves the type of the action parameter or return value when <see cref="T:System.Net.Http.HttpRequestMessage"/> or <see cref="T:System.Net.Http.HttpResponseMessage"/> is used.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+            <param name="sampleDirection">The value indicating whether the sample is for a request or a response.</param>
+            <param name="formatters">The formatters.</param>
+        </member>
+        <member name="M:RAMS.Web.Areas.HelpPage.HelpPageSampleGenerator.WriteSampleObjectUsingFormatter(System.Net.Http.Formatting.MediaTypeFormatter,System.Object,System.Type,System.Net.Http.Headers.MediaTypeHeaderValue)">
+            <summary>
+            Writes the sample object using formatter.
+            </summary>
+            <param name="formatter">The formatter.</param>
+            <param name="value">The value.</param>
+            <param name="type">The type.</param>
+            <param name="mediaType">Type of the media.</param>
+            <returns></returns>
+        </member>
+        <member name="P:RAMS.Web.Areas.HelpPage.HelpPageSampleGenerator.ActualHttpMessageTypes">
+            <summary>
+            Gets CLR types that are used as the content of <see cref="T:System.Net.Http.HttpRequestMessage"/> or <see cref="T:System.Net.Http.HttpResponseMessage"/>.
+            </summary>
+        </member>
+        <member name="P:RAMS.Web.Areas.HelpPage.HelpPageSampleGenerator.ActionSamples">
+            <summary>
+            Gets the objects that are used directly as samples for certain actions.
+            </summary>
+        </member>
+        <member name="P:RAMS.Web.Areas.HelpPage.HelpPageSampleGenerator.SampleObjects">
+            <summary>
+            Gets the objects that are serialized as samples by the supported formatters.
+            </summary>
+        </member>
+        <member name="P:RAMS.Web.Areas.HelpPage.HelpPageSampleGenerator.SampleObjectFactories">
+            <summary>
+            Gets factories for the objects that the supported formatters will serialize as samples. Processed in order,
+            stopping when the factory successfully returns a non-<see langref="null"/> object.
+            </summary>
+            <remarks>
+            Collection includes just <see cref="M:RAMS.Web.Areas.HelpPage.ObjectGenerator.GenerateObject(System.Type)"/> initially. Use
+            <code>SampleObjectFactories.Insert(0, func)</code> to provide an override and
+            <code>SampleObjectFactories.Add(func)</code> to provide a fallback.</remarks>
+        </member>
+        <member name="T:RAMS.Web.Areas.HelpPage.HelpPageSampleKey">
+            <summary>
+            This is used to identify the place where the sample should be applied.
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Areas.HelpPage.HelpPageSampleKey.#ctor(System.Net.Http.Headers.MediaTypeHeaderValue)">
+            <summary>
+            Creates a new <see cref="T:RAMS.Web.Areas.HelpPage.HelpPageSampleKey"/> based on media type.
+            </summary>
+            <param name="mediaType">The media type.</param>
+        </member>
+        <member name="M:RAMS.Web.Areas.HelpPage.HelpPageSampleKey.#ctor(System.Net.Http.Headers.MediaTypeHeaderValue,System.Type)">
+            <summary>
+            Creates a new <see cref="T:RAMS.Web.Areas.HelpPage.HelpPageSampleKey"/> based on media type and CLR type.
+            </summary>
+            <param name="mediaType">The media type.</param>
+            <param name="type">The CLR type.</param>
+        </member>
+        <member name="M:RAMS.Web.Areas.HelpPage.HelpPageSampleKey.#ctor(RAMS.Web.Areas.HelpPage.SampleDirection,System.String,System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Creates a new <see cref="T:RAMS.Web.Areas.HelpPage.HelpPageSampleKey"/> based on <see cref="P:RAMS.Web.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>, controller name, action name and parameter names.
+            </summary>
+            <param name="sampleDirection">The <see cref="P:RAMS.Web.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:RAMS.Web.Areas.HelpPage.HelpPageSampleKey.#ctor(System.Net.Http.Headers.MediaTypeHeaderValue,RAMS.Web.Areas.HelpPage.SampleDirection,System.String,System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Creates a new <see cref="T:RAMS.Web.Areas.HelpPage.HelpPageSampleKey"/> based on media type, <see cref="P:RAMS.Web.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>, controller name, action name and parameter names.
+            </summary>
+            <param name="mediaType">The media type.</param>
+            <param name="sampleDirection">The <see cref="P:RAMS.Web.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="P:RAMS.Web.Areas.HelpPage.HelpPageSampleKey.ControllerName">
+            <summary>
+            Gets the name of the controller.
+            </summary>
+            <value>
+            The name of the controller.
+            </value>
+        </member>
+        <member name="P:RAMS.Web.Areas.HelpPage.HelpPageSampleKey.ActionName">
+            <summary>
+            Gets the name of the action.
+            </summary>
+            <value>
+            The name of the action.
+            </value>
+        </member>
+        <member name="P:RAMS.Web.Areas.HelpPage.HelpPageSampleKey.MediaType">
+            <summary>
+            Gets the media type.
+            </summary>
+            <value>
+            The media type.
+            </value>
+        </member>
+        <member name="P:RAMS.Web.Areas.HelpPage.HelpPageSampleKey.ParameterNames">
+            <summary>
+            Gets the parameter names.
+            </summary>
+        </member>
+        <member name="P:RAMS.Web.Areas.HelpPage.HelpPageSampleKey.SampleDirection">
+            <summary>
+            Gets the <see cref="P:RAMS.Web.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>.
+            </summary>
+        </member>
+        <member name="T:RAMS.Web.Areas.HelpPage.ImageSample">
+            <summary>
+            This represents an image sample on the help page. There's a display template named ImageSample associated with this class.
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Areas.HelpPage.ImageSample.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:RAMS.Web.Areas.HelpPage.ImageSample"/> class.
+            </summary>
+            <param name="src">The URL of an image.</param>
+        </member>
+        <member name="T:RAMS.Web.Areas.HelpPage.InvalidSample">
+            <summary>
+            This represents an invalid sample on the help page. There's a display template named InvalidSample associated with this class.
+            </summary>
+        </member>
+        <member name="T:RAMS.Web.Areas.HelpPage.ObjectGenerator">
+            <summary>
+            This class will create an object of a given type and populate it with sample data.
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Areas.HelpPage.ObjectGenerator.GenerateObject(System.Type)">
+            <summary>
+            Generates an object for a given type. The type needs to be public, have a public default constructor and settable public properties/fields. Currently it supports the following types:
+            Simple types: <see cref="T:System.Int32"/>, <see cref="T:System.String"/>, <see cref="T:System.Enum"/>, <see cref="T:System.DateTime"/>, <see cref="T:System.Uri"/>, etc.
+            Complex types: POCO types.
+            Nullables: <see cref="T:System.Nullable`1"/>.
+            Arrays: arrays of simple types or complex types.
+            Key value pairs: <see cref="T:System.Collections.Generic.KeyValuePair`2"/>
+            Tuples: <see cref="T:System.Tuple`1"/>, <see cref="T:System.Tuple`2"/>, etc
+            Dictionaries: <see cref="T:System.Collections.Generic.IDictionary`2"/> or anything deriving from <see cref="T:System.Collections.Generic.IDictionary`2"/>.
+            Collections: <see cref="T:System.Collections.Generic.IList`1"/>, <see cref="T:System.Collections.Generic.IEnumerable`1"/>, <see cref="T:System.Collections.Generic.ICollection`1"/>, <see cref="T:System.Collections.IList"/>, <see cref="T:System.Collections.IEnumerable"/>, <see cref="T:System.Collections.ICollection"/> or anything deriving from <see cref="T:System.Collections.Generic.ICollection`1"/> or <see cref="T:System.Collections.IList"/>.
+            Queryables: <see cref="T:System.Linq.IQueryable"/>, <see cref="T:System.Linq.IQueryable`1"/>.
+            </summary>
+            <param name="type">The type.</param>
+            <returns>An object of the given type.</returns>
+        </member>
+        <member name="T:RAMS.Web.Areas.HelpPage.SampleDirection">
+            <summary>
+            Indicates whether the sample is used for request or response
+            </summary>
+        </member>
+        <member name="T:RAMS.Web.Areas.HelpPage.TextSample">
+            <summary>
+            This represents a preformatted text sample on the help page. There's a display template named TextSample associated with this class.
+            </summary>
+        </member>
+        <member name="T:RAMS.Web.Areas.HelpPage.XmlDocumentationProvider">
+            <summary>
+            A custom <see cref="T:System.Web.Http.Description.IDocumentationProvider"/> that reads the API documentation from an XML documentation file.
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Areas.HelpPage.XmlDocumentationProvider.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:RAMS.Web.Areas.HelpPage.XmlDocumentationProvider"/> class.
+            </summary>
+            <param name="documentPath">The physical path to XML document.</param>
+        </member>
+        <member name="T:RAMS.Web.Controllers.BaseController">
+            <summary>
+            BaseController controller implements common methods for accessing WebAPI via HttpClient
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Controllers.BaseController.#ctor">
+            <summary>
+            BaseController constructor initializes and configures HttpClient allowing controller that inherit from BaseController to access WebAPI using already configured HttpClient 
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Controllers.BaseController.GetHttpClient">
+            <summary>
+            GetHttpClient method allows to access HttpClient (HttpClient getter)
+            </summary>
+            <returns>Already configured instance of an HttpClient</returns>
+        </member>
+        <member name="T:RAMS.Web.Configuration.AutofacConfiguration">
+            <summary>
+            AutofacConfiguration class allows to setup Autofac configuration
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Configuration.AutofacConfiguration.Configure">
+            <summary>
+            Configure method is called when application starts and allows to set container and register types
+            </summary>
+        </member>
+        <member name="T:RAMS.Web.Configuration.AutoMapperConfiguration">
+            <summary>
+            AutoMapperConfiguration class allows to setup AutoMapper configuration
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Configuration.AutoMapperConfiguration.Configure">
+            <summary>
+            Configure method is called when application starts and allows to setup custom mappings for AutoMapper
+            </summary>
+        </member>
+        <member name="T:RAMS.Web.Configuration.ModelToViewModelMapping">
+            <summary>
+            ModelToViewModelMapping profile allows to configure domain model to view model mapping
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Configuration.ModelToViewModelMapping.Configure">
+            <summary>
+            Configure method contains detailed configuration of each mapping 
+            </summary>
+        </member>
+        <member name="T:RAMS.Web.Configuration.ViewModelToModelMapping">
+            <summary>
+            ViewModelToModelMapping profile allows to configure view model to domain model mapping
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Configuration.ViewModelToModelMapping.Configure">
+            <summary>
+            Configure method contains detailed configuration of each mapping 
+            </summary>
+        </member>
+        <member name="T:RAMS.Web.Controllers.HomeController">
+            <summary>
+            HomeController controller will be (By default) accessed as soon as application starts, or user navigates to the application by it's root URL
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Controllers.HomeController.Index">
+            <summary>
+            Index action method will be called as soon as application starts, or user navigates to the application by it's root URL
+            Once authenticated, user will be redirected to default controller and default action of the area where user belongs (UserType determines which area user belongs to)
+            </summary>
+            <returns>Redirects to default controller and default action of the area where user belongs</returns>
+        </member>
+        <member name="T:RAMS.Web.Controllers.WebAPI.AdminController">
+            <summary>
+            AdminController is an api controller that allows to access context resources by sending http requests and responces
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.AdminController.#ctor(RAMS.Service.IAdminService)">
+            <summary>
+            Controller that sets admin service in order to access context resources
+            </summary>
+            <param name="adminService">Parameter for setting admin service</param>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.AdminController.GetAllAdmins">
+            <summary>
+            Get the list of all admins
+            </summary>
+            <returns>The list of all admins</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.AdminController.GetAdmin(System.Int32)">
+            <summary>
+            Get an admin by id
+            </summary>
+            <param name="id">Id of an admin to be fetched</param>
+            <returns>An admin with matching id</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.AdminController.GetOneAdminByUsername(System.String)">
+            <summary>
+            Get an admin by username
+            </summary>
+            <param name="userName">Username of an admin to be fetched</param>
+            <returns>An admin with matching username</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.AdminController.PostAdmin(RAMS.Models.Admin)">
+            <summary>
+            Create new admin
+            </summary>
+            <param name="admin">An admin to be created</param>
+            <returns>The Uri of newly created admin</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.AdminController.PutAdmin(RAMS.Models.Admin)">
+            <summary>
+            Update existing admin
+            </summary>
+            <param name="admin">Admin to be updated</param>
+            <returns>HttpResponseMessage with status code dependning on the outcome of this method</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.AdminController.BlockUnblockAdminByUserName(System.String,System.Boolean)">
+            <summary>
+            Block or unblock admin by user name
+            </summary>
+            <param name="userName">User name of the admin to be blocked or unblocked</param>
+            <param name="block">Boolean indicating whether admin should be blocked or unblocked</param>
+            <returns>HttpResponseMessage with status code dependning on the outcome of this method</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.AdminController.DeleteAdminById(System.Int32,System.Boolean)">
+            <summary>
+            Delete existing admin by id (Logical and physical)
+            </summary>
+            <param name="id">Id of the admin to be deleted</param>
+            <param name="physicalDelete">Boolean indicating whether delete is physical or logical</param>
+            <returns>HttpResponseMessage with status code dependning on the outcome of this method</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.AdminController.DeleteAdminByUserName(System.String,System.Boolean)">
+            <summary>
+            Delete existing admin by user name
+            </summary>
+            <param name="userName">User name of the admin to be deleted</param>
+            <param name="physicalDelete">Boolian indicating whether delete is physical or logical</param>
+            <returns>HttpResponseMessage with status code dependning on the outcome of this method</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.AdminController.AdminExists(System.Int32)">
+            <summary>
+            AdminExists is used to check whether the admin is present in data context
+            </summary>
+            <param name="id">Id of the admin to check against</param>
+            <returns>True if admin is present in data context, false otherwise</returns>
+        </member>
+        <member name="T:RAMS.Web.Controllers.WebAPI.AgentController">
+            <summary>
+            AgentController is an api controller that allows to access context resources by sending http requests and responces
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.AgentController.#ctor(RAMS.Service.IAgentService,RAMS.Service.IDepartmentService)">
+            <summary>
+            Controller that sets agent service in order to access context resources
+            </summary>
+            <param name="agentService">Parameter for setting agent service</param>
+            <param name="departmentService">Parameter for setting department service</param>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.AgentController.GetAllAgents">
+            <summary>
+            Get the list of all agents
+            </summary>
+            <returns>The list of all agents</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.AgentController.GetAgent(System.Int32)">
+            <summary>
+            Get an agent by id
+            </summary>
+            <param name="id">Id of an agent to be fetched</param>
+            <returns>An agent with matching id</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.AgentController.GetManyAgentsByDepartmentId(System.Int32)">
+            <summary>
+            Get the list of all agents that belong to specific department (Agent.DepartmentID = deartmentId)
+            </summary>
+            <param name="departmentId">Department id for which all the agents are to be fetched</param>
+            <returns>List of the agents that belong to specific department</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.AgentController.GetOneAgentByUsername(System.String)">
+            <summary>
+            Get an agent by username
+            </summary>
+            <param name="userName">Username of an agent to be fetched</param>
+            <returns>An agent with matching username</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.AgentController.PostAgent(RAMS.Models.Agent)">
+            <summary>
+            Create new agent
+            </summary>
+            <param name="agent">An agent to be created</param>
+            <returns>The Uri of newly created agent</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.AgentController.PutAgent(RAMS.Models.Agent)">
+            <summary>
+            Update existing agent
+            </summary>
+            <param name="agent">Agent to be updated</param>
+            <returns>HttpResponseMessage with status code dependning on the outcome of this method</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.AgentController.BlockUnblockAgentByUserName(System.String,System.Boolean)">
+            <summary>
+            Block or unblock agent by user name
+            </summary>
+            <param name="userName">User name of the agent to be blocked or unblocked</param>
+            <param name="block">Boolean indicating whether agent should be blocked or unblocked</param>
+            <returns>HttpResponseMessage with status code dependning on the outcome of this method</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.AgentController.DeleteAgentById(System.Int32,System.Boolean)">
+            <summary>
+            Delete existing agent by id (Logical and physical)
+            </summary>
+            <param name="id">Id of the agent to be deleted</param>
+            <param name="physicalDelete">Boolean indicating whether delete is physical or logical</param>
+            <returns>HttpResponseMessage with status code dependning on the outcome of this method</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.AgentController.DeleteAgentByUserName(System.String,System.Boolean)">
+            <summary>
+            Delete existing agent by user name
+            </summary>
+            <param name="userName">User name of the agent to be deleted</param>
+            <param name="physicalDelete">Boolian indicating whether delete is physical or logical</param>
+            <returns>HttpResponseMessage with status code dependning on the outcome of this method</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.AgentController.AgentExists(System.Int32)">
+            <summary>
+            AgentExists is used to check whether the agent is present in data context
+            </summary>
+            <param name="id">Id of the agent to check against</param>
+            <returns>True if agent is present in data context, false otherwise</returns>
+        </member>
+        <member name="T:RAMS.Web.Controllers.WebAPI.CandidateController">
+            <summary>
+            CandidateController is an api controller that allows to access context resources by sending http requests and responces
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.CandidateController.#ctor(RAMS.Service.ICandidateService)">
+            <summary>
+            Controller that sets candidate service in order to access context resources
+            </summary>
+            <param name="candidateService">Parameter for setting candidate service</param>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.CandidateController.GetAllCandidates">
+            <summary>
+            Get the list of all candidates
+            </summary>
+            <returns>The list of all candidates</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.CandidateController.GetCandidate(System.Int32)">
+            <summary>
+            Get a candidate by id
+            </summary>
+            <param name="id">Id of a candidate to be fetched</param>
+            <returns>A candidate with matching id</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.CandidateController.PostCandidate(RAMS.Models.Candidate)">
+            <summary>
+            Create new candidate
+            </summary>
+            <param name="candidate">A candidate to be created</param>
+            <returns>The Uri of newly created candidate</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.CandidateController.PutCandidate(RAMS.Models.Candidate)">
+            <summary>
+            Update existing candidate
+            </summary>
+            <param name="candidate">Candidate to be updated</param>
+            <returns>HttpResponseMessage with status code dependning on the outcome of this method</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.CandidateController.DeleteCandidate(System.Int32)">
+            <summary>
+            Delete existing candidate
+            </summary>
+            <param name="id">Id of the candidate to be deleted</param>
+            <returns>HttpResponseMessage with status code dependning on the outcome of this method</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.CandidateController.CandidateExists(System.Int32)">
+            <summary>
+            CandidateExists is used to check whether the candidate is present in data context
+            </summary>
+            <param name="id">Id of the candidate to check against</param>
+            <returns>True if candidate is present in data context, false otherwise</returns>
+        </member>
+        <member name="T:RAMS.Web.Controllers.WebAPI.CategoryController">
+            <summary>
+            CategoryController is an api controller that allows to access context resources by sending http requests and responces
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.CategoryController.#ctor(RAMS.Service.ICategoryService)">
+            <summary>
+            Controller that sets category service in order to access context resources
+            </summary>
+            <param name="categoryService">Parameter for setting category service</param>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.CategoryController.GetAllCategorys">
+            <summary>
+            Get the list of all categories
+            </summary>
+            <returns>The list of all categories</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.CategoryController.GetCategory(System.Int32)">
+            <summary>
+            Get a category by id
+            </summary>
+            <param name="id">Id of a category to be fetched</param>
+            <returns>A category with matching id</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.CategoryController.PostCategory(RAMS.Models.Category)">
+            <summary>
+            Create new category
+            </summary>
+            <param name="category">A category to be created</param>
+            <returns>The Uri of newly created category</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.CategoryController.PutCategory(RAMS.Models.Category)">
+            <summary>
+            Update existing category
+            </summary>
+            <param name="category">Category to be updated</param>
+            <returns>HttpResponseMessage with status code dependning on the outcome of this method</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.CategoryController.DeleteCategory(System.Int32)">
+            <summary>
+            Delete existing category
+            </summary>
+            <param name="id">Id of the category to be deleted</param>
+            <returns>HttpResponseMessage with status code dependning on the outcome of this method</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.CategoryController.CategoryExists(System.Int32)">
+            <summary>
+            CategoryExists is used to check whether the category is present in data context
+            </summary>
+            <param name="id">Id of the category to check against</param>
+            <returns>True if category is present in data context, false otherwise</returns>
+        </member>
+        <member name="T:RAMS.Web.Controllers.WebAPI.ClientController">
+            <summary>
+            ClientController is an api controller that allows to access context resources by sending http requests and responces
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.ClientController.#ctor(RAMS.Service.IClientService)">
+            <summary>
+            Controller that sets client service in order to access context resources
+            </summary>
+            <param name="clientService">Parameter for setting client service</param>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.ClientController.GetAllClients">
+            <summary>
+            Get the list of all clients
+            </summary>
+            <returns>The list of all clients</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.ClientController.GetClient(System.Int32)">
+            <summary>
+            Get a client by id
+            </summary>
+            <param name="id">Id of a client to be fetched</param>
+            <returns>A client with matching id</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.ClientController.GetOneClientByUsername(System.String)">
+            <summary>
+            Get a client by username
+            </summary>
+            <param name="userName">Username of a client to be fetched</param>
+            <returns>A client with matching username</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.ClientController.PostClient(RAMS.Models.Client)">
+            <summary>
+            Create new client
+            </summary>
+            <param name="client">A client to be created</param>
+            <returns>The Uri of newly created client</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.ClientController.PutClient(RAMS.Models.Client)">
+            <summary>
+            Update existing client
+            </summary>
+            <param name="client">Client to be updated</param>
+            <returns>HttpResponseMessage with status code dependning on the outcome of this method</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.ClientController.BlockUnblockClientByUserName(System.String,System.Boolean)">
+            <summary>
+            Block or unblock client by user name
+            </summary>
+            <param name="userName">User name of the client to be blocked or unblocked</param>
+            <param name="block">Boolean indicating whether client should be blocked or unblocked</param>
+            <returns>HttpResponseMessage with status code dependning on the outcome of this method</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.ClientController.DeleteClientById(System.Int32,System.Boolean)">
+            <summary>
+            Delete existing client by id (Logical and physical)
+            </summary>
+            <param name="id">Id of the client to be deleted</param>
+            <param name="physicalDelete">Boolean indicating whether delete is physical or logical</param>
+            <returns>HttpResponseMessage with status code dependning on the outcome of this method</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.ClientController.DeleteClientByUserName(System.String,System.Boolean)">
+            <summary>
+            Delete existing client by user name
+            </summary>
+            <param name="userName">User name of the client to be deleted</param>
+            <param name="physicalDelete">Boolian indicating whether delete is physical or logical</param>
+            <returns>HttpResponseMessage with status code dependning on the outcome of this method</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.ClientController.ClientExists(System.Int32)">
+            <summary>
+            ClientExists is used to check whether the client is present in data context
+            </summary>
+            <param name="id">Id of the client to check against</param>
+            <returns>True if client is present in data context, false otherwise</returns>
+        </member>
+        <member name="T:RAMS.Web.Controllers.WebAPI.DepartmentController">
+            <summary>
+            DepartmentController is an api controller that allows to access context resources by sending http requests and responces
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.DepartmentController.#ctor(RAMS.Service.IDepartmentService)">
+            <summary>
+            Controller that sets department service in order to access context resources
+            </summary>
+            <param name="departmentService">Parameter for setting department service</param>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.DepartmentController.GetAllDepartments">
+            <summary>
+            Get the list of all departments
+            </summary>
+            <returns>The list of all departments</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.DepartmentController.GetDepartment(System.Int32)">
+            <summary>
+            Get a department by id
+            </summary>
+            <param name="id">Id of a department to be fetched</param>
+            <returns>A department with matching id</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.DepartmentController.PostDepartment(RAMS.Models.Department)">
+            <summary>
+            Create new department
+            </summary>
+            <param name="department">Department to be created</param>
+            <returns>The Uri of newly created department</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.DepartmentController.PutDepartment(RAMS.Models.Department)">
+            <summary>
+            Update existing department
+            </summary>
+            <param name="department">Department to be updated</param>
+            <returns>HttpResponseMessage with status code dependning on the outcome of this method</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.DepartmentController.DeleteDepartment(System.Int32)">
+            <summary>
+            Delete existing department
+            </summary>
+            <param name="id">Id of the department to be deleted</param>
+            <returns>HttpResponseMessage with status code dependning on the outcome of this method</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.DepartmentController.DepartmentExists(System.Int32)">
+            <summary>
+            DepartmentExists is used to check whether the department is present in data context
+            </summary>
+            <param name="id">Id of the department to check against</param>
+            <returns>True if department is present in data context, false otherwise</returns>
+        </member>
+        <member name="T:RAMS.Web.Controllers.WebAPI.InterviewController">
+            <summary>
+            InterviewController is an api controller that allows to access context resources by sending http requests and responces
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.InterviewController.#ctor(RAMS.Service.IInterviewService)">
+            <summary>
+            Controller that sets interview service in order to access context resources
+            </summary>
+            <param name="interviewService">Parameter for setting interview service</param>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.InterviewController.GetAllInterviews">
+            <summary>
+            Get the list of all interviews
+            </summary>
+            <returns>The list of all interviews</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.InterviewController.GetInterview(System.Int32)">
+            <summary>
+            Get an interview by id
+            </summary>
+            <param name="id">Id of an interview to be fetched</param>
+            <returns>An interview with matching id</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.InterviewController.PostInterview(RAMS.Models.Interview)">
+            <summary>
+            Create new interview
+            </summary>
+            <param name="interview">An interview to be created</param>
+            <returns>The Uri of newly created interview</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.InterviewController.PutInterview(RAMS.Models.Interview)">
+            <summary>
+            Update existing interview
+            </summary>
+            <param name="interview">Interview to be updated</param>
+            <returns>HttpResponseMessage with status code dependning on the outcome of this method</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.InterviewController.DeleteInterview(System.Int32)">
+            <summary>
+            Delete existing interview
+            </summary>
+            <param name="id">Id of the interview to be deleted</param>
+            <returns>HttpResponseMessage with status code dependning on the outcome of this method</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.InterviewController.InterviewExists(System.Int32)">
+            <summary>
+            InterviewExists is used to check whether the interview is present in data context
+            </summary>
+            <param name="id">Id of the interview to check against</param>
+            <returns>True if interview is present in data context, false otherwise</returns>
+        </member>
+        <member name="T:RAMS.Web.Controllers.WebAPI.NotificationController">
+            <summary>
+            NotificationController is an api controller that allows to access context resources by sending http requests and responces
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.NotificationController.#ctor(RAMS.Service.INotificationService)">
+            <summary>
+            Controller that sets notification service in order to access context resources
+            </summary>
+            <param name="notificationService">Parameter for setting notification service</param>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.NotificationController.GetAllNotifications">
+            <summary>
+            Get the list of all notifications
+            </summary>
+            <returns>The list of all notifications</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.NotificationController.GetNotification(System.Int32)">
+            <summary>
+            Get a notification by id
+            </summary>
+            <param name="id">Id of a notification to be fetched</param>
+            <returns>A notification with matching id</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.NotificationController.PostNotification(RAMS.Models.Notification)">
+            <summary>
+            Create new notification
+            </summary>
+            <param name="notification">Notification to be created</param>
+            <returns>The Uri of newly created notification</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.NotificationController.PutNotification(RAMS.Models.Notification)">
+            <summary>
+            Update existing notification
+            </summary>
+            <param name="notification">Notification to be updated</param>
+            <returns>HttpResponseMessage with status code dependning on the outcome of this method</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.NotificationController.DeleteNotification(System.Int32)">
+            <summary>
+            Delete existing notification
+            </summary>
+            <param name="id">Id of the notification to be deleted</param>
+            <returns>HttpResponseMessage with status code dependning on the outcome of this method</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.NotificationController.NotificationExists(System.Int32)">
+            <summary>
+            NotificationExists is used to check whether the notification is present in data context
+            </summary>
+            <param name="id">Id of the notification to check against</param>
+            <returns>True if notification is present in data context, false otherwise</returns>
+        </member>
+        <member name="T:RAMS.Web.Controllers.WebAPI.PositionController">
+            <summary>
+            PositionController is an api controller that allows to access context resources by sending http requests and responces
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.PositionController.#ctor(RAMS.Service.IPositionService)">
+            <summary>
+            Controller that sets position service in order to access context resources
+            </summary>
+            <param name="positionService">Parameter for setting position service</param>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.PositionController.GetAllPositions">
+            <summary>
+            Get the list of all positions
+            </summary>
+            <returns>The list of all positions</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.PositionController.GetPosition(System.Int32)">
+            <summary>
+            Get a position by id
+            </summary>
+            <param name="id">Id of a position to be fetched</param>
+            <returns>A position with matching id</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.PositionController.PostPosition(RAMS.Models.Position)">
+            <summary>
+            Create new position
+            </summary>
+            <param name="position">Position to be created</param>
+            <returns>The Uri of newly created position</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.PositionController.PutPosition(RAMS.Models.Position)">
+            <summary>
+            Update existing position
+            </summary>
+            <param name="position">Position to be updated</param>
+            <returns>HttpResponseMessage with status code dependning on the outcome of this method</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.PositionController.DeletePosition(System.Int32)">
+            <summary>
+            Delete existing position
+            </summary>
+            <param name="id">Id of the position to be deleted</param>
+            <returns>HttpResponseMessage with status code dependning on the outcome of this method</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.PositionController.PositionExists(System.Int32)">
+            <summary>
+            PositionExists is used to check whether the position is present in data context
+            </summary>
+            <param name="id">Id of the position to check against</param>
+            <returns>True if position is present in data context, false otherwise</returns>
+        </member>
+        <member name="T:RAMS.Web.MvcApplication">
+            <summary>
+            MvcApplication class implements global application configuration
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.MvcApplication.Application_Start">
+            <summary>
+            Application_Start method is executed when application starts and it is used to configure all the components of the application
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,14 @@
+﻿Dear %name%,
+
+Your account has been successfully created.
+
+You may now access the application using following credentials:
+
+Username: %username%
+Password: %password%
+
+Please consider changing your password as soon as you access the application.
+
+Thank you!
+
+RAMS Administration

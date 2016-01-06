@@ -1,0 +1,28 @@
+﻿body {
+    min-width: 600px;
+}
+
+.vertical-padding-24
+{
+    padding-top:24px;
+}
+
+.bottom-margin-0
+{
+    margin-bottom: 0px;
+}
+
+.background-white
+{
+    background-color: white;
+}
+
+.vertical-align-top
+{
+    vertical-align: top;
+}
+
+select option:disabled 
+{
+    display: none;
+}

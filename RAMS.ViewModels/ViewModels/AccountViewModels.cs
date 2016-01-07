@@ -541,4 +541,71 @@ namespace RAMS.ViewModels
             this.PhysicalDelete = physicalDelete;
         }
     }
+
+    public class EditUserProfileViewModel
+    {
+        // TODO - Add GetAsync for EditAgent, EditClient, and EditAdmin for keeping the image.
+
+        // TODO - Code from Automapper profiles and AccountController
+
+        [Required]
+        [Display(Name = "User Id")]
+        public string UserId { get; set; }
+
+        [Required]
+        [Display(Name = "User Name")]
+        public string UserName { get; set; }
+
+        [Required]
+        [Display(Name = "User Type")]
+        public UserType UserType { get; set; }
+
+        [Required]
+        [Display(Name = "Role")]
+        public Role Role { get; set; }
+
+        [Required]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        [Required]
+        [Display(Name = "Job Title")]
+        public string JobTitle { get; set; }
+
+        [Required]
+        [Display(Name = "Company Name")]
+        public string Company { get; set; }
+
+        public byte[] Timestamp { get; set; }
+    }
+
+    public class ChangePasswordViewModel
+    {
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Current Password")]
+        public string CurrentPassword { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "New Password")]
+        public string Password { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm Password")]
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        public string ConfirmPassword { get; set; }
+    }
 }

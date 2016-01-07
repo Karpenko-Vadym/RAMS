@@ -28,6 +28,10 @@ namespace RAMS.Web.Configuration
             Mapper.CreateMap<EditAgentViewModel, Agent>().ForMember(a => a.Role, map => map.MapFrom(vm => (Role)Enum.Parse(typeof(Role), vm.SelectedRole))).ForMember(a => a.AgentStatus, map => map.MapFrom(vm => (AgentStatus)Enum.Parse(typeof(AgentStatus), vm.SelectedAgentStatus)));
             Mapper.CreateMap<EditClientViewModel, Client>().ForMember(a => a.Role, map => map.MapFrom(vm => Role.Employee));
             Mapper.CreateMap<EditAdminViewModel, Admin>().ForMember(a => a.Role, map => map.MapFrom(vm => (Role)Enum.Parse(typeof(Role), vm.SelectedRole)));
+
+            Mapper.CreateMap<EditUserProfileViewModel, Agent>();
+            Mapper.CreateMap<EditUserProfileViewModel, Client>();
+            Mapper.CreateMap<EditUserProfileViewModel, Admin>();
         }
     }
 }

@@ -35,6 +35,10 @@ namespace RAMS.Web.Configuration
             Mapper.CreateMap<Agent, ConfirmationViewModel>();
             Mapper.CreateMap<Client, ConfirmationViewModel>();
             Mapper.CreateMap<Admin, ConfirmationViewModel>();
+
+            Mapper.CreateMap<Agent, EditUserProfileViewModel>().ForMember(a => a.UserId, map => map.MapFrom(vm => vm.AgentId));
+            Mapper.CreateMap<Client, EditUserProfileViewModel>().ForMember(c => c.UserId, map => map.MapFrom(vm => vm.ClientId));
+            Mapper.CreateMap<Admin, EditUserProfileViewModel>().ForMember(a => a.UserId, map => map.MapFrom(vm => vm.AdminId));
         }
     }
 }

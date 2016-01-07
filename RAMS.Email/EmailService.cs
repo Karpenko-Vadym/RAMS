@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RAMS.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -21,21 +22,28 @@ namespace RAMS.Email
         /// <param name="body">An email body (Main content)</param>
         public static void SendEmail(string address, string subject, string body)
         {
-            SqlConnection sqlConnection = new SqlConnection(Global.connectionString);
+            try
+            {
+                using (SqlConnection sqlConnection = new SqlConnection(Global.connectionString))
+                {
+                    SqlCommand sqlCommand = new SqlCommand("SendEmail", sqlConnection);
 
-            SqlCommand sqlCommand = new SqlCommand("SendEmail", sqlConnection);
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
 
-            sqlCommand.CommandType = CommandType.StoredProcedure;
+                    sqlCommand.Parameters.AddWithValue("@Address", address);
+                    sqlCommand.Parameters.AddWithValue("@Subject", subject);
+                    sqlCommand.Parameters.AddWithValue("@Body", body);
 
-            sqlCommand.Parameters.AddWithValue("@Address", address);
-            sqlCommand.Parameters.AddWithValue("@Subject", subject);
-            sqlCommand.Parameters.AddWithValue("@Body", body);
+                    sqlConnection.Open();
 
-            sqlConnection.Open();
-
-            sqlCommand.ExecuteNonQuery();
-
-            sqlConnection.Close();
+                    sqlCommand.ExecuteNonQuery();
+                }
+            }
+            catch (SqlException ex)
+            {
+                // Log exception
+                ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+            }
         }
     }
 }

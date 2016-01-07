@@ -556,6 +556,204 @@
             </summary>
             <returns>Already configured instance of an HttpClient</returns>
         </member>
+        <member name="T:RAMS.Web.Areas.SystemAdmin.Controllers.HomeController">
+            <summary>
+            HomeController controller will be (By default) accessed as soon as user navigates to SystemAdmin area by it's root URL
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.HomeController.Index">
+            <summary>
+            Index action method will be called as soon as user navigates to SystemAdmin area by it's root URL
+            User will be redirected to Index method of User controller
+            </summary>
+            <returns>Redirects to Index method of User controller</returns>
+        </member>
+        <member name="T:RAMS.Web.Areas.SystemAdmin.Controllers.UserController">
+            <summary>
+            UserController controller implements CRUD operations for application users and employees
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.#ctor">
+            <summary>
+            Default UserController constructor
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.#ctor(RAMS.Web.ApplicationUserManager,RAMS.Web.ApplicationSignInManager)">
+            <summary>
+            UserController constructor that sets GetUserManager and GetSignInManager
+            </summary>
+            <param name="userManager"></param>
+            <param name="signInManager"></param>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.Index">
+            <summary>
+            Default action method that returns main view of User controller
+            </summary>
+            <returns>Main view of User controller</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.UserList">
+            <summary>
+            UserList action method displays all the employees in _UserList partial view
+            </summary>
+            <returns>_UserList partial view with all the employees</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.NewUser">
+            <summary>
+            NewUser method returns _NewUser partial view
+            </summary>
+            <returns>_NewUser partial view</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.UserTypeSelect">
+            <summary>
+            UserTypeSelect method returns _UserTypeSelect partial view
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.UserTypeSelect(RAMS.ViewModels.UserTypeViewModel)">
+            <summary>
+            UserTypeSelect method displays different registration form depending on user selection from _UserTypeSelect partial view
+            </summary>
+            <param name="model">Model that contains information about user selection</param>
+            <returns>Different registration form depending on user selection from _UserTypeSelect partial view, or _Error partial view with error message if selection did not match to UserType enum values</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.RegisterAgent(RAMS.ViewModels.RegisterAgentViewModel)">
+            <summary>
+            RegisterAgent method creates new user and new employee 
+            </summary>
+            <param name="model">User and employee details required in order to create new user and employee</param>
+            <returns>_Success partial view with success message if user and employee were successfully created, _Error partial view with error message otherwise. If mode is not valid, returns _RegisterAgent partial view</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.RegisterClient(RAMS.ViewModels.RegisterClientViewModel)">
+            <summary>
+            RegisterClient method creates new user and new employee
+            </summary>
+            <param name="model">User and employee details required in order to create new user and employee</param>
+            <returns>_Success partial view with success message if user and employee were successfully created, _Error partial view with error message otherwise. If mode is not valid, returns _RegisterClient partial view</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.RegisterAdmin(RAMS.ViewModels.RegisterAdminViewModel)">
+            <summary>
+            RegisterAdmin method creates new user and new employee
+            </summary>
+            <param name="model">User and employee details required in order to create new user and employee</param>
+            <returns>_Success partial view with success message if user and employee were successfully created, _Error partial view with error message otherwise. If mode is not valid, returns _RegisterAdmin partial view</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.EditUser(System.String,System.String)">
+            <summary>
+            EditUser method displays different edit form depending on user selection from _UserList partial view
+            </summary>
+            <param name="userName">User name of selected user</param>
+            <param name="userType">User type of selected user</param>
+            <returns>Different edit form depending on user selection from _UserList partial view, or _Error partial view with error message if userType parameter value did not match to UserType enum values</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.EditAgent(RAMS.ViewModels.EditAgentViewModel)">
+            <summary>
+            EditAgent method updates user and employee profiles
+            </summary>
+            <param name="model">Updated user and employee details</param>
+            <returns>_Success partial view with success message if user and employee were successfully updated, _Error partial view with error message otherwise. If mode is not valid, returns _EditAgent partial view</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.EditClient(RAMS.ViewModels.EditClientViewModel)">
+            <summary>
+            EditClient method updates user and employee profiles
+            </summary>
+            <param name="model">Updated user and employee details</param>
+            <returns>_Success partial view with success message if user and employee were successfully updated, _Error partial view with error message otherwise. If mode is not valid, returns _EditClient partial view</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.EditAdmin(RAMS.ViewModels.EditAdminViewModel)">
+            <summary>
+            EditAdmin method updates user and employee profiles
+            </summary>
+            <param name="model">Updated user and employee details</param>
+            <returns>_Success partial view with success message if user and employee were successfully updated, _Error partial view with error message otherwise. If mode is not valid, returns _EditAdmin partial view</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.ResetPassword(System.String,System.String,System.String,System.String)">
+            <summary>
+            ResetPassword method populates the view model with properties received from _EditAgent, _EditClient, and _EditAdmin partial views and passes it to _ResetPassword partial view
+            </summary>
+            <param name="userName">Setter for UserName property</param>
+            <param name="userType">Setter for UserType property</param>
+            <param name="email">Setter for Email property</param>
+            <param name="firstName">Setter for FirstName property</param>
+            <returns>_ResetPassword partial view with populated view model</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.ResetPassword(RAMS.ViewModels.ResetPasswordViewModel)">
+            <summary>
+            ResetPassword method validates new password and displays an error message if password does not match password criteria, otherwise replaces old password with a new password
+            </summary>
+            <param name="model">User information required to reset password</param>
+            <returns>_Confirmation partial view with confirmation message of success or failure depending on the outcome of this method</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.BlockUser(System.String,System.String)">
+            <summary>
+            BlockUser method populates the view model with properties received from _EditAgent, _EditClient, and _EditAdmin partial views and passes it to _BlockUser partial view
+            </summary>
+            <param name="userName">Setter for UserName property</param>
+            <param name="userType">Setter for UserType property</param>
+            <returns>_BlockUser partial view with populated view model</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.BlockUser(RAMS.ViewModels.ConfirmationViewModel)">
+            <summary>
+            BlockUser method sets employee UserStatus property and user UserStatus claim to BLOCKED and returns _Confirmation partial view with the result (Success or failure) of this method
+            </summary>
+            <param name="model">User details required to block the user</param>
+            <returns>_Confirmation partial view with confirmation message of success or failure depending on the outcome of this method</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.UnblockUser(System.String,System.String)">
+            <summary>
+            UnblockUser method populates the view model with properties received from _EditAgent, _EditClient, and _EditAdmin partial views and passes it to _UnblockUser partial view
+            </summary>
+            <param name="userName">Setter for UserName property</param>
+            <param name="userType">Setter for UserType property</param>
+            <returns>_UnblockUser partial view with populated view model</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.UnblockUser(RAMS.ViewModels.ConfirmationViewModel)">
+            <summary>
+            UnblockUser method sets employee UserStatus property and user UserStatus claim to ACTIVE and returns _Confirmation partial view with the result (Success or failure) of this method
+            </summary>
+            <param name="model">User details required to unblock the user</param>
+            <returns>_Confirmation partial view with confirmation message of success or failure depending on the outcome of this method</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.DeleteUser(System.String,System.String)">
+            <summary>
+            DeleteUser method populates the view model with employee information retrieved from database and passes it to _UnblockUser partial view
+            </summary>
+            <param name="userName">Property required to retrieve the employee profile from database</param>
+            <param name="userType">Property required to retrieve the employee profile from database</param>
+            <returns>_DeleteUser partial view with populated view model</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.DeleteUser(RAMS.ViewModels.ConfirmationViewModel)">
+            <summary>
+            DeleteUser method either physically deletes the user profile and employee profile, or flags both the user profile (By setting UserStatus claim to DELETED) and the employee profile (By setting UserStatus property to DELETED) as DELETED
+            </summary>
+            <param name="model">User details required to delete the user</param>
+            <returns>_Confirmation partial view with confirmation message of success or failure depending on the outcome of this method</returns>
+        </member>
+        <member name="P:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.PasswordRegex">
+            <summary>
+            PasswordRegex getter 
+            </summary>
+        </member>
+        <member name="P:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.GetSignInManager">
+            <summary>
+            ApplicationSignInManager getter and setter
+            </summary>
+        </member>
+        <member name="P:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.GetUserManager">
+            <summary>
+            ApplicationUserManager getter and setter
+            </summary>
+        </member>
+        <member name="T:RAMS.Web.Areas.SystemAdmin.SystemAdminAreaRegistration">
+            <summary>
+            SystemAdminAreaRegistration class allows to register SystemAdmin area
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.SystemAdminAreaRegistration.RegisterArea(System.Web.Mvc.AreaRegistrationContext)">
+            <summary>
+            RegisterArea method allows to access MapRoute method of AreaRegistrationContext class and configure routing for SystemAdmin area
+            </summary>
+            <param name="context">Area registration context</param>
+        </member>
         <member name="T:RAMS.Web.Configuration.AutofacConfiguration">
             <summary>
             AutofacConfiguration class allows to setup Autofac configuration

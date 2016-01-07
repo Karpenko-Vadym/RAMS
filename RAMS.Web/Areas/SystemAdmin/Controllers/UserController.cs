@@ -121,7 +121,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
         }
         #endregion
 
-
         #region Registration
         /// <summary>
         /// NewUser method returns _NewUser partial view
@@ -1117,7 +1116,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
         #endregion
 
-
         #region Edit Users
         /// <summary>
         /// EditUser method displays different edit form depending on user selection from _UserList partial view
@@ -1353,7 +1351,16 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                             throw new ClaimsAssignmentException(message);
                         }
 
-                        var agent = Mapper.Map<EditAgentViewModel, Agent>(model);
+                        var agent = new Agent();
+
+                        response = await this.GetHttpClient().GetAsync(String.Format("Agent?userName={0}", model.CurrentUserName));
+
+                        if (response.IsSuccessStatusCode) // Ensure that data that is not being changed, remain in the database
+                        {
+                            agent = await response.Content.ReadAsAsync<Agent>();
+                        }
+
+                        agent = Mapper.Map<EditAgentViewModel, Agent>(model);
 
                         // If Role user claim successfully updated, attempt to update employee profile
                         response = await this.GetHttpClient().PutAsJsonAsync("Agent", agent);
@@ -1586,7 +1593,16 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                             throw new ClaimsAssignmentException(message);
                         }
 
-                        var client = Mapper.Map<EditClientViewModel, Client>(model);
+                        var client = new Client();
+
+                        response = await this.GetHttpClient().GetAsync(String.Format("Client?userName={0}", model.CurrentUserName));
+
+                        if (response.IsSuccessStatusCode) // Ensure that data that is not being changed, remain in the database
+                        {
+                            client = await response.Content.ReadAsAsync<Client>();
+                        }
+
+                        client = Mapper.Map<EditClientViewModel, Client>(model);
 
                         // If FullName user claim successfully updated, attempt to update employee profile
                         response = await this.GetHttpClient().PutAsJsonAsync("Client", client);
@@ -1848,7 +1864,16 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                             throw new ClaimsAssignmentException(message);
                         }
 
-                        var admin = Mapper.Map<EditAdminViewModel, Admin>(model);
+                        var admin = new Admin();
+
+                        response = await this.GetHttpClient().GetAsync(String.Format("Admin?userName={0}", model.CurrentUserName));
+
+                        if (response.IsSuccessStatusCode) // Ensure that data that is not being changed, remain in the database
+                        {
+                            admin = await response.Content.ReadAsAsync<Admin>(); 
+                        }
+
+                        admin = Mapper.Map<EditAdminViewModel, Admin>(model);
 
                         // If Role user claim successfully updated, attempt to update employee profile
                         response = await this.GetHttpClient().PutAsJsonAsync("Admin", admin);

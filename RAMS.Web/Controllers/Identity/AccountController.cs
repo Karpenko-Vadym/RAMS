@@ -10,12 +10,15 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using RAMS.ViewModels;
 using RAMS.Web.Identity;
+using System.Net.Http;
+using AutoMapper;
+using RAMS.Models;
 
 namespace RAMS.Web.Controllers
 {
     // TODO - Uncomment [Authorize]
     // [Authorize] 
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private ApplicationSignInManager _signInManager;
 
@@ -95,6 +98,74 @@ namespace RAMS.Web.Controllers
             AuthenticationManager.SignOut();
 
             return RedirectToAction("Index", "Home");
+        }
+
+        public async Task<PartialViewResult> EditUserProfile()
+        {
+            var identity = User.Identity as ClaimsIdentity;
+
+            var response = new HttpResponseMessage();
+
+            var editUserProfileViewModel = new EditUserProfileViewModel();
+
+            if (identity.HasClaim("UserType", "Agent"))
+            {
+                response = await this.GetHttpClient().GetAsync(String.Format("Agent?userName={0}", this.User.Identity.Name));
+
+                if (response.IsSuccessStatusCode)
+                {
+                    editUserProfileViewModel = Mapper.Map<Agent, EditUserProfileViewModel>(await response.Content.ReadAsAsync<Agent>());
+
+
+                    if (editUserProfileViewModel == null)
+                    {
+                        return PartialView("_EditUserProfile");
+                    }
+
+                }
+            }
+            else if (identity.HasClaim("UserType", "Client"))
+            {
+                response = await this.GetHttpClient().GetAsync(String.Format("Client?userName={0}", this.User.Identity.Name));
+
+                if (response.IsSuccessStatusCode)
+                {
+                    editUserProfileViewModel = Mapper.Map<Client, EditUserProfileViewModel>(await response.Content.ReadAsAsync<Client>());
+
+
+                    if (editUserProfileViewModel == null)
+                    {
+                        return PartialView("_EditUserProfile");
+                    }
+
+                }
+            }
+            else if (identity.HasClaim("UserType", "Admin"))
+            {
+                response = await this.GetHttpClient().GetAsync(String.Format("Admin?userName={0}", this.User.Identity.Name));
+
+                if (response.IsSuccessStatusCode)
+                {
+                    editUserProfileViewModel = Mapper.Map<Admin, EditUserProfileViewModel>(await response.Content.ReadAsAsync<Admin>());
+
+
+                    if (editUserProfileViewModel == null)
+                    {
+                        return PartialView("_EditUserProfile");
+                    }
+
+                }
+            }
+
+            return PartialView("_EditUserProfile", editUserProfileViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<PartialViewResult> EditUserProfile(EditUserProfileViewModel model)
+        {
+
+            return null;
         }
 
         protected override void Dispose(bool disposing)

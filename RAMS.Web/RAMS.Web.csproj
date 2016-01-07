@@ -349,6 +349,7 @@
     <Content Include="Areas\SystemAdmin\Views\User\_UserTypeSelect.cshtml" />
     <Content Include="Content\JS\jquery-2.1.4.min.map" />
     <Content Include="Views\Shared\_AccessControl.cshtml" />
+    <Content Include="Views\Identity\Account\_EditUserProfile.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

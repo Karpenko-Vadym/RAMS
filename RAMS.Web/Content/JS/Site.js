@@ -82,6 +82,11 @@ function GetBaseUrl()
     return urlComponents[0] + "//" + urlComponents[2];
 }
 
+/*************** GENERAL MODAL CONTROLS *************/
+function GeneralModalControls() {
+    $("#edit-profile-modal").on("show.bs.modal", function (e) { LoadAction("edit-user-profile-modal-body-div", "/RAMS/Account/EditUserProfile"); });
+}
+/*********** END OF GENERAL MODAL CONTROLS **********/
 
 /************ SYSTEM ADMIN MODAL CONTROLS ***********/
 function SystemAdminModalControls() {

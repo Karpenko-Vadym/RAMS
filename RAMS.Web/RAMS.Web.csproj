@@ -350,6 +350,8 @@
     <Content Include="Content\JS\jquery-2.1.4.min.map" />
     <Content Include="Views\Shared\_AccessControl.cshtml" />
     <Content Include="Views\Identity\Account\_EditUserProfile.cshtml" />
+    <Content Include="Views\Identity\Account\_Success.cshtml" />
+    <Content Include="Views\Identity\Account\_Error.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

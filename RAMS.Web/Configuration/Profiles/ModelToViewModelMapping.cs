@@ -36,9 +36,9 @@ namespace RAMS.Web.Configuration
             Mapper.CreateMap<Client, ConfirmationViewModel>();
             Mapper.CreateMap<Admin, ConfirmationViewModel>();
 
-            Mapper.CreateMap<Agent, EditUserProfileViewModel>().ForMember(a => a.UserId, map => map.MapFrom(vm => vm.AgentId));
-            Mapper.CreateMap<Client, EditUserProfileViewModel>().ForMember(c => c.UserId, map => map.MapFrom(vm => vm.ClientId));
-            Mapper.CreateMap<Admin, EditUserProfileViewModel>().ForMember(a => a.UserId, map => map.MapFrom(vm => vm.AdminId));
+            Mapper.CreateMap<Agent, EditUserProfileViewModel>().ForMember(a => a.UserId, map => map.MapFrom(vm => vm.AgentId)).ForMember(a => a.CurrentFullName, map => map.MapFrom(model => model.FirstName + " " + model.LastName)).ForMember(a => a.CurrentEmail, map=> map.MapFrom(model => model.Email)); 
+            Mapper.CreateMap<Client, EditUserProfileViewModel>().ForMember(c => c.UserId, map => map.MapFrom(vm => vm.ClientId)).ForMember(c => c.CurrentFullName, map => map.MapFrom(model => model.FirstName + " " + model.LastName)).ForMember(c => c.CurrentEmail, map => map.MapFrom(model => model.Email));
+            Mapper.CreateMap<Admin, EditUserProfileViewModel>().ForMember(a => a.UserId, map => map.MapFrom(vm => vm.AdminId)).ForMember(a => a.CurrentFullName, map => map.MapFrom(model => model.FirstName + " " + model.LastName)).ForMember(a => a.CurrentEmail, map => map.MapFrom(model => model.Email));
         }
     }
 }

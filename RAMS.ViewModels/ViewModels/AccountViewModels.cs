@@ -573,9 +573,17 @@ namespace RAMS.ViewModels
         public string LastName { get; set; }
 
         [Required]
+        [Display(Name = "Current Full Name")]
+        public string CurrentFullName { get; set; } // CurrentFullName is used for tracking full name before it has been updated
+
+        [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
+
+        [Required]
+        [Display(Name = "Current Email")]
+        public string CurrentEmail { get; set; } // CurrentEmail is used for tracking email before it has been updated
 
         [Required]
         [Display(Name = "Job Title")]

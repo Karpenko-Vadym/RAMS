@@ -3,7 +3,7 @@
 @{
     AjaxOptions ajaxOptions = new AjaxOptions
     {
-        UpdateTargetId = "edit-user-profile-message-modal-body-div",
+        UpdateTargetId = "edit-user-profile-modal-body-div",
         OnBegin = "OnAjaxBegin",
         OnSuccess = "OnAjaxSuccess",
         OnFailure = "OnAjaxFailure",
@@ -30,6 +30,8 @@
 
             @Html.HiddenFor(model => model.UserId)
             @Html.HiddenFor(model => model.UserName)
+            @Html.HiddenFor(model => model.CurrentFullName)
+            @Html.HiddenFor(model => model.CurrentEmail)
             @Html.HiddenFor(model => model.JobTitle)
             @Html.HiddenFor(model => model.Company)
             @Html.HiddenFor(model => model.Role)

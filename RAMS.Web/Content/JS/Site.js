@@ -111,6 +111,7 @@ function GeneralModalControls() {
 
 /************ SYSTEM ADMIN MODAL CONTROLS ***********/
 function SystemAdminModalControls() {
+    //Users
     $("#new-user-modal").on("show.bs.modal", function (e) { LoadAction("new-user-modal-body-div", "/RAMS/SystemAdmin/User/NewUser"); });
 
     $("#new-user-modal").on("hidden.bs.modal", function (e) { $("#new-user-modal-body-div").empty(); });
@@ -118,8 +119,6 @@ function SystemAdminModalControls() {
     $("#edit-user-modal").on("show.bs.modal", function (e) { $("#edit-user-modal-title").text("Edit User - " + $(e.relatedTarget).data("user-name")); LoadAction("edit-user-modal-body-div", "/RAMS/SystemAdmin/User/EditUser?userName=" + $(e.relatedTarget).data("user-name") + "&userType=" + $(e.relatedTarget).data("user-type")); $("#edit-user-message-modal-body-div").empty(); });
 
     $("#edit-user-modal").on("hidden.bs.modal", function (e) { $("#edit-user-modal-title").text("Edit User"); $("#edit-user-modal-body-div").empty(); });
-
-
 
     $("#reset-password-modal").on("show.bs.modal", function (e) { LoadAction("password-reset-div", "/RAMS/SystemAdmin/User/ResetPassword?userName=" + $(e.relatedTarget).data("user-name") + "&userType=" + $(e.relatedTarget).data("user-type") + "&email=" + $(e.relatedTarget).data("email") + "&firstName=" + $(e.relatedTarget).data("firstName")); });
 
@@ -146,6 +145,15 @@ function SystemAdminModalControls() {
     });
 
     $("#block-delete-user-modal").on("hidden.bs.modal", function (e) { $("#block-delete-user-div").empty(); });
+
+    //Departments
+    $("#new-department-modal").on("show.bs.modal", function (e) { LoadAction("new-department-modal-body-div", "/RAMS/SystemAdmin/Department/NewDepartment"); });
+
+    $("#new-department-modal").on("hidden.bs.modal", function (e) { $("#new-department-modal-body-div").empty(); });
+
+    $("#edit-department-modal").on("show.bs.modal", function (e) { $("#edit-department-modal-title").text("Edit Department - " + $(e.relatedTarget).data("department-name")); LoadAction("edit-department-modal-body-div", "/RAMS/SystemAdmin/Department/EditDepartment?id=" + $(e.relatedTarget).data("department-id")); });
+
+    $("#edit-department-modal").on("hidden.bs.modal", function (e) { $("#edit-department-modal-title").text("Edit Department"); $("#edit-department-modal-body-div").empty(); });
 }
 /******** END OF SYSTEM ADMIN MODAL CONTROLS ********/
 

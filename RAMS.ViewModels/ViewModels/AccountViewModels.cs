@@ -23,7 +23,7 @@ namespace RAMS.Web.Identity
 namespace RAMS.ViewModels 
 {
     /// <summary>
-    /// EmployeeViewModel view model is a base view model for RegisterAgentViewModel, RegisterClientViewModel, RegisterAdminViewModel and declares common properties of those view models
+    /// EmployeeViewModel view model is a base view model for AgentAddViewModel, ClientAddViewModel, AdminAddViewModel and declares common properties of those view models
     /// </summary>
     public class EmployeeViewModel
     {
@@ -83,9 +83,9 @@ namespace RAMS.ViewModels
     }
 
     /// <summary>
-    /// RegisterAgentViewModel view model declares properties for _RegisterAgent partial view
+    /// AgentAddViewModel view model declares properties for _RegisterAgent partial view
     /// </summary>
-    public class RegisterAgentViewModel : EmployeeViewModel
+    public class AgentAddViewModel : EmployeeViewModel
     {
         [Required]
         [Display(Name = "Department")]
@@ -106,9 +106,9 @@ namespace RAMS.ViewModels
         public string SelectedRole { get; set; } // Selected Role
 
         /// <summary>
-        /// RegisterAgentViewModel constructor sets UserType to Agent, and UserStatus to Active
+        /// AgentAddViewModel constructor sets UserType to Agent, and UserStatus to Active
         /// </summary>
-        public RegisterAgentViewModel()
+        public AgentAddViewModel()
         {
             this.UserType = Enums.UserType.Agent;
             this.UserStatus = Enums.UserStatus.Active;
@@ -116,14 +116,14 @@ namespace RAMS.ViewModels
     }
 
     /// <summary>
-    /// RegisterClientViewModel view model declares properties for _RegisterClient partial view
+    /// ClientAddViewModel view model declares properties for _RegisterClient partial view
     /// </summary>
-    public class RegisterClientViewModel : EmployeeViewModel 
+    public class ClientAddViewModel : EmployeeViewModel 
     {
         /// <summary>
-        /// RegisterClientViewModel constructor sets UserType to Client, UserStatus to Active, and Role to Employee
+        /// ClientAddViewModel constructor sets UserType to Client, UserStatus to Active, and Role to Employee
         /// </summary>
-        public RegisterClientViewModel()
+        public ClientAddViewModel()
         {
             this.UserType = Enums.UserType.Client;
             this.UserStatus = Enums.UserStatus.Active;
@@ -132,18 +132,18 @@ namespace RAMS.ViewModels
     }
 
     /// <summary>
-    /// RegisterAdminViewModel view model declares properties for _RegisterAdmin partial view
+    /// AdminAddViewModel view model declares properties for _RegisterAdmin partial view
     /// </summary>
-    public class RegisterAdminViewModel : EmployeeViewModel 
+    public class AdminAddViewModel : EmployeeViewModel 
     {
         [Required]
         [Display(Name = "Role")]
         public string SelectedRole { get; set; } // Selected Role
 
         /// <summary>
-        /// RegisterAdminViewModel constructor sets UserType to Admin, and UserStatus to Active
+        /// AdminAddViewModel constructor sets UserType to Admin, and UserStatus to Active
         /// </summary>
-        public RegisterAdminViewModel()
+        public AdminAddViewModel()
         {
             this.UserType = Enums.UserType.Admin;
             this.UserStatus = Enums.UserStatus.Active;
@@ -195,9 +195,9 @@ namespace RAMS.ViewModels
     }
 
     /// <summary>
-    /// EditEmployeeViewModel view model is a base view model for EditAgentViewModel, EditClientViewModel, EditAdminViewModel and declares common properties of those view models
+    /// EmployeeEditViewModel view model is a base view model for AgentEditViewModel, ClientEditViewModel, AdminEditViewModel and declares common properties of those view models
     /// </summary>
-    public class EditEmployeeViewModel
+    public class EmployeeEditViewModel
     {
         [Display(Name = "User Id")]
         public string UserId { get; set; }
@@ -264,9 +264,9 @@ namespace RAMS.ViewModels
     }
 
     /// <summary>
-    /// EditAgentViewModel view model declares properties for _EditAgent partial view
+    /// AgentEditViewModel view model declares properties for _EditAgent partial view
     /// </summary>
-    public class EditAgentViewModel : EditEmployeeViewModel
+    public class AgentEditViewModel : EmployeeEditViewModel
     {
         public int AgentId { get; set; }
 
@@ -290,17 +290,17 @@ namespace RAMS.ViewModels
     }
 
     /// <summary>
-    /// EditClientViewModel view model declares properties for _EditClient partial view
+    /// ClientEditViewModel view model declares properties for _EditClient partial view
     /// </summary>
-    public class EditClientViewModel : EditEmployeeViewModel
+    public class ClientEditViewModel : EmployeeEditViewModel
     {
         public int ClientId { get; set; }
     }
 
     /// <summary>
-    /// EditAdminViewModel view model declares properties for _EditAdmin partial view
+    /// AdminEditViewModel view model declares properties for _EditAdmin partial view
     /// </summary>
-    public class EditAdminViewModel : EditEmployeeViewModel
+    public class AdminEditViewModel : EmployeeEditViewModel
     {
         public int AdminId { get; set; }
 
@@ -367,9 +367,9 @@ namespace RAMS.ViewModels
     }
 
     /// <summary>
-    /// ConfirmationViewModel view model declares properties for _Confirmation, _Success, and _Error partial views
+    /// UserConfirmationViewModel view model declares properties for _Confirmation, _Success, and _Error partial views
     /// </summary>
-    public class ConfirmationViewModel
+    public class UserConfirmationViewModel
     {
         [Display(Name = "User Name")]
         public string UserName { get; set; }
@@ -386,8 +386,8 @@ namespace RAMS.ViewModels
         [Display(Name = "Refresh Edit Form?")]
         public bool RefreshEditForm { get; set; }
 
-        [Display(Name = "Refresh User List?")]
-        public bool RefreshUserList { get; set; }
+        [Display(Name = "Refresh List?")]
+        public bool RefreshList { get; set; }
 
         [Display(Name = "Clear Messages?")]
         public bool ClearMessages { get; set; }
@@ -396,15 +396,15 @@ namespace RAMS.ViewModels
         public bool PhysicalDelete { get; set; }
 
         /// <summary>
-        /// Default ConfirmationViewModel constructor sets all the properties default values
+        /// Default UserConfirmationViewModel constructor sets all the properties default values
         /// </summary>
-        public ConfirmationViewModel()
+        public UserConfirmationViewModel()
         {
             this.Message = "";
 
             this.RefreshEditForm = false;
 
-            this.RefreshUserList = false;
+            this.RefreshList = false;
 
             this.ClearMessages = false;
 
@@ -412,16 +412,16 @@ namespace RAMS.ViewModels
         }
 
         /// <summary>
-        /// ConfirmationViewModel constructor which sets the Message property
+        /// UserConfirmationViewModel constructor which sets the Message property
         /// </summary>
         /// <param name="message">Setter for message property</param>
-        public ConfirmationViewModel(string message)
+        public UserConfirmationViewModel(string message)
         {
             this.Message = message;
 
             this.RefreshEditForm = false;
 
-            this.RefreshUserList = false;
+            this.RefreshList = false;
 
             this.ClearMessages = false;
 
@@ -429,11 +429,11 @@ namespace RAMS.ViewModels
         }
 
         /// <summary>
-        /// ConfirmationViewModel constructor which sets UserName and UserType properties
+        /// UserConfirmationViewModel constructor which sets UserName and UserType properties
         /// </summary>
         /// <param name="userName">Setter for user name property</param>
         /// <param name="userType">Setter for user type property</param>
-        public ConfirmationViewModel(string userName, string userType)
+        public UserConfirmationViewModel(string userName, string userType)
         {
             this.Message = "";
 
@@ -443,7 +443,7 @@ namespace RAMS.ViewModels
 
             this.RefreshEditForm = false;
 
-            this.RefreshUserList = false;
+            this.RefreshList = false;
 
             this.ClearMessages = false;
 
@@ -451,12 +451,12 @@ namespace RAMS.ViewModels
         }
 
         /// <summary>
-        /// ConfirmationViewModel constructors which sets Message, UserName, and UserType properties
+        /// UserConfirmationViewModel constructors which sets Message, UserName, and UserType properties
         /// </summary>
         /// <param name="message">Setter for Message property</param>
         /// <param name="userName">Setter for UserName property</param>
         /// <param name="userType">Setter for UserType property</param>
-        public ConfirmationViewModel(string message, string userName, string userType)
+        public UserConfirmationViewModel(string message, string userName, string userType)
         {
             this.Message = message;
 
@@ -466,7 +466,7 @@ namespace RAMS.ViewModels
 
             this.RefreshEditForm = false;
 
-            this.RefreshUserList = false;
+            this.RefreshList = false;
 
             this.ClearMessages = false;
 
@@ -474,36 +474,36 @@ namespace RAMS.ViewModels
         }
 
         /// <summary>
-        /// ConfirmationViewModel constructor which sets Message, RefreshEditForm, and RefreshUserList properties
+        /// UserConfirmationViewModel constructor which sets Message, RefreshEditForm, and RefreshList properties
         /// </summary>
         /// <param name="message">Setter for Message property</param>
         /// <param name="refreshEditForm">Setter for RefreshEditForm property</param>
-        /// <param name="refreshUserList">Setter for RefreshUserList property</param>
-        public ConfirmationViewModel(string message, bool refreshEditForm, bool refreshUserList)
+        /// <param name="refreshList">Setter for RefreshList property</param>
+        public UserConfirmationViewModel(string message, bool refreshEditForm, bool refreshList)
         {
             this.Message = message;
 
             this.RefreshEditForm = refreshEditForm;
 
-            this.RefreshUserList = refreshUserList;
+            this.RefreshList = refreshList;
 
             this.PhysicalDelete = false;
         }
 
         /// <summary>
-        /// ConfirmationViewModel constructor which sets Message, RefreshEditForm, RefreshUserList, and ClearMessages properties
+        /// UserConfirmationViewModel constructor which sets Message, RefreshEditForm, RefreshList, and ClearMessages properties
         /// </summary>
         /// <param name="message">Setter for Message property</param>
         /// <param name="refreshEditForm">Setter for RefreshEditForm property</param>
-        /// <param name="refreshUserList">Setter for RefreshUserList property</param>
+        /// <param name="refreshList">Setter for RefreshList property</param>
         /// <param name="clearMessages">Setter for ClearMessages property</param>
-        public ConfirmationViewModel(string message, bool refreshEditForm, bool refreshUserList, bool clearMessages)
+        public UserConfirmationViewModel(string message, bool refreshEditForm, bool refreshList, bool clearMessages)
         {
             this.Message = message;
 
             this.RefreshEditForm = refreshEditForm;
 
-            this.RefreshUserList = refreshUserList;
+            this.RefreshList = refreshList;
 
             this.ClearMessages = clearMessages;
 
@@ -511,13 +511,13 @@ namespace RAMS.ViewModels
         }
 
         /// <summary>
-        /// ConfirmationViewModel constructor which sets UserName, UserType, RefreshEditForm, and RefreshUserList properties
+        /// UserConfirmationViewModel constructor which sets UserName, UserType, RefreshEditForm, and RefreshList properties
         /// </summary>
         /// <param name="userName">Setter for UserName property</param>
         /// <param name="userType">Setter for UserType property</param>
         /// <param name="refreshEditForm">Setter for RefreshEditForm property</param>
-        /// <param name="refreshUserList">Setter for RefreshUserList property</param>
-        public ConfirmationViewModel(string userName, string userType, bool refreshEditForm, bool refreshUserList)
+        /// <param name="refreshList">Setter for RefreshList property</param>
+        public UserConfirmationViewModel(string userName, string userType, bool refreshEditForm, bool refreshList)
         {
             this.Message = "";
 
@@ -527,7 +527,7 @@ namespace RAMS.ViewModels
 
             this.RefreshEditForm = refreshEditForm;
 
-            this.RefreshUserList = refreshUserList;
+            this.RefreshList = refreshList;
 
             this.ClearMessages = false;
 
@@ -535,15 +535,15 @@ namespace RAMS.ViewModels
         }
 
         /// <summary>
-        /// ConfirmationViewModel constructor which sets Message, UserName, UserType, RefreshEditForm, RefreshUserList, and PhysicalDelete properties
+        /// UserConfirmationViewModel constructor which sets Message, UserName, UserType, RefreshEditForm, RefreshList, and PhysicalDelete properties
         /// </summary>
-        /// <param name="message"></param>
-        /// <param name="userName"></param>
-        /// <param name="userType"></param>
-        /// <param name="refreshEditForm"></param>
-        /// <param name="refreshUserList"></param>
-        /// <param name="physicalDelete"></param>
-        public ConfirmationViewModel(string message, string userName, string userType, bool refreshEditForm, bool refreshUserList, bool physicalDelete)
+        /// <param name="message">Setter for Message</param>
+        /// <param name="userName">Setter for UserName</param>
+        /// <param name="userType">Setter for UserType</param>
+        /// <param name="refreshEditForm">Setter for RefreshEditForm</param>
+        /// <param name="refreshList">Setter for RefreshList</param>
+        /// <param name="physicalDelete">Setter for PhysicalDelete</param>
+        public UserConfirmationViewModel(string message, string userName, string userType, bool refreshEditForm, bool refreshList, bool physicalDelete)
         {
             this.Message = message;
 
@@ -553,7 +553,7 @@ namespace RAMS.ViewModels
 
             this.RefreshEditForm = refreshEditForm;
 
-            this.RefreshUserList = refreshUserList;
+            this.RefreshList = refreshList;
 
             this.ClearMessages = false;
 
@@ -562,9 +562,9 @@ namespace RAMS.ViewModels
     }
 
     /// <summary>
-    /// EditUserProfileViewModel view model declares properties for _EditUserProfile partial view
+    /// UserEditProfileViewModel view model declares properties for _EditUserProfile partial view
     /// </summary>
-    public class EditUserProfileViewModel
+    public class UserEditProfileViewModel
     {
         [Required]
         [Display(Name = "User Id")]

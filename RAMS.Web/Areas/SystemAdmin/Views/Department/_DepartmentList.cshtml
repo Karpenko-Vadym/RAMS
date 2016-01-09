@@ -1,0 +1,60 @@
+﻿@model List<RAMS.ViewModels.DepartmentListViewModel>
+<!-- DEPARTMENT LIST PARTIAL -->
+@if (!RAMS.Helpers.Utilities.IsEmpty(Model))
+{
+    <div class="well well-lg bottom-margin-0 background-white">
+        <table id="department-list-table" class="table table-striped table-bordered table-hover bottom-margin-0" cellspacing="0">
+            <thead>
+                <tr class="active">
+                    <th>Department Id</th>
+                    <th>Department Name</th>
+                    <th>Number of Employees</th>
+                    <th>Manager(s)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr data-toggle="modal" data-target="#edit-department-modal" data-department-id="@item.DepartmentId" data-department-name="@item.Name">
+                        <td>@item.DepartmentId</td>
+                        <td>@item.Name</td>
+                        <td>@item.NumOfAgents</td>
+                        <td>
+                            @{
+                                var hasManager = false;
+                                    
+                                foreach(var agent in item.Agents)
+                                {
+                                    if(agent.Role == RAMS.Enums.Role.Manager)
+                                    {
+                                        hasManager = true;
+                                        
+                                        var managerName = agent.FirstName + " " + agent.LastName + "; ";
+                                        
+                                        @managerName
+                                    }
+                                }
+                                
+                                if(!hasManager)
+                                {
+                                    <span>None</span>
+                                }
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <script type="text/javascript">$(function () { LoadDataTable("department-list-table") });</script>
+}
+else
+{
+    <div class="well well-lg bottom-margin-0 background-white">
+        <div class="alert alert-danger bottom-margin-0" role="alert">
+            <span>Oh no! <br /> There is no data available.</span>
+        </div>
+    </div>
+}
+<!-- END OF DEPARTMENT LIST PARTIAL -->

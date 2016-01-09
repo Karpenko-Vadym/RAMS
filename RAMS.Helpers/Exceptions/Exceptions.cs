@@ -46,29 +46,29 @@ namespace RAMS.Helpers
     }
 
     /// <summary>
-    /// DeleteUserException is a custom exception that provides additional controls over the application and error handling
-    /// DeleteUserException is thrown when user deletion issue occurs
+    /// UserDeleteException is a custom exception that provides additional controls over the application and error handling
+    /// UserDeleteException is thrown when user deletion issue occurs
     /// </summary>
-    public class DeleteUserException : Exception
+    public class UserDeleteException : Exception
     {
-        public DeleteUserException() : base("User could not be deleted.") { }
+        public UserDeleteException() : base("User could not be deleted.") { }
 
-        public DeleteUserException(string message) : base(message) { }
+        public UserDeleteException(string message) : base(message) { }
 
-        public DeleteUserException(string message, Exception innerException) : base(message, innerException) { }
+        public UserDeleteException(string message, Exception innerException) : base(message, innerException) { }
     }
 
     /// <summary>
-    /// DeleteEmployeeException is a custom exception that provides additional controls over the application and error handling
-    /// DeleteEmployeeException is thrown when employee deletion issue occurs
+    /// EmployeeDeleteException is a custom exception that provides additional controls over the application and error handling
+    /// EmployeeDeleteException is thrown when employee deletion issue occurs
     /// </summary>
-    public class DeleteEmployeeException : Exception
+    public class EmployeeDeleteException : Exception
     {
-        public DeleteEmployeeException() : base("Employee could not be deleted.") { }
+        public EmployeeDeleteException() : base("Employee could not be deleted.") { }
 
-        public DeleteEmployeeException(string message) : base(message) { }
+        public EmployeeDeleteException(string message) : base(message) { }
 
-        public DeleteEmployeeException(string message, Exception innerException) : base(message, innerException) { }
+        public EmployeeDeleteException(string message, Exception innerException) : base(message, innerException) { }
     }
 
     /// <summary>
@@ -121,5 +121,18 @@ namespace RAMS.Helpers
         public EmployeeUpdateException(string message) : base(message) { }
 
         public EmployeeUpdateException(string message, Exception innerException) : base(message, innerException) { }
+    }
+
+    /// <summary>
+    /// DepartmentAddException is a custom exception that provides additional controls over the application and error handling
+    /// DepartmentAddException is thrown when employee update issue occurs
+    /// </summary>
+    public class DepartmentAddException : Exception
+    {
+        public DepartmentAddException() : base("Employee could not be updated.") { }
+
+        public DepartmentAddException(string message) : base(message) { }
+
+        public DepartmentAddException(string message, Exception innerException) : base(message, innerException) { }
     }
 }

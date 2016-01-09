@@ -1,4 +1,4 @@
-﻿@model RAMS.ViewModels.ConfirmationViewModel
+﻿@model RAMS.ViewModels.UserConfirmationViewModel
 <!-- CONFIRMATION PARTIAL -->
 @if (Model != null)
 {
@@ -7,7 +7,7 @@
         <script type="text/javascript">$(function () { RefreshEditForm("@Model.UserName", "@Model.UserType"); });</script>
     }
 
-    if (Model.RefreshUserList)
+    if (Model.RefreshList)
     {
         <script type="text/javascript">$(function () { LoadAction("user-list-div", "@Url.Action("UserList", "User", new { Area = "SystemAdmin" })"); });</script>
     }

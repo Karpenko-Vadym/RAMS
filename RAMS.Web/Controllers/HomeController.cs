@@ -23,6 +23,7 @@ namespace RAMS.Web.Controllers
         /// Once authenticated, user will be redirected to default controller and default action of the area where user belongs (UserType determines which area user belongs to)
         /// </summary>
         /// <returns>Redirects to default controller and default action of the area where user belongs</returns>
+        [HttpGet]
         public ActionResult Index()
         {
             var identity = User.Identity as ClaimsIdentity;

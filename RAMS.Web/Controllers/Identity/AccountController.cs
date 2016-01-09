@@ -80,6 +80,7 @@ namespace RAMS.Web.Controllers
         /// </summary>
         /// <param name="returnUrl"></param>
         /// <returns>Login form</returns>
+        [HttpGet]
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
@@ -126,6 +127,7 @@ namespace RAMS.Web.Controllers
         /// LogOff method signs out the user and redirects to home view
         /// </summary>
         /// <returns>Home</returns>
+        [HttpGet]
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut();
@@ -133,17 +135,19 @@ namespace RAMS.Web.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        #region Edit User Profile
         /// <summary>
         /// EditUserProfile method gets user details and returns _EditUserProfile partial view with the model containing user details
         /// </summary>
         /// <returns>_EditUserProfile partial view with the model containing user details</returns>
+        [HttpGet]
         public async Task<PartialViewResult> EditUserProfile()
         {
             var identity = User.Identity as ClaimsIdentity; // Get current user
 
             var response = new HttpResponseMessage();
 
-            var editUserProfileViewModel = new EditUserProfileViewModel();
+            var UserEditProfileViewModel = new UserEditProfileViewModel();
 
             if (identity.HasClaim("UserType", "Agent")) // Current user is Agent
             {
@@ -151,10 +155,10 @@ namespace RAMS.Web.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
-                    editUserProfileViewModel = Mapper.Map<Agent, EditUserProfileViewModel>(await response.Content.ReadAsAsync<Agent>());
+                    UserEditProfileViewModel = Mapper.Map<Agent, UserEditProfileViewModel>(await response.Content.ReadAsAsync<Agent>());
 
 
-                    if (editUserProfileViewModel == null)
+                    if (UserEditProfileViewModel == null)
                     {
                         return PartialView("_EditUserProfile");
                     }
@@ -167,10 +171,10 @@ namespace RAMS.Web.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
-                    editUserProfileViewModel = Mapper.Map<Client, EditUserProfileViewModel>(await response.Content.ReadAsAsync<Client>());
+                    UserEditProfileViewModel = Mapper.Map<Client, UserEditProfileViewModel>(await response.Content.ReadAsAsync<Client>());
 
 
-                    if (editUserProfileViewModel == null)
+                    if (UserEditProfileViewModel == null)
                     {
                         return PartialView("_EditUserProfile");
                     }
@@ -183,10 +187,10 @@ namespace RAMS.Web.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
-                    editUserProfileViewModel = Mapper.Map<Admin, EditUserProfileViewModel>(await response.Content.ReadAsAsync<Admin>());
+                    UserEditProfileViewModel = Mapper.Map<Admin, UserEditProfileViewModel>(await response.Content.ReadAsAsync<Admin>());
 
 
-                    if (editUserProfileViewModel == null)
+                    if (UserEditProfileViewModel == null)
                     {
                         return PartialView("_EditUserProfile");
                     }
@@ -194,7 +198,7 @@ namespace RAMS.Web.Controllers
                 }
             }
 
-            return PartialView("_EditUserProfile", editUserProfileViewModel);
+            return PartialView("_EditUserProfile", UserEditProfileViewModel);
         }
 
         /// <summary>
@@ -204,7 +208,7 @@ namespace RAMS.Web.Controllers
         /// <returns>Success message if update was successful (_Success partial view), error message otherwise (_Error partial view)</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<PartialViewResult> EditUserProfile(EditUserProfileViewModel model)
+        public async Task<PartialViewResult> EditUserProfile(UserEditProfileViewModel model)
         {
             var response = new HttpResponseMessage();
 
@@ -281,7 +285,7 @@ namespace RAMS.Web.Controllers
                                 agent = await response.Content.ReadAsAsync<Agent>();
                             }
 
-                            Mapper.Map<EditUserProfileViewModel, Agent>(model, agent);
+                            Mapper.Map<UserEditProfileViewModel, Agent>(model, agent);
 
                             response = await this.GetHttpClient().PutAsJsonAsync("Agent", agent);
 
@@ -307,9 +311,9 @@ namespace RAMS.Web.Controllers
 
                                     stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1'>Please remember NOT to share your login credentials with anyone.</div></div>");
 
-                                    var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString(), false, false, true);
+                                    var userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString(), false, false, true);
 
-                                    return PartialView("_Success", confirmationViewModel);
+                                    return PartialView("_Success", userConfirmationViewModel);
                                 }
                                 else
                                 {
@@ -333,7 +337,7 @@ namespace RAMS.Web.Controllers
                                 client = await response.Content.ReadAsAsync<Client>();
                             }
 
-                            Mapper.Map<EditUserProfileViewModel, Client>(model, client);
+                            Mapper.Map<UserEditProfileViewModel, Client>(model, client);
 
                             response = await this.GetHttpClient().PutAsJsonAsync("Client", client);
 
@@ -359,9 +363,9 @@ namespace RAMS.Web.Controllers
 
                                     stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1'>Please remember NOT to share your login credentials with anyone.</div></div>");
 
-                                    var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString(), false, false, true);
+                                    var userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString(), false, false, true);
 
-                                    return PartialView("_Success", confirmationViewModel);
+                                    return PartialView("_Success", userConfirmationViewModel);
                                 }
                                 else
                                 {
@@ -385,7 +389,7 @@ namespace RAMS.Web.Controllers
                                 admin = await response.Content.ReadAsAsync<Admin>();
                             }
 
-                            Mapper.Map<EditUserProfileViewModel, Admin>(model, admin);
+                            Mapper.Map<UserEditProfileViewModel, Admin>(model, admin);
 
                             response = await this.GetHttpClient().PutAsJsonAsync("Admin", admin);
 
@@ -411,9 +415,9 @@ namespace RAMS.Web.Controllers
 
                                     stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1'>Please remember NOT to share your login credentials with anyone.</div></div>");
 
-                                    var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString(), false, false, true);
+                                    var userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString(), false, false, true);
 
-                                    return PartialView("_Success", confirmationViewModel);
+                                    return PartialView("_Success", userConfirmationViewModel);
                                 }
                                 else
                                 {
@@ -452,9 +456,9 @@ namespace RAMS.Web.Controllers
 
                     stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to update a user profile. Please review an exception log for more details about the exception.</div></div>");
 
-                    var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+                    var userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString());
 
-                    return PartialView("_Error", confirmationViewModel);
+                    return PartialView("_Error", userConfirmationViewModel);
                 }
                 catch (ClaimsAssignmentException ex)
                 {
@@ -467,9 +471,9 @@ namespace RAMS.Web.Controllers
 
                     stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to assign a user claim. Please review an exception log for more details about the exception.</div></div>");
 
-                    var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+                    var userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString());
 
-                    return PartialView("_Error", confirmationViewModel);
+                    return PartialView("_Error", userConfirmationViewModel);
                 }
                 catch (EmployeeUpdateException ex)
                 {
@@ -482,14 +486,15 @@ namespace RAMS.Web.Controllers
 
                     stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to update an employee profile. Please review an exception log for more details about the exception.</div></div>");
 
-                    var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+                    var userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString());
 
-                    return PartialView("_Error", confirmationViewModel);
+                    return PartialView("_Error", userConfirmationViewModel);
                 }
             }
 
             return PartialView("_EditUserProfile", model);
         }
+        #endregion
 
         #region Change Password
         /// <summary>
@@ -498,6 +503,7 @@ namespace RAMS.Web.Controllers
         /// <param name="userName">Setter for UserName property</param>
         /// <param name="userType">Setter for UserType property</param>
         /// <returns>_ChangePassword partial view with populated view model</returns>
+        [HttpGet]
         public PartialViewResult ChangePassword(string userName, string userType)
         {
             var changePasswordViewModel = new ChangePasswordViewModel(userName, userType);
@@ -516,7 +522,7 @@ namespace RAMS.Web.Controllers
         {
             var stringBuilder = new StringBuilder();
 
-            var confirmationViewModel = new ConfirmationViewModel();
+            var userConfirmationViewModel = new UserConfirmationViewModel();
 
             var identity = new ApplicationUser();
 
@@ -531,9 +537,9 @@ namespace RAMS.Web.Controllers
 
                 stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Please ensure that all required fields are entered.</div></div>");
 
-                confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+                userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString());
 
-                return PartialView("_Confirmation", confirmationViewModel);
+                return PartialView("_Confirmation", userConfirmationViewModel);
                 
             }
 
@@ -550,9 +556,9 @@ namespace RAMS.Web.Controllers
 
                     stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Please try again using valid password.</div></div>");
 
-                    confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+                    userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString());
 
-                    return PartialView("_Confirmation", confirmationViewModel);
+                    return PartialView("_Confirmation", userConfirmationViewModel);
                 }
             }
 
@@ -569,9 +575,9 @@ namespace RAMS.Web.Controllers
 
                     stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Please try again using valid password pattern.</div></div>");
 
-                    confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+                    userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString());
 
-                    return PartialView("_Confirmation", confirmationViewModel);
+                    return PartialView("_Confirmation", userConfirmationViewModel);
                 }
                 // If password is invalid format, display _Error partial view with following error message "Passwords must have at least one non letter or digit character, least one lowercase ('a'-'z'), least one uppercase ('A'-'Z')."
                 else if (!Utilities.RegexMatch(this.PasswordRegex, model.Password))
@@ -584,9 +590,9 @@ namespace RAMS.Web.Controllers
 
                     stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Please try again using valid password pattern.</div></div>");
 
-                    confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+                    userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString());
 
-                    return PartialView("_Confirmation", confirmationViewModel);
+                    return PartialView("_Confirmation", userConfirmationViewModel);
                 }
             }
 
@@ -622,9 +628,9 @@ namespace RAMS.Web.Controllers
 
                         stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Please remember NOT to share your login credentials with anyone.</div></div>");
 
-                        confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+                        userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString());
 
-                        return PartialView("_Confirmation", confirmationViewModel);
+                        return PartialView("_Confirmation", userConfirmationViewModel);
                     }
                     catch (PasswordChangeException ex)
                     {
@@ -637,9 +643,9 @@ namespace RAMS.Web.Controllers
 
                         stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to change a user password. Please review an exception log for more details about the exception.</div></div>");
 
-                        confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+                        userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString());
 
-                        return PartialView("_Confirmation", confirmationViewModel);
+                        return PartialView("_Confirmation", userConfirmationViewModel);
                     }
                 }
             }
@@ -652,9 +658,9 @@ namespace RAMS.Web.Controllers
 
             stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> If you encounter this issue again in the future, please contact Technical Support with exact steps to reproduce this issue.</div></div>");
 
-            confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+            userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString());
 
-            return PartialView("_Confirmation", confirmationViewModel);
+            return PartialView("_Confirmation", userConfirmationViewModel);
         }
         #endregion
 

@@ -227,6 +227,12 @@
     <Content Include="App_Data\ExceptionLog.log" />
     <Content Include="Areas\SystemAdmin\Views\User\_EditClient.cshtml" />
     <Content Include="Areas\SystemAdmin\Views\User\_EditAdmin.cshtml" />
+    <Content Include="Areas\SystemAdmin\Views\Department\Index.cshtml" />
+    <Content Include="Areas\SystemAdmin\Views\Department\_DepartmentList.cshtml" />
+    <Content Include="Areas\SystemAdmin\Views\Department\_NewDepartment.cshtml" />
+    <Content Include="Areas\SystemAdmin\Views\Department\_Success.cshtml" />
+    <Content Include="Areas\SystemAdmin\Views\Department\_Error.cshtml" />
+    <Content Include="Areas\SystemAdmin\Views\Department\_EditDepartment.cshtml" />
     <None Include="Content\JS\jquery-2.1.4.intellisense.js" />
     <Content Include="Content\JS\jquery-2.1.4.js" />
     <Content Include="Content\JS\jquery-2.1.4.min.js" />
@@ -277,6 +283,7 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Areas\Portal\Controllers\HomeController.cs" />
     <Compile Include="Areas\Portal\PortalAreaRegistration.cs" />
+    <Compile Include="Areas\SystemAdmin\Controllers\DepartmentController.cs" />
     <Compile Include="Areas\SystemAdmin\Controllers\HomeController.cs" />
     <Compile Include="Areas\SystemAdmin\Controllers\UserController.cs" />
     <Compile Include="Areas\SystemAdmin\SystemAdminAreaRegistration.cs" />

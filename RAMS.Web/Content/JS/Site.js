@@ -1,4 +1,5 @@
-﻿// Remove empty options from dropdowns
+﻿/***************** GENERAL FUNCTIONS ****************/
+// Remove empty options from dropdowns
 $("select option").filter(function () { return !this.value || $.trim(this.value).length == 0; }).prop("disabled", "disabled");
 
 // Remove empty options from dropdowns for partial views (Partial views (Loaded with Ajax after triggering some event) will not pickup already loaded JavaScript)
@@ -82,9 +83,29 @@ function GetBaseUrl()
     return urlComponents[0] + "//" + urlComponents[2];
 }
 
+function ShowHidePassword()
+{
+    $("#showHidePassword").click(function () {
+        if($(".password").attr("type") == "password")
+        {
+            $(".password").attr("type", "text");
+        }
+        else {
+            $(".password").attr("type", "password");
+        }
+    });
+}
+
+
+/************* END OF GENERAL FUNCTIONS *************/
+
 /*************** GENERAL MODAL CONTROLS *************/
 function GeneralModalControls() {
     $("#edit-profile-modal").on("show.bs.modal", function (e) { LoadAction("edit-user-profile-modal-body-div", "/RAMS/Account/EditUserProfile"); });
+
+    $("#change-password-modal").on("show.bs.modal", function (e) { LoadAction("password-change-div", "/RAMS/Account/ChangePassword?userName=" + $(e.relatedTarget).data("user-name") + "&userType=" + $(e.relatedTarget).data("user-type")); });
+
+    $("#edit-profile-modal").on("hidden.bs.modal", function (e) { $("#edit-user-profile-modal-body-div").empty(); $("#edit-user-profile-message-modal-body-div").empty(); });
 }
 /*********** END OF GENERAL MODAL CONTROLS **********/
 
@@ -100,7 +121,7 @@ function SystemAdminModalControls() {
 
 
 
-    $("#reset-password-modal").on("show.bs.modal", function (e) { LoadAction("password-reset-div", "/RAMS/SystemAdmin/User/ResetPassword?userName=" + $(e.relatedTarget).data("user-name") + "&userType=" + $(e.relatedTarget).data("user-type") + "&email=" + $(e.relatedTarget).data("email") + "&firstName=" + $(e.relatedTarget).data("firstName")); $("#edit-user-modal-title").text($(e.relatedTarget).data("user-name")); });
+    $("#reset-password-modal").on("show.bs.modal", function (e) { LoadAction("password-reset-div", "/RAMS/SystemAdmin/User/ResetPassword?userName=" + $(e.relatedTarget).data("user-name") + "&userType=" + $(e.relatedTarget).data("user-type") + "&email=" + $(e.relatedTarget).data("email") + "&firstName=" + $(e.relatedTarget).data("firstName")); });
 
     $("#reset-password-modal").on("hidden.bs.modal", function (e) { $("#password-reset-div").empty(); });
 

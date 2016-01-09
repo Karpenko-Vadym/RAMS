@@ -24,7 +24,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
     /// <summary>
     /// UserController controller implements CRUD operations for application users and employees
     /// </summary>
-    //[Authorize]
+    // [Authorize]
     // TODO - Uncomment [Authorize]
     // TODO - Replace my (atomix0x@gmail.com) email address with the email address of the user
     public class UserController : BaseController
@@ -1432,6 +1432,10 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                                 return PartialView("_Success", confirmationViewModel);
                             }
+                            else
+                            {
+                                throw new EmployeeUpdateException("Null is returned after updating an employee. Status Code: " + response.StatusCode);
+                            }
                         }
                         else
                         {
@@ -1667,6 +1671,10 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                                 var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString(), false, true, true);
 
                                 return PartialView("_Success", confirmationViewModel);
+                            }
+                            else
+                            {
+                                throw new EmployeeUpdateException("Null is returned after updating an employee. Status Code: " + response.StatusCode);
                             }
                         }
                         else
@@ -1941,6 +1949,10 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                                 return PartialView("_Success", confirmationViewModel);
                             }
+                            else
+                            {
+                                throw new EmployeeUpdateException("Null is returned after updating an employee. Status Code: " + response.StatusCode);
+                            }
                         }
                         else
                         {
@@ -2024,7 +2036,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
         /// <returns>_ResetPassword partial view with populated view model</returns>
         public PartialViewResult ResetPassword(string userName, string userType, string email, string firstName)
         {
-            var resetPasswordViewModel = new ResetPasswordViewModel() { UserName = userName, UserType = userType, Email = email, FirstName = firstName };
+            var resetPasswordViewModel = new ResetPasswordViewModel(userName, userType, email, firstName);
 
             return PartialView("_ResetPassword", resetPasswordViewModel);
         }
@@ -2044,7 +2056,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
             if (!String.IsNullOrEmpty(model.Password))
             {
-                // If password is invalid format, add model error with following error message "Passwords must have at least one non letter or digit character, least one lowercase ('a'-'z'), least one uppercase ('A'-'Z')."
+                // If password is invalid format, display _Confirmation partial view with following error message "Passwords must have at least one non letter or digit character, least one lowercase ('a'-'z'), least one uppercase ('A'-'Z')."
                 if (!Utilities.RegexMatch(this.PasswordRegex, model.Password))
                 {
                     stringBuilder.Clear();
@@ -3131,6 +3143,11 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
         #endregion
 
+        // From Microsoft Developer Network at https://msdn.microsoft.com/en-us/library/dd492699(v=vs.118).aspx
+        /// <summary>
+        /// Dispose method releases unmanaged resources and optionally releases managed resources
+        /// </summary>
+        /// <param name="disposing">If disposing is set to true releases both managed and unmanaged resources, otherwise only releases unmanaged resources</param> 
         protected override void Dispose(bool disposing)
         {
             if (disposing)

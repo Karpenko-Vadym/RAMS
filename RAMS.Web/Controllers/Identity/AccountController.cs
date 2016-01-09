@@ -19,16 +19,27 @@ using RAMS.Enums;
 
 namespace RAMS.Web.Controllers
 {
+    /// <summary>
+    /// AccountController controller implements login and registration related action methods
+    /// </summary>
+    // [Authorize]
     // TODO - Uncomment [Authorize]
-    // [Authorize] 
     public class AccountController : BaseController
     {
         private ApplicationSignInManager SignInManager;
 
         private ApplicationUserManager UserManager;
 
+        /// <summary>
+        /// Default AccountController constructor
+        /// </summary>
         public AccountController() { }
 
+        /// <summary>
+        /// AccountController constructor that sets UserManager and SignInManager
+        /// </summary>
+        /// <param name="userManager">UserManager setter</param>
+        /// <param name="signInManager">SignInManager setter</param>
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
         {
             this.UserManager = userManager;
@@ -36,6 +47,17 @@ namespace RAMS.Web.Controllers
             this.SignInManager = signInManager;
         }
 
+        /// <summary>
+        /// PasswordRegex getter 
+        /// </summary>
+        public string PasswordRegex
+        {
+            get { return "^(?=.*[a-z])(?=.*[A-Z])(?=.*[1234567890])(?=.*[!@#$%^&*()_+=-]).+$"; }
+        }
+
+        /// <summary>
+        /// Getter and setter for SignInManager property
+        /// </summary>
         public ApplicationSignInManager GetSignInManager
         {
             get { return this.SignInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>(); }
@@ -43,6 +65,9 @@ namespace RAMS.Web.Controllers
             private set { this.SignInManager = value; }
         }
 
+        /// <summary>
+        /// Getter and setter for UserManager property
+        /// </summary>
         public ApplicationUserManager GetUserManager
         {
             get { return this.UserManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
@@ -50,6 +75,11 @@ namespace RAMS.Web.Controllers
             private set { this.UserManager = value; }
         }
 
+        /// <summary>
+        /// Login 
+        /// </summary>
+        /// <param name="returnUrl"></param>
+        /// <returns>Login form</returns>
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
@@ -58,6 +88,12 @@ namespace RAMS.Web.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Login method authenticates the user if provided credentials are valid, otherwise re-displays login form with an error message
+        /// </summary>
+        /// <param name="model">Login credentials</param>
+        /// <param name="returnUrl">URL of a page from where user was redirected to login form (In cases when cookie expires)</param>
+        /// <returns>Login form if there has been an error while logging in, otherwise redirects to returnUrl or Home view if returnUrl is null</returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -68,23 +104,13 @@ namespace RAMS.Web.Controllers
                 return View(model);
             }
 
-            // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await this.GetSignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await this.GetSignInManager.PasswordSignInAsync(model.UserName, model.Password, false, shouldLockout: false);
 
             switch (result)
             {
                 case SignInStatus.Success:
 
                     return RedirectToLocal(returnUrl);
-
-                case SignInStatus.LockedOut:
-
-                    return View("Lockout");
-
-                case SignInStatus.RequiresVerification:
-
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
 
                 case SignInStatus.Failure:
 
@@ -96,6 +122,10 @@ namespace RAMS.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// LogOff method signs out the user and redirects to home view
+        /// </summary>
+        /// <returns>Home</returns>
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut();
@@ -103,15 +133,19 @@ namespace RAMS.Web.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        /// <summary>
+        /// EditUserProfile method gets user details and returns _EditUserProfile partial view with the model containing user details
+        /// </summary>
+        /// <returns>_EditUserProfile partial view with the model containing user details</returns>
         public async Task<PartialViewResult> EditUserProfile()
         {
-            var identity = User.Identity as ClaimsIdentity;
+            var identity = User.Identity as ClaimsIdentity; // Get current user
 
             var response = new HttpResponseMessage();
 
             var editUserProfileViewModel = new EditUserProfileViewModel();
 
-            if (identity.HasClaim("UserType", "Agent"))
+            if (identity.HasClaim("UserType", "Agent")) // Current user is Agent
             {
                 response = await this.GetHttpClient().GetAsync(String.Format("Agent?userName={0}", this.User.Identity.Name));
 
@@ -127,7 +161,7 @@ namespace RAMS.Web.Controllers
 
                 }
             }
-            else if (identity.HasClaim("UserType", "Client"))
+            else if (identity.HasClaim("UserType", "Client")) // Current user is Client
             {
                 response = await this.GetHttpClient().GetAsync(String.Format("Client?userName={0}", this.User.Identity.Name));
 
@@ -143,7 +177,7 @@ namespace RAMS.Web.Controllers
 
                 }
             }
-            else if (identity.HasClaim("UserType", "Admin"))
+            else if (identity.HasClaim("UserType", "Admin")) // Current user is Admin
             {
                 response = await this.GetHttpClient().GetAsync(String.Format("Admin?userName={0}", this.User.Identity.Name));
 
@@ -163,6 +197,11 @@ namespace RAMS.Web.Controllers
             return PartialView("_EditUserProfile", editUserProfileViewModel);
         }
 
+        /// <summary>
+        /// EditUserProfile method persists updated user details and returns success message if update was successful, error message otherwise
+        /// </summary>
+        /// <param name="model">ViewModel with updated user details</param>
+        /// <returns>Success message if update was successful (_Success partial view), error message otherwise (_Error partial view)</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<PartialViewResult> EditUserProfile(EditUserProfileViewModel model)
@@ -268,7 +307,7 @@ namespace RAMS.Web.Controllers
 
                                     stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1'>Please remember NOT to share your login credentials with anyone.</div></div>");
 
-                                    var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+                                    var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString(), false, false, true);
 
                                     return PartialView("_Success", confirmationViewModel);
                                 }
@@ -320,7 +359,7 @@ namespace RAMS.Web.Controllers
 
                                     stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1'>Please remember NOT to share your login credentials with anyone.</div></div>");
 
-                                    var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+                                    var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString(), false, false, true);
 
                                     return PartialView("_Success", confirmationViewModel);
                                 }
@@ -372,7 +411,7 @@ namespace RAMS.Web.Controllers
 
                                     stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1'>Please remember NOT to share your login credentials with anyone.</div></div>");
 
-                                    var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+                                    var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString(), false, false, true);
 
                                     return PartialView("_Success", confirmationViewModel);
                                 }
@@ -452,6 +491,178 @@ namespace RAMS.Web.Controllers
             return PartialView("_EditUserProfile", model);
         }
 
+        #region Change Password
+        /// <summary>
+        /// ChangePassword method populates the view model with properties received from _EditUserProfile partial view and passes it to _ChangePassword partial view
+        /// </summary>
+        /// <param name="userName">Setter for UserName property</param>
+        /// <param name="userType">Setter for UserType property</param>
+        /// <returns>_ChangePassword partial view with populated view model</returns>
+        public PartialViewResult ChangePassword(string userName, string userType)
+        {
+            var changePasswordViewModel = new ChangePasswordViewModel(userName, userType);
+
+            return PartialView("_ChangePassword", changePasswordViewModel);
+        }
+
+        /// <summary>
+        /// ChangePassword method validates current and new password and displays an error message if new password does not match password criteria or old password does not match database records, otherwise replaces old password with a new password
+        /// </summary>
+        /// <param name="model">User information required to reset password</param>
+        /// <returns>_Success partial view with success message, or _Error partial view with error message depending on the outcome of this method</returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<PartialViewResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            var stringBuilder = new StringBuilder();
+
+            var confirmationViewModel = new ConfirmationViewModel();
+
+            var identity = new ApplicationUser();
+
+            // If any of password fields is empty, display _Error partial view with following error message "Not all required fields were entered."
+            if (String.IsNullOrEmpty(model.CurrentPassword) || String.IsNullOrEmpty(model.Password) || String.IsNullOrEmpty(model.ConfirmPassword))
+            { 
+                stringBuilder.Clear();
+
+                stringBuilder.Append("<div class='text-center'><h4><strong>Password could NOT be changed.</strong></h4></div>");
+
+                stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Not all required fields were entered.</div>");
+
+                stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Please ensure that all required fields are entered.</div></div>");
+
+                confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+
+                return PartialView("_Confirmation", confirmationViewModel);
+                
+            }
+
+            if (!String.IsNullOrEmpty(model.CurrentPassword))
+            {
+                // If current password does not match database records, display _Error partial view with following error message "Current Password does NOT match our records."
+                if ((identity = this.GetUserManager.Find(model.UserName, model.CurrentPassword)) == null)
+                {
+                    stringBuilder.Clear();
+
+                    stringBuilder.Append("<div class='text-center'><h4><strong>Password could NOT be changed.</strong></h4></div>");
+
+                    stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Current Password does NOT match our records.</div>");
+
+                    stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Please try again using valid password.</div></div>");
+
+                    confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+
+                    return PartialView("_Confirmation", confirmationViewModel);
+                }
+            }
+
+            if (!String.IsNullOrEmpty(model.Password))
+            {
+                // If password has less than 6 characters, display _Error partial view with following error message "Passwords must be at least 6 character long."
+                if (model.Password.Length < 6)
+                {
+                    stringBuilder.Clear();
+
+                    stringBuilder.Append("<div class='text-center'><h4><strong>Password could NOT be changed.</strong></h4></div>");
+
+                    stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Passwords must be at least 6 character long.</div>");
+
+                    stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Please try again using valid password pattern.</div></div>");
+
+                    confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+
+                    return PartialView("_Confirmation", confirmationViewModel);
+                }
+                // If password is invalid format, display _Error partial view with following error message "Passwords must have at least one non letter or digit character, least one lowercase ('a'-'z'), least one uppercase ('A'-'Z')."
+                else if (!Utilities.RegexMatch(this.PasswordRegex, model.Password))
+                {
+                    stringBuilder.Clear();
+
+                    stringBuilder.Append("<div class='text-center'><h4><strong>Password could NOT be changed.</strong></h4></div>");
+
+                    stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>New Passwords must have at least one non letter or digit character, least one lowercase ('a'-'z'), least one uppercase ('A'-'Z').</div>");
+
+                    stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Please try again using valid password pattern.</div></div>");
+
+                    confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+
+                    return PartialView("_Confirmation", confirmationViewModel);
+                }
+            }
+
+            if (ModelState.IsValid)
+            {
+                if (identity != null)
+                {
+                    // Attempt to change password
+                    try
+                    {
+                        var result = await this.GetUserManager.ChangePasswordAsync(identity.Id, model.CurrentPassword, model.Password);
+
+                        if (!result.Succeeded)
+                        {
+                            var message = String.Format("Password could not be changed from user {0}.", identity.UserName);
+
+                            if (!Utilities.IsEmpty(result.Errors))
+                            {
+                                foreach (var error in result.Errors)
+                                {
+                                    message += " " + error;
+                                }
+                            }
+
+                            throw new PasswordChangeException(message);
+                        }                     
+
+                        stringBuilder.Clear();
+
+                        stringBuilder.Append("<div class='text-center'><h4><strong>Success!</strong></h4></div>");
+
+                        stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>User password has been successfully changed.</div>");
+
+                        stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Please remember NOT to share your login credentials with anyone.</div></div>");
+
+                        confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+
+                        return PartialView("_Confirmation", confirmationViewModel);
+                    }
+                    catch (PasswordChangeException ex)
+                    {
+                        // Log exception
+                        ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+
+                        stringBuilder.Clear();
+
+                        stringBuilder.Append("<div class='text-center'><h4><strong>Password could NOT be changed.</strong></h4></div>");
+
+                        stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to change a user password. Please review an exception log for more details about the exception.</div></div>");
+
+                        confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+
+                        return PartialView("_Confirmation", confirmationViewModel);
+                    }
+                }
+            }
+
+            stringBuilder.Clear();
+
+            stringBuilder.Append("<div class='text-center'><h4><strong>Password could NOT be changed.</strong></h4></div>");
+
+            stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>ModelState is not valid for current instance of the request. Please try again in a moment.</div>");
+
+            stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> If you encounter this issue again in the future, please contact Technical Support with exact steps to reproduce this issue.</div></div>");
+
+            confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+
+            return PartialView("_Confirmation", confirmationViewModel);
+        }
+        #endregion
+
+        // From Microsoft Developer Network at https://msdn.microsoft.com/en-us/library/dd492699(v=vs.118).aspx
+        /// <summary>
+        /// Dispose method releases unmanaged resources and optionally releases managed resources
+        /// </summary>
+        /// <param name="disposing">If disposing is set to true releases both managed and unmanaged resources, otherwise only releases unmanaged resources</param> 
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -85,6 +85,19 @@ namespace RAMS.Helpers
     }
 
     /// <summary>
+    /// PasswordChangeException is a custom exception that provides additional controls over the application and error handling
+    /// PasswordChangeException is thrown when password change issue occurs
+    /// </summary>
+    public class PasswordChangeException : Exception
+    {
+        public PasswordChangeException() : base("Password could not be reset.") { }
+
+        public PasswordChangeException(string message) : base(message) { }
+
+        public PasswordChangeException(string message, Exception innerException) : base(message, innerException) { }
+    }
+
+    /// <summary>
     /// UserUpdateException is a custom exception that provides additional controls over the application and error handling
     /// UserUpdateException is thrown when user update issue occurs
     /// </summary>

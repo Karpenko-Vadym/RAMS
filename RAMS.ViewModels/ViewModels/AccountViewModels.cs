@@ -17,9 +17,6 @@ namespace RAMS.Web.Identity
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
-
-        [Display(Name = "Remember me?")]
-        public bool RememberMe { get; set; }
     }
 }
 
@@ -322,7 +319,7 @@ namespace RAMS.ViewModels
         public string UserName { get; set; }
 
         [Required]
-        [Display(Name = "Username")]
+        [Display(Name = "User Type")]
         public string UserType { get; set; }
 
         [Required]
@@ -345,6 +342,28 @@ namespace RAMS.ViewModels
         [Display(Name = "Confirm Password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        public ResetPasswordViewModel()
+        {
+            this.UserName = "";
+
+            this.UserType = "";
+
+            this.Email = "";
+
+            this.FirstName = "";
+        }
+
+        public ResetPasswordViewModel(string userName, string userType, string email, string firstName)
+        {
+            this.UserName = userName;
+
+            this.UserType = userType;
+
+            this.Email = email;
+
+            this.FirstName = firstName;
+        }
     }
 
     /// <summary>
@@ -542,12 +561,11 @@ namespace RAMS.ViewModels
         }
     }
 
+    /// <summary>
+    /// EditUserProfileViewModel view model declares properties for _EditUserProfile partial view
+    /// </summary>
     public class EditUserProfileViewModel
     {
-        // TODO - Add GetAsync for EditAgent, EditClient, and EditAdmin for keeping the image.
-
-        // TODO - Code from Automapper profiles and AccountController
-
         [Required]
         [Display(Name = "User Id")]
         public string UserId { get; set; }
@@ -596,8 +614,19 @@ namespace RAMS.ViewModels
         public byte[] Timestamp { get; set; }
     }
 
+    /// <summary>
+    /// ChangePasswordViewModel view model declares properties for _ChangePassword partial view
+    /// </summary>
     public class ChangePasswordViewModel
     {
+        [Required]
+        [Display(Name = "Username")]
+        public string UserName { get; set; }
+
+        [Required]
+        [Display(Name = "User Type")]
+        public string UserType { get; set; }
+
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
@@ -615,5 +644,27 @@ namespace RAMS.ViewModels
         [Display(Name = "Confirm Password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        /// <summary>
+        /// Default ChangePasswordViewModel constructor
+        /// </summary>
+        public ChangePasswordViewModel()
+        {
+            this.UserName = "";
+
+            this.UserType = null;
+        }
+
+        /// <summary>
+        /// ChangePasswordViewModel constructor that sets UserName and UserType properties
+        /// </summary>
+        /// <param name="userName">UserName setter</param>
+        /// <param name="userType">UserType setter</param>
+        public ChangePasswordViewModel(string userName, string userType)
+        {
+            this.UserName = userName;
+
+            this.UserType = userType;
+        }
     }
 }

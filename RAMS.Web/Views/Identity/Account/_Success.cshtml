@@ -2,6 +2,16 @@
 <!-- SUCCESS PARTIAL -->
 @if (Model != null)
 {
+    if (Model.RefreshUserList)
+    {
+        <script type="text/javascript">$(function () { LoadAction("user-list-div", "@Url.Action("UserList", "User", new { Area = "SystemAdmin" })"); });</script>
+    }
+
+    if (Model.ClearMessages)
+    {
+        <script type="text/javascript">$(function () { $("#edit-user-profile-message-modal-body-div").empty(); });</script>
+    }
+
     <div class="alert alert-success bottom-margin-0" role="alert">
         @Html.Raw(Model.Message)
     </div>

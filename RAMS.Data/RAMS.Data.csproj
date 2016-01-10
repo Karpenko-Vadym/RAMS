@@ -71,9 +71,9 @@
     <Compile Include="Infrastructure\Interfaces\IUnitOfWork.cs" />
     <Compile Include="Infrastructure\RepositoryBase.cs" />
     <Compile Include="Infrastructure\UnitOfWork.cs" />
-    <Compile Include="Migrations\201601020444059_InitialDatabase.cs" />
-    <Compile Include="Migrations\201601020444059_InitialDatabase.Designer.cs">
-      <DependentUpon>201601020444059_InitialDatabase.cs</DependentUpon>
+    <Compile Include="Migrations\201601102244249_InistialDatabase.cs" />
+    <Compile Include="Migrations\201601102244249_InistialDatabase.Designer.cs">
+      <DependentUpon>201601102244249_InistialDatabase.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -111,8 +111,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201601020444059_InitialDatabase.resx">
-      <DependentUpon>201601020444059_InitialDatabase.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201601102244249_InistialDatabase.resx">
+      <DependentUpon>201601102244249_InistialDatabase.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

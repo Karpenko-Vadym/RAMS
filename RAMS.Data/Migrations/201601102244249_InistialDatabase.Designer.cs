@@ -7,13 +7,13 @@ namespace RAMS.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class InitialDatabase : IMigrationMetadata
+    public sealed partial class InistialDatabase : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialDatabase));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InistialDatabase));
         
         string IMigrationMetadata.Id
         {
-            get { return "201601020444059_InitialDatabase"; }
+            get { return "201601102244249_InistialDatabase"; }
         }
         
         string IMigrationMetadata.Source

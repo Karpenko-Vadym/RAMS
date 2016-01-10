@@ -19,27 +19,27 @@ namespace RAMS.Data.Migrations
     /// </summary>
     internal sealed class Configuration : DbMigrationsConfiguration<RAMS.Data.DataContext>
     {
-        public static IDataFactory dataFactory = new DataFactory();
+        protected static IDataFactory dataFactory = new DataFactory();
 
-        public static IUnitOfWork unitOfWork = new UnitOfWork(dataFactory);
+        protected static IUnitOfWork unitOfWork = new UnitOfWork(dataFactory);
 
-        public static IClientRepository clientRepositpry = new ClientRepository(dataFactory);
+        protected static IClientRepository clientRepositpry = new ClientRepository(dataFactory);
 
-        public static IPositionRepository positionRepository = new PositionRepository(dataFactory);
+        protected static IPositionRepository positionRepository = new PositionRepository(dataFactory);
 
-        public static ICategoryRepository categoryRepository = new CategoryRepository(dataFactory);
+        protected static ICategoryRepository categoryRepository = new CategoryRepository(dataFactory);
 
-        public static IDepartmentRepository departmentRepository = new DepartmentRepository(dataFactory);
+        protected static IDepartmentRepository departmentRepository = new DepartmentRepository(dataFactory);
 
-        public static IAdminRepository adminRepository = new AdminRepository(dataFactory);
+        protected static IAdminRepository adminRepository = new AdminRepository(dataFactory);
 
-        public static IAgentRepository agentRepository = new AgentRepository(dataFactory);
+        protected static IAgentRepository agentRepository = new AgentRepository(dataFactory);
 
-        public static ICandidateRepository candidateRepository = new CandidateRepository(dataFactory);
+        protected static ICandidateRepository candidateRepository = new CandidateRepository(dataFactory);
 
-        public static IInterviewRepository interviewRepository = new InterviewRepository(dataFactory);
+        protected static IInterviewRepository interviewRepository = new InterviewRepository(dataFactory);
 
-        public static INotificationRepository notificationRepository = new NotificationRepository(dataFactory);
+        protected static INotificationRepository notificationRepository = new NotificationRepository(dataFactory);
 
         public Configuration()
         {
@@ -364,10 +364,12 @@ namespace RAMS.Data.Migrations
                     AssetSkills = "C#, C++, Java",
                     CategoryId = categoryRepository.GetAll().FirstOrDefault().CategoryId,
                     CleintId = clientRepositpry.GetAll().FirstOrDefault().ClientId,
+                    AgentId = agentRepository.GetAll().FirstOrDefault().AgentId,
                     CompanyDetails = "Our company has been on the market for many years and proven to have high quality standards.",
                     DateCreated = DateTime.Now,
                     Description = "The Technical Support Specialist’s primary mission is to provide customers with in-service support.",
                     ExpiryDate = DateTime.Now.AddYears(1),
+                    DepartmentId = departmentRepository.GetAll().FirstOrDefault().DepartmentId,
                     Location = "Toronto",
                     PeopleNeeded = 8,
                     Qualifications = "Advanced knowledge of ORACLE Database, SQL, JavaScript",

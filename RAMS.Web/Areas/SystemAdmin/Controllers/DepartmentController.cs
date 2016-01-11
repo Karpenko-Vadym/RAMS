@@ -16,14 +16,26 @@ using RAMS.Helpers;
 
 namespace RAMS.Web.Areas.SystemAdmin.Controllers
 {
+    /// <summary>
+    /// DepartmentController controller implements CRUD operations for departments
+    /// </summary>
     public class DepartmentController : BaseController
     {
+        /// <summary>
+        /// Index action method will be called as soon as user navigates (Or gets redirected) to /RAMS/Departments
+        /// This method displays the main view where all department related CRUD operations take place 
+        /// </summary>
+        /// <returns>Main view where all department related CRUD operations take place</returns>
         [HttpGet]
         public ActionResult Index()
         {
             return View();
         }
 
+        /// <summary>
+        /// DepartmentList method gets the list of all departments and passess it to _DepartmentList partial view
+        /// </summary>
+        /// <returns>_DepartmentList partial view with a list of departments as it's model</returns>
         [HttpGet]
         public async Task<PartialViewResult> DepartmentList()
         {
@@ -39,6 +51,10 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
             return PartialView("_DepartmentList" , departmentList);
         }
 
+        /// <summary>
+        /// NewDepartment method returns _NewDepartment partial view
+        /// </summary>
+        /// <returns>_NewDepartment partial view</returns>
         [HttpGet]
         public PartialViewResult NewDepartment()
         {
@@ -47,6 +63,11 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
             return PartialView("_NewDepartment", departmentAddViewModel);
         }
 
+        /// <summary>
+        /// NewDepartment method validates the model and attempts to persist it database if model state is valid
+        /// </summary>
+        /// <param name="model">Model containing properties required for creating new department</param>
+        /// <returns>If model state is not valid, re-displays _NewDepartment partial view with an input form and an error message. Otherwise returns success message or error message depending on the outcome of this method</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<PartialViewResult> NewDepartment(DepartmentAddViewModel model)
@@ -55,6 +76,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
             {
                 try
                 {
+                    // If model state is valid, attempt to persist new department
                     var department = Mapper.Map<DepartmentAddViewModel, Department>(model);
 
                     var response = await this.GetHttpClient().PostAsJsonAsync("Department", department);
@@ -103,6 +125,11 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
             return PartialView("_NewDepartment", model);
         }
 
+        /// <summary>
+        /// EditDepartment method retrieves one department by it's id and displays it's information in _EditDepartment partial view
+        /// </summary>
+        /// <param name="id">Id of the department to be retrieved</param>
+        /// <returns>_EditDepartment partial view with details of retrieved department if department information could be retrieved, otherwise an error message</returns>
         [HttpGet]
         public async Task<PartialViewResult> EditDepartment(int id)
         {
@@ -128,6 +155,77 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
             var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
 
             return PartialView("_Error", confirmationViewModel);
+        }
+
+        /// <summary>
+        /// EditDepartment method validates the model and attempts to persist it database if model state is valid
+        /// </summary>
+        /// <param name="model">Model containing properties required for editing existing department</param>
+        /// <returns>If model state is not valid, re-displays _EditDepartment partial view with an input form and an error message. Otherwise returns success message or error message depending on the outcome of this method</returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<PartialViewResult> EditDepartment(DepartmentEditViewModel model)
+        {
+            var response = new HttpResponseMessage();
+            
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Attempt to persist updated department
+                    var department = Mapper.Map<DepartmentEditViewModel, Department>(model);
+
+                    response = await this.GetHttpClient().PutAsJsonAsync("Department", department);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        department = await response.Content.ReadAsAsync<Department>();
+
+                        if (department != null)
+                        {
+                            var stringBuilder = new StringBuilder();
+
+                            stringBuilder.AppendFormat("<div class='text-center'><h4><strong>Department {0} has been successfully updated!</strong></h4></div>", department.Name);
+
+                            stringBuilder.Append("<div class='row'><div class='col-md-offset-1'>Please ensure that department information is valid.</div>");
+
+                            stringBuilder.AppendFormat("<div class='col-md-12'><p></p></div><div class='col-md-offset-2 col-md-3'>Department Name: </div><div class='col-md-7'><strong>{0}</strong></div>", department.Name);
+
+                            stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1'><strong>NOTE:</strong> Employee can be assigned to this department from Edit User or New User interfaces.</div></div>");
+
+                            var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString(), false, true);
+
+                            return PartialView("_Success", confirmationViewModel);
+                        }
+                        else
+                        {
+                            throw new DepartmentUpdateException("Null is returned after updating department. Status Code: " + response.StatusCode);
+                        }
+                    }
+                    else
+                    {
+                        throw new DepartmentUpdateException("Department could not be updated. Status Code: " + response.StatusCode);
+                    }
+                    
+                }
+                catch (DepartmentUpdateException ex)
+                {
+                    // Log exception
+                    ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+
+                    var stringBuilder = new StringBuilder();
+
+                    stringBuilder.Append("<div class='text-center'><h4><strong>Department could NOT be updated.</strong></h4></div>");
+
+                    stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to update depatment details. Please review an exception log for more details about the exception.</div></div>");
+
+                    var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+
+                    return PartialView("_Error", confirmationViewModel);
+                }
+            }
+
+            return PartialView("_EditDepartment", model);
         }
     }
 }

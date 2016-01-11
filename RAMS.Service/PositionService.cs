@@ -20,6 +20,8 @@ namespace RAMS.Service
 
         private readonly ICategoryRepository CategoryRepository;
 
+        private readonly IDepartmentRepository DepartmentRepository;
+
         private readonly IClientRepository ClientRepository;
 
         private readonly IAgentRepository AgentRepository;
@@ -33,15 +35,18 @@ namespace RAMS.Service
         /// </summary>
         /// <param name="positionRepository">Parameter for setting PositionRepository</param>
         /// <param name="categoryRepository">Parameter for setting CategoryRepository</param>
+        /// <param name="departmentRepository">Parameter for setting DepartmentRepository</param>
         /// <param name="clientRepository">Parameter for setting ClientRepository</param>
         /// <param name="agentRepository">Parameter for setting AgentRepository</param>
         /// <param name="candidateRepository">Parameter for setting CandidateRepository</param>
         /// <param name="unitOfWork">Parameter for setting UnitOfWork</param>
-        public PositionService(IPositionRepository positionRepository, ICategoryRepository categoryRepository, IClientRepository clientRepository, IAgentRepository agentRepository, ICandidateRepository candidateRepository, IUnitOfWork unitOfWork)
+        public PositionService(IPositionRepository positionRepository, ICategoryRepository categoryRepository, IDepartmentRepository departmentRepository, IClientRepository clientRepository, IAgentRepository agentRepository, ICandidateRepository candidateRepository, IUnitOfWork unitOfWork)
         {
             this.PositionRepository = positionRepository;
 
             this.CategoryRepository = categoryRepository;
+
+            this.DepartmentRepository = departmentRepository;
 
             this.ClientRepository = clientRepository;
 
@@ -106,6 +111,18 @@ namespace RAMS.Service
             var category = this.CategoryRepository.GetById(id);
 
             return category.Positions;
+        }
+
+        /// <summary>
+        /// Get multiple positions for specific department
+        /// </summary>
+        /// <param name="id">Id of the department for which positions are being retrieved</param>
+        /// <returns>Multiple positions for specific department</returns>
+        public IEnumerable<Position> GetManyPositionsByDepartmentId(int id)
+        {
+            var department = this.DepartmentRepository.GetById(id);
+
+            return department.Positions;
         }
 
         /// <summary>

@@ -21,7 +21,8 @@
             @Html.AntiForgeryToken()
 
             @Html.HiddenFor(model => model.DepartmentId)
-
+            @Html.HiddenFor(model => model.Timestamp)
+            
             <div class="form-horizontal">
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">

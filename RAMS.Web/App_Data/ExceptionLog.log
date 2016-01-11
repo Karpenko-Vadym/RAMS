@@ -1,0 +1,73 @@
+Logged on: 10/01/2016 6:44:51 PM
+Exception of type 'DbUpdateConcurrencyException' has been caught.
+Message: Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+********************* Stack Trace **********************
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at RAMS.Data.DataContext.Commit() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Data\DataContext.cs:line 54
+   at RAMS.Data.Infrastructure.UnitOfWork.Commit() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Data\Infrastructure\UnitOfWork.cs:line 41
+   at RAMS.Service.Interfaces.DepartmentService.SaveChanges() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Service\DepartmentService.cs:line 112
+   at RAMS.Web.Controllers.WebAPI.DepartmentController.PutDepartment(Department department) in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Web\Controllers\WebAPI\DepartmentController.cs:line 119
+****************** End of Stack Trace ******************
+******************* Inner Exception ********************
+Exception of type 'OptimisticConcurrencyException' has been caught.
+Message: Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+********************* Stack Trace **********************
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.ValidateRowsAffected(Int64 rowsAffected, UpdateCommand source)
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.Update()
+   at System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesToStore(SaveOptions options, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction)
+   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesInternal(SaveOptions options, Boolean executeInExistingTransaction)
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+****************** End of Stack Trace ******************
+**************** End of Inner Exception ****************
+
+
+Logged on: 10/01/2016 6:45:22 PM
+Exception of type 'DepartmentUpdateException' has been caught.
+Message: Department could not be updated. Status Code: Conflict
+********************* Stack Trace **********************
+   at RAMS.Web.Areas.SystemAdmin.Controllers.DepartmentController.<EditDepartment>d__17.MoveNext() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Web\Areas\SystemAdmin\Controllers\DepartmentController.cs:line 174
+****************** End of Stack Trace ******************
+
+
+Logged on: 10/01/2016 6:55:23 PM
+Exception of type 'EmployeeUpdateException' has been caught.
+Message: Employee profile could not be updated. Status Code: InternalServerError
+********************* Stack Trace **********************
+   at RAMS.Web.Areas.SystemAdmin.Controllers.UserController.<EditAgent>d__60.MoveNext() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Web\Areas\SystemAdmin\Controllers\UserController.cs:line 1451
+****************** End of Stack Trace ******************
+
+
+Logged on: 10/01/2016 6:55:51 PM
+Exception of type 'EmployeeUpdateException' has been caught.
+Message: Employee profile could not be updated. Status Code: InternalServerError
+********************* Stack Trace **********************
+   at RAMS.Web.Areas.SystemAdmin.Controllers.UserController.<EditAgent>d__60.MoveNext() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Web\Areas\SystemAdmin\Controllers\UserController.cs:line 1451
+****************** End of Stack Trace ******************
+
+
+Logged on: 10/01/2016 6:56:03 PM
+Exception of type 'EmployeeUpdateException' has been caught.
+Message: Employee profile could not be updated. Status Code: InternalServerError
+********************* Stack Trace **********************
+   at RAMS.Web.Areas.SystemAdmin.Controllers.UserController.<EditAgent>d__60.MoveNext() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Web\Areas\SystemAdmin\Controllers\UserController.cs:line 1451
+****************** End of Stack Trace ******************
+
+
+Logged on: 10/01/2016 6:56:34 PM
+Exception of type 'EmployeeUpdateException' has been caught.
+Message: Employee profile could not be updated. Status Code: InternalServerError
+********************* Stack Trace **********************
+   at RAMS.Web.Areas.SystemAdmin.Controllers.UserController.<EditAgent>d__60.MoveNext() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Web\Areas\SystemAdmin\Controllers\UserController.cs:line 1451
+****************** End of Stack Trace ******************
+
+
+Logged on: 10/01/2016 6:58:11 PM
+Exception of type 'EmployeeUpdateException' has been caught.
+Message: Employee profile could not be updated. Status Code: InternalServerError
+********************* Stack Trace **********************
+   at RAMS.Web.Areas.SystemAdmin.Controllers.UserController.<EditClient>d__6b.MoveNext() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Web\Areas\SystemAdmin\Controllers\UserController.cs:line 1691
+****************** End of Stack Trace ******************
+
+

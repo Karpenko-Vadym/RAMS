@@ -1357,16 +1357,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                         }
 
                         // If Role user claim successfully updated, attempt to update employee profile
-                        var agent = new Agent();
-
-                        response = await this.GetHttpClient().GetAsync(String.Format("Agent?userName={0}", model.CurrentUserName));
-
-                        if (response.IsSuccessStatusCode) // Ensure that data that is not being changed, remain in the database
-                        {
-                            agent = await response.Content.ReadAsAsync<Agent>();
-                        }
-
-                        Mapper.Map<AgentEditViewModel, Agent>(model, agent);
+                        var agent = Mapper.Map<AgentEditViewModel, Agent>(model);
 
                         response = await this.GetHttpClient().PutAsJsonAsync("Agent", agent);
 
@@ -1603,16 +1594,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                         }
 
                         // If FullName user claim successfully updated, attempt to update employee profile
-                        var client = new Client();
-
-                        response = await this.GetHttpClient().GetAsync(String.Format("Client?userName={0}", model.CurrentUserName));
-
-                        if (response.IsSuccessStatusCode) // Ensure that data that is not being changed, remain in the database
-                        {
-                            client = await response.Content.ReadAsAsync<Client>();
-                        }
-
-                        Mapper.Map<ClientEditViewModel, Client>(model, client);
+                        var client = Mapper.Map<ClientEditViewModel, Client>(model);
 
                         response = await this.GetHttpClient().PutAsJsonAsync("Client", client);
 
@@ -1877,18 +1859,9 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                             throw new ClaimsAssignmentException(message);
                         }
 
-                        // If Role user claim successfully updated, attempt to update employee profile
-                        var admin = new Admin();
+                        // If Role user claim successfully updated, attempt to update employee profile 
+                        var admin = Mapper.Map<AdminEditViewModel, Admin>(model);
 
-                        response = await this.GetHttpClient().GetAsync(String.Format("Admin?userName={0}", model.CurrentUserName));
-
-                        if (response.IsSuccessStatusCode) // Ensure that data that is not being changed, remain in the database
-                        {
-                            admin = await response.Content.ReadAsAsync<Admin>(); 
-                        }
-
-                        Mapper.Map<AdminEditViewModel, Admin>(model, admin);
-   
                         response = await this.GetHttpClient().PutAsJsonAsync("Admin", admin);
 
                         if (response.IsSuccessStatusCode)

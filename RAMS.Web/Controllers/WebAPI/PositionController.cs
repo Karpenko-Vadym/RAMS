@@ -70,6 +70,27 @@ namespace RAMS.Web.Controllers.WebAPI
         }
 
         /// <summary>
+        /// Get the list of positions for specific deparment
+        /// </summary>
+        /// <returns>The list of positions for specific deparment</returns>
+        [HttpGet]
+        [ResponseType(typeof(IEnumerable<Position>))]
+        public IHttpActionResult GetManyPositionsByDepartmentId(int departmentId)
+        {
+            if (departmentId > 0)
+            {
+                var positions = this.PositionService.GetManyPositionsByDepartmentId(departmentId);
+
+                if (positions.Count() > 0)
+                {
+                    return Ok(positions);
+                }
+            }
+
+            return NotFound();
+        }
+
+        /// <summary>
         /// Create new position
         /// </summary>
         /// <param name="position">Position to be created</param>

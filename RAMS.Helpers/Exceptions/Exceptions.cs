@@ -125,14 +125,27 @@ namespace RAMS.Helpers
 
     /// <summary>
     /// DepartmentAddException is a custom exception that provides additional controls over the application and error handling
-    /// DepartmentAddException is thrown when employee update issue occurs
+    /// DepartmentAddException is thrown when department creation issue occurs
     /// </summary>
     public class DepartmentAddException : Exception
     {
-        public DepartmentAddException() : base("Employee could not be updated.") { }
+        public DepartmentAddException() : base("Department could not be added.") { }
 
         public DepartmentAddException(string message) : base(message) { }
 
         public DepartmentAddException(string message, Exception innerException) : base(message, innerException) { }
+    }
+
+    /// <summary>
+    /// DepartmentUpdateException is a custom exception that provides additional controls over the application and error handling
+    /// DepartmentUpdateException is thrown when department update issue occurs
+    /// </summary>
+    public class DepartmentUpdateException : Exception
+    {
+        public DepartmentUpdateException() : base("Department could not be updated.") { }
+
+        public DepartmentUpdateException(string message) : base(message) { }
+
+        public DepartmentUpdateException(string message, Exception innerException) : base(message, innerException) { }
     }
 }

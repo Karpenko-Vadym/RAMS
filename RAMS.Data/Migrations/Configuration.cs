@@ -19,27 +19,27 @@ namespace RAMS.Data.Migrations
     /// </summary>
     internal sealed class Configuration : DbMigrationsConfiguration<RAMS.Data.DataContext>
     {
-        protected static IDataFactory dataFactory = new DataFactory();
+        public static IDataFactory dataFactory = new DataFactory();
 
-        protected static IUnitOfWork unitOfWork = new UnitOfWork(dataFactory);
+        public static IUnitOfWork unitOfWork = new UnitOfWork(dataFactory);
 
-        protected static IClientRepository clientRepositpry = new ClientRepository(dataFactory);
+        public static IClientRepository clientRepositpry = new ClientRepository(dataFactory);
 
-        protected static IPositionRepository positionRepository = new PositionRepository(dataFactory);
+        public static IPositionRepository positionRepository = new PositionRepository(dataFactory);
 
-        protected static ICategoryRepository categoryRepository = new CategoryRepository(dataFactory);
+        public static ICategoryRepository categoryRepository = new CategoryRepository(dataFactory);
 
-        protected static IDepartmentRepository departmentRepository = new DepartmentRepository(dataFactory);
+        public static IDepartmentRepository departmentRepository = new DepartmentRepository(dataFactory);
 
-        protected static IAdminRepository adminRepository = new AdminRepository(dataFactory);
+        public static IAdminRepository adminRepository = new AdminRepository(dataFactory);
 
-        protected static IAgentRepository agentRepository = new AgentRepository(dataFactory);
+        public static IAgentRepository agentRepository = new AgentRepository(dataFactory);
 
-        protected static ICandidateRepository candidateRepository = new CandidateRepository(dataFactory);
+        public static ICandidateRepository candidateRepository = new CandidateRepository(dataFactory);
 
-        protected static IInterviewRepository interviewRepository = new InterviewRepository(dataFactory);
+        public static IInterviewRepository interviewRepository = new InterviewRepository(dataFactory);
 
-        protected static INotificationRepository notificationRepository = new NotificationRepository(dataFactory);
+        public static INotificationRepository notificationRepository = new NotificationRepository(dataFactory);
 
         public Configuration()
         {

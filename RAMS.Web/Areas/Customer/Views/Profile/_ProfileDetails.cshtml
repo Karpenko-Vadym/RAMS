@@ -1,0 +1,22 @@
+﻿@model RAMS.ViewModels.ClientProfileDetailsViewModel
+
+@if (Model != null)
+{
+    <h2>@Model.FullName</h2>
+
+    <dl class="dl-horizontal">
+        <dt>@Html.LabelFor(model => model.JobTitle)</dt>
+        <dd>@Model.JobTitle</dd>
+        <dt>@Html.LabelFor(model => model.Company)</dt>
+        <dd>@Model.Company</dd>
+        <dt>@Html.LabelFor(model => model.Email)</dt>
+        <dd>@Model.Email</dd>
+        <dt>@Html.LabelFor(model => model.PhoneNumber)</dt>
+        <dd>@Model.PhoneNumber</dd>
+    </dl>
+
+}
+else
+{
+    <div class="alert alert-danger bottom-margin-0" role="alert">Profile details are not available.</div>
+}

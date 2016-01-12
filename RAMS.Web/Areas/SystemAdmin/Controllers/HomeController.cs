@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -23,7 +24,22 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
         /// <returns>Redirects to Index method of User controller</returns>
         public ActionResult Index()
         {
-            return RedirectToAction("Index", "User", new { Area = "SystemAdmin" });
+            var identity = User.Identity as ClaimsIdentity;
+
+            if (identity.HasClaim("UserType", "Agent"))
+            {
+                return RedirectToAction("Index", "Home", new { Area = "Agency" });
+            }
+            else if (identity.HasClaim("UserType", "Client"))
+            {
+                return RedirectToAction("Index", "Home", new { Area = "Customer" });
+            }
+            else if (identity.HasClaim("UserType", "Admin"))
+            {
+                return RedirectToAction("Index", "User", new { Area = "SystemAdmin" });
+            }
+
+            return RedirectToAction("Index", "Home", new { Area = "" });
         }
     }
 }

@@ -85,7 +85,22 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            return View();
+            var identity = User.Identity as ClaimsIdentity;
+
+            if (identity.HasClaim("UserType", "Agent"))
+            {
+                return RedirectToAction("Index", "Home", new { Area = "Agency" });
+            }
+            else if (identity.HasClaim("UserType", "Client"))
+            {
+                return RedirectToAction("Index", "Home", new { Area = "Customer" });
+            }
+            else if (identity.HasClaim("UserType", "Admin"))
+            {
+                return View();
+            }
+
+            return RedirectToAction("Index", "Home", new { Area = "" });
         }
 
         #region User List
@@ -494,7 +509,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                             ErrorHandlingUtilities.LogException(new UserDeleteException(message).ToString(), this.ControllerContext.RouteData.Values["controller"].ToString(), this.ControllerContext.RouteData.Values["action"].ToString());
                         }
 
-                        response = this.GetHttpClient().DeleteAsync("Agent?userName=" + model.UserName).Result;
+                        response = this.GetHttpClient().DeleteAsync(String.Format("Agent?userName={0}",model.UserName)).Result;
 
                         // If agent could not be deleted, log EmployeeDeleteException with detailed error message
                         if (!response.IsSuccessStatusCode)
@@ -803,7 +818,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                             ErrorHandlingUtilities.LogException(new UserDeleteException(message).ToString(), this.ControllerContext.RouteData.Values["controller"].ToString(), this.ControllerContext.RouteData.Values["action"].ToString());
                         }
 
-                        response = this.GetHttpClient().DeleteAsync("Client?userName=" + model.UserName).Result;
+                        response = this.GetHttpClient().DeleteAsync(String.Format("Client?userName={0}", model.UserName)).Result;
 
                         // If client could not be deleted, log EmployeeDeleteException with detailed error message
                         if (!response.IsSuccessStatusCode)
@@ -1102,7 +1117,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                             ErrorHandlingUtilities.LogException(new UserDeleteException(message).ToString(), this.ControllerContext.RouteData.Values["controller"].ToString(), this.ControllerContext.RouteData.Values["action"].ToString());
                         }
 
-                        response = this.GetHttpClient().DeleteAsync("Admin?userName=" + model.UserName).Result;
+                        response = this.GetHttpClient().DeleteAsync(String.Format("Admin?userName={0}", model.UserName)).Result;
 
                         // If admin could not be deleted, log EmployeeDeleteException with detailed error message
                         if (!response.IsSuccessStatusCode)

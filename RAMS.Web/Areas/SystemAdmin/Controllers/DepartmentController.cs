@@ -29,7 +29,22 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            return View();
+            var identity = User.Identity as ClaimsIdentity;
+
+            if (identity.HasClaim("UserType", "Agent"))
+            {
+                return RedirectToAction("Index", "Home", new { Area = "Agency" });
+            }
+            else if (identity.HasClaim("UserType", "Client"))
+            {
+                return RedirectToAction("Index", "Home", new { Area = "Customer" });
+            }
+            else if (identity.HasClaim("UserType", "Admin"))
+            {
+                return View();
+            }
+
+            return RedirectToAction("Index", "Home", new { Area = "" });
         }
 
         /// <summary>

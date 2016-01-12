@@ -39,7 +39,7 @@ namespace RAMS.Web.Controllers.WebAPI
         {
             var notifications = this.NotificationService.GetAllNotifications();
 
-            if (notifications.Count() > 0)
+            if (!Utilities.IsEmpty(notifications))
             {
                 return Ok(notifications);
             }

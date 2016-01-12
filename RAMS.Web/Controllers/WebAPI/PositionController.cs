@@ -39,7 +39,7 @@ namespace RAMS.Web.Controllers.WebAPI
         {
             var positions = this.PositionService.GetAllPositions();
 
-            if (positions.Count() > 0)
+            if (!Utilities.IsEmpty(positions))
             {
                 return Ok(positions);
             }
@@ -81,7 +81,7 @@ namespace RAMS.Web.Controllers.WebAPI
             {
                 var positions = this.PositionService.GetManyPositionsByDepartmentId(departmentId);
 
-                if (positions.Count() > 0)
+                if (!Utilities.IsEmpty(positions))
                 {
                     return Ok(positions);
                 }

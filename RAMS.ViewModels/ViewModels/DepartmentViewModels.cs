@@ -15,8 +15,10 @@ namespace RAMS.ViewModels
     {
         public int DepartmentId { get; set; }
 
+        [Display(Name = "Department Name")]
         public string Name { get; set; }
 
+        [Display(Name = "Number of Agents")]
         public int NumOfAgents { get; set; }
 
         public virtual List<Agent> Agents { get; set; }

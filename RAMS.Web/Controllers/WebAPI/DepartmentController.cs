@@ -39,7 +39,7 @@ namespace RAMS.Web.Controllers.WebAPI
         {
             var departments = this.DepartmentService.GetAllDepartments();
 
-            if (departments.Count() > 0)
+            if (!Utilities.IsEmpty(departments))
             {
                 return Ok(departments);
             }

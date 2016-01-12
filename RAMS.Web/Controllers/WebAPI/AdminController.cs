@@ -39,7 +39,7 @@ namespace RAMS.Web.Controllers.WebAPI
         {
             var admins = this.AdminService.GetAllAdmins();
 
-            if (admins.Count() > 0)
+            if (!Utilities.IsEmpty(admins))
             {
                 return Ok(admins);
             }

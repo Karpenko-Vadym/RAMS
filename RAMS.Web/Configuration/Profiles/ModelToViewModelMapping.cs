@@ -43,6 +43,8 @@ namespace RAMS.Web.Configuration
             Mapper.CreateMap<Department, DepartmentListViewModel>().ForMember(d => d.NumOfAgents, map => map.MapFrom(vm => vm.Agents.Count()));
             Mapper.CreateMap<Department, DepartmentAddViewModel>();
             Mapper.CreateMap<Department, DepartmentEditViewModel>();
+
+            Mapper.CreateMap<Client, ClientProfileDetailsViewModel>().ForMember(c => c.FullName, map => map.MapFrom(model => model.FirstName + " " + model.LastName));
         }
     }
 }

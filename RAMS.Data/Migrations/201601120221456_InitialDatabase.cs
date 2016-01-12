@@ -3,7 +3,7 @@ namespace RAMS.Data.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InistialDatabase : DbMigration
+    public partial class InitialDatabase : DbMigration
     {
         public override void Up()
         {
@@ -22,8 +22,6 @@ namespace RAMS.Data.Migrations
                         Company = c.String(nullable: false, maxLength: 200),
                         Email = c.String(nullable: false, maxLength: 300),
                         PhoneNumber = c.String(nullable: false, maxLength: 20),
-                        MediaType = c.String(),
-                        FileContent = c.Binary(),
                         Timestamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
                     })
                 .PrimaryKey(t => t.AdminId)
@@ -69,8 +67,6 @@ namespace RAMS.Data.Migrations
                         Company = c.String(nullable: false, maxLength: 200),
                         Email = c.String(nullable: false, maxLength: 300),
                         PhoneNumber = c.String(nullable: false, maxLength: 20),
-                        MediaType = c.String(),
-                        FileContent = c.Binary(),
                         Timestamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
                     })
                 .PrimaryKey(t => t.AgentId)
@@ -187,8 +183,6 @@ namespace RAMS.Data.Migrations
                         Company = c.String(nullable: false, maxLength: 200),
                         Email = c.String(nullable: false, maxLength: 300),
                         PhoneNumber = c.String(nullable: false, maxLength: 20),
-                        MediaType = c.String(),
-                        FileContent = c.Binary(),
                         Timestamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
                     })
                 .PrimaryKey(t => t.ClientId)

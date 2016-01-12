@@ -63,19 +63,19 @@ function GenerateRandomString(stringLength, allowedCharacters, regexString)
     }
 }
 
-
+// LoadDataTable method loads DataTable for the table with provided id
 function LoadDataTable(id)
 {
     $("#" + id).DataTable();
 }
 
-
-function LoadAction(divName, actionUrl)
+// LoadAction method loads an action method into a div with provided id
+function LoadAction(divId, actionUrl)
 {
-    $("#" + divName).load(actionUrl, function (response, status, xhr) { return status; });
+    $("#" + divId).load(actionUrl, function (response, status, xhr) { return status; });
 }
 
-
+// GetBaseUrl method returns a string representation of current application's base url
 function GetBaseUrl()
 {
     urlComponents = location.href.split('/');
@@ -83,6 +83,7 @@ function GetBaseUrl()
     return urlComponents[0] + "//" + urlComponents[2];
 }
 
+// ShowHidePassword method toggles password visibility of password fields
 function ShowHidePassword()
 {
     $("#showHidePassword").click(function () {
@@ -157,6 +158,16 @@ function SystemAdminModalControls() {
 }
 /******** END OF SYSTEM ADMIN MODAL CONTROLS ********/
 
+/************** CUSTOMER MODAL CONTROLS *************/
+function CustomerModalControls()
+{
+
+
+
+}
+
+/********** END OF CUSTOMER MODAL CONTROLS **********/
+
 /************** SYSTEM ADMIN FUNCTIONS **************/
 function RefreshEditForm(userName, userType) {
     LoadAction("edit-user-modal-body-div", "/RAMS/SystemAdmin/User/EditUser?userName=" + userName + "&userType=" + userType);
@@ -174,7 +185,7 @@ function DisableEditForm()
 
 
 /****************** MODAL UTILITIES *****************/
-
+// Fixes the issue with modal overflow in cases with multiple modals on one screen
 $(document).on("show.bs.modal", ".modal", function () {
     var index = ($('.modal:visible').length * 10) + 1040;
 
@@ -183,7 +194,7 @@ $(document).on("show.bs.modal", ".modal", function () {
     setTimeout(function () { $(".modal-backdrop").not(".modal-stack").css("z-index", index - 1).addClass("modal-stack"); }, 0);
 });
 
-
+// Fixes the issue with page scroll on pages with the modals
 $(document).on("hidden.bs.modal", ".modal", function () { $(".modal:visible").length && $(document.body).addClass('modal-open'); });
 
 /*************** END OF MODAL UTILITIES *************/

@@ -1,20 +1,46 @@
 ﻿@model RAMS.ViewModels.ClientProfileDetailsViewModel
 
+@using RAMS.Helpers
+
 @if (Model != null)
-{
-    <h2>@Model.FullName</h2>
+{    
+    <h2 class="text-center">@Model.FullName</h2>
+    <div class="row">
+        <div class="col-sm-3 col-md-3">
+            <img class="img-circle img-responsive" src="@Utilities.GetProfilePictureUrl(Model.UserName)" onerror="this.onerror=null;this.src='@Url.Content("~/Content/ProfilePictures/NoImage.jpg")'" />
+            
+            @if (String.IsNullOrEmpty(Utilities.GetProfilePictureUrl(Model.UserName)))
+            {
+                <input type="button" class="btn btn-info btn-block" value="Upload Picture" />
+            }
+            else
+            {
+                <div class="btn-group btn-group-justified" role="group">
+                    <div class="btn-group" role="group">
+                        <input type="button" class="btn btn-info" value="Change" />
+                    </div>
 
-    <dl class="dl-horizontal">
-        <dt>@Html.LabelFor(model => model.JobTitle)</dt>
-        <dd>@Model.JobTitle</dd>
-        <dt>@Html.LabelFor(model => model.Company)</dt>
-        <dd>@Model.Company</dd>
-        <dt>@Html.LabelFor(model => model.Email)</dt>
-        <dd>@Model.Email</dd>
-        <dt>@Html.LabelFor(model => model.PhoneNumber)</dt>
-        <dd>@Model.PhoneNumber</dd>
-    </dl>
+                    <div class="btn-group" role="group">
+                        <input type="button" class="btn btn-danger" value="Delete" />
+                    </div>
+                </div>
+            }
+        </div>
 
+        <div class="col-sm-7 col-md-7">
+            <div class="vertical-padding-24"></div>
+            <dl class="dl-horizontal">
+                <dt>@Html.LabelFor(model => model.JobTitle)</dt>
+                <dd>@Model.JobTitle</dd>
+                <dt>@Html.LabelFor(model => model.Company)</dt>
+                <dd>@Model.Company</dd>
+                <dt>@Html.LabelFor(model => model.Email)</dt>
+                <dd>@Model.Email</dd>
+                <dt>@Html.LabelFor(model => model.PhoneNumber)</dt>
+                <dd>@Model.PhoneNumber</dd>
+            </dl>
+        </div>
+    </div>
 }
 else
 {

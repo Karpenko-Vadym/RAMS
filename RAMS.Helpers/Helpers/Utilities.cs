@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -46,6 +47,29 @@ namespace RAMS.Helpers
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// GetProfilePictureUrl returns string representation of the path to user's profile picture, and if profile picture does not exist, returns empty string
+        /// </summary>
+        /// <param name="userName">User name of the user whos profile picture url is being fetched</param>
+        /// <returns>String representation of the path to user's profile picture, and if profile picture does not exist, returns empty string</returns>
+        public static string GetProfilePictureUrl(string userName)
+        {
+            if(File.Exists(String.Format("~/Content/ProfilePictures/{0}.jpg", userName)))
+            {
+                return String.Format("~/Content/ProfilePictures/{0}.jpg", userName);
+            }
+            else if(File.Exists(String.Format("~/Content/ProfilePictures/{0}.png", userName)))
+            {
+                return String.Format("~/Content/ProfilePictures/{0}.png", userName);
+            }
+            else if(File.Exists(String.Format("~/Content/ProfilePictures/{0}.gif", userName)))
+            {
+                return String.Format("~/Content/ProfilePictures/{0}.gif", userName);
+            }
+
+            return String.Empty;
         }
     }
 }

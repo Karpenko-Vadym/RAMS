@@ -9,6 +9,9 @@ namespace RAMS.ViewModels
 {
     public class ClientProfileDetailsViewModel
     {
+        [Display(Name = "User Name")]
+        public string UserName { get; set; }
+
         [Display(Name = "Full Name")]
         public string FullName { get; set; }
 

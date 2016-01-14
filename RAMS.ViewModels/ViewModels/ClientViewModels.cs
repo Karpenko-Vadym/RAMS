@@ -28,15 +28,20 @@ namespace RAMS.ViewModels
         public string PhoneNumber { get; set; }
     }
 
-    public class ClientProfileImageViewModel
+    public class ClientProfilePictureViewModel
     {
-        public HttpPostedFileBase Image { get; set; }
+        [Required]
+        public string UserName { get; set; }
 
-        public List<string> ImageContentTypes { get; set; }
+        [Required]
+        [Display(Name = "Profile Picture")]
+        public HttpPostedFileBase ProfilePicture { get; set; }
 
-        public ClientProfileImageViewModel()
+        public ClientProfilePictureViewModel() { }
+
+        public ClientProfilePictureViewModel(string userName)
         {
-            this.ImageContentTypes = new List<string> { "image/jpeg", "image/gif", "image/png" };
+            this.UserName = userName;
         }
     }
 }

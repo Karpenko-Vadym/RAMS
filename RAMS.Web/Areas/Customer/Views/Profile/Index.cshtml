@@ -1,5 +1,13 @@
-﻿<!-- PROFILE INDEX VIEW -->
+﻿@model string
+
+<!-- PROFILE INDEX VIEW -->
 <div class="well well-lg bottom-margin-0 background-white">
+    @if (!String.IsNullOrEmpty(Model))
+    {
+        <div class='alert alert-warning bottom-margin-0' role='alert'>
+            <div class='text-center'>@Model</div>
+        </div>
+    }
     <div id="profile-details-div"></div>
 
 

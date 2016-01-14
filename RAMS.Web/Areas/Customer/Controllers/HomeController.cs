@@ -11,22 +11,22 @@ namespace RAMS.Web.Areas.Customer.Controllers
     {
         public ActionResult Index()
         {
-            //var identity = User.Identity as ClaimsIdentity;
+            var identity = User.Identity as ClaimsIdentity;
 
-            //if (identity.HasClaim("UserType", "Agent"))
-            //{
-            //    return RedirectToAction("Index", "Home", new { Area = "Agency" });
-            //}
-            //else if (identity.HasClaim("UserType", "Client"))
-            //{
+            if (identity.HasClaim("UserType", "Agent"))
+            {
+                return RedirectToAction("Index", "Home", new { Area = "Agency" });
+            }
+            else if (identity.HasClaim("UserType", "Client"))
+            {
                 return RedirectToAction("Index", "Profile", new { Area = "Customer" });
-            //}
-            //else if (identity.HasClaim("UserType", "Admin"))
-            //{
-            //    return RedirectToAction("Index", "User", new { Area = "SystemAdmin" });
-            //}
+            }
+            else if (identity.HasClaim("UserType", "Admin"))
+            {
+                return RedirectToAction("Index", "User", new { Area = "SystemAdmin" });
+            }
 
-            //return RedirectToAction("Index", "Home", new { Area = "" });
+            return RedirectToAction("Index", "Home", new { Area = "" });
         }
     }
 }

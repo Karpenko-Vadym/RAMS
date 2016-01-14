@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Web;
+using System.Web.Mvc;
 
 namespace RAMS.Helpers
 {
@@ -54,19 +56,21 @@ namespace RAMS.Helpers
         /// </summary>
         /// <param name="userName">User name of the user whos profile picture's url is being fetched</param>
         /// <returns>String representation of the path to user's profile picture, and if profile picture does not exist, returns empty string</returns>
-        public static string GetProfilePictureUrl(string userName)
+        public static string GetProfilePictureUrl(this HtmlHelper htmlHelper, string userName)
         {
-            if(File.Exists(String.Format("~/Content/ProfilePictures/{0}.jpg", userName)))
+            var urlHelper = new UrlHelper(htmlHelper.ViewContext.RequestContext);
+
+            if(File.Exists(htmlHelper.ViewContext.HttpContext.Server.MapPath(String.Format("~/Content/ProfilePictures/{0}.jpg", userName))))
             {
-                return String.Format("~/Content/ProfilePictures/{0}.jpg", userName);
+                return urlHelper.Content(String.Format("~/Content/ProfilePictures/{0}.jpg", userName));
             }
-            else if(File.Exists(String.Format("~/Content/ProfilePictures/{0}.png", userName)))
+            else if (File.Exists(htmlHelper.ViewContext.HttpContext.Server.MapPath(String.Format("~/Content/ProfilePictures/{0}.png", userName))))
             {
-                return String.Format("~/Content/ProfilePictures/{0}.png", userName);
+                return urlHelper.Content(String.Format("~/Content/ProfilePictures/{0}.png", userName));
             }
-            else if(File.Exists(String.Format("~/Content/ProfilePictures/{0}.gif", userName)))
+            else if (File.Exists(htmlHelper.ViewContext.HttpContext.Server.MapPath(String.Format("~/Content/ProfilePictures/{0}.gif", userName))))
             {
-                return String.Format("~/Content/ProfilePictures/{0}.gif", userName);
+                return urlHelper.Content(String.Format("~/Content/ProfilePictures/{0}.gif", userName));
             }
 
             return String.Empty;

@@ -200,6 +200,7 @@
     <Content Include="Content\JS\Site.js" />
     <Content Include="Content\CSS\Site.css" />
     <Content Include="Content\favicon.ico" />
+    <Content Include="Content\ProfilePictures\jimmy.thomson.jpg" />
     <Content Include="Content\ProfilePictures\NoImage.jpg" />
     <Content Include="Global.asax" />
     <Content Include="Content\JS\modernizr-2.6.2.js" />

@@ -2,15 +2,21 @@
 
 @using RAMS.Helpers
 
+<!-- PROFILE DETAILS PARTIAL VIEW -->
+
 @if (Model != null)
 {    
     <h2 class="text-center">@Model.FullName</h2>
     <div class="profile-picture-message-div"></div>
     <div class="row">
         <div class="col-sm-3 col-md-3">
-            <img class="img-circle img-responsive" src="@Utilities.GetProfilePictureUrl(Model.UserName)" onerror="this.onerror=null;this.src='@Url.Content("~/Content/ProfilePictures/NoImage.jpg")'" />
-            
-            @if (String.IsNullOrEmpty(Utilities.GetProfilePictureUrl(Model.UserName)))
+            <div id="profile-picture-div">
+                <img class="img-circle img-responsive" src="@Html.GetProfilePictureUrl(Model.UserName)" onerror="this.onerror=null;this.src='@Url.Content("~/Content/ProfilePictures/NoImage.jpg")'" />
+            </div>
+
+            <div class="vertical-padding-24"></div>
+
+            @if (String.IsNullOrEmpty(Html.GetProfilePictureUrl(Model.UserName)))
             {
                 <input type="button" class="btn btn-info btn-block" data-action="upload" data-toggle="modal" data-target="#upload-change-profile-picture-modal" value="Upload Picture" />
             }
@@ -41,11 +47,10 @@
                 <dd>@Model.PhoneNumber</dd>
             </dl>
         </div>
-    </div>
-    
-    
+    </div>  
 }
 else
 {
     <div class="alert alert-danger bottom-margin-0" role="alert">Profile details are not available.</div>
 }
+<!-- END OF PROFILE DETAILS PARTIAL VIEW -->

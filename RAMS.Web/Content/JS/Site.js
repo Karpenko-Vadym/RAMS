@@ -86,7 +86,8 @@ function GetBaseUrl()
 // ShowHidePassword method toggles password visibility of password fields
 function ShowHidePassword()
 {
-    $("#showHidePassword").click(function () {
+    $("#showHidePassword").click(function ()
+    {
         if($(".password").attr("type") == "password")
         {
             $(".password").attr("type", "text");
@@ -97,11 +98,32 @@ function ShowHidePassword()
     });
 }
 
+// ProfilePictureUpload method allows to remove default "C:\\fakepath\\" path portion of the path to file and to preview the file that is being uploaded
+function ProfilePictureUpload()
+{
+    $('#profile-picture-upload').change(function ()
+    {
+        $('#path-input-field').val($(this).val().replace("C:\\fakepath\\", ""));
+
+        if (this.files && this.files[0])
+        {
+            var fileReader = new FileReader();
+
+            fileReader.onload = function (e)
+            {
+                $('#profile-picture-preview').attr('src', e.target.result);
+            }
+
+            fileReader.readAsDataURL(this.files[0]);
+        }
+    });
+}
 
 /************* END OF GENERAL FUNCTIONS *************/
 
 /*************** GENERAL MODAL CONTROLS *************/
-function GeneralModalControls() {
+function GeneralModalControls()
+{
     $("#edit-profile-modal").on("show.bs.modal", function (e) { LoadAction("edit-user-profile-modal-body-div", "/RAMS/Account/EditUserProfile"); });
 
     $("#change-password-modal").on("show.bs.modal", function (e) { LoadAction("password-change-div", "/RAMS/Account/ChangePassword?userName=" + $(e.relatedTarget).data("user-name") + "&userType=" + $(e.relatedTarget).data("user-type")); });
@@ -111,7 +133,8 @@ function GeneralModalControls() {
 /*********** END OF GENERAL MODAL CONTROLS **********/
 
 /************ SYSTEM ADMIN MODAL CONTROLS ***********/
-function SystemAdminModalControls() {
+function SystemAdminModalControls()
+{
     //Users
     $("#new-user-modal").on("show.bs.modal", function (e) { LoadAction("new-user-modal-body-div", "/RAMS/SystemAdmin/User/NewUser"); });
 
@@ -125,7 +148,8 @@ function SystemAdminModalControls() {
 
     $("#reset-password-modal").on("hidden.bs.modal", function (e) { $("#password-reset-div").empty(); });
 
-    $("#block-delete-user-modal").on("show.bs.modal", function (e) {
+    $("#block-delete-user-modal").on("show.bs.modal", function (e)
+    {
         if ($(e.relatedTarget).data("action") == "block")
         {
             $("#block-delete-user-modal-title").text("Block User - " + $(e.relatedTarget).data("user-name"));
@@ -161,7 +185,19 @@ function SystemAdminModalControls() {
 /************** CUSTOMER MODAL CONTROLS *************/
 function CustomerModalControls()
 {
+    $("#upload-change-profile-picture-modal").on("show.bs.modal", function (e)
+    {
+        if ($(e.relatedTarget).data("action") == "upload")
+        {
+            $("#upload-change-profile-picture-modal-title").text("Upload Profile Picture");
+        }
+        else if ($(e.relatedTarget).data("action") == "change")
+        {
+            $("#upload-change-profile-picture-modal-title").text("Change Profile Picture");
+        }
 
+        LoadAction("upload-change-profile-picture-modal-body-div", "/RAMS/Customer/Profile/UploadProfilePicture");
+    });
 
 
 }
@@ -169,7 +205,8 @@ function CustomerModalControls()
 /********** END OF CUSTOMER MODAL CONTROLS **********/
 
 /************** SYSTEM ADMIN FUNCTIONS **************/
-function RefreshEditForm(userName, userType) {
+function RefreshEditForm(userName, userType)
+{
     LoadAction("edit-user-modal-body-div", "/RAMS/SystemAdmin/User/EditUser?userName=" + userName + "&userType=" + userType);
 }
 
@@ -184,9 +221,11 @@ function DisableEditForm()
 /********** END OF SYSTEM ADMIN FUNCTIONS ***********/
 
 
+
 /****************** MODAL UTILITIES *****************/
 // Fixes the issue with modal overflow in cases with multiple modals on one screen
-$(document).on("show.bs.modal", ".modal", function () {
+$(document).on("show.bs.modal", ".modal", function ()
+{
     var index = ($('.modal:visible').length * 10) + 1040;
 
     $(this).css('z-index', index);

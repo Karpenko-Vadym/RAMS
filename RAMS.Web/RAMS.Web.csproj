@@ -235,6 +235,7 @@
     <Content Include="Areas\SystemAdmin\Views\Department\_EditDepartment.cshtml" />
     <Content Include="Areas\Customer\Views\Profile\Index.cshtml" />
     <Content Include="Areas\Customer\Views\Profile\_ProfileDetails.cshtml" />
+    <Content Include="Areas\Customer\Views\Profile\_UploadProfilePicture.cshtml" />
     <None Include="Content\JS\jquery-2.1.4.intellisense.js" />
     <Content Include="Content\JS\jquery-2.1.4.js" />
     <Content Include="Content\JS\jquery-2.1.4.min.js" />

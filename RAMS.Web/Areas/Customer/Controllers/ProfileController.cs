@@ -60,6 +60,20 @@ namespace RAMS.Web.Areas.Customer.Controllers
 
             return PartialView("_ProfileDetails");
         }
+
+        [HttpGet]
+        public PartialViewResult UploadProfilePicture()
+        {
+            return PartialView("_UploadProfilePicture");
+        }
+
+        [HttpPost]
+        public PartialViewResult UploadProfilePicture(ClientProfileImageViewModel model)
+        {
+            // TODO - null is returned for Image (Fix!)
+
+            return null;
+        }
         #endregion
     }
 }

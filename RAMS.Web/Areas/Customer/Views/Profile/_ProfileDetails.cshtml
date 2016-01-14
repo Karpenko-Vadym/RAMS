@@ -5,23 +5,24 @@
 @if (Model != null)
 {    
     <h2 class="text-center">@Model.FullName</h2>
+    <div class="profile-picture-message-div"></div>
     <div class="row">
         <div class="col-sm-3 col-md-3">
             <img class="img-circle img-responsive" src="@Utilities.GetProfilePictureUrl(Model.UserName)" onerror="this.onerror=null;this.src='@Url.Content("~/Content/ProfilePictures/NoImage.jpg")'" />
             
             @if (String.IsNullOrEmpty(Utilities.GetProfilePictureUrl(Model.UserName)))
             {
-                <input type="button" class="btn btn-info btn-block" value="Upload Picture" />
+                <input type="button" class="btn btn-info btn-block" data-action="upload" data-toggle="modal" data-target="#upload-change-profile-picture-modal" value="Upload Picture" />
             }
             else
             {
                 <div class="btn-group btn-group-justified" role="group">
                     <div class="btn-group" role="group">
-                        <input type="button" class="btn btn-info" value="Change" />
+                        <input type="button" class="btn btn-info" data-action="change" data-toggle="modal" data-target="#upload-change-profile-picture-modal" value="Change" />
                     </div>
 
                     <div class="btn-group" role="group">
-                        <input type="button" class="btn btn-danger" value="Delete" />
+                        <input type="button" class="btn btn-danger"  value="Delete" />
                     </div>
                 </div>
             }
@@ -41,6 +42,8 @@
             </dl>
         </div>
     </div>
+    
+    
 }
 else
 {

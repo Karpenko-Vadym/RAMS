@@ -52,7 +52,7 @@ namespace RAMS.Helpers
         /// <summary>
         /// GetProfilePictureUrl returns string representation of the path to user's profile picture, and if profile picture does not exist, returns empty string
         /// </summary>
-        /// <param name="userName">User name of the user whos profile picture url is being fetched</param>
+        /// <param name="userName">User name of the user whos profile picture's url is being fetched</param>
         /// <returns>String representation of the path to user's profile picture, and if profile picture does not exist, returns empty string</returns>
         public static string GetProfilePictureUrl(string userName)
         {

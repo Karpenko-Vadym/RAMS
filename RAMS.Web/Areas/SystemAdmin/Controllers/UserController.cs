@@ -80,6 +80,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
         /// <summary>
         /// Default action method that returns main view of User controller
+        /// User will be redirected to appropriate location depending on his/her UserType if user does not belong to this area
         /// </summary>
         /// <returns>Main view of User controller</returns>
         [HttpGet]
@@ -361,6 +362,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                             try
                             {
+                                // Send email
                                 var template = HttpContext.Server.MapPath("~/App_Data/UserRegistrationEmailTemplate.txt");
 
                                 var message = System.IO.File.ReadAllText(template);  
@@ -368,6 +370,14 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                                 message = message.Replace("%name%", agent.FirstName).Replace("%username%", agent.UserName).Replace("%password%", model.Password);
 
                                 Email.EmailService.SendEmail("atomix0x@gmail.com", "Your account has been created.", message); // Send login credentials to newly created user via email
+
+                                // Create notification
+                                response = await this.GetHttpClient().PostAsJsonAsync("Notification", new Notification() { AgentId = agent.AgentId, Status = NotificationStatus.Unread, Title = "Welcome to RAMS!", Details = "Your user account was successfully created on: " + DateTime.Now, DateCreated = DateTime.Now });
+
+                                if (!response.IsSuccessStatusCode)
+                                {
+                                    throw new NotificationAddException(String.Format("Notification could NOT be added for agent {0}. Status Code: {1}", agent.UserName, response.StatusCode));
+                                }
                             }
                             catch(System.IO.FileNotFoundException ex)
                             {
@@ -375,6 +385,11 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                                 ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
                             }
                             catch(System.IO.IOException ex)
+                            {
+                                // Log exception
+                                ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+                            }
+                            catch (NotificationAddException ex)
                             {
                                 // Log exception
                                 ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
@@ -515,7 +530,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                         if (!response.IsSuccessStatusCode)
                         {
                             // Log exception
-                            ErrorHandlingUtilities.LogException(new EmployeeDeleteException("Agent " + model.UserName + " could not be deleted. Response: " + response.StatusCode).ToString(), this.ControllerContext.RouteData.Values["controller"].ToString(), this.ControllerContext.RouteData.Values["action"].ToString());
+                            ErrorHandlingUtilities.LogException(new EmployeeDeleteException(String.Format("Agent {0} could not be deleted. Response: {1}", model.UserName, response.StatusCode)).ToString(), this.ControllerContext.RouteData.Values["controller"].ToString(), this.ControllerContext.RouteData.Values["action"].ToString());
                         }
                     }
                 }
@@ -676,6 +691,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                             try
                             {
+                                // Send email
                                 var template = HttpContext.Server.MapPath("~/App_Data/UserRegistrationEmailTemplate.txt");
 
                                 var message = System.IO.File.ReadAllText(template);
@@ -683,6 +699,14 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                                 message = message.Replace("%name%", client.FirstName).Replace("%username%", client.UserName).Replace("%password%", model.Password);
 
                                 Email.EmailService.SendEmail("atomix0x@gmail.com", "Your account has been created.", message); // Send login credentials to newly created user via email
+
+                                // Create notification
+                                response = await this.GetHttpClient().PostAsJsonAsync("Notification", new Notification() { ClientId = client.ClientId, Status = NotificationStatus.Unread, Title = "Welcome to RAMS!", Details = "Your user account was successfully created on: " + DateTime.Now, DateCreated = DateTime.Now });
+
+                                if (!response.IsSuccessStatusCode)
+                                {
+                                    throw new NotificationAddException(String.Format("Notification could NOT be added for client {0}. Status Code: {1}", client.UserName, response.StatusCode));
+                                }
                             }
                             catch (System.IO.FileNotFoundException ex)
                             {
@@ -690,6 +714,11 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                                 ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
                             }
                             catch (System.IO.IOException ex)
+                            {
+                                // Log exception
+                                ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+                            }
+                            catch (NotificationAddException ex)
                             {
                                 // Log exception
                                 ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
@@ -980,6 +1009,14 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                                 message = message.Replace("%name%", admin.FirstName).Replace("%username%", admin.UserName).Replace("%password%", model.Password);
 
                                 Email.EmailService.SendEmail("atomix0x@gmail.com", "Your account has been created.", message); // Send login credentials to newly created user via email
+
+                                // Create notification
+                                response = await this.GetHttpClient().PostAsJsonAsync("Notification", new Notification() { AdminId = admin.AdminId, Status = NotificationStatus.Unread, Title = "Welcome to RAMS!", Details = "Your user account was successfully created on: " + DateTime.Now, DateCreated = DateTime.Now });
+
+                                if (!response.IsSuccessStatusCode)
+                                {
+                                    throw new NotificationAddException(String.Format("Notification could NOT be added for admin {0}. Status Code: {1}", admin.UserName, response.StatusCode));
+                                }
                             }
                             catch (System.IO.FileNotFoundException ex)
                             {
@@ -987,6 +1024,11 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                                 ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
                             }
                             catch (System.IO.IOException ex)
+                            {
+                                // Log exception
+                                ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+                            }
+                            catch (NotificationAddException ex)
                             {
                                 // Log exception
                                 ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));

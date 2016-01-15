@@ -64,9 +64,11 @@ function GenerateRandomString(stringLength, allowedCharacters, regexString)
 }
 
 // LoadDataTable method loads DataTable for the table with provided id
-function LoadDataTable(id)
+function LoadDataTable(id, lengthMenuArray)
 {
-    $("#" + id).DataTable();
+    lengthMenuArray = (typeof lengthMenuArray === "undefined") ? [[10, 15, 20, 25], [10, 15, 20, 25]] : lengthMenuArray;
+
+    $("#" + id).DataTable({ "lengthMenu": lengthMenuArray });
 }
 
 // LoadAction method loads an action method into a div with provided id
@@ -179,6 +181,18 @@ function SystemAdminModalControls()
     $("#edit-department-modal").on("show.bs.modal", function (e) { $("#edit-department-modal-title").text("Edit Department - " + $(e.relatedTarget).data("department-name")); LoadAction("edit-department-modal-body-div", "/RAMS/SystemAdmin/Department/EditDepartment?id=" + $(e.relatedTarget).data("department-id")); });
 
     $("#edit-department-modal").on("hidden.bs.modal", function (e) { $("#edit-department-modal-title").text("Edit Department"); $("#edit-department-modal-body-div").empty(); });
+
+    // Profile
+    $("#upload-change-profile-picture-modal").on("show.bs.modal", function (e) {
+        if ($(e.relatedTarget).data("action") == "upload") {
+            $("#upload-change-profile-picture-modal-title").text("Upload Profile Picture");
+        }
+        else if ($(e.relatedTarget).data("action") == "change") {
+            $("#upload-change-profile-picture-modal-title").text("Change Profile Picture");
+        }
+
+        LoadAction("upload-change-profile-picture-modal-body-div", "/RAMS/SystemAdmin/Profile/UploadProfilePicture");
+    });
 }
 /******** END OF SYSTEM ADMIN MODAL CONTROLS ********/
 
@@ -198,8 +212,6 @@ function CustomerModalControls()
 
         LoadAction("upload-change-profile-picture-modal-body-div", "/RAMS/Customer/Profile/UploadProfilePicture");
     });
-
-
 }
 
 /********** END OF CUSTOMER MODAL CONTROLS **********/

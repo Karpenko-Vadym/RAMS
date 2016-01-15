@@ -21,9 +21,15 @@ using RAMS.Helpers;
 
 namespace RAMS.Web.Controllers
 {
+    /// <summary>
+    /// Test controller is a controller for testing stuff 
+    /// </summary>
     public class TestController : BaseController
     {
-        // GET: Test
+        /// <summary>
+        /// Method for testing stuff
+        /// </summary>
+        /// <returns>Positive test result</returns>
         public async Task Index()
         {
             var response = await this.GetHttpClient().GetAsync("Agent?id=1");

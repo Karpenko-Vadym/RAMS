@@ -35,6 +35,9 @@
             </div>
             <div class="collapse navbar-collapse" id="rams-navbar-collapse">
                 <ul class="nav navbar-nav">
+                    <li class='@Html.IsActive("Profile")'>
+                        @Html.ActionLink("Profile", "Index", "Profile", new { area = "Customer" }, new { @class = "" })
+                    </li>
                     <li class='@Html.IsActive("Help", "Index")'>
                         @Html.ActionLink("API", "Index", "Help", new { area = "HelpPage" }, new { @class = "" })
                     </li>

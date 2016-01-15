@@ -8,9 +8,9 @@ using System.Web;
 namespace RAMS.ViewModels
 {
     /// <summary>
-    /// ClientProfileDetailsViewModel view model declares properties for _ProfileDetails partial view
+    /// AdminProfileDetailsViewModel view model declares properties for _ProfileDetails partial view
     /// </summary>
-    public class ClientProfileDetailsViewModel
+    public class AdminProfileDetailsViewModel
     {
         [Display(Name = "User Name")]
         public string UserName { get; set; }
@@ -32,9 +32,9 @@ namespace RAMS.ViewModels
     }
 
     /// <summary>
-    /// ClientProfilePictureViewModel view model declares properties for _UploadProfilePicture partial view
+    /// AdminProfilePictureViewModel view model declares properties for _UploadProfilePicture partial view
     /// </summary>
-    public class ClientProfilePictureViewModel
+    public class AdminProfilePictureViewModel
     {
         [Required]
         public string UserName { get; set; }
@@ -43,9 +43,9 @@ namespace RAMS.ViewModels
         [Display(Name = "Profile Picture")]
         public HttpPostedFileBase ProfilePicture { get; set; }
 
-        public ClientProfilePictureViewModel() { }
+        public AdminProfilePictureViewModel() { }
 
-        public ClientProfilePictureViewModel(string userName)
+        public AdminProfilePictureViewModel(string userName)
         {
             this.UserName = userName;
         }

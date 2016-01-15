@@ -1,8 +1,8 @@
-﻿@model RAMS.ViewModels.ClientProfilePictureViewModel
+﻿@model RAMS.ViewModels.AdminProfilePictureViewModel
 <!-- UPLOAD PROFILE PICTURE PARTIAL -->
 @using RAMS.Helpers
 
-@using (Html.BeginForm("UploadProfilePicture", "Profile", new { Area = "Customer" }, FormMethod.Post, new { id = "upload-change-profile-picture-form", enctype = "multipart/form-data" }))
+@using (Html.BeginForm("UploadProfilePicture", "Profile", new { Area = "SystemAdmin" }, FormMethod.Post, new { id = "upload-change-profile-picture-form", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.UserName)

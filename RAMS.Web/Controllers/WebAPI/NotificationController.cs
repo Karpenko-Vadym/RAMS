@@ -19,14 +19,26 @@ namespace RAMS.Web.Controllers.WebAPI
     public class NotificationController : ApiController
     {
         private readonly INotificationService NotificationService;
+        private readonly IAgentService AgentService;
+        private readonly IClientService ClientService;
+        private readonly IAdminService AdminService;
 
         /// <summary>
         /// Controller that sets notification service in order to access context resources
         /// </summary>
-        /// <param name="notificationService">Parameter for setting notification service</param>
-        public NotificationController(INotificationService notificationService)
+        /// <param name="notificationService">Parameter for setting NotificationService</param>
+        /// <param name="agentService">Parameter for setting AgentService</param>
+        /// <param name="clientService">Parameter for setting ClientService</param>
+        /// <param name="adminService">Parameter for setting AdminService</param>
+        public NotificationController(INotificationService notificationService, IAgentService agentService, IClientService clientService, IAdminService adminService)
         {
             this.NotificationService = notificationService;
+
+            this.AgentService = agentService;
+
+            this.ClientService = clientService;
+
+            this.AdminService = adminService;
         }
 
         /// <summary>
@@ -42,6 +54,72 @@ namespace RAMS.Web.Controllers.WebAPI
             if (!Utilities.IsEmpty(notifications))
             {
                 return Ok(notifications);
+            }
+
+            return NotFound();
+        }
+
+        /// <summary>
+        /// Get the list of notifications for specific agent
+        /// </summary>
+        /// <param name="agentUserName">User name of the agent whos notification are being fetched</param>
+        /// <returns>The list of notifications for specific agent</returns>
+        [HttpGet]
+        [ResponseType(typeof(IEnumerable<Notification>))]
+        public IHttpActionResult GetManyNotificationsByAgentUserName(string agentUserName)
+        {
+            var agent = this.AgentService.GetOneAgentByUserName(agentUserName);
+
+            if (agent != null)
+            {
+                if (!Utilities.IsEmpty(agent.Notifications))
+                {
+                    return Ok(agent.Notifications);
+                }
+            }
+
+            return NotFound();
+        }
+
+        /// <summary>
+        /// Get the list of notifications for specific client
+        /// </summary>
+        /// <param name="clientUserName">User name of the client whos notification are being fetched</param>
+        /// <returns>The list of notifications for specific client</returns>
+        [HttpGet]
+        [ResponseType(typeof(IEnumerable<Notification>))]
+        public IHttpActionResult GetManyNotificationsByClientUserName(string clientUserName)
+        {
+            var client = this.ClientService.GetOneClientByUserName(clientUserName);
+
+            if (client != null)
+            {
+                if (!Utilities.IsEmpty(client.Notifications))
+                {
+                    return Ok(client.Notifications);
+                }
+            }
+
+            return NotFound();
+        }
+
+        /// <summary>
+        /// Get the list of notifications for specific admin
+        /// </summary>
+        /// <param name="adminUserName">User name of the admin whos notification are being fetched</param>
+        /// <returns>The list of notifications for specific admin</returns>
+        [HttpGet]
+        [ResponseType(typeof(IEnumerable<Notification>))]
+        public IHttpActionResult GetManyNotificationsByAdminUserName(string adminUserName)
+        {
+            var admin = this.AdminService.GetOneAdminByUserName(adminUserName);
+
+            if (admin != null)
+            {
+                if (!Utilities.IsEmpty(admin.Notifications))
+                {
+                    return Ok(admin.Notifications);
+                }
             }
 
             return NotFound();

@@ -24,6 +24,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
         /// <summary>
         /// Index action method will be called as soon as user navigates (Or gets redirected) to /RAMS/Departments
         /// This method displays the main view where all department related CRUD operations take place 
+        /// User will be redirected to appropriate location depending on his/her UserType if user does not belong to this area
         /// </summary>
         /// <returns>Main view where all department related CRUD operations take place</returns>
         [HttpGet]

@@ -17,7 +17,7 @@ using RAMS.Models;
 using RAMS.Web.Controllers;
 using RAMS.Helpers;
 
-namespace RAMS.Web.Areas.Customer.Controllers
+namespace RAMS.Web.Areas.SystemAdmin.Controllers
 {
     /// <summary>
     /// ProfileController implements employee profile related methods
@@ -41,11 +41,11 @@ namespace RAMS.Web.Areas.Customer.Controllers
             }
             else if (identity.HasClaim("UserType", "Client"))
             {
-                return View("Index", null, message);
+                return RedirectToAction("Index", "Home", new { Area = "Customer" });
             }
             else if (identity.HasClaim("UserType", "Admin"))
             {
-                return RedirectToAction("Index", "Home", new { Area = "SystemAdmin" });
+                return View("Index", null, message);
             }
 
             return RedirectToAction("Index", "Home", new { Area = "" });
@@ -59,13 +59,13 @@ namespace RAMS.Web.Areas.Customer.Controllers
         [HttpGet]
         public async Task<PartialViewResult> ProfileDetails()
         {
-            var response = await this.GetHttpClient().GetAsync(String.Format("Client?userName={0}", User.Identity.Name));
+            var response = await this.GetHttpClient().GetAsync(String.Format("Admin?userName={0}", User.Identity.Name));
 
             if (response.IsSuccessStatusCode)
             {
-                var clientProfileDetailsViewModel = Mapper.Map<Client, ClientProfileDetailsViewModel>(await response.Content.ReadAsAsync<Client>());
+                var adminProfileDetailsViewModel = Mapper.Map<Admin, AdminProfileDetailsViewModel>(await response.Content.ReadAsAsync<Admin>());
 
-                return PartialView("_ProfileDetails", clientProfileDetailsViewModel);
+                return PartialView("_ProfileDetails", adminProfileDetailsViewModel);
             }
 
             return PartialView("_ProfileDetails");
@@ -78,9 +78,9 @@ namespace RAMS.Web.Areas.Customer.Controllers
         [HttpGet]
         public PartialViewResult UploadProfilePicture()
         {
-            var clientProfilePictureViewModel = new ClientProfilePictureViewModel(User.Identity.Name);
+            var adminProfilePictureViewModel = new AdminProfilePictureViewModel(User.Identity.Name);
 
-            return PartialView("_UploadProfilePicture", clientProfilePictureViewModel);
+            return PartialView("_UploadProfilePicture", adminProfilePictureViewModel);
         }
 
         /// <summary>
@@ -89,9 +89,9 @@ namespace RAMS.Web.Areas.Customer.Controllers
         /// <param name="model">View model with information required to save the file</param>
         /// <returns>Redirects to Index view with success message, or failure message</returns>
         [HttpPost]
-        public ActionResult UploadProfilePicture(ClientProfilePictureViewModel model)
+        public ActionResult UploadProfilePicture(AdminProfilePictureViewModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 try
                 {
@@ -99,7 +99,7 @@ namespace RAMS.Web.Areas.Customer.Controllers
                     {
                         model.ProfilePicture.SaveAs(System.IO.Path.Combine(Server.MapPath("~/Content/ProfilePictures/"), model.UserName + ".jpg")); // Save file
 
-                        if(System.IO.File.Exists(System.IO.Path.Combine(Server.MapPath("~/Content/ProfilePictures/"), model.UserName + ".png")))
+                        if (System.IO.File.Exists(System.IO.Path.Combine(Server.MapPath("~/Content/ProfilePictures/"), model.UserName + ".png")))
                         {
                             System.IO.File.Delete(System.IO.Path.Combine(Server.MapPath("~/Content/ProfilePictures/"), model.UserName + ".png")); // Delete other files if present
                         }
@@ -109,9 +109,9 @@ namespace RAMS.Web.Areas.Customer.Controllers
                             System.IO.File.Delete(System.IO.Path.Combine(Server.MapPath("~/Content/ProfilePictures/"), model.UserName + ".gif")); // Delete other files if present
                         }
 
-                        return RedirectToAction("Index", "Profile", new { Area = "Customer", message = "Profile picture has been successfully updated." });
+                        return RedirectToAction("Index", "Profile", new { Area = "SystemAdmin", message = "Profile picture has been successfully updated." });
                     }
-                    else if (model.ProfilePicture.ContentType == "image/gif") // If file is .gif
+                    else if (model.ProfilePicture.ContentType == "image/gif") // If file is .giv
                     {
                         model.ProfilePicture.SaveAs(System.IO.Path.Combine(Server.MapPath("~/Content/ProfilePictures/"), model.UserName + ".gif")); // Save file
 
@@ -125,7 +125,7 @@ namespace RAMS.Web.Areas.Customer.Controllers
                             System.IO.File.Delete(System.IO.Path.Combine(Server.MapPath("~/Content/ProfilePictures/"), model.UserName + ".png")); // Delete other files if present
                         }
 
-                        return RedirectToAction("Index", "Profile", new { Area = "Customer", message = "Profile picture has been successfully updated." });
+                        return RedirectToAction("Index", "Profile", new { Area = "SystemAdmin", message = "Profile picture has been successfully updated." });
                     }
                     else if (model.ProfilePicture.ContentType == "image/png") // If file is .png
                     {
@@ -141,11 +141,11 @@ namespace RAMS.Web.Areas.Customer.Controllers
                             System.IO.File.Delete(System.IO.Path.Combine(Server.MapPath("~/Content/ProfilePictures/"), model.UserName + ".gif")); // Delete other files if present
                         }
 
-                        return RedirectToAction("Index", "Profile", new { Area = "Customer", message = "Profile picture has been successfully updated." });
+                        return RedirectToAction("Index", "Profile", new { Area = "SystemAdmin", message = "Profile picture has been successfully updated." });
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Profile", new { Area = "Customer", message = "Unsupported image type. Please try again using supported image type." });
+                        return RedirectToAction("Index", "Profile", new { Area = "SystemAdmin", message = "Unsupported image type. Please try again using supported image type." });
                     }
                 }
                 catch (UnauthorizedAccessException ex) // IMPORTANT - This exception will probably be thrown on the server, unless we change ProfilePictures folder's permissions right away
@@ -153,19 +153,19 @@ namespace RAMS.Web.Areas.Customer.Controllers
                     // Log exception
                     ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
 
-                    return RedirectToAction("Index", "Profile", new { Area = "Customer", message = "File could NOT be saved due to lack of permissions. Please review exception log for more details." });
+                    return RedirectToAction("Index", "Profile", new { Area = "SystemAdmin", message = "File could NOT be saved due to lack of permissions. Please review exception log for more details." });
                 }
-                catch(System.IO.IOException ex)
+                catch (System.IO.IOException ex)
                 {
                     // Log exception
                     ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
 
-                    return RedirectToAction("Index", "Profile", new { Area = "Customer", message = "An exception has occured. Please review exception log for more details." });
+                    return RedirectToAction("Index", "Profile", new { Area = "SystemAdmin", message = "An exception has occured. Please review exception log for more details." });
                 }
 
             }
 
-            return RedirectToAction("Index", "Profile", new { Area = "Customer", message = "An error occured while attmpting to upload a profile picture. Profile picture has NOT been updated." });
+            return RedirectToAction("Index", "Profile", new { Area = "SystemAdmin", message = "An error occured while attmpting to upload a profile picture. Profile picture has NOT been updated." });
         }
 
         /// <summary>
@@ -202,17 +202,17 @@ namespace RAMS.Web.Areas.Customer.Controllers
 
                 if (success)
                 {
-                    return RedirectToAction("Index", "Profile", new { Area = "Customer", message = "Profile picture has been successfully deleted." });
+                    return RedirectToAction("Index", "Profile", new { Area = "SystemAdmin", message = "Profile picture has been successfully deleted." });
                 }
 
-                return RedirectToAction("Index", "Profile", new { Area = "Customer", message = "Profile picture could NOT be deleted at this time." });
+                return RedirectToAction("Index", "Profile", new { Area = "SystemAdmin", message = "Profile picture could NOT be deleted at this time." });
             }
             catch (System.IO.IOException ex)
             {
                 // Log exception
                 ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
 
-                return RedirectToAction("Index", "Profile", new { Area = "Customer", message = "An exception has occured. Please review exception log for more details." });
+                return RedirectToAction("Index", "Profile", new { Area = "SystemAdmin", message = "An exception has occured. Please review exception log for more details." });
             }
         }
         #endregion
@@ -223,7 +223,7 @@ namespace RAMS.Web.Areas.Customer.Controllers
         /// <returns>_NotificationList partial view with the list of notifications for current user (If any)</returns>
         public async Task<PartialViewResult> GetNotificationList()
         {
-            var response = await this.GetHttpClient().GetAsync(String.Format("Notification?clientUserName={0}", User.Identity.Name));
+            var response = await this.GetHttpClient().GetAsync(String.Format("Notification?adminUserName={0}", User.Identity.Name));
 
             if (response.IsSuccessStatusCode)
             {

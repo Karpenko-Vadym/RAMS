@@ -148,4 +148,17 @@ namespace RAMS.Helpers
 
         public DepartmentUpdateException(string message, Exception innerException) : base(message, innerException) { }
     }
+
+    /// <summary>
+    /// NotificationAddException is a custom exception that provides additional controls over the application and error handling
+    /// NotificationAddException is thrown when notification creation issue occurs
+    /// </summary>
+    public class NotificationAddException : Exception
+    {
+        public NotificationAddException() : base("Notification could not be created.") { }
+
+        public NotificationAddException(string message) : base(message) { }
+
+        public NotificationAddException(string message, Exception innerException) : base(message, innerException) { }
+    }
 }

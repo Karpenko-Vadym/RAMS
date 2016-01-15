@@ -200,7 +200,6 @@
     <Content Include="Content\JS\Site.js" />
     <Content Include="Content\CSS\Site.css" />
     <Content Include="Content\favicon.ico" />
-    <Content Include="Content\ProfilePictures\jimmy.thomson.jpg" />
     <Content Include="Content\ProfilePictures\NoImage.jpg" />
     <Content Include="Global.asax" />
     <Content Include="Content\JS\modernizr-2.6.2.js" />
@@ -237,6 +236,11 @@
     <Content Include="Areas\Customer\Views\Profile\Index.cshtml" />
     <Content Include="Areas\Customer\Views\Profile\_ProfileDetails.cshtml" />
     <Content Include="Areas\Customer\Views\Profile\_UploadProfilePicture.cshtml" />
+    <Content Include="Areas\Customer\Views\Profile\_NotificationList.cshtml" />
+    <Content Include="Areas\SystemAdmin\Views\Profile\_NotificationList.cshtml" />
+    <Content Include="Areas\SystemAdmin\Views\Profile\_ProfileDetails.cshtml" />
+    <Content Include="Areas\SystemAdmin\Views\Profile\_UploadProfilePicture.cshtml" />
+    <Content Include="Areas\SystemAdmin\Views\Profile\Index.cshtml" />
     <None Include="Content\JS\jquery-2.1.4.intellisense.js" />
     <Content Include="Content\JS\jquery-2.1.4.js" />
     <Content Include="Content\JS\jquery-2.1.4.min.js" />
@@ -290,6 +294,7 @@
     <Compile Include="Areas\Portal\PortalAreaRegistration.cs" />
     <Compile Include="Areas\SystemAdmin\Controllers\DepartmentController.cs" />
     <Compile Include="Areas\SystemAdmin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\SystemAdmin\Controllers\ProfileController.cs" />
     <Compile Include="Areas\SystemAdmin\Controllers\UserController.cs" />
     <Compile Include="Areas\SystemAdmin\SystemAdminAreaRegistration.cs" />
     <Compile Include="Configuration\AutofacConfiguration.cs" />
@@ -373,11 +378,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Areas\Agency\Models\" />
-    <Folder Include="Areas\Customer\Models\" />
-    <Folder Include="Views\Test\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\RAMS.Data\RAMS.Data.csproj">
       <Project>{62bb8f5b-2989-40e0-9de2-294bcc0c909d}</Project>

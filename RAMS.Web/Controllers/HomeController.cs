@@ -41,7 +41,7 @@ namespace RAMS.Web.Controllers
                 return RedirectToAction("Index", "Home", new { Area = "SystemAdmin" });
             }
 
-            return RedirectToAction("Index", "Home", new { Area = "Portal" });
+            return RedirectToAction("Login", "Account", new { Area = "" });
         }
     }
 }

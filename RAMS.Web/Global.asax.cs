@@ -39,5 +39,19 @@ namespace RAMS.Web
             // Initializa all the custom configuration
             InitializationConfig.Initialize();
         }
+
+        /// <summary>
+        /// Application_BeginRequest method is executed at the begining of each request
+        /// </summary>
+        protected void Application_BeginRequest()
+        {
+            // Server Certificate is needed to be able to use HTTPS
+            // While Self-Signes Certificate work, browsers still complain about insecurity
+            // In order to avoid such errors, we only allow HTTP requiests (We can allow HTTPS requests if we get Verified Certificate)
+            if(Context.Request.IsSecureConnection) 
+            {
+                Response.Redirect(Context.Request.Url.ToString().Replace("https", "http")); 
+            }
+        }
     }
 }

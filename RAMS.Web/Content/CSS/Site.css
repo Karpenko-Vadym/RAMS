@@ -26,3 +26,10 @@ select option:disabled
 {
     display: none;
 }
+
+.vertical-align-center
+{
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}

@@ -1,0 +1,59 @@
+﻿@model RAMS.ViewModels.AdminProfilePictureViewModel
+<!-- UPLOAD PROFILE PICTURE PARTIAL -->
+@using RAMS.Helpers
+
+@using (Html.BeginForm("UploadProfilePicture", "Profile", new { Area = "SystemAdmin" }, FormMethod.Post, new { id = "upload-change-profile-picture-form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.UserName)
+
+    <div class="well well-lg bottom-margin-0">
+        <div class="well well-lg background-white bottom-margin-0">
+            <div class="row">
+
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class='alert alert-warning' role='alert'>
+                            <div><strong>Supported Formats:</strong> JPEG, PNG, GIF</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <img id="profile-picture-preview" class="img-circle col-md-4 col-sm-4 col-xs-4 col-md-offset-4 col-xs-offset-4" src="@Html.GetProfilePictureUrl(Model.UserName)" onerror="this.onerror=null;this.src='@Url.Content("~/Content/ProfilePictures/NoImage.jpg")'" alt="Profile Picture" />
+                </div>
+
+                <input type="file" name="ProfilePicture" style="visibility:hidden;" id="profile-picture-upload" />
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ProfilePicture, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-8">
+                        <div class="input-group">
+                            <input type="text" id="path-input-field" class="form-control">
+                            <div class="input-group-btn">
+                                <span class="btn btn-info" onclick="$('#profile-picture-upload').click();">Browse</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="vertical-padding-24"></div>
+
+    <div class="form-group bottom-margin-0">
+        <div class="col-md-offset-0 col-lg-offset-0 col-md-3 col-lg-3">
+            <input type="submit" value="Upload" class="btn btn-danger btn-block" onclick="$('#upload-change-profile-picture-modal').modal('hide');" />
+        </div>
+
+        <div class="col-md-offset-6 col-lg-offset-6 col-md-3 col-lg-3">
+            <input type="button" value="Cancel" class="btn btn-info btn-block" onclick="$('#upload-change-profile-picture-modal').modal('hide');" />
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+}
+
+<script type="text/javascript">$(function () { ProfilePictureUpload(); });</script>
+<!-- END OF UPLOAD PROFILE PICTURE PARTIAL -->

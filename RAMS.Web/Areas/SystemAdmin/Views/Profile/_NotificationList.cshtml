@@ -1,0 +1,35 @@
+﻿@model List<RAMS.ViewModels.NotificationListViewModel>
+
+<!-- NOTIFICATION LIST PARTIAL -->
+@if (!RAMS.Helpers.Utilities.IsEmpty(Model))
+{
+    <div class="vertical-padding-24"></div>
+    <table id="notification-list-table" class="table table-striped table-bordered table-hover bottom-margin-0" cellspacing="0">
+        <thead>
+            <tr class="active">
+                <th>Title</th>
+                <th>Description</th>
+                <th>Date Created</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Title</td>
+                    <td>@item.Details</td>
+                    <td>@item.DateCreated</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <script type="text/javascript">$(function () { LoadDataTable("notification-list-table", [[5, 10, 15], [5, 10, 15]]) });</script>
+}
+else
+{
+    <div class="vertical-padding-24"></div>
+    <div class="alert alert-warning bottom-margin-0 text-center" role="alert"><span>Notifications are not available.</span></div>
+}
+<!-- END OF NOTIFICATION LIST PARTIAL -->
+

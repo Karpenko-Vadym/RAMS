@@ -100,22 +100,22 @@ namespace RAMS.Data
 
             /* Set up table relations */
 
-            modelBuilder.Entity<Candidate>().HasRequired(c => c.Position).WithMany(p => p.Candidates).HasForeignKey(c => c.PositionId);
-            
-            modelBuilder.Entity<Candidate>().HasMany(c => c.Interviews).WithRequired(i => i.Candidate).HasForeignKey(c => c.CandidateId);
+            modelBuilder.Entity<Candidate>().HasRequired(c => c.Position).WithMany(p => p.Candidates).HasForeignKey(c => c.PositionId).WillCascadeOnDelete(true);
+            modelBuilder.Entity<Candidate>().HasMany(c => c.Interviews).WithRequired(i => i.Candidate).HasForeignKey(c => c.CandidateId).WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<Category>().HasMany(c => c.Positions).WithRequired(p => p.Category).HasForeignKey(c => c.CategoryId);
+            modelBuilder.Entity<Category>().HasMany(c => c.Positions).WithRequired(p => p.Category).HasForeignKey(c => c.CategoryId).WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<Department>().HasMany(d => d.Agents).WithRequired(a => a.Department).HasForeignKey(d => d.DepartmentId);
+            modelBuilder.Entity<Department>().HasMany(d => d.Agents).WithRequired(a => a.Department).HasForeignKey(d => d.DepartmentId).WillCascadeOnDelete(true);
+            modelBuilder.Entity<Department>().HasMany(d => d.Positions).WithRequired(p => p.Department).HasForeignKey(d => d.DepartmentId).WillCascadeOnDelete(true);
 
-            modelBuilder.Entity<Interview>().HasRequired(i => i.Interviewer).WithMany(a => a.Interviews).HasForeignKey(i => i.InterviewerId);
+            modelBuilder.Entity<Interview>().HasRequired(i => i.Interviewer).WithMany(a => a.Interviews).HasForeignKey(i => i.InterviewerId).WillCascadeOnDelete(true); ;
 
-            modelBuilder.Entity<Notification>().HasOptional(n => n.Client).WithMany(c => c.Notifications).HasForeignKey(n => n.ClientId);
-            modelBuilder.Entity<Notification>().HasOptional(n => n.Agent).WithMany(a => a.Notifications).HasForeignKey(n => n.AgentId);
-            modelBuilder.Entity<Notification>().HasOptional(n => n.Admin).WithMany(a => a.Notifications).HasForeignKey(n => n.AdminId);
+            modelBuilder.Entity<Notification>().HasOptional(n => n.Client).WithMany(c => c.Notifications).HasForeignKey(n => n.ClientId).WillCascadeOnDelete(true);
+            modelBuilder.Entity<Notification>().HasOptional(n => n.Agent).WithMany(a => a.Notifications).HasForeignKey(n => n.AgentId).WillCascadeOnDelete(true);
+            modelBuilder.Entity<Notification>().HasOptional(n => n.Admin).WithMany(a => a.Notifications).HasForeignKey(n => n.AdminId).WillCascadeOnDelete(true);
 
-            modelBuilder.Entity<Position>().HasOptional(p => p.Agent).WithMany(a => a.Positions).HasForeignKey(p => p.AgentId);
-            modelBuilder.Entity<Position>().HasRequired(p => p.Client).WithMany(a => a.Positions).HasForeignKey(p => p.CleintId);
+            modelBuilder.Entity<Position>().HasOptional(p => p.Agent).WithMany(a => a.Positions).HasForeignKey(p => p.AgentId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<Position>().HasRequired(p => p.Client).WithMany(a => a.Positions).HasForeignKey(p => p.CleintId).WillCascadeOnDelete(true);
         }
     }
 }

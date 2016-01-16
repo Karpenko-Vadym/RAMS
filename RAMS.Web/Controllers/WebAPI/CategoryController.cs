@@ -39,7 +39,7 @@ namespace RAMS.Web.Controllers.WebAPI
         {
             var categories = this.CategoryService.GetAllCategories();
 
-            if (categories.Count() > 0)
+            if (!Utilities.IsEmpty(categories))
             {
                 return Ok(categories);
             }

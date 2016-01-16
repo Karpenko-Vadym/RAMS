@@ -39,7 +39,7 @@ namespace RAMS.Web.Controllers.WebAPI
         {
             var candidates = this.CandidateService.GetAllCandidates();
 
-            if (candidates.Count() > 0)
+            if (!Utilities.IsEmpty(candidates))
             {
                 return Ok(candidates);
             }

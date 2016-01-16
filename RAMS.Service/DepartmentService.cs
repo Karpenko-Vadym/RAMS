@@ -19,6 +19,8 @@ namespace RAMS.Service.Interfaces
 
         private readonly IAgentRepository AgentRepository;
 
+        private readonly IPositionRepository PositionRepository;
+
         private readonly IUnitOfWork UnitOfWork;
 
         /// <summary>
@@ -26,12 +28,15 @@ namespace RAMS.Service.Interfaces
         /// </summary>
         /// <param name="departmentRepository">Parameter for setting DepartmentRepository</param>
         /// <param name="agentRepository">Parameter for setting AgentRepository</param>
+        /// <param name="positionRepository">Parameter for setting PositionRepository</param>
         /// <param name="unitOfWork">Parameter for setting UnitOfWork</param>
-        public DepartmentService(IDepartmentRepository departmentRepository, IAgentRepository agentRepository, IUnitOfWork unitOfWork) 
+        public DepartmentService(IDepartmentRepository departmentRepository, IAgentRepository agentRepository, IPositionRepository positionRepository, IUnitOfWork unitOfWork) 
         {
             this.DepartmentRepository = departmentRepository;
 
             this.AgentRepository = agentRepository;
+
+            this.PositionRepository = positionRepository;
 
             this.UnitOfWork = unitOfWork;
         }
@@ -60,12 +65,24 @@ namespace RAMS.Service.Interfaces
         /// Get department of specific agent 
         /// </summary>
         /// <param name="id">Id of the agent who's department is being retrieved</param>
-        /// <returns></returns>
+        /// <returns>Department of specific agent</returns>
         public Department GetOneDepartmentByAgentId(int id)
         {
             var agent = this.AgentRepository.GetById(id);
 
             return agent.Department;
+        }
+
+        /// <summary>
+        /// Get department for specific position
+        /// </summary>
+        /// <param name="id">Id of the position for which department is being retrieved</param>
+        /// <returns>Department for specific position</returns>
+        public Department GetOneDepartmentByPositionId(int id)
+        {
+            var position = this.PositionRepository.GetById(id);
+
+            return position.Department;
         }
         #endregion
 

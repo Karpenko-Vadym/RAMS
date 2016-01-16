@@ -1,4 +1,5 @@
-﻿// Remove empty options from dropdowns
+﻿/***************** GENERAL FUNCTIONS ****************/
+// Remove empty options from dropdowns
 $("select option").filter(function () { return !this.value || $.trim(this.value).length == 0; }).prop("disabled", "disabled");
 
 // Remove empty options from dropdowns for partial views (Partial views (Loaded with Ajax after triggering some event) will not pickup already loaded JavaScript)
@@ -62,19 +63,21 @@ function GenerateRandomString(stringLength, allowedCharacters, regexString)
     }
 }
 
-
-function LoadDataTable(id)
+// LoadDataTable method loads DataTable for the table with provided id
+function LoadDataTable(id, lengthMenuArray)
 {
-    $("#" + id).DataTable();
+    lengthMenuArray = (typeof lengthMenuArray === "undefined") ? [[10, 15, 20, 25], [10, 15, 20, 25]] : lengthMenuArray;
+
+    $("#" + id).DataTable({ "lengthMenu": lengthMenuArray });
 }
 
-
-function LoadAction(divName, actionUrl)
+// LoadAction method loads an action method into a div with provided id
+function LoadAction(divId, actionUrl)
 {
-    $("#" + divName).load(actionUrl, function (response, status, xhr) { return status; });
+    $("#" + divId).load(actionUrl, function (response, status, xhr) { return status; });
 }
 
-
+// GetBaseUrl method returns a string representation of current application's base url
 function GetBaseUrl()
 {
     urlComponents = location.href.split('/');
@@ -82,9 +85,59 @@ function GetBaseUrl()
     return urlComponents[0] + "//" + urlComponents[2];
 }
 
+// ShowHidePassword method toggles password visibility of password fields
+function ShowHidePassword()
+{
+    $("#showHidePassword").click(function ()
+    {
+        if($(".password").attr("type") == "password")
+        {
+            $(".password").attr("type", "text");
+        }
+        else {
+            $(".password").attr("type", "password");
+        }
+    });
+}
+
+// ProfilePictureUpload method allows to remove default "C:\\fakepath\\" path portion of the path to file and to preview the file that is being uploaded
+function ProfilePictureUpload()
+{
+    $('#profile-picture-upload').change(function ()
+    {
+        $('#path-input-field').val($(this).val().replace("C:\\fakepath\\", ""));
+
+        if (this.files && this.files[0])
+        {
+            var fileReader = new FileReader();
+
+            fileReader.onload = function (e)
+            {
+                $('#profile-picture-preview').attr('src', e.target.result);
+            }
+
+            fileReader.readAsDataURL(this.files[0]);
+        }
+    });
+}
+
+/************* END OF GENERAL FUNCTIONS *************/
+
+/*************** GENERAL MODAL CONTROLS *************/
+function GeneralModalControls()
+{
+    $("#edit-profile-modal").on("show.bs.modal", function (e) { LoadAction("edit-user-profile-modal-body-div", "/RAMS/Account/EditUserProfile"); });
+
+    $("#change-password-modal").on("show.bs.modal", function (e) { LoadAction("password-change-div", "/RAMS/Account/ChangePassword?userName=" + $(e.relatedTarget).data("user-name") + "&userType=" + $(e.relatedTarget).data("user-type")); });
+
+    $("#edit-profile-modal").on("hidden.bs.modal", function (e) { $("#edit-user-profile-modal-body-div").empty(); $("#edit-user-profile-message-modal-body-div").empty(); });
+}
+/*********** END OF GENERAL MODAL CONTROLS **********/
 
 /************ SYSTEM ADMIN MODAL CONTROLS ***********/
-function SystemAdminModalControls() {
+function SystemAdminModalControls()
+{
+    //Users
     $("#new-user-modal").on("show.bs.modal", function (e) { LoadAction("new-user-modal-body-div", "/RAMS/SystemAdmin/User/NewUser"); });
 
     $("#new-user-modal").on("hidden.bs.modal", function (e) { $("#new-user-modal-body-div").empty(); });
@@ -93,13 +146,12 @@ function SystemAdminModalControls() {
 
     $("#edit-user-modal").on("hidden.bs.modal", function (e) { $("#edit-user-modal-title").text("Edit User"); $("#edit-user-modal-body-div").empty(); });
 
-
-
-    $("#reset-password-modal").on("show.bs.modal", function (e) { LoadAction("password-reset-div", "/RAMS/SystemAdmin/User/ResetPassword?userName=" + $(e.relatedTarget).data("user-name") + "&userType=" + $(e.relatedTarget).data("user-type") + "&email=" + $(e.relatedTarget).data("email") + "&firstName=" + $(e.relatedTarget).data("firstName")); $("#edit-user-modal-title").text($(e.relatedTarget).data("user-name")); });
+    $("#reset-password-modal").on("show.bs.modal", function (e) { LoadAction("password-reset-div", "/RAMS/SystemAdmin/User/ResetPassword?userName=" + $(e.relatedTarget).data("user-name") + "&userType=" + $(e.relatedTarget).data("user-type") + "&email=" + $(e.relatedTarget).data("email") + "&firstName=" + $(e.relatedTarget).data("firstName")); });
 
     $("#reset-password-modal").on("hidden.bs.modal", function (e) { $("#password-reset-div").empty(); });
 
-    $("#block-delete-user-modal").on("show.bs.modal", function (e) {
+    $("#block-delete-user-modal").on("show.bs.modal", function (e)
+    {
         if ($(e.relatedTarget).data("action") == "block")
         {
             $("#block-delete-user-modal-title").text("Block User - " + $(e.relatedTarget).data("user-name"));
@@ -120,11 +172,53 @@ function SystemAdminModalControls() {
     });
 
     $("#block-delete-user-modal").on("hidden.bs.modal", function (e) { $("#block-delete-user-div").empty(); });
+
+    //Departments
+    $("#new-department-modal").on("show.bs.modal", function (e) { LoadAction("new-department-modal-body-div", "/RAMS/SystemAdmin/Department/NewDepartment"); });
+
+    $("#new-department-modal").on("hidden.bs.modal", function (e) { $("#new-department-modal-body-div").empty(); });
+
+    $("#edit-department-modal").on("show.bs.modal", function (e) { $("#edit-department-modal-title").text("Edit Department - " + $(e.relatedTarget).data("department-name")); LoadAction("edit-department-modal-body-div", "/RAMS/SystemAdmin/Department/EditDepartment?id=" + $(e.relatedTarget).data("department-id")); });
+
+    $("#edit-department-modal").on("hidden.bs.modal", function (e) { $("#edit-department-modal-title").text("Edit Department"); $("#edit-department-modal-body-div").empty(); });
+
+    // Profile
+    $("#upload-change-profile-picture-modal").on("show.bs.modal", function (e) {
+        if ($(e.relatedTarget).data("action") == "upload") {
+            $("#upload-change-profile-picture-modal-title").text("Upload Profile Picture");
+        }
+        else if ($(e.relatedTarget).data("action") == "change") {
+            $("#upload-change-profile-picture-modal-title").text("Change Profile Picture");
+        }
+
+        LoadAction("upload-change-profile-picture-modal-body-div", "/RAMS/SystemAdmin/Profile/UploadProfilePicture");
+    });
 }
 /******** END OF SYSTEM ADMIN MODAL CONTROLS ********/
 
+/************** CUSTOMER MODAL CONTROLS *************/
+function CustomerModalControls()
+{
+    $("#upload-change-profile-picture-modal").on("show.bs.modal", function (e)
+    {
+        if ($(e.relatedTarget).data("action") == "upload")
+        {
+            $("#upload-change-profile-picture-modal-title").text("Upload Profile Picture");
+        }
+        else if ($(e.relatedTarget).data("action") == "change")
+        {
+            $("#upload-change-profile-picture-modal-title").text("Change Profile Picture");
+        }
+
+        LoadAction("upload-change-profile-picture-modal-body-div", "/RAMS/Customer/Profile/UploadProfilePicture");
+    });
+}
+
+/********** END OF CUSTOMER MODAL CONTROLS **********/
+
 /************** SYSTEM ADMIN FUNCTIONS **************/
-function RefreshEditForm(userName, userType) {
+function RefreshEditForm(userName, userType)
+{
     LoadAction("edit-user-modal-body-div", "/RAMS/SystemAdmin/User/EditUser?userName=" + userName + "&userType=" + userType);
 }
 
@@ -139,9 +233,11 @@ function DisableEditForm()
 /********** END OF SYSTEM ADMIN FUNCTIONS ***********/
 
 
-/****************** MODAL UTILITIES *****************/
 
-$(document).on("show.bs.modal", ".modal", function () {
+/****************** MODAL UTILITIES *****************/
+// Fixes the issue with modal overflow in cases with multiple modals on one screen
+$(document).on("show.bs.modal", ".modal", function ()
+{
     var index = ($('.modal:visible').length * 10) + 1040;
 
     $(this).css('z-index', index);
@@ -149,7 +245,7 @@ $(document).on("show.bs.modal", ".modal", function () {
     setTimeout(function () { $(".modal-backdrop").not(".modal-stack").css("z-index", index - 1).addClass("modal-stack"); }, 0);
 });
 
-
+// Fixes the issue with page scroll on pages with the modals
 $(document).on("hidden.bs.modal", ".modal", function () { $(".modal:visible").length && $(document.body).addClass('modal-open'); });
 
 /*************** END OF MODAL UTILITIES *************/

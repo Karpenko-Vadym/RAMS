@@ -1,7 +1,4 @@
-﻿@{
-    ViewBag.Title = "Users";
-}
-
+﻿<!-- USER INDEX VIEW -->
 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#new-user-modal">New User</button>
 
 <button type="button" class="btn btn-info pull-right" onclick="LoadAction('user-list-div', '@Url.Action("UserList", "User", new { Area = "SystemAdmin" })' );">Refresh List</button>
@@ -56,7 +53,7 @@
         <!-- END OF MODAL CONTENT-->
     </div>
 </div>
-<!-- EDIT OF NEW USER MODAL -->
+<!-- END OF EDIT USER MODAL -->
 
 <!-- RESET PASSWORD MODAL -->
 <div id="reset-password-modal" class="modal fade" role="dialog">
@@ -79,7 +76,7 @@
         <!-- END OF MODAL CONTENT-->
     </div>
 </div>
-<!-- EDIT OF RESET PASSWORD MODAL -->
+<!-- END OF RESET PASSWORD MODAL -->
 
 <!-- BLOCK DELETE USER MODAL -->
 <div id="block-delete-user-modal" class="modal fade" role="dialog">
@@ -97,6 +94,7 @@
         <!-- END OF MODAL CONTENT-->
     </div>
 </div>
-<!-- EDIT OF BLOCK DELETE USER MODAL -->
+<!-- END OF BLOCK DELETE USER MODAL -->
 
 <script type="text/javascript">$(function () { LoadAction("user-list-div", "@Url.Action("UserList", "User", new { Area = "SystemAdmin" })"); SystemAdminModalControls(); });</script>
+<!-- END OF USER INDEX VIEW -->

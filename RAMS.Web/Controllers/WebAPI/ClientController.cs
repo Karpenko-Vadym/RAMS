@@ -39,7 +39,7 @@ namespace RAMS.Web.Controllers.WebAPI
         {
             var clients = this.ClientService.GetAllClients();
 
-            if (clients.Count() > 0)
+            if (!Utilities.IsEmpty(clients))
             {
                 return Ok(clients);
             }

@@ -1,0 +1,59 @@
+﻿@model RAMS.ViewModels.ClientProfileDetailsViewModel
+
+@using RAMS.Helpers
+
+@{
+    var profilePictureUrl = Html.GetProfilePictureUrl(Model.UserName);
+}
+
+<!-- PROFILE DETAILS PARTIAL VIEW -->
+@if (Model != null)
+{    
+    <h2 class="text-center">@Model.FullName</h2>
+    <div class="profile-picture-message-div"></div>
+    <div class="row">
+        <div class="col-sm-3 col-md-3">
+            <div id="profile-picture-div">
+                <img class="img-circle img-responsive" src="@profilePictureUrl" onerror="this.onerror=null; this.src='@Url.Content("~/Content/ProfilePictures/NoImage.jpg")'" />
+            </div>
+
+            <div class="vertical-padding-24"></div>
+
+            @if (String.IsNullOrEmpty(profilePictureUrl))
+            {
+                <input type="button" class="btn btn-info btn-block" data-action="upload" data-toggle="modal" data-target="#upload-change-profile-picture-modal" value="Upload Picture" />
+            }
+            else
+            {
+                <div class="btn-group btn-group-justified" role="group">
+                    <div class="btn-group" role="group">
+                        <input type="button" class="btn btn-info" data-action="change" data-toggle="modal" data-target="#upload-change-profile-picture-modal" value="Change" />
+                    </div>
+
+                    <div class="btn-group" role="group">
+                        <input type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-profile-picture-modal" value="Delete" />
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="col-sm-7 col-md-7">
+            <div class="vertical-padding-24"></div>
+            <dl class="dl-horizontal">
+                <dt>@Html.LabelFor(model => model.JobTitle)</dt>
+                <dd>@Model.JobTitle</dd>
+                <dt>@Html.LabelFor(model => model.Company)</dt>
+                <dd>@Model.Company</dd>
+                <dt>@Html.LabelFor(model => model.Email)</dt>
+                <dd>@Model.Email</dd>
+                <dt>@Html.LabelFor(model => model.PhoneNumber)</dt>
+                <dd>@Model.PhoneNumber</dd>
+            </dl>
+        </div>
+    </div>  
+}
+else
+{
+    <div class="alert alert-danger bottom-margin-0" role="alert">Profile details are not available.</div>
+}
+<!-- END OF PROFILE DETAILS PARTIAL VIEW -->

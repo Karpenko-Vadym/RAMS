@@ -43,7 +43,7 @@ namespace RAMS.Web.Controllers.WebAPI
         {
             var agents = this.AgentService.GetAllAgents();
 
-            if(agents.Count() > 0)
+            if(!Utilities.IsEmpty(agents))
             {
                 return Ok(agents);
             }
@@ -86,7 +86,7 @@ namespace RAMS.Web.Controllers.WebAPI
             {
                 var agents = this.AgentService.GetManyAgentsByDepartmentId(departmentId);
 
-                if (agents.Count() > 0)
+                if (!Utilities.IsEmpty(agents))
                 {
                     return Ok(agents);
                 }

@@ -39,7 +39,7 @@ namespace RAMS.Web.Controllers.WebAPI
         {
             var interviews = this.InterviewService.GetAllInterviews();
 
-            if (interviews.Count() > 0)
+            if (!Utilities.IsEmpty(interviews))
             {
                 return Ok(interviews);
             }

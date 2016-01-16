@@ -30,10 +30,6 @@ namespace RAMS.Models
         public string Email { get; set; }
 
         public string PhoneNumber { get; set; }
-
-        public string MediaType { get; set; } // File media type
-
-        public byte[] FileContent { get; set; } // File content 
     }
 
     /// <summary>

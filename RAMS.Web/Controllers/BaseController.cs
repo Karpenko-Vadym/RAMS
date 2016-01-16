@@ -32,7 +32,7 @@ namespace RAMS.Web.Controllers
                 siteUrl = siteUrl.Substring(0, siteUrl.IndexOf('/'));
             }
 
-            this.HttpClient.BaseAddress = new Uri(string.Format("{0}://{1}{2}/api/", System.Web.HttpContext.Current.Request.Url.Scheme.ToString(), System.Web.HttpContext.Current.Request.Url.Host.ToString(), System.Web.HttpContext.Current.Request.Url.Port.ToString() == "80" ? siteUrl == "/" ? string.Empty : "/" + siteUrl : ":" + System.Web.HttpContext.Current.Request.Url.Port.ToString()));
+            this.HttpClient.BaseAddress = new Uri(string.Format("{0}://{1}{2}/api/", System.Web.HttpContext.Current.Request.Url.Scheme.ToString(), System.Web.HttpContext.Current.Request.Url.Host.ToString(), System.Web.HttpContext.Current.Request.Url.Port.ToString() == "80" || System.Web.HttpContext.Current.Request.Url.Port.ToString() == "443" ? siteUrl == "/" ? string.Empty : "/" + siteUrl : ":" + System.Web.HttpContext.Current.Request.Url.Port.ToString()));
 
             this.HttpClient.DefaultRequestHeaders.Accept.Clear();
 

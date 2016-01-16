@@ -23,7 +23,7 @@ namespace RAMS.Data.Migrations
 
         public static IUnitOfWork unitOfWork = new UnitOfWork(dataFactory);
 
-        public static IClientRepository clientRepositpry = new ClientRepository(dataFactory);
+        public static IClientRepository clientRepository = new ClientRepository(dataFactory);
 
         public static IPositionRepository positionRepository = new PositionRepository(dataFactory);
 
@@ -135,9 +135,9 @@ namespace RAMS.Data.Migrations
             }
 
             // Add clients
-            if (!clientRepositpry.GetAll().Any())
+            if (!clientRepository.GetAll().Any())
             {
-                GetClients().ForEach(c => clientRepositpry.Add(c));
+                GetClients().ForEach(c => clientRepository.Add(c));
 
                 unitOfWork.Commit();
             }
@@ -192,7 +192,7 @@ namespace RAMS.Data.Migrations
 
             
         }
-
+        #region Getters
         /// <summary>
         /// Gettter that returns a list of Departments
         /// </summary>
@@ -363,11 +363,13 @@ namespace RAMS.Data.Migrations
                     AcceptanceScore = 50,
                     AssetSkills = "C#, C++, Java",
                     CategoryId = categoryRepository.GetAll().FirstOrDefault().CategoryId,
-                    CleintId = clientRepositpry.GetAll().FirstOrDefault().ClientId,
+                    CleintId = clientRepository.GetAll().FirstOrDefault().ClientId,
+                    AgentId = agentRepository.GetAll().FirstOrDefault().AgentId,
                     CompanyDetails = "Our company has been on the market for many years and proven to have high quality standards.",
                     DateCreated = DateTime.Now,
                     Description = "The Technical Support Specialist’s primary mission is to provide customers with in-service support.",
                     ExpiryDate = DateTime.Now.AddYears(1),
+                    DepartmentId = departmentRepository.GetAll().FirstOrDefault().DepartmentId,
                     Location = "Toronto",
                     PeopleNeeded = 8,
                     Qualifications = "Advanced knowledge of ORACLE Database, SQL, JavaScript",
@@ -430,6 +432,22 @@ namespace RAMS.Data.Migrations
                 new Notification
                 {
                     AgentId = agentRepository.GetAll().FirstOrDefault().AgentId,
+                    DateCreated = DateTime.Now,
+                    Details = "Database has been seeded successfully on " + DateTime.Now.ToString(),
+                    Status = NotificationStatus.Unread,
+                    Title = "Database data seeded"
+                },
+                new Notification
+                {
+                    ClientId = clientRepository.GetAll().FirstOrDefault().ClientId,
+                    DateCreated = DateTime.Now,
+                    Details = "Database has been seeded successfully on " + DateTime.Now.ToString(),
+                    Status = NotificationStatus.Unread,
+                    Title = "Database data seeded"
+                },
+                new Notification
+                {
+                    ClientId = adminRepository.GetAll().FirstOrDefault().AdminId,
                     DateCreated = DateTime.Now,
                     Details = "Database has been seeded successfully on " + DateTime.Now.ToString(),
                     Status = NotificationStatus.Unread,
@@ -505,5 +523,6 @@ namespace RAMS.Data.Migrations
                 }
             };
         }
+        #endregion
     }
 }

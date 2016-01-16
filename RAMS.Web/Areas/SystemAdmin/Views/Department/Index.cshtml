@@ -1,0 +1,56 @@
+﻿<!-- DEPARTMENT INDEX VIEW -->
+<button type="button" class="btn btn-info" data-toggle="modal" data-target="#new-department-modal">New Department</button>
+
+<button type="button" class="btn btn-info pull-right" onclick="LoadAction('department-list-div', '@Url.Action("DepartmentList", "Department", new { Area = "SystemAdmin" })' );">Refresh List</button>
+
+<div class="vertical-padding-24"></div>
+
+<div id="department-list-div"></div>
+
+<!-- NEW DEPARTMENT MODAL -->
+<div id="new-department-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- MODAL CONTENT -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" onclick="$('#new-department-modal').modal('hide');">&times;</button>
+                <h4 class="modal-title text-center">New Department</h4>
+            </div>
+            <div class="modal-body">
+                <div class="well well-lg bottom-margin-0">
+                    <div id="new-department-modal-body-div"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" onclick="$('#new-department-modal').modal('hide');">Close</button>
+            </div>
+        </div>
+        <!-- END OF MODAL CONTENT-->
+    </div>
+</div>
+<!-- END OF NEW DEPARTMENT MODAL -->
+<!-- EDIT DEPARTMENT MODAL -->
+<div id="edit-department-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- MODAL CONTENT -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" onclick="$('#edit-department-modal').modal('hide');">&times;</button>
+                <h4 id="edit-department-modal-title" class="modal-title text-center">Edit Department</h4>
+            </div>
+            <div class="modal-body">
+                <div class="well well-lg bottom-margin-0">
+                    <div id="edit-department-modal-body-div"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" onclick="$('#edit-department-modal').modal('hide');">Close</button>
+            </div>
+        </div>
+        <!-- END OF MODAL CONTENT-->
+    </div>
+</div>
+<!-- END OF EDIT DEPARTMENT MODAL -->
+
+<script type="text/javascript">$(function () { LoadAction("department-list-div", "@Url.Action("DepartmentList", "Department", new { Area = "SystemAdmin" })"); SystemAdminModalControls(); });</script>
+<!-- END OF DEPARTMENT INDEX VIEW -->

@@ -24,7 +24,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
     /// <summary>
     /// UserController controller implements CRUD operations for application users and employees
     /// </summary>
-    //[Authorize]
+    // [Authorize]
     // TODO - Uncomment [Authorize]
     // TODO - Replace my (atomix0x@gmail.com) email address with the email address of the user
     public class UserController : BaseController
@@ -80,11 +80,28 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
         /// <summary>
         /// Default action method that returns main view of User controller
+        /// User will be redirected to appropriate location depending on his/her UserType if user does not belong to this area
         /// </summary>
         /// <returns>Main view of User controller</returns>
+        [HttpGet]
         public ActionResult Index()
         {
-            return View();
+            var identity = User.Identity as ClaimsIdentity;
+
+            if (identity.HasClaim("UserType", "Agent"))
+            {
+                return RedirectToAction("Index", "Home", new { Area = "Agency" });
+            }
+            else if (identity.HasClaim("UserType", "Client"))
+            {
+                return RedirectToAction("Index", "Home", new { Area = "Customer" });
+            }
+            else if (identity.HasClaim("UserType", "Admin"))
+            {
+                return View();
+            }
+
+            return RedirectToAction("Index", "Home", new { Area = "" });
         }
 
         #region User List
@@ -92,6 +109,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
         /// UserList action method displays all the employees in _UserList partial view
         /// </summary>
         /// <returns>_UserList partial view with all the employees</returns>
+        [HttpGet]
         public async Task<PartialViewResult> UserList()
         {
             var users = new List<UserListViewModel>();
@@ -117,16 +135,16 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                 users.AddRange(Mapper.Map<List<Admin>, List<UserListViewModel>>(await response.Content.ReadAsAsync<List<Admin>>()));
             }
 
-            return PartialView("_UserList", users);
+            return PartialView("_UserList", users); // TODO - Do not display deleted users (logical) in the list
         }
         #endregion
-
 
         #region Registration
         /// <summary>
         /// NewUser method returns _NewUser partial view
         /// </summary>
         /// <returns>_NewUser partial view</returns>
+        [HttpGet]
         public PartialViewResult NewUser()
         {
             return PartialView("_NewUser");
@@ -137,6 +155,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
         /// UserTypeSelect method returns _UserTypeSelect partial view
         /// </summary>
         /// <returns></returns>
+        [HttpGet]
         public PartialViewResult UserTypeSelect()
         {
             return PartialView("_UserTypeSelect");
@@ -155,7 +174,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
             {
                 if (Enum.GetName(typeof(Enums.UserType), UserType.Agent) == model.SelectedValue) // Agent is selected
                 {
-                    var registerAgentViewModel = new RegisterAgentViewModel();
+                    var agentAddViewModel = new AgentAddViewModel();
 
                     var departments = new List<Department>();
 
@@ -166,21 +185,21 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                         departments = await response.Content.ReadAsAsync<List<Department>>();
                     }
 
-                    registerAgentViewModel.Departments = new[] { new SelectListItem { Text = "", Value = string.Empty } }.Concat(departments.Select(d => new SelectListItem { Text = d.Name, Value = d.DepartmentId.ToString() }).ToList()).ToList();
+                    agentAddViewModel.Departments = new[] { new SelectListItem { Text = "", Value = string.Empty } }.Concat(departments.Select(d => new SelectListItem { Text = d.Name, Value = d.DepartmentId.ToString() }).ToList()).ToList();
 
-                    return PartialView("_RegisterAgent", registerAgentViewModel);
+                    return PartialView("_RegisterAgent", agentAddViewModel);
                 }
                 else if (Enum.GetName(typeof(Enums.UserType), UserType.Client) == model.SelectedValue) // Cleint is selected
                 {
-                    var registerClientViewModel = new RegisterClientViewModel();
+                    var clientAddViewModel = new ClientAddViewModel();
 
-                    return PartialView("_RegisterClient", registerClientViewModel);
+                    return PartialView("_RegisterClient", clientAddViewModel);
                 }
                 else if (Enum.GetName(typeof(Enums.UserType), UserType.Admin) == model.SelectedValue) // Admin is selected
                 {
-                    var registerAdminViewModel = new RegisterAdminViewModel();
+                    var adminAddViewModel = new AdminAddViewModel();
 
-                    return PartialView("_RegisterAdmin", registerAdminViewModel);
+                    return PartialView("_RegisterAdmin", adminAddViewModel);
                 }
             }
 
@@ -192,9 +211,9 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
             stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> Different input form will be displayed depending on user type selection.</div></div>");
 
-            var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+            var userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString());
 
-            return PartialView("_Error", confirmationViewModel);
+            return PartialView("_Error", userConfirmationViewModel);
         }
         #endregion
 
@@ -206,7 +225,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
         /// <returns>_Success partial view with success message if user and employee were successfully created, _Error partial view with error message otherwise. If mode is not valid, returns _RegisterAgent partial view</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<PartialViewResult> RegisterAgent(RegisterAgentViewModel model)
+        public async Task<PartialViewResult> RegisterAgent(AgentAddViewModel model)
         {
             HttpResponseMessage response = new HttpResponseMessage();
 
@@ -333,7 +352,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                         }
 
                         // If IdentityResult (Assign UserType claim) is Succeded, attempt to create new agent
-                        var agent = Mapper.Map<RegisterAgentViewModel, Agent>(model);
+                        var agent = Mapper.Map<AgentAddViewModel, Agent>(model);
 
                         response = await this.GetHttpClient().PostAsJsonAsync("Agent", agent);
 
@@ -343,6 +362,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                             try
                             {
+                                // Send email
                                 var template = HttpContext.Server.MapPath("~/App_Data/UserRegistrationEmailTemplate.txt");
 
                                 var message = System.IO.File.ReadAllText(template);  
@@ -350,6 +370,14 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                                 message = message.Replace("%name%", agent.FirstName).Replace("%username%", agent.UserName).Replace("%password%", model.Password);
 
                                 Email.EmailService.SendEmail("atomix0x@gmail.com", "Your account has been created.", message); // Send login credentials to newly created user via email
+
+                                // Create notification
+                                response = await this.GetHttpClient().PostAsJsonAsync("Notification", new Notification() { AgentId = agent.AgentId, Status = NotificationStatus.Unread, Title = "Welcome to RAMS!", Details = "Your user account was successfully created on: " + DateTime.Now, DateCreated = DateTime.Now });
+
+                                if (!response.IsSuccessStatusCode)
+                                {
+                                    throw new NotificationAddException(String.Format("Notification could NOT be added for agent {0}. Status Code: {1}", agent.UserName, response.StatusCode));
+                                }
                             }
                             catch(System.IO.FileNotFoundException ex)
                             {
@@ -357,6 +385,11 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                                 ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
                             }
                             catch(System.IO.IOException ex)
+                            {
+                                // Log exception
+                                ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+                            }
+                            catch (NotificationAddException ex)
                             {
                                 // Log exception
                                 ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
@@ -392,9 +425,9 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                             stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1'><strong>NOTE:</strong> Login credentials have been sent to the user via an email.</div></div>");
 
-                            var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString(), false, true);
+                            var userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString(), false, true);
 
-                            return PartialView("_Success", confirmationViewModel);
+                            return PartialView("_Success", userConfirmationViewModel);
                         }
                         else
                         {
@@ -429,9 +462,9 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                     stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to register a user. Please review an exception log for more details about the exception.</div></div>");
 
-                    var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+                    var userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString());
 
-                    return PartialView("_Error", confirmationViewModel);  
+                    return PartialView("_Error", userConfirmationViewModel);  
                 }
                 catch (ClaimsAssignmentException ex)
                 {
@@ -446,9 +479,9 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                     stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to assign a user claim. Please review an exception log for more details about the exception.</div></div>");
 
-                    var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+                    var userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString());
 
-                    return PartialView("_Error", confirmationViewModel); 
+                    return PartialView("_Error", userConfirmationViewModel); 
                 }
                 catch (EmployeeRegistrationException ex)
                 {
@@ -463,9 +496,9 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                     stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to register an employee. Please review an exception log for more details about the exception.</div></div>");
 
-                    var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+                    var userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString());
 
-                    return PartialView("_Error", confirmationViewModel);  
+                    return PartialView("_Error", userConfirmationViewModel);  
                 }
                 finally
                 {
@@ -476,7 +509,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                         if (!result.Succeeded)
                         {
-                            // If user could not be deleted, log DeleteUserException with detailed error message
+                            // If user could not be deleted, log UserDeleteException with detailed error message
                             var message = "User " + user.UserName + " could not be deleted.";
 
                             if (!Utilities.IsEmpty(result.Errors))
@@ -488,16 +521,16 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                             }
 
                             // Log exception
-                            ErrorHandlingUtilities.LogException(new DeleteUserException(message).ToString(), this.ControllerContext.RouteData.Values["controller"].ToString(), this.ControllerContext.RouteData.Values["action"].ToString());
+                            ErrorHandlingUtilities.LogException(new UserDeleteException(message).ToString(), this.ControllerContext.RouteData.Values["controller"].ToString(), this.ControllerContext.RouteData.Values["action"].ToString());
                         }
 
-                        response = this.GetHttpClient().DeleteAsync("Agent?userName=" + model.UserName).Result;
+                        response = this.GetHttpClient().DeleteAsync(String.Format("Agent?userName={0}",model.UserName)).Result;
 
-                        // If agent could not be deleted, log DeleteEmployeeException with detailed error message
+                        // If agent could not be deleted, log EmployeeDeleteException with detailed error message
                         if (!response.IsSuccessStatusCode)
                         {
                             // Log exception
-                            ErrorHandlingUtilities.LogException(new DeleteEmployeeException("Agent " + model.UserName + " could not be deleted. Response: " + response.StatusCode).ToString(), this.ControllerContext.RouteData.Values["controller"].ToString(), this.ControllerContext.RouteData.Values["action"].ToString());
+                            ErrorHandlingUtilities.LogException(new EmployeeDeleteException(String.Format("Agent {0} could not be deleted. Response: {1}", model.UserName, response.StatusCode)).ToString(), this.ControllerContext.RouteData.Values["controller"].ToString(), this.ControllerContext.RouteData.Values["action"].ToString());
                         }
                     }
                 }
@@ -526,7 +559,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
         /// <returns>_Success partial view with success message if user and employee were successfully created, _Error partial view with error message otherwise. If mode is not valid, returns _RegisterClient partial view</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<PartialViewResult> RegisterClient(RegisterClientViewModel model)
+        public async Task<PartialViewResult> RegisterClient(ClientAddViewModel model)
         {
             HttpResponseMessage response = new HttpResponseMessage();
 
@@ -648,7 +681,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
 
                         // If IdentityResult (Assign UserType claim) is Succeded, attempt to create new client
-                        var client = Mapper.Map<RegisterClientViewModel, Client>(model);
+                        var client = Mapper.Map<ClientAddViewModel, Client>(model);
 
                         response = await this.GetHttpClient().PostAsJsonAsync("Client", client);
 
@@ -658,6 +691,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                             try
                             {
+                                // Send email
                                 var template = HttpContext.Server.MapPath("~/App_Data/UserRegistrationEmailTemplate.txt");
 
                                 var message = System.IO.File.ReadAllText(template);
@@ -665,6 +699,14 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                                 message = message.Replace("%name%", client.FirstName).Replace("%username%", client.UserName).Replace("%password%", model.Password);
 
                                 Email.EmailService.SendEmail("atomix0x@gmail.com", "Your account has been created.", message); // Send login credentials to newly created user via email
+
+                                // Create notification
+                                response = await this.GetHttpClient().PostAsJsonAsync("Notification", new Notification() { ClientId = client.ClientId, Status = NotificationStatus.Unread, Title = "Welcome to RAMS!", Details = "Your user account was successfully created on: " + DateTime.Now, DateCreated = DateTime.Now });
+
+                                if (!response.IsSuccessStatusCode)
+                                {
+                                    throw new NotificationAddException(String.Format("Notification could NOT be added for client {0}. Status Code: {1}", client.UserName, response.StatusCode));
+                                }
                             }
                             catch (System.IO.FileNotFoundException ex)
                             {
@@ -672,6 +714,11 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                                 ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
                             }
                             catch (System.IO.IOException ex)
+                            {
+                                // Log exception
+                                ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+                            }
+                            catch (NotificationAddException ex)
                             {
                                 // Log exception
                                 ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
@@ -701,9 +748,9 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                             stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1'><strong>NOTE:</strong> Login credentials have been sent to the user via an email.</div></div>");
 
-                            var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString(), false, true);
+                            var userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString(), false, true);
 
-                            return PartialView("_Success", confirmationViewModel);
+                            return PartialView("_Success", userConfirmationViewModel);
                         }
                         else
                         {
@@ -738,9 +785,9 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                     stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to register a user. Please review an exception log for more details about the exception.</div></div>");
 
-                    var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+                    var userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString());
 
-                    return PartialView("_Error", confirmationViewModel);  
+                    return PartialView("_Error", userConfirmationViewModel);  
                 }
                 catch (ClaimsAssignmentException ex)
                 {
@@ -755,9 +802,9 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                     stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to assign a user claim. Please review an exception log for more details about the exception.</div></div>");
 
-                    var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+                    var userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString());
 
-                    return PartialView("_Error", confirmationViewModel); 
+                    return PartialView("_Error", userConfirmationViewModel); 
                 }
                 catch (EmployeeRegistrationException ex)
                 {
@@ -772,9 +819,9 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                     stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to register an employee. Please review an exception log for more details about the exception.</div></div>");
 
-                    var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+                    var userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString());
 
-                    return PartialView("_Error", confirmationViewModel); 
+                    return PartialView("_Error", userConfirmationViewModel); 
                 }
                 finally
                 {
@@ -785,7 +832,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                         if (!result.Succeeded)
                         {
-                            // If user could not be deleted, log DeleteUserException with detailed error message
+                            // If user could not be deleted, log UserDeleteException with detailed error message
                             var message = "User " + user.UserName + " could not be deleted.";
 
                             if (!Utilities.IsEmpty(result.Errors))
@@ -797,16 +844,16 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                             }
 
                             // Log exception
-                            ErrorHandlingUtilities.LogException(new DeleteUserException(message).ToString(), this.ControllerContext.RouteData.Values["controller"].ToString(), this.ControllerContext.RouteData.Values["action"].ToString());
+                            ErrorHandlingUtilities.LogException(new UserDeleteException(message).ToString(), this.ControllerContext.RouteData.Values["controller"].ToString(), this.ControllerContext.RouteData.Values["action"].ToString());
                         }
 
-                        response = this.GetHttpClient().DeleteAsync("Client?userName=" + model.UserName).Result;
+                        response = this.GetHttpClient().DeleteAsync(String.Format("Client?userName={0}", model.UserName)).Result;
 
-                        // If client could not be deleted, log DeleteEmployeeException with detailed error message
+                        // If client could not be deleted, log EmployeeDeleteException with detailed error message
                         if (!response.IsSuccessStatusCode)
                         {
                             // Log exception
-                            ErrorHandlingUtilities.LogException(new DeleteEmployeeException("Client " + model.UserName + " could not be deleted. Response: " + response.StatusCode).ToString(), this.ControllerContext.RouteData.Values["controller"].ToString(), this.ControllerContext.RouteData.Values["action"].ToString());
+                            ErrorHandlingUtilities.LogException(new EmployeeDeleteException("Client " + model.UserName + " could not be deleted. Response: " + response.StatusCode).ToString(), this.ControllerContext.RouteData.Values["controller"].ToString(), this.ControllerContext.RouteData.Values["action"].ToString());
                         }
                     }
                 }
@@ -824,7 +871,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
         /// <returns>_Success partial view with success message if user and employee were successfully created, _Error partial view with error message otherwise. If mode is not valid, returns _RegisterAdmin partial view</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<PartialViewResult> RegisterAdmin(RegisterAdminViewModel model)
+        public async Task<PartialViewResult> RegisterAdmin(AdminAddViewModel model)
         {
             HttpResponseMessage response = new HttpResponseMessage();
 
@@ -945,7 +992,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                         }
 
                         // If IdentityResult (Assign UserType claim) is Succeded, attempt to create new admin
-                        var admin = Mapper.Map<RegisterAdminViewModel, Admin>(model);
+                        var admin = Mapper.Map<AdminAddViewModel, Admin>(model);
 
                         response = await this.GetHttpClient().PostAsJsonAsync("Admin", admin);
 
@@ -962,6 +1009,14 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                                 message = message.Replace("%name%", admin.FirstName).Replace("%username%", admin.UserName).Replace("%password%", model.Password);
 
                                 Email.EmailService.SendEmail("atomix0x@gmail.com", "Your account has been created.", message); // Send login credentials to newly created user via email
+
+                                // Create notification
+                                response = await this.GetHttpClient().PostAsJsonAsync("Notification", new Notification() { AdminId = admin.AdminId, Status = NotificationStatus.Unread, Title = "Welcome to RAMS!", Details = "Your user account was successfully created on: " + DateTime.Now, DateCreated = DateTime.Now });
+
+                                if (!response.IsSuccessStatusCode)
+                                {
+                                    throw new NotificationAddException(String.Format("Notification could NOT be added for admin {0}. Status Code: {1}", admin.UserName, response.StatusCode));
+                                }
                             }
                             catch (System.IO.FileNotFoundException ex)
                             {
@@ -969,6 +1024,11 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                                 ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
                             }
                             catch (System.IO.IOException ex)
+                            {
+                                // Log exception
+                                ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+                            }
+                            catch (NotificationAddException ex)
                             {
                                 // Log exception
                                 ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
@@ -1000,9 +1060,9 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                             stringBuilder.AppendFormat("<div class='col-md-12'><p></p></div><div class='col-md-offset-1'><strong>NOTE:</strong> Login credentials have been sent to the user via an email.</div></div>");
 
-                            var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString(), false, true);
+                            var userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString(), false, true);
 
-                            return PartialView("_Success", confirmationViewModel);
+                            return PartialView("_Success", userConfirmationViewModel);
                         }
                         else
                         {
@@ -1037,9 +1097,9 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                     stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to register a user. Please review an exception log for more details about the exception.</div></div>");
 
-                    var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+                    var userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString());
 
-                    return PartialView("_Error", confirmationViewModel); 
+                    return PartialView("_Error", userConfirmationViewModel); 
                 }
                 catch (ClaimsAssignmentException ex)
                 {
@@ -1054,9 +1114,9 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                     stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to assign a user claim. Please review an exception log for more details about the exception.</div></div>");
 
-                    var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+                    var userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString());
 
-                    return PartialView("_Error", confirmationViewModel); 
+                    return PartialView("_Error", userConfirmationViewModel); 
                 }
                 catch (EmployeeRegistrationException ex)
                 {
@@ -1071,9 +1131,9 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                     stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to register an employee. Please review an exception log for more details about the exception.</div></div>");
 
-                    var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+                    var userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString());
 
-                    return PartialView("_Error", confirmationViewModel); 
+                    return PartialView("_Error", userConfirmationViewModel); 
                 }
                 finally
                 {
@@ -1084,7 +1144,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                         if (!result.Succeeded)
                         {
-                            // If user could not be deleted, log DeleteUserException with detailed error message
+                            // If user could not be deleted, log UserDeleteException with detailed error message
                             var message = "User " + user.UserName + " could not be deleted.";
 
                             if (!Utilities.IsEmpty(result.Errors))
@@ -1096,16 +1156,16 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                             }
 
                             // Log exception
-                            ErrorHandlingUtilities.LogException(new DeleteUserException(message).ToString(), this.ControllerContext.RouteData.Values["controller"].ToString(), this.ControllerContext.RouteData.Values["action"].ToString());
+                            ErrorHandlingUtilities.LogException(new UserDeleteException(message).ToString(), this.ControllerContext.RouteData.Values["controller"].ToString(), this.ControllerContext.RouteData.Values["action"].ToString());
                         }
 
-                        response = this.GetHttpClient().DeleteAsync("Admin?userName=" + model.UserName).Result;
+                        response = this.GetHttpClient().DeleteAsync(String.Format("Admin?userName={0}", model.UserName)).Result;
 
-                        // If admin could not be deleted, log DeleteEmployeeException with detailed error message
+                        // If admin could not be deleted, log EmployeeDeleteException with detailed error message
                         if (!response.IsSuccessStatusCode)
                         {
                             // Log exception
-                            ErrorHandlingUtilities.LogException(new DeleteEmployeeException("Admin " + model.UserName + " could not be deleted. Response: " + response.StatusCode).ToString(), this.ControllerContext.RouteData.Values["controller"].ToString(), this.ControllerContext.RouteData.Values["action"].ToString());
+                            ErrorHandlingUtilities.LogException(new EmployeeDeleteException("Admin " + model.UserName + " could not be deleted. Response: " + response.StatusCode).ToString(), this.ControllerContext.RouteData.Values["controller"].ToString(), this.ControllerContext.RouteData.Values["action"].ToString());
                         }
                     }
                 }
@@ -1117,7 +1177,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
         #endregion
 
-
         #region Edit Users
         /// <summary>
         /// EditUser method displays different edit form depending on user selection from _UserList partial view
@@ -1125,13 +1184,14 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
         /// <param name="userName">User name of selected user</param>
         /// <param name="userType">User type of selected user</param>
         /// <returns>Different edit form depending on user selection from _UserList partial view, or _Error partial view with error message if userType parameter value did not match to UserType enum values</returns>
+        [HttpGet]
         public async Task<PartialViewResult> EditUser(string userName, string userType)
         {
             var response = new HttpResponseMessage();
 
             if (Enum.GetName(typeof(Enums.UserType), UserType.Agent) == userType)
             {
-                var editAgentViewModel = new EditAgentViewModel();
+                var agentEditViewModel = new AgentEditViewModel();
 
                 // Retrieve an employee profile
                 response = await this.GetHttpClient().GetAsync(String.Format("Agent?userName={0}", userName));
@@ -1140,7 +1200,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                 {
                     var departments = new List<Department>();
 
-                    editAgentViewModel = Mapper.Map<Agent, EditAgentViewModel>(await response.Content.ReadAsAsync<Agent>());
+                    agentEditViewModel = Mapper.Map<Agent, AgentEditViewModel>(await response.Content.ReadAsAsync<Agent>());
 
                     response = await this.GetHttpClient().GetAsync("Department");
 
@@ -1149,20 +1209,20 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                         departments = await response.Content.ReadAsAsync<List<Department>>();
                     }
 
-                    editAgentViewModel.Departments = new[] { new SelectListItem { Text = "", Value = string.Empty } }.Concat(departments.Select(d => new SelectListItem { Text = d.Name, Value = d.DepartmentId.ToString(), Selected = (d.DepartmentId == editAgentViewModel.DepartmentId) }).ToList()).ToList();
+                    agentEditViewModel.Departments = new[] { new SelectListItem { Text = "", Value = string.Empty } }.Concat(departments.Select(d => new SelectListItem { Text = d.Name, Value = d.DepartmentId.ToString(), Selected = (d.DepartmentId == agentEditViewModel.DepartmentId) }).ToList()).ToList();
 
-                    if (editAgentViewModel.UserStatus == UserStatus.Deleted)
+                    if (agentEditViewModel.UserStatus == UserStatus.Deleted)
                     {
                         return PartialView("_EditAgent");
                     }
 
-                    return PartialView("_EditAgent", editAgentViewModel);
+                    return PartialView("_EditAgent", agentEditViewModel);
 
                 }
             }
             else if (Enum.GetName(typeof(Enums.UserType), UserType.Client) == userType)
             {
-                var editClientViewModel = new EditClientViewModel();
+                var clientEditViewModel = new ClientEditViewModel();
 
                 // Retrieve an employee profile
                 response = await this.GetHttpClient().GetAsync(String.Format("Client?userName={0}", userName));
@@ -1171,35 +1231,35 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                 {
                     var client = await response.Content.ReadAsAsync<Client>();
 
-                    editClientViewModel = Mapper.Map<Client, EditClientViewModel>(client);
+                    clientEditViewModel = Mapper.Map<Client, ClientEditViewModel>(client);
 
 
-                    if (editClientViewModel.UserStatus == UserStatus.Deleted)
+                    if (clientEditViewModel.UserStatus == UserStatus.Deleted)
                     {
                         return PartialView("_EditClient");
                     }
 
-                    return PartialView("_EditClient", editClientViewModel);
+                    return PartialView("_EditClient", clientEditViewModel);
                 }
             }
             else if (Enum.GetName(typeof(Enums.UserType), UserType.Admin) == userType)
             {
-                var editAdminViewModel = new EditAdminViewModel();
+                var adminEditViewModel = new AdminEditViewModel();
 
                 // Retrieve an employee profile
                 response = await this.GetHttpClient().GetAsync(String.Format("Admin?userName={0}", userName));
 
                 if (response.IsSuccessStatusCode)
                 {
-                    editAdminViewModel = Mapper.Map<Admin, EditAdminViewModel>(await response.Content.ReadAsAsync<Admin>());
+                    adminEditViewModel = Mapper.Map<Admin, AdminEditViewModel>(await response.Content.ReadAsAsync<Admin>());
 
 
-                    if (editAdminViewModel.UserStatus == UserStatus.Deleted)
+                    if (adminEditViewModel.UserStatus == UserStatus.Deleted)
                     {
                         return PartialView("_EditAdmin");
                     }
 
-                    return PartialView("_EditAdmin", editAdminViewModel);
+                    return PartialView("_EditAdmin", adminEditViewModel);
                 }
             }
 
@@ -1211,9 +1271,9 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
             stringBuilder.Append("<div class='col-md-offset-1 col-md-11'>Please refresh the list and try again in a moment.</div></div>");
 
-            var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString(), false, true);
+            var userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString(), false, true);
 
-            return PartialView("_Error", confirmationViewModel);
+            return PartialView("_Error", userConfirmationViewModel);
         }
 
         #region Edit Agent
@@ -1224,7 +1284,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
         /// <returns>_Success partial view with success message if user and employee were successfully updated, _Error partial view with error message otherwise. If mode is not valid, returns _EditAgent partial view</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<PartialViewResult> EditAgent(EditAgentViewModel model)
+        public async Task<PartialViewResult> EditAgent(AgentEditViewModel model)
         {
             var response = new HttpResponseMessage();
 
@@ -1353,9 +1413,9 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                             throw new ClaimsAssignmentException(message);
                         }
 
-                        var agent = Mapper.Map<EditAgentViewModel, Agent>(model);
-
                         // If Role user claim successfully updated, attempt to update employee profile
+                        var agent = Mapper.Map<AgentEditViewModel, Agent>(model);
+
                         response = await this.GetHttpClient().PutAsJsonAsync("Agent", agent);
 
                         if (response.IsSuccessStatusCode)
@@ -1421,9 +1481,13 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                                 stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1'><strong>NOTE:</strong> The user has been notified about the profile changes via an email.</div></div>");
 
-                                var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString(), false, true, true);
+                                var userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString(), false, true, true);
 
-                                return PartialView("_Success", confirmationViewModel);
+                                return PartialView("_Success", userConfirmationViewModel);
+                            }
+                            else
+                            {
+                                throw new EmployeeUpdateException("Null is returned after updating an employee. Status Code: " + response.StatusCode);
                             }
                         }
                         else
@@ -1457,9 +1521,9 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                     stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to update a user profile. Please review an exception log for more details about the exception.</div></div>");
 
-                    var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+                    var userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString());
 
-                    return PartialView("_Error", confirmationViewModel);  
+                    return PartialView("_Error", userConfirmationViewModel);  
                 }
                 catch (ClaimsAssignmentException ex)
                 {
@@ -1472,9 +1536,9 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                     stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to assign a user claim. Please review an exception log for more details about the exception.</div></div>");
 
-                    var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+                    var userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString());
 
-                    return PartialView("_Error", confirmationViewModel); 
+                    return PartialView("_Error", userConfirmationViewModel); 
                 }
                 catch(EmployeeUpdateException ex)
                 {
@@ -1487,9 +1551,9 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                     stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to update an employee profile. Please review an exception log for more details about the exception.</div></div>");
 
-                    var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+                    var userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString());
 
-                    return PartialView("_Error", confirmationViewModel);
+                    return PartialView("_Error", userConfirmationViewModel);
                 }
             }
 
@@ -1507,7 +1571,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
         /// <returns>_Success partial view with success message if user and employee were successfully updated, _Error partial view with error message otherwise. If mode is not valid, returns _EditClient partial view</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<PartialViewResult> EditClient(EditClientViewModel model)
+        public async Task<PartialViewResult> EditClient(ClientEditViewModel model)
         {
             var response = new HttpResponseMessage();
 
@@ -1586,9 +1650,9 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                             throw new ClaimsAssignmentException(message);
                         }
 
-                        var client = Mapper.Map<EditClientViewModel, Client>(model);
-
                         // If FullName user claim successfully updated, attempt to update employee profile
+                        var client = Mapper.Map<ClientEditViewModel, Client>(model);
+
                         response = await this.GetHttpClient().PutAsJsonAsync("Client", client);
 
                         if (response.IsSuccessStatusCode)
@@ -1648,9 +1712,13 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                                 stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1'><strong>NOTE:</strong> The user has been notified about the profile changes via an email.</div></div>");
 
-                                var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString(), false, true, true);
+                                var userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString(), false, true, true);
 
-                                return PartialView("_Success", confirmationViewModel);
+                                return PartialView("_Success", userConfirmationViewModel);
+                            }
+                            else
+                            {
+                                throw new EmployeeUpdateException("Null is returned after updating an employee. Status Code: " + response.StatusCode);
                             }
                         }
                         else
@@ -1684,9 +1752,9 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                     stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to update a user profile. Please review an exception log for more details about the exception.</div></div>");
 
-                    var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+                    var userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString());
 
-                    return PartialView("_Error", confirmationViewModel); 
+                    return PartialView("_Error", userConfirmationViewModel); 
                 }
                 catch (ClaimsAssignmentException ex)
                 {
@@ -1699,9 +1767,9 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                     stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to assign a user claim. Please review an exception log for more details about the exception.</div></div>");
 
-                    var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+                    var userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString());
 
-                    return PartialView("_Error", confirmationViewModel);
+                    return PartialView("_Error", userConfirmationViewModel);
                 }
                 catch (EmployeeUpdateException ex)
                 {
@@ -1714,9 +1782,9 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                     stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to update an employee profile. Please review an exception log for more details about the exception.</div></div>");
 
-                    var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+                    var userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString());
 
-                    return PartialView("_Error", confirmationViewModel);
+                    return PartialView("_Error", userConfirmationViewModel);
                 }
             }
 
@@ -1732,7 +1800,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
         /// <returns>_Success partial view with success message if user and employee were successfully updated, _Error partial view with error message otherwise. If mode is not valid, returns _EditAdmin partial view</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<PartialViewResult> EditAdmin(EditAdminViewModel model)
+        public async Task<PartialViewResult> EditAdmin(AdminEditViewModel model)
         {
             var response = new HttpResponseMessage();
 
@@ -1848,9 +1916,9 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                             throw new ClaimsAssignmentException(message);
                         }
 
-                        var admin = Mapper.Map<EditAdminViewModel, Admin>(model);
+                        // If Role user claim successfully updated, attempt to update employee profile 
+                        var admin = Mapper.Map<AdminEditViewModel, Admin>(model);
 
-                        // If Role user claim successfully updated, attempt to update employee profile
                         response = await this.GetHttpClient().PutAsJsonAsync("Admin", admin);
 
                         if (response.IsSuccessStatusCode)
@@ -1912,9 +1980,13 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                                 stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1'><strong>NOTE:</strong> The user has been notified about the profile changes via an email.</div></div>");
 
-                                var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString(), false, true, true);
+                                var userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString(), false, true, true);
 
-                                return PartialView("_Success", confirmationViewModel);
+                                return PartialView("_Success", userConfirmationViewModel);
+                            }
+                            else
+                            {
+                                throw new EmployeeUpdateException("Null is returned after updating an employee. Status Code: " + response.StatusCode);
                             }
                         }
                         else
@@ -1948,9 +2020,9 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                     stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to update a user profile. Please review an exception log for more details about the exception.</div></div>");
 
-                    var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+                    var userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString());
 
-                    return PartialView("_Error", confirmationViewModel); 
+                    return PartialView("_Error", userConfirmationViewModel); 
                 }
                 catch (ClaimsAssignmentException ex)
                 {
@@ -1963,9 +2035,9 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                     stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to assign a user claim. Please review an exception log for more details about the exception.</div></div>");
 
-                    var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+                    var userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString());
 
-                    return PartialView("_Error", confirmationViewModel);
+                    return PartialView("_Error", userConfirmationViewModel);
                 }
                 catch (EmployeeUpdateException ex)
                 {
@@ -1978,9 +2050,9 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                     stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to update an employee profile. Please review an exception log for more details about the exception.</div></div>");
 
-                    var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+                    var userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString());
 
-                    return PartialView("_Error", confirmationViewModel);
+                    return PartialView("_Error", userConfirmationViewModel);
                 }
             }
 
@@ -1997,9 +2069,10 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
         /// <param name="email">Setter for Email property</param>
         /// <param name="firstName">Setter for FirstName property</param>
         /// <returns>_ResetPassword partial view with populated view model</returns>
+        [HttpGet]
         public PartialViewResult ResetPassword(string userName, string userType, string email, string firstName)
         {
-            var resetPasswordViewModel = new ResetPasswordViewModel() { UserName = userName, UserType = userType, Email = email, FirstName = firstName };
+            var resetPasswordViewModel = new ResetPasswordViewModel(userName, userType, email, firstName);
 
             return PartialView("_ResetPassword", resetPasswordViewModel);
         }
@@ -2015,11 +2088,11 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
         {
             var stringBuilder = new StringBuilder();
 
-            var confirmationViewModel = new ConfirmationViewModel();
+            var userConfirmationViewModel = new UserConfirmationViewModel();
 
             if (!String.IsNullOrEmpty(model.Password))
             {
-                // If password is invalid format, add model error with following error message "Passwords must have at least one non letter or digit character, least one lowercase ('a'-'z'), least one uppercase ('A'-'Z')."
+                // If password is invalid format, display _Confirmation partial view with following error message "Passwords must have at least one non letter or digit character, least one lowercase ('a'-'z'), least one uppercase ('A'-'Z')."
                 if (!Utilities.RegexMatch(this.PasswordRegex, model.Password))
                 {
                     stringBuilder.Clear();
@@ -2030,9 +2103,9 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                     stringBuilder.Append("<div class='col-md-offset-1 col-md-11'>Please try again using valid password pattern.</div></div>");
 
-                    confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString(), model.UserName, model.UserType);
+                    userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString(), model.UserName, model.UserType);
 
-                    return PartialView("_Confirmation", confirmationViewModel);
+                    return PartialView("_Confirmation", userConfirmationViewModel);
                 }
             }
 
@@ -2110,9 +2183,9 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                         stringBuilder.Append("<div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> New password has been sent to the user via an email.</div></div>");
 
-                        confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString(), model.UserName, model.UserType);
+                        userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString(), model.UserName, model.UserType);
 
-                        return PartialView("_Confirmation", confirmationViewModel);
+                        return PartialView("_Confirmation", userConfirmationViewModel);
                     }
                     catch(PasswordResetException ex)
                     {
@@ -2125,9 +2198,9 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                         stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to reset a user password. Please review an exception log for more details about the exception.</div></div>");
 
-                        confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString(), model.UserName, model.UserType);
+                        userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString(), model.UserName, model.UserType);
 
-                        return PartialView("_Confirmation", confirmationViewModel); 
+                        return PartialView("_Confirmation", userConfirmationViewModel); 
                     }
                 }
             }
@@ -2140,9 +2213,9 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
             stringBuilder.Append("<div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> If you encounter this issue again in the future, please contact Technical Support with exact steps to reproduce this issue.</div></div>");
 
-            confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString(), model.UserName, model.UserType);
+            userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString(), model.UserName, model.UserType);
 
-            return PartialView("_Confirmation", confirmationViewModel); 
+            return PartialView("_Confirmation", userConfirmationViewModel); 
         }
         #endregion
 
@@ -2153,11 +2226,12 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
         /// <param name="userName">Setter for UserName property</param>
         /// <param name="userType">Setter for UserType property</param>
         /// <returns>_BlockUser partial view with populated view model</returns>
+        [HttpGet]
         public PartialViewResult BlockUser(string userName, string userType)
         {
-            var confirmationViewModel = new ConfirmationViewModel() { UserName = userName, UserType = userType };
+            var userConfirmationViewModel = new UserConfirmationViewModel() { UserName = userName, UserType = userType };
 
-            return PartialView("_BlockUser", confirmationViewModel);
+            return PartialView("_BlockUser", userConfirmationViewModel);
         }
 
         /// <summary>
@@ -2167,7 +2241,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
         /// <returns>_Confirmation partial view with confirmation message of success or failure depending on the outcome of this method</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<PartialViewResult> BlockUser(ConfirmationViewModel model)
+        public async Task<PartialViewResult> BlockUser(UserConfirmationViewModel model)
         {
             var stringBuilder = new StringBuilder();
 
@@ -2446,7 +2520,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
             model.RefreshEditForm = true;
 
-            model.RefreshUserList = true;
+            model.RefreshList = true;
 
             return PartialView("_Confirmation", model);
         }
@@ -2459,11 +2533,12 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
         /// <param name="userName">Setter for UserName property</param>
         /// <param name="userType">Setter for UserType property</param>
         /// <returns>_UnblockUser partial view with populated view model</returns>
+        [HttpGet]
         public PartialViewResult UnblockUser(string userName, string userType)
         {
-            var confirmationViewModel = new ConfirmationViewModel(userName, userType);
+            var userConfirmationViewModel = new UserConfirmationViewModel(userName, userType);
 
-            return PartialView("_UnblockUser", confirmationViewModel);
+            return PartialView("_UnblockUser", userConfirmationViewModel);
         }
 
         /// <summary>
@@ -2473,7 +2548,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
         /// <returns>_Confirmation partial view with confirmation message of success or failure depending on the outcome of this method</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<PartialViewResult> UnblockUser(ConfirmationViewModel model)
+        public async Task<PartialViewResult> UnblockUser(UserConfirmationViewModel model)
         {
             var stringBuilder = new StringBuilder();
 
@@ -2745,7 +2820,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
             model.RefreshEditForm = true;
 
-            model.RefreshUserList = true;
+            model.RefreshList = true;
 
             return PartialView("_Confirmation", model);
         }
@@ -2758,11 +2833,12 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
         /// <param name="userName">Property required to retrieve the employee profile from database</param>
         /// <param name="userType">Property required to retrieve the employee profile from database</param>
         /// <returns>_DeleteUser partial view with populated view model</returns>
+        [HttpGet]
         public async Task<PartialViewResult> DeleteUser(string userName, string userType)
         {
             var response = new HttpResponseMessage();
 
-            var confirmationViewModel = new ConfirmationViewModel();
+            var userConfirmationViewModel = new UserConfirmationViewModel();
 
             if(userType == UserType.Agent.ToString())
             {
@@ -2770,7 +2846,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                 if(response.IsSuccessStatusCode)
                 {
-                    confirmationViewModel = Mapper.Map<Agent, ConfirmationViewModel>(await response.Content.ReadAsAsync<Agent>());
+                    userConfirmationViewModel = Mapper.Map<Agent, UserConfirmationViewModel>(await response.Content.ReadAsAsync<Agent>());
                 }
             }
             else if (userType == UserType.Client.ToString())
@@ -2779,7 +2855,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
-                    confirmationViewModel = Mapper.Map<Client, ConfirmationViewModel>(await response.Content.ReadAsAsync<Client>());
+                    userConfirmationViewModel = Mapper.Map<Client, UserConfirmationViewModel>(await response.Content.ReadAsAsync<Client>());
                 }
             }
             else if (userType == UserType.Admin.ToString())
@@ -2788,11 +2864,11 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
-                    confirmationViewModel = Mapper.Map<Admin, ConfirmationViewModel>(await response.Content.ReadAsAsync<Admin>());
+                    userConfirmationViewModel = Mapper.Map<Admin, UserConfirmationViewModel>(await response.Content.ReadAsAsync<Admin>());
                 }
             }
 
-            return PartialView("_DeleteUser", confirmationViewModel);
+            return PartialView("_DeleteUser", userConfirmationViewModel);
         }
 
         /// <summary>
@@ -2802,7 +2878,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
         /// <returns>_Confirmation partial view with confirmation message of success or failure depending on the outcome of this method</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<PartialViewResult> DeleteUser(ConfirmationViewModel model)
+        public async Task<PartialViewResult> DeleteUser(UserConfirmationViewModel model)
         {
             var stringBuilder = new StringBuilder();
 
@@ -2833,7 +2909,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                                 }
                             }
 
-                            throw new DeleteUserException(message);
+                            throw new UserDeleteException(message);
                         }
                     }
                     else
@@ -2920,7 +2996,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                             model.RefreshEditForm = true;
 
-                            model.RefreshUserList = true;
+                            model.RefreshList = true;
 
                             return PartialView("_Confirmation", model);
                         }
@@ -2985,7 +3061,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                             model.RefreshEditForm = true;
 
-                            model.RefreshUserList = true;
+                            model.RefreshList = true;
 
                             return PartialView("_Confirmation", model);
                         }
@@ -3050,7 +3126,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                             model.RefreshEditForm = true;
 
-                            model.RefreshUserList = true;
+                            model.RefreshList = true;
 
                             return PartialView("_Confirmation", model);
                         }
@@ -3080,7 +3156,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                 return PartialView("_Confirmation", model);
             }
-            catch (DeleteUserException ex)
+            catch (UserDeleteException ex)
             {
                 // Log exception
                 ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
@@ -3106,6 +3182,11 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
         #endregion
 
+        // From Microsoft Developer Network at https://msdn.microsoft.com/en-us/library/dd492699(v=vs.118).aspx
+        /// <summary>
+        /// Dispose method releases unmanaged resources and optionally releases managed resources
+        /// </summary>
+        /// <param name="disposing">If disposing is set to true releases both managed and unmanaged resources, otherwise only releases unmanaged resources</param> 
         protected override void Dispose(bool disposing)
         {
             if (disposing)

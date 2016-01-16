@@ -39,7 +39,7 @@ namespace RAMS.Web.Controllers.WebAPI
         {
             var positions = this.PositionService.GetAllPositions();
 
-            if (positions.Count() > 0)
+            if (!Utilities.IsEmpty(positions))
             {
                 return Ok(positions);
             }
@@ -63,6 +63,27 @@ namespace RAMS.Web.Controllers.WebAPI
                 if (position != null)
                 {
                     return Ok(position);
+                }
+            }
+
+            return NotFound();
+        }
+
+        /// <summary>
+        /// Get the list of positions for specific deparment
+        /// </summary>
+        /// <returns>The list of positions for specific deparment</returns>
+        [HttpGet]
+        [ResponseType(typeof(IEnumerable<Position>))]
+        public IHttpActionResult GetManyPositionsByDepartmentId(int departmentId)
+        {
+            if (departmentId > 0)
+            {
+                var positions = this.PositionService.GetManyPositionsByDepartmentId(departmentId);
+
+                if (!Utilities.IsEmpty(positions))
+                {
+                    return Ok(positions);
                 }
             }
 

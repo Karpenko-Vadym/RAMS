@@ -433,25 +433,25 @@ namespace RAMS.Data.Migrations
                 {
                     AgentId = agentRepository.GetAll().FirstOrDefault().AgentId,
                     DateCreated = DateTime.Now,
-                    Details = "Database has been seeded successfully on " + DateTime.Now.ToString(),
+                    Details = "Your account has been created on " + DateTime.Now.ToString(),
                     Status = NotificationStatus.Unread,
-                    Title = "Database data seeded"
+                    Title = "Welcome to RAMS!"
                 },
                 new Notification
                 {
                     ClientId = clientRepository.GetAll().FirstOrDefault().ClientId,
                     DateCreated = DateTime.Now,
-                    Details = "Database has been seeded successfully on " + DateTime.Now.ToString(),
+                    Details = "Your account has been created on " + DateTime.Now.ToString(),
                     Status = NotificationStatus.Unread,
-                    Title = "Database data seeded"
+                    Title = "Welcome to RAMS!"
                 },
                 new Notification
                 {
-                    ClientId = adminRepository.GetAll().FirstOrDefault().AdminId,
+                    AdminId = adminRepository.GetAll().FirstOrDefault().AdminId,
                     DateCreated = DateTime.Now,
-                    Details = "Database has been seeded successfully on " + DateTime.Now.ToString(),
+                    Details = "Your account has been created on " + DateTime.Now.ToString(),
                     Status = NotificationStatus.Unread,
-                    Title = "Database data seeded"
+                    Title = "Welcome to RAMS!"
                 }
             };
         }

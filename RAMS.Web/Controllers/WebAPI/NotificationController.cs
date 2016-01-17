@@ -223,6 +223,70 @@ namespace RAMS.Web.Controllers.WebAPI
         }
 
         /// <summary>
+        /// Update status of the existing notification
+        /// </summary>
+        /// <param name="id">Id of the notification to be updated</param>
+        /// <param name="isReadStatus">Status of the notification depends on the calue of isReadStatus (If isReadStatus is true, status will be set to Read. Otherwise, it will be set to Unread)</param>
+        /// <returns>HttpResponseMessage with status code dependning on the outcome of this method</returns>
+        [HttpPut]
+        [ResponseType(typeof(Notification))]
+        public IHttpActionResult ChangeNotificationStatus(int id, bool isReadStatus = false)
+        {
+            if (id != null || id != 0)
+            {
+                var notification = this.NotificationService.GetOneNotificationById(id);
+
+                if (notification != null)
+                {
+                    if (isReadStatus)
+                    {
+                        if(notification.Status != Enums.NotificationStatus.Read)
+                        {
+                            notification.Status = Enums.NotificationStatus.Read;
+                        }
+                    }
+                    else
+                    {
+                        if (notification.Status != Enums.NotificationStatus.Unread)
+                        {
+                            notification.Status = Enums.NotificationStatus.Unread;
+                        }
+                    }
+
+                    this.NotificationService.UpdateNotification(notification);
+
+                    try
+                    {
+                        this.NotificationService.SaveChanges();   
+                    }
+                    catch (DbUpdateConcurrencyException ex)
+                    {
+                        // Log exception
+                        ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+
+                        return Conflict();
+                    }
+                    catch (DbUpdateException ex)
+                    {
+                        // Log exception
+                        ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+
+                        if (!this.NotificationExists(notification.NotificationId))
+                        {
+                            return NotFound();
+                        }
+
+                        return Conflict();
+                    }
+
+                    return Ok(notification);
+                }
+            }
+
+            return NotFound();
+        }
+
+        /// <summary>
         /// Delete existing notification
         /// </summary>
         /// <param name="id">Id of the notification to be deleted</param>

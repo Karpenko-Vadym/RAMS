@@ -33,3 +33,8 @@ select option:disabled
     top: 50%;
     transform: translateY(-50%);
 }
+
+.cursor-pointer
+{
+    cursor: pointer;
+}

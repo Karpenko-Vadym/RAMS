@@ -133,6 +133,8 @@ function GeneralModalControls()
     $("#change-password-modal").on("show.bs.modal", function (e) { LoadAction("password-change-div", "/RAMS/Account/ChangePassword?userName=" + $(e.relatedTarget).data("user-name") + "&userType=" + $(e.relatedTarget).data("user-type")); });
 
     $("#edit-profile-modal").on("hidden.bs.modal", function (e) { $("#edit-user-profile-modal-body-div").empty(); $("#edit-user-profile-message-modal-body-div").empty(); });
+
+    $("#forgot-password-modal").on("show.bs.modal", function (e) { LoadAction("forgot-password-div", "/RAMS/Account/ForgotPassword"); });
 }
 /*********** END OF GENERAL MODAL CONTROLS **********/
 

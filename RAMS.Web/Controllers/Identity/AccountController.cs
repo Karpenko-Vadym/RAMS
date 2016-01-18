@@ -664,6 +664,85 @@ namespace RAMS.Web.Controllers
         }
         #endregion
 
+        #region Forgot Password
+        /// <summary>
+        /// ForgotPassword method returns _ForgotPassword partial view
+        /// </summary>
+        /// <returns>_ForgotPassword partial view</returns>
+        [HttpGet]
+        public PartialViewResult ForgotPassword()
+        {
+            return PartialView("_ForgotPassword");
+        }
+
+        /// <summary>
+        /// ForgotPassword method checks if an email address and user name provided by user match to email address and user name stored in data context, and if it matches, an email will be sent to administration with request to change password. Otherwise form will be redisplayed with an error message
+        /// </summary>
+        /// <param name="model">Email address and user name provided by user</param>
+        /// <returns>_Confirmation partial view with success message if outcome of this method is success, _ForgotPassword partial view with model errors otherwise</returns>
+        [HttpPost]
+        public async Task<PartialViewResult> ForgotPassword(ForgotPasswordViewModel model)
+        {
+            if (!String.IsNullOrEmpty(model.UserName) && !String.IsNullOrEmpty(model.Email))
+            {
+                var user = await this.GetUserManager.FindByNameAsync(model.UserName);
+
+                if (user != null) // Check if user exists
+                {
+                    if (user.Email != model.Email) // Check if user name matches with email
+                    {
+                        ModelState.AddModelError("", "User name or email address does not match our records. Please try again.");
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("", "User name or email address does not match our records. Please try again.");
+                }
+            }
+
+            if(ModelState.IsValid)
+            {
+                try
+                {
+                    var template = HttpContext.Server.MapPath("~/App_Data/UserPasswordResetEmailTemplate.txt");
+
+                    var message = System.IO.File.ReadAllText(template);
+
+                    message = message.Replace("%username%", model.UserName).Replace("%email%", model.Email);
+
+                    // TODO - Change "atomix0x@gmail.com" to the email address of admin group
+                    Email.EmailService.SendEmail("atomix0x@gmail.com", "Request to reset user password.", message); // Send a request to reset user password to admin group email address
+                }
+                catch (System.IO.FileNotFoundException ex)
+                {
+                    // Log exception
+                    ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+                }
+                catch (System.IO.IOException ex)
+                {
+                    // Log exception
+                    ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+                }
+
+                var stringBuilder = new StringBuilder();
+
+                stringBuilder.Append("<div class='text-center'><h4><strong>Success!</strong></h4></div>");
+
+                stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Request to reset user password has been sent to the RAMS Administration.</div>");
+
+                stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>You will receive your new login credentials by an email once request is complete.</div>");
+
+                stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE: </strong> Please remember NOT to share your login credentials with anyone.</div></div>");
+
+                var userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString());
+
+                return PartialView("_ForgotPasswordConfirmation", userConfirmationViewModel);
+            }
+
+            return PartialView("_ForgotPassword", model);
+        }
+        #endregion
+
         // From Microsoft Developer Network at https://msdn.microsoft.com/en-us/library/dd492699(v=vs.118).aspx
         /// <summary>
         /// Dispose method releases unmanaged resources and optionally releases managed resources

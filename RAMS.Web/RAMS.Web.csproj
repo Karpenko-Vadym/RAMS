@@ -177,6 +177,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\PasswordResetEmailTemplate.txt" />
+    <Content Include="App_Data\UserPasswordResetEmailTemplate.txt" />
     <Content Include="App_Data\UserRegistrationEmailTemplate.txt" />
     <Content Include="App_Data\UserUpdateEmailTemplate.txt" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -369,6 +370,8 @@
     <Content Include="Views\Identity\Account\_Error.cshtml" />
     <Content Include="Views\Identity\Account\_ChangePassword.cshtml" />
     <Content Include="Views\Identity\Account\_Confirmation.cshtml" />
+    <Content Include="Views\Account\_ForgotPassword.cshtml" />
+    <Content Include="Views\Identity\Account\_ForgotPasswordConfirmation.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

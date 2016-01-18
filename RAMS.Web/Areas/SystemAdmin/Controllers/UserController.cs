@@ -369,6 +369,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                    
                                 message = message.Replace("%name%", agent.FirstName).Replace("%username%", agent.UserName).Replace("%password%", model.Password);
 
+                                // TODO - Change "atomix0x@gmail.com" to the email address of newly created user
                                 Email.EmailService.SendEmail("atomix0x@gmail.com", "Your account has been created.", message); // Send login credentials to newly created user via email
 
                                 // Create notification
@@ -698,6 +699,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                                 message = message.Replace("%name%", client.FirstName).Replace("%username%", client.UserName).Replace("%password%", model.Password);
 
+                                // TODO - Change "atomix0x@gmail.com" to the email address of newly created user
                                 Email.EmailService.SendEmail("atomix0x@gmail.com", "Your account has been created.", message); // Send login credentials to newly created user via email
 
                                 // Create notification
@@ -1008,6 +1010,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                                 message = message.Replace("%name%", admin.FirstName).Replace("%username%", admin.UserName).Replace("%password%", model.Password);
 
+                                // TODO - Change "atomix0x@gmail.com" to the email address of newly created user
                                 Email.EmailService.SendEmail("atomix0x@gmail.com", "Your account has been created.", message); // Send login credentials to newly created user via email
 
                                 // Create notification
@@ -1438,6 +1441,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                                     message = message.Replace("%name%", agent.FirstName).Replace("%username%", agent.UserName);
 
+                                    // TODO - Change "atomix0x@gmail.com" to the email address of updated user
                                     Email.EmailService.SendEmail("atomix0x@gmail.com", "Your user account has been successfully updated.", message); // Send notification about account changes to the user via email
                                 }
                                 catch (System.IO.FileNotFoundException ex)
@@ -1675,6 +1679,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                                     message = message.Replace("%name%", client.FirstName).Replace("%username%", client.UserName);
 
+                                    // TODO - Change "atomix0x@gmail.com" to the email address of updated user
                                     Email.EmailService.SendEmail("atomix0x@gmail.com", "Your user account has been successfully updated.", message); // Send notification about account changes to the user via email
                                 }
                                 catch (System.IO.FileNotFoundException ex)
@@ -1941,6 +1946,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                                     message = message.Replace("%name%", admin.FirstName).Replace("%username%", admin.UserName);
 
+                                    // TODO - Change "atomix0x@gmail.com" to the email address of updated user
                                     Email.EmailService.SendEmail("atomix0x@gmail.com", "Your user account has been successfully updated.", message); // Send notification about account changes to the user via email
                                 }
                                 catch (System.IO.FileNotFoundException ex)
@@ -2162,6 +2168,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                             message = message.Replace("%name%", model.FirstName).Replace("%username%", model.UserName).Replace("%password%", model.Password);
 
+                            // TODO - Change "atomix0x@gmail.com" to the email address of updated user
                             Email.EmailService.SendEmail("atomix0x@gmail.com", "Your password has been successfully reset.", message); 
                         }
                         catch (System.IO.FileNotFoundException ex)

@@ -18,6 +18,21 @@ namespace RAMS.Web.Identity
         [Display(Name = "Password")]
         public string Password { get; set; }
     }
+
+    /// <summary>
+    /// ForgotPasswordViewModel view model declares properties for _ForgotPassword partial view
+    /// </summary>
+    public class ForgotPasswordViewModel
+    {
+        [Required]
+        [Display(Name = "User Name")]
+        public string UserName { get; set; }
+
+        [Required]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+    }
 }
 
 namespace RAMS.ViewModels 

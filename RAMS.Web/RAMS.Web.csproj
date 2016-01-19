@@ -246,6 +246,8 @@
     <Content Include="Areas\Customer\Views\Profile\_ChangeNotificationStatus.cshtml" />
     <Content Include="Areas\SystemAdmin\Views\Profile\_ChangeNotificationStatus.cshtml" />
     <Content Include="Areas\SystemAdmin\Views\Profile\_Confirmation.cshtml" />
+    <Content Include="Areas\Customer\Views\Position\Index.cshtml" />
+    <Content Include="Areas\Customer\Views\Position\_PositionList.cshtml" />
     <None Include="Content\JS\jquery-2.1.4.intellisense.js" />
     <Content Include="Content\JS\jquery-2.1.4.js" />
     <Content Include="Content\JS\jquery-2.1.4.min.js" />
@@ -265,6 +267,7 @@
     <Compile Include="Areas\Agency\AgencyAreaRegistration.cs" />
     <Compile Include="Areas\Agency\Controllers\HomeController.cs" />
     <Compile Include="Areas\Customer\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Customer\Controllers\PositionController.cs" />
     <Compile Include="Areas\Customer\Controllers\ProfileController.cs" />
     <Compile Include="Areas\Customer\CustomerAreaRegistration.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />

@@ -229,6 +229,11 @@ function CustomerModalControls()
     $("#change-notification-status-modal").on("show.bs.modal", function (e) { LoadAction("change-notification-status-div", "/RAMS/Customer/Profile/ChangeNotificationStatus?notificationId=" + $(e.relatedTarget).data("notification-id") + "&notificationTitle=" + encodeURIComponent($(e.relatedTarget).data("notification-title")) + "&notificationStatus=" + $(e.relatedTarget).data("notification-status")); });
 
     $("#change-notification-status-modal").on("hidden.bs.modal", function (e) { $("#change-notification-status-div").empty(); });
+
+    // Position
+    $("#new-position-modal").on("show.bs.modal", function (e) { LoadAction("new-position-modal-body-div", "/RAMS/Customer/Position/NewPosition"); });
+
+    $("#new-position-modal").on("hidden.bs.modal", function (e) { $("#new-position-modal-body-div").empty(); });
 }
 
 /********** END OF CUSTOMER MODAL CONTROLS **********/

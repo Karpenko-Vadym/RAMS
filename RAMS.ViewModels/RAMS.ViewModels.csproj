@@ -49,6 +49,7 @@
     <Compile Include="ViewModels\DepartmentViewModels.cs" />
     <Compile Include="ViewModels\HelperViewModels.cs" />
     <Compile Include="ViewModels\NotificationViewModels.cs" />
+    <Compile Include="ViewModels\PositionViewModels.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RAMS.Models\RAMS.Models.csproj">

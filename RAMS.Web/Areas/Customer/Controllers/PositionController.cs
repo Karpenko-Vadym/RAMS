@@ -74,5 +74,79 @@ namespace RAMS.Web.Areas.Customer.Controllers
             return PartialView("_PositionList");
         }
         #endregion
+
+        #region New Position
+        [HttpGet]
+        public async Task<PartialViewResult> NewPosition()
+        {
+            var departments = new List<Department>();
+
+            var categories = new List<Category>();
+
+            HttpResponseMessage response = await this.GetHttpClient().GetAsync("Department");
+
+            if (response.IsSuccessStatusCode)
+            {
+                departments = await response.Content.ReadAsAsync<List<Department>>();
+            }
+            else
+            {
+                var stringBuilder = new StringBuilder();
+
+                stringBuilder.Append("<div class='text-center'><h4><strong>Failed to retrieve the list of departments.</strong></h4></div>");
+
+                stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Server returned status code '{0}' while attempting to retrieve the list of departments. Please try again in a moment.</div>");
+
+                stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> If you encounter this issue again in the future, please contact Technical Support with exact steps to reproduce this issue.</div></div>");
+
+                var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+
+                return PartialView("_Error", confirmationViewModel);
+            }
+
+            response = await this.GetHttpClient().GetAsync("Category");
+
+            if (response.IsSuccessStatusCode)
+            {
+                categories = await response.Content.ReadAsAsync<List<Category>>();
+            }
+            else
+            {
+                var stringBuilder = new StringBuilder();
+
+                stringBuilder.Append("<div class='text-center'><h4><strong>Failed to retrieve the list of categories.</strong></h4></div>");
+
+                stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Server returned status code '{0}' while attempting to retrieve the list of categories. Please try again in a moment.</div>");
+
+                stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> If you encounter this issue again in the future, please contact Technical Support with exact steps to reproduce this issue.</div></div>");
+
+                var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+
+                return PartialView("_Error", confirmationViewModel);
+            }
+
+            var positionAddViewModel = new PositionAddViewModel();
+
+            positionAddViewModel.Departments = new[] { new SelectListItem { Text = "", Value = string.Empty } }.Concat(departments.Select(d => new SelectListItem { Text = d.Name, Value = d.DepartmentId.ToString() }).ToList()).ToList();
+
+            positionAddViewModel.Categories = new[] { new SelectListItem { Text = "", Value = string.Empty } }.Concat(categories.Select(c => new SelectListItem { Text = c.Name, Value = c.CategoryId.ToString() }).ToList()).ToList();
+
+            return PartialView("_NewPosition", positionAddViewModel);
+        }
+
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<PartialViewResult> NewPosition(PositionAddViewModel model)
+        {
+
+            if(ModelState.IsValid)
+            {
+
+            }
+
+            return null;
+        }
+        #endregion
     }
 }

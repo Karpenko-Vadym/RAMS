@@ -35,6 +35,8 @@ namespace RAMS.Web.Configuration
 
             Mapper.CreateMap<DepartmentAddViewModel, Department>();
             Mapper.CreateMap<DepartmentEditViewModel, Department>();
+
+            Mapper.CreateMap<PositionAddViewModel, Position>();
         }
     }
 }

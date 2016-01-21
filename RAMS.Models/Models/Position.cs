@@ -35,7 +35,7 @@ namespace RAMS.Models
 
         public string Qualifications { get; set; } // Skills & Qualifications
 
-        public string AssetSkills { get; set; } // Skills that are assets
+        public string AssetSkills { get; set; } // Skills that are an asset
 
         public virtual Department Department { get; set; } // Department to which position is assigned
 

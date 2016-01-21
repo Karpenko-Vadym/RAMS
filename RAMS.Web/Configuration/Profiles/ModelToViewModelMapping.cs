@@ -50,6 +50,7 @@ namespace RAMS.Web.Configuration
             Mapper.CreateMap<Notification, NotificationListViewModel>();
 
             Mapper.CreateMap<Position, PositionListViewModel>().ForMember(p => p.PositionIdForDisplay, map => map.MapFrom(model => model.PositionId.ToString("00000"))).ForMember(p => p.CategoryName, map => map.MapFrom(model => model.Category.Name)).ForMember(p => p.AssignedTo, map => map.MapFrom(model => model.Agent.FirstName + " " + model.Agent.LastName));
+            Mapper.CreateMap<Position, PositionAddViewModel>();
         }
     }
 }

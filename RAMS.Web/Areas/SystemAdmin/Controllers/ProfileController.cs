@@ -90,6 +90,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
         /// <param name="model">View model with information required to save the file</param>
         /// <returns>Redirects to Index view with success message, or failure message</returns>
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult UploadProfilePicture(AdminProfilePictureViewModel model)
         {
             if (ModelState.IsValid)

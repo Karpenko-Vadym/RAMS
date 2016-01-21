@@ -106,7 +106,7 @@ namespace RAMS.ViewModels
         [Display(Name = "Department")]
         public int DepartmentId { get; set; }
 
-        public List<System.Web.Mvc.SelectListItem> Departments { get; set; } // Select list for dropdowns
+        public List<System.Web.Mvc.SelectListItem> Departments { get; set; } // Select list for Department dropdown
 
         [Required]
         [Display(Name = "Agent Status")]

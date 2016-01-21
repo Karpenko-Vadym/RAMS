@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace RAMS.ViewModels
 {
@@ -53,6 +54,8 @@ namespace RAMS.ViewModels
 
         [Required]
         [Display(Name = "Expiry Date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime ExpiryDate { get; set; }
 
         [Required]
@@ -60,10 +63,12 @@ namespace RAMS.ViewModels
         public string Title { get; set; }
 
         [Required]
+        [AllowHtml]
         [Display(Name = "Description")]
         public string Description { get; set; }
 
         [Required]
+        [AllowHtml]
         [Display(Name = "Company Details")]
         public string CompanyDetails { get; set; } // Company Description
 
@@ -77,7 +82,7 @@ namespace RAMS.ViewModels
 
         [Required]
         [Display(Name = "Asset Skills")]
-        public string AssetSkills { get; set; } // Skills that are assets
+        public string AssetSkills { get; set; } // Skills that are an asset
 
         [Required]
         [Display(Name = "People Needed")]
@@ -89,8 +94,13 @@ namespace RAMS.ViewModels
 
         public PositionStatus Status { get; set; }
 
-        public List<System.Web.Mvc.SelectListItem> Departments { get; set; } // Select list for dropdowns
+        public List<System.Web.Mvc.SelectListItem> Departments { get; set; } // Select list for Department dropdown
 
-        public List<System.Web.Mvc.SelectListItem> Categories { get; set; } // Select list for dropdowns
+        public List<System.Web.Mvc.SelectListItem> Categories { get; set; } // Select list for Category dropdown
+
+        public PositionAddViewModel()
+        {
+            this.Status = PositionStatus.New;
+        }
     }
 }

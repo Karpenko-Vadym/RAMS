@@ -123,6 +123,13 @@ function ProfilePictureUpload()
     });
 }
 
+function setDatepicker()
+{
+    $(".datepicker-field").datepicker();
+
+    
+}
+
 /************* END OF GENERAL FUNCTIONS *************/
 
 /*************** GENERAL MODAL CONTROLS *************/

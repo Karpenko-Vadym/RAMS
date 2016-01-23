@@ -86,36 +86,21 @@ namespace RAMS.Data.Migrations
                 .PrimaryKey(t => t.DepartmentId);
             
             CreateTable(
-                "dbo.Positions",
+                "dbo.Interviews",
                 c => new
                     {
-                        PositionId = c.Int(nullable: false, identity: true),
-                        CleintId = c.Int(nullable: false),
-                        AgentId = c.Int(),
-                        CategoryId = c.Int(nullable: false),
-                        DepartmentId = c.Int(nullable: false),
-                        DateCreated = c.DateTime(nullable: false),
-                        ExpiryDate = c.DateTime(nullable: false),
-                        Title = c.String(nullable: false, maxLength: 100),
-                        Description = c.String(nullable: false, maxLength: 2000),
-                        CompanyDetails = c.String(nullable: false, maxLength: 1000),
-                        Location = c.String(nullable: false, maxLength: 200),
-                        Qualifications = c.String(nullable: false),
-                        AssetSkills = c.String(),
-                        PeopleNeeded = c.Int(nullable: false),
-                        AcceptanceScore = c.Int(nullable: false),
+                        InterviewId = c.Int(nullable: false, identity: true),
+                        CandidateId = c.Int(nullable: false),
+                        InterviewerId = c.Int(nullable: false),
+                        InterviewDate = c.DateTime(nullable: false),
                         Status = c.Int(nullable: false),
                         Timestamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
                     })
-                .PrimaryKey(t => t.PositionId)
-                .ForeignKey("dbo.Agents", t => t.AgentId)
-                .ForeignKey("dbo.Categories", t => t.CategoryId)
-                .ForeignKey("dbo.Clients", t => t.CleintId, cascadeDelete: true)
-                .ForeignKey("dbo.Departments", t => t.DepartmentId, cascadeDelete: true)
-                .Index(t => t.CleintId)
-                .Index(t => t.AgentId)
-                .Index(t => t.CategoryId)
-                .Index(t => t.DepartmentId);
+                .PrimaryKey(t => t.InterviewId)
+                .ForeignKey("dbo.Candidates", t => t.CandidateId)
+                .ForeignKey("dbo.Agents", t => t.InterviewerId, cascadeDelete: true)
+                .Index(t => t.CandidateId)
+                .Index(t => t.InterviewerId);
             
             CreateTable(
                 "dbo.Candidates",
@@ -142,21 +127,33 @@ namespace RAMS.Data.Migrations
                 .Index(t => t.PositionId);
             
             CreateTable(
-                "dbo.Interviews",
+                "dbo.Positions",
                 c => new
                     {
-                        InterviewId = c.Int(nullable: false, identity: true),
-                        CandidateId = c.Int(nullable: false),
-                        InterviewerId = c.Int(nullable: false),
-                        InterviewDate = c.DateTime(nullable: false),
+                        PositionId = c.Int(nullable: false, identity: true),
+                        CleintId = c.Int(nullable: false),
+                        AgentId = c.Int(),
+                        CategoryId = c.Int(nullable: false),
+                        DateCreated = c.DateTime(nullable: false),
+                        ExpiryDate = c.DateTime(nullable: false),
+                        Title = c.String(nullable: false, maxLength: 100),
+                        Description = c.String(nullable: false, maxLength: 2000),
+                        CompanyDetails = c.String(nullable: false, maxLength: 1000),
+                        Location = c.String(nullable: false, maxLength: 200),
+                        Qualifications = c.String(nullable: false),
+                        AssetSkills = c.String(),
+                        PeopleNeeded = c.Int(nullable: false),
+                        AcceptanceScore = c.Int(nullable: false),
                         Status = c.Int(nullable: false),
                         Timestamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
                     })
-                .PrimaryKey(t => t.InterviewId)
-                .ForeignKey("dbo.Agents", t => t.InterviewerId, cascadeDelete: true)
-                .ForeignKey("dbo.Candidates", t => t.CandidateId)
-                .Index(t => t.CandidateId)
-                .Index(t => t.InterviewerId);
+                .PrimaryKey(t => t.PositionId)
+                .ForeignKey("dbo.Agents", t => t.AgentId)
+                .ForeignKey("dbo.Categories", t => t.CategoryId)
+                .ForeignKey("dbo.Clients", t => t.CleintId, cascadeDelete: true)
+                .Index(t => t.CleintId)
+                .Index(t => t.AgentId)
+                .Index(t => t.CategoryId);
             
             CreateTable(
                 "dbo.Categories",
@@ -195,24 +192,22 @@ namespace RAMS.Data.Migrations
         {
             DropForeignKey("dbo.Notifications", "ClientId", "dbo.Clients");
             DropForeignKey("dbo.Notifications", "AgentId", "dbo.Agents");
-            DropForeignKey("dbo.Positions", "DepartmentId", "dbo.Departments");
+            DropForeignKey("dbo.Interviews", "InterviewerId", "dbo.Agents");
+            DropForeignKey("dbo.Candidates", "PositionId", "dbo.Positions");
             DropForeignKey("dbo.Positions", "CleintId", "dbo.Clients");
             DropForeignKey("dbo.Positions", "CategoryId", "dbo.Categories");
-            DropForeignKey("dbo.Candidates", "PositionId", "dbo.Positions");
-            DropForeignKey("dbo.Interviews", "CandidateId", "dbo.Candidates");
-            DropForeignKey("dbo.Interviews", "InterviewerId", "dbo.Agents");
             DropForeignKey("dbo.Positions", "AgentId", "dbo.Agents");
+            DropForeignKey("dbo.Interviews", "CandidateId", "dbo.Candidates");
             DropForeignKey("dbo.Agents", "DepartmentId", "dbo.Departments");
             DropForeignKey("dbo.Notifications", "AdminId", "dbo.Admins");
             DropIndex("dbo.Clients", new[] { "Email" });
             DropIndex("dbo.Clients", new[] { "UserName" });
-            DropIndex("dbo.Interviews", new[] { "InterviewerId" });
-            DropIndex("dbo.Interviews", new[] { "CandidateId" });
-            DropIndex("dbo.Candidates", new[] { "PositionId" });
-            DropIndex("dbo.Positions", new[] { "DepartmentId" });
             DropIndex("dbo.Positions", new[] { "CategoryId" });
             DropIndex("dbo.Positions", new[] { "AgentId" });
             DropIndex("dbo.Positions", new[] { "CleintId" });
+            DropIndex("dbo.Candidates", new[] { "PositionId" });
+            DropIndex("dbo.Interviews", new[] { "InterviewerId" });
+            DropIndex("dbo.Interviews", new[] { "CandidateId" });
             DropIndex("dbo.Agents", new[] { "Email" });
             DropIndex("dbo.Agents", new[] { "UserName" });
             DropIndex("dbo.Agents", new[] { "DepartmentId" });
@@ -223,9 +218,9 @@ namespace RAMS.Data.Migrations
             DropIndex("dbo.Admins", new[] { "UserName" });
             DropTable("dbo.Clients");
             DropTable("dbo.Categories");
-            DropTable("dbo.Interviews");
-            DropTable("dbo.Candidates");
             DropTable("dbo.Positions");
+            DropTable("dbo.Candidates");
+            DropTable("dbo.Interviews");
             DropTable("dbo.Departments");
             DropTable("dbo.Agents");
             DropTable("dbo.Notifications");

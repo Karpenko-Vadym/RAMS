@@ -19,8 +19,6 @@ namespace RAMS.Models
 
         public int CategoryId { get; set; }
 
-        public int DepartmentId { get; set; }
-
         public DateTime DateCreated { get; set; }
 
         public DateTime ExpiryDate { get; set; }
@@ -36,8 +34,6 @@ namespace RAMS.Models
         public string Qualifications { get; set; } // Skills & Qualifications
 
         public string AssetSkills { get; set; } // Skills that are an asset
-
-        public virtual Department Department { get; set; } // Department to which position is assigned
 
         public virtual Category Category { get; set; } // Position category
 

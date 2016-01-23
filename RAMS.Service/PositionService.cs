@@ -113,17 +113,6 @@ namespace RAMS.Service
             return category.Positions;
         }
 
-        /// <summary>
-        /// Get multiple positions for specific department
-        /// </summary>
-        /// <param name="id">Id of the department for which positions are being retrieved</param>
-        /// <returns>Multiple positions for specific department</returns>
-        public IEnumerable<Position> GetManyPositionsByDepartmentId(int id)
-        {
-            var department = this.DepartmentRepository.GetById(id);
-
-            return department.Positions;
-        }
 
         /// <summary>
         /// Get multiple positions with matching creation date 

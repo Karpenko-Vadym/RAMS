@@ -17,13 +17,9 @@ namespace RAMS.Models
 
         public virtual List<Agent> Agents { get; set; }
 
-        public virtual List<Position> Positions { get; set; }
-
         public Department()
         {
             this.Agents = new List<Agent>();
-
-            this.Positions = new List<Position>();
         }
     }
 }

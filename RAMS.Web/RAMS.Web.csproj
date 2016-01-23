@@ -570,6 +570,7 @@
     <Content Include="Content\CKEditor\samples\toolbarconfigurator\lib\codemirror\LICENSE" />
     <Content Include="Content\CKEditor\skins\moono\readme.md" />
     <Content Include="Areas\Customer\Views\Position\_Error.cshtml" />
+    <Content Include="Areas\Customer\Views\Position\_PositionConfirmation.cshtml" />
     <None Include="Content\JS\jquery-2.1.4.intellisense.js" />
     <Content Include="Content\JS\jquery-2.1.4.js" />
     <Content Include="Content\JS\jquery-2.1.4.min.js" />

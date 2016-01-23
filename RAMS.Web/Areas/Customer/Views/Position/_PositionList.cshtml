@@ -23,7 +23,15 @@
                         <td>@item.Status</td>
                         <td>@item.CategoryName</td>
                         <td>@item.DateCreated</td>
-                        <td>@item.AssignedTo</td>
+
+                        @if (String.IsNullOrEmpty(item.AssignedTo))
+                        {
+                            <td>Not Assigned</td>
+                        }
+                        else
+                        {
+                            <td>@item.AssignedTo</td>
+                        }
                     </tr>
                 }
             </tbody>

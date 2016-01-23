@@ -52,9 +52,16 @@ select option:disabled
 
 #ui-datepicker-div a.ui-state-highlight
 {
-    background-color: #fcf8e3;
-    border-color: #faebcc;
-    color: #8a6d3b;
+    background-color: #f0ad4e;
+    border-color: #eea236;
+    color: white;
+}
+
+#ui-datepicker-div a.ui-state-highlight:hover
+{
+    background-color: #ec971f;
+    border-color: #d58512;
+    color: white;
 }
 
 #ui-datepicker-div a.ui-state-active
@@ -72,3 +79,8 @@ select option:disabled
     color: white;
 }
 
+.form-group.required .control-label:before 
+{ 
+   content: "*";
+   color: red;
+}

@@ -23,8 +23,6 @@ namespace RAMS.Service
 
         IEnumerable<Position> GetManyPositionsByCategoryId(int id);
 
-        IEnumerable<Position> GetManyPositionsByDepartmentId(int id);
-
         IEnumerable<Position> GetManyPositionsByCreationDate(DateTime dateCreated);
 
         IEnumerable<Position> GetManyPositionsByExpiryDate(DateTime expiryDate);

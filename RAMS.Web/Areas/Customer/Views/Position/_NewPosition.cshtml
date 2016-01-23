@@ -4,7 +4,7 @@
 @{
     AjaxOptions ajaxOptions = new AjaxOptions
     {
-        UpdateTargetId = "new-position-div",
+        UpdateTargetId = "new-position-modal-body-div",
         OnBegin = "OnAjaxBegin",
         OnSuccess = "OnAjaxSuccess",
         OnFailure = "OnAjaxFailure",
@@ -19,10 +19,12 @@
 
         @Html.HiddenFor(model => model.DateCreated)
         @Html.HiddenFor(model => model.Status)
+        @Html.HiddenFor(model => model.CleintId)
+        @Html.HiddenFor(model => model.AcceptanceScore)
 
         <div class="form-horizontal">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="form-group">
+            <div class="form-group required">
                 @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-7">
                     @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
@@ -30,7 +32,7 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group required">
                 @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-7">
                     @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
@@ -38,7 +40,7 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group required">
                 @Html.LabelFor(model => model.ExpiryDate, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-7">
                     @Html.TextBoxFor(model => model.ExpiryDate, new { @class = "form-control datepicker-field", @Value = "", @placeholder = "Please select or enter the date in following format: dd/mm/yyyy" })
@@ -46,7 +48,7 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group required">
                 @Html.LabelFor(model => model.CompanyDetails, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-7">
                     @Html.TextAreaFor(model => model.CompanyDetails, new { htmlAttributes = new { @class = "form-control" } })
@@ -54,7 +56,15 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group required">
+                @Html.LabelFor(model => model.Location, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.Location, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group required">
                 @Html.LabelFor(model => model.PeopleNeeded, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-7">
                     @Html.EditorFor(model => model.PeopleNeeded, new { htmlAttributes = new { @class = "form-control" } })
@@ -62,15 +72,7 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.DepartmentId, htmlAttributes: new { @class = "control-label col-md-3" })
-                <div class="col-md-7">
-                    @Html.DropDownListFor(model => model.DepartmentId, Model.Departments, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.DepartmentId, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
+            <div class="form-group required">
                 @Html.LabelFor(model => model.CategoryId, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-7">
                     @Html.DropDownListFor(model => model.CategoryId, Model.Categories, new { @class = "form-control" })
@@ -78,7 +80,17 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <hr />
+
+            <div class="alert alert-warning">
+                <div class='row'>
+                    <div class='col-md-offset-1'>Please enter "Qualifications" and "Asset Skills" keywords that are most related to this position.</div>
+                    <div class='col-md-12'><p></p></div>
+                    <div class='col-md-offset-1'><strong>NOTE:</strong> Please use semicolon as a separator between the keywords.</div>
+                </div>
+            </div>
+
+            <div class="form-group required">
                 @Html.LabelFor(model => model.Qualifications, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-7">
                     @Html.EditorFor(model => model.Qualifications, new { htmlAttributes = new { @class = "form-control" } })
@@ -103,5 +115,5 @@
     }
 </div>
 
-<script type="text/javascript">$(function () { DisableEmptyOptions(); $(".datepicker-field").datepicker(); CKEDITOR.replace('Description'); CKEDITOR.replace('CompanyDetails'); });</script>
+<script type="text/javascript">$(function () { DisableEmptyOptions(); $(".datepicker-field").datepicker({ dateFormat: "dd/mm/yy", onSelect: function (dateText, inst) { $(this).attr('value', dateText); } }); CKEDITOR.replace('Description'); CKEDITOR.replace('CompanyDetails'); });</script>
 <!-- END OF NEW POSITION PARTIAL -->

@@ -106,7 +106,6 @@ namespace RAMS.Data
             modelBuilder.Entity<Category>().HasMany(c => c.Positions).WithRequired(p => p.Category).HasForeignKey(c => c.CategoryId).WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Department>().HasMany(d => d.Agents).WithRequired(a => a.Department).HasForeignKey(d => d.DepartmentId).WillCascadeOnDelete(true);
-            modelBuilder.Entity<Department>().HasMany(d => d.Positions).WithRequired(p => p.Department).HasForeignKey(d => d.DepartmentId).WillCascadeOnDelete(true);
 
             modelBuilder.Entity<Interview>().HasRequired(i => i.Interviewer).WithMany(a => a.Interviews).HasForeignKey(i => i.InterviewerId).WillCascadeOnDelete(true); ;
 

@@ -42,20 +42,18 @@ namespace RAMS.ViewModels
     {
         public int? AgentId { get; set; }
 
+        [Display(Name = "Client")]
+        public int CleintId { get; set; }
+
         [Required]
         [Display(Name = "Category")]
         public int CategoryId { get; set; }
-
-        [Required]
-        [Display(Name = "Department")]
-        public int DepartmentId { get; set; }
 
         public DateTime DateCreated { get; set; }
 
         [Required]
         [Display(Name = "Expiry Date")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime ExpiryDate { get; set; }
 
         [Required]
@@ -70,7 +68,7 @@ namespace RAMS.ViewModels
         [Required]
         [AllowHtml]
         [Display(Name = "Company Details")]
-        public string CompanyDetails { get; set; } // Company Description
+        public string CompanyDetails { get; set; } 
 
         [Required]
         [Display(Name = "Location")]
@@ -78,29 +76,72 @@ namespace RAMS.ViewModels
 
         [Required]
         [Display(Name = "Qualifications")]
-        public string Qualifications { get; set; } // Skills & Qualifications
+        public string Qualifications { get; set; } 
 
-        [Required]
         [Display(Name = "Asset Skills")]
-        public string AssetSkills { get; set; } // Skills that are an asset
+        public string AssetSkills { get; set; } 
 
         [Required]
         [Display(Name = "People Needed")]
-        public int PeopleNeeded { get; set; } // How many people needed for this position
+        public int PeopleNeeded { get; set; } 
 
-        [Required]
         [Display(Name = "Acceptance Score")]
-        public int AcceptanceScore { get; set; } // Score cut off point, everything below will not qualify for the position
+        public int AcceptanceScore { get; set; }
 
         public PositionStatus Status { get; set; }
-
-        public List<System.Web.Mvc.SelectListItem> Departments { get; set; } // Select list for Department dropdown
 
         public List<System.Web.Mvc.SelectListItem> Categories { get; set; } // Select list for Category dropdown
 
         public PositionAddViewModel()
         {
+            this.AcceptanceScore = 50;
+
             this.Status = PositionStatus.New;
         }
+    }
+
+    /// <summary>
+    /// PositionConfirmationViewModel view model declares properties for _PositionConfirmation partial view
+    /// </summary>
+    public class PositionConfirmationViewModel
+    {
+        [Display(Name = "Id")]
+        public int PositionId { get; set; }
+
+        [Display(Name = "Requestor")]
+        public string Cleint { get; set; }
+
+        [Display(Name = "Category")]
+        public string Category { get; set; }
+
+        [Display(Name = "Date Created")]
+        public DateTime DateCreated { get; set; }
+
+        [Display(Name = "Expiry Date")]
+        public DateTime ExpiryDate { get; set; }
+
+        [Display(Name = "Title")]
+        public string Title { get; set; }
+
+        [Display(Name = "Description")]
+        public string Description { get; set; }
+
+        [Display(Name = "Company Details")]
+        public string CompanyDetails { get; set; }
+
+        [Display(Name = "Location")]
+        public string Location { get; set; }
+
+        [Display(Name = "Qualifications")]
+        public string Qualifications { get; set; }
+
+        [Display(Name = "Asset Skills")]
+        public string AssetSkills { get; set; }
+
+        [Display(Name = "People Needed")]
+        public int PeopleNeeded { get; set; }
+
+        [Display(Name = "Position Status")]
+        public PositionStatus Status { get; set; }
     }
 }

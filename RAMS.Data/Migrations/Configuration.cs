@@ -369,7 +369,6 @@ namespace RAMS.Data.Migrations
                     DateCreated = DateTime.Now,
                     Description = "The Technical Support Specialist’s primary mission is to provide customers with in-service support.",
                     ExpiryDate = DateTime.Now.AddYears(1),
-                    DepartmentId = departmentRepository.GetAll().FirstOrDefault().DepartmentId,
                     Location = "Toronto",
                     PeopleNeeded = 8,
                     Qualifications = "Advanced knowledge of ORACLE Database, SQL, JavaScript",

@@ -1,11 +1,13 @@
 ﻿@model RAMS.ViewModels.UserConfirmationViewModel
-<!-- CONFIRMATION PARTIAL -->
+
+<!-- SUCCESS CONFIRMATION PARTIAL -->
 @if (Model != null)
 {
-    <div class="alert alert-warning bottom-margin-0" role="alert">
+    <div class="alert alert-success bottom-margin-0" role="alert">
         @Html.Raw(Model.Message)
     </div>
 
     <div class="vertical-padding-24"></div>
 }
-<!-- END OF CONFIRMATION PARTIAL -->
+<!-- END OF SUCCESS CONFIRMATION PARTIAL -->
+

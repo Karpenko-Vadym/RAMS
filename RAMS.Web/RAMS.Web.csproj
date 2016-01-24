@@ -513,7 +513,6 @@
     <Content Include="Areas\SystemAdmin\Views\User\_RegisterAgent.cshtml" />
     <Content Include="Areas\SystemAdmin\Views\User\_RegisterClient.cshtml" />
     <Content Include="Areas\SystemAdmin\Views\User\_RegisterAdmin.cshtml" />
-    <Content Include="Areas\SystemAdmin\Views\User\_Success.cshtml" />
     <Content Include="Areas\Agency\Views\web.config" />
     <Content Include="Areas\Agency\Views\Home\Index.cshtml" />
     <Content Include="Areas\Agency\Views\_ViewStart.cshtml" />
@@ -525,7 +524,6 @@
     <Content Include="Areas\SystemAdmin\Views\User\_EditAgent.cshtml" />
     <Content Include="Areas\SystemAdmin\Views\User\_ResetPassword.cshtml" />
     <Content Include="Areas\SystemAdmin\Views\User\_BlockUser.cshtml" />
-    <Content Include="Areas\SystemAdmin\Views\User\_Confirmation.cshtml" />
     <Content Include="Areas\SystemAdmin\Views\User\_DeleteUser.cshtml" />
     <Content Include="Areas\SystemAdmin\Views\User\_UnblockUser.cshtml" />
     <Content Include="App_Data\ExceptionLog.log" />
@@ -571,6 +569,14 @@
     <Content Include="Content\CKEditor\skins\moono\readme.md" />
     <Content Include="Areas\Customer\Views\Position\_Error.cshtml" />
     <Content Include="Areas\Customer\Views\Position\_PositionConfirmation.cshtml" />
+    <Content Include="Areas\SystemAdmin\Views\User\_RegisterAgentConfirmation.cshtml" />
+    <Content Include="Areas\SystemAdmin\Views\User\_RegisterClientConfirmation.cshtml" />
+    <Content Include="Areas\SystemAdmin\Views\User\_RegisterAdminConfirmation.cshtml" />
+    <Content Include="Areas\SystemAdmin\Views\User\_EditAgentConfirmation.cshtml" />
+    <Content Include="Areas\SystemAdmin\Views\User\_EditClientConfirmation.cshtml" />
+    <Content Include="Areas\SystemAdmin\Views\User\_EditAdminConfirmation.cshtml" />
+    <Content Include="Areas\SystemAdmin\Views\User\_SuccessConfirmation.cshtml" />
+    <Content Include="Areas\SystemAdmin\Views\User\_FailureConfirmation.cshtml" />
     <None Include="Content\JS\jquery-2.1.4.intellisense.js" />
     <Content Include="Content\JS\jquery-2.1.4.js" />
     <Content Include="Content\JS\jquery-2.1.4.min.js" />
@@ -695,9 +701,11 @@
     <Content Include="Views\Identity\Account\_Success.cshtml" />
     <Content Include="Views\Identity\Account\_Error.cshtml" />
     <Content Include="Views\Identity\Account\_ChangePassword.cshtml" />
-    <Content Include="Views\Identity\Account\_Confirmation.cshtml" />
     <Content Include="Views\Account\_ForgotPassword.cshtml" />
     <Content Include="Views\Identity\Account\_ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Views\Identity\Account\_SuccessConfirmation.cshtml" />
+    <Content Include="Views\Identity\Account\_FailureConfirmation.cshtml" />
+    <Content Include="Views\Identity\Account\_EditUserConfirmation.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

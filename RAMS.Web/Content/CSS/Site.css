@@ -84,3 +84,13 @@ select option:disabled
    content: "*";
    color: red;
 }
+
+div.modal .modal-content
+{
+    min-width: 600px;
+}
+
+div.container.body-content
+{
+    min-width: 700px;
+}

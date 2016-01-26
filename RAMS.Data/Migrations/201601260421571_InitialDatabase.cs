@@ -131,7 +131,7 @@ namespace RAMS.Data.Migrations
                 c => new
                     {
                         PositionId = c.Int(nullable: false, identity: true),
-                        CleintId = c.Int(nullable: false),
+                        ClientId = c.Int(nullable: false),
                         AgentId = c.Int(),
                         CategoryId = c.Int(nullable: false),
                         DateCreated = c.DateTime(nullable: false),
@@ -150,8 +150,8 @@ namespace RAMS.Data.Migrations
                 .PrimaryKey(t => t.PositionId)
                 .ForeignKey("dbo.Agents", t => t.AgentId)
                 .ForeignKey("dbo.Categories", t => t.CategoryId)
-                .ForeignKey("dbo.Clients", t => t.CleintId, cascadeDelete: true)
-                .Index(t => t.CleintId)
+                .ForeignKey("dbo.Clients", t => t.ClientId, cascadeDelete: true)
+                .Index(t => t.ClientId)
                 .Index(t => t.AgentId)
                 .Index(t => t.CategoryId);
             
@@ -194,7 +194,7 @@ namespace RAMS.Data.Migrations
             DropForeignKey("dbo.Notifications", "AgentId", "dbo.Agents");
             DropForeignKey("dbo.Interviews", "InterviewerId", "dbo.Agents");
             DropForeignKey("dbo.Candidates", "PositionId", "dbo.Positions");
-            DropForeignKey("dbo.Positions", "CleintId", "dbo.Clients");
+            DropForeignKey("dbo.Positions", "ClientId", "dbo.Clients");
             DropForeignKey("dbo.Positions", "CategoryId", "dbo.Categories");
             DropForeignKey("dbo.Positions", "AgentId", "dbo.Agents");
             DropForeignKey("dbo.Interviews", "CandidateId", "dbo.Candidates");
@@ -204,7 +204,7 @@ namespace RAMS.Data.Migrations
             DropIndex("dbo.Clients", new[] { "UserName" });
             DropIndex("dbo.Positions", new[] { "CategoryId" });
             DropIndex("dbo.Positions", new[] { "AgentId" });
-            DropIndex("dbo.Positions", new[] { "CleintId" });
+            DropIndex("dbo.Positions", new[] { "ClientId" });
             DropIndex("dbo.Candidates", new[] { "PositionId" });
             DropIndex("dbo.Interviews", new[] { "InterviewerId" });
             DropIndex("dbo.Interviews", new[] { "CandidateId" });

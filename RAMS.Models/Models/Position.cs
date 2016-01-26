@@ -13,7 +13,7 @@ namespace RAMS.Models
     {
         public int PositionId { get; set; }
 
-        public int CleintId { get; set; }
+        public int ClientId { get; set; }
 
         public int? AgentId { get; set; }
 

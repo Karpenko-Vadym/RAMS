@@ -17,7 +17,7 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr class="cursor-pointer" >
+                    <tr class="cursor-pointer" data-toggle="modal" data-target="#position-details-modal" data-position-id="@item.PositionId">
                         <td>@item.PositionIdForDisplay</td>
                         <td>@item.Title</td>
                         <td>@item.Status</td>

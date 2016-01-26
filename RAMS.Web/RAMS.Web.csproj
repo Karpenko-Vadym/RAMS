@@ -705,6 +705,7 @@
     <Content Include="Views\Identity\Account\_SuccessConfirmation.cshtml" />
     <Content Include="Views\Identity\Account\_FailureConfirmation.cshtml" />
     <Content Include="Views\Identity\Account\_EditUserConfirmation.cshtml" />
+    <Content Include="Areas\Customer\Views\Position\_PositionDetails.cshtml" />
     <None Include="Content\JS\jquery-2.1.4.intellisense.js" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

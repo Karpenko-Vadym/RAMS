@@ -363,7 +363,7 @@ namespace RAMS.Data.Migrations
                     AcceptanceScore = 50,
                     AssetSkills = "C#, C++, Java",
                     CategoryId = categoryRepository.GetAll().FirstOrDefault().CategoryId,
-                    CleintId = clientRepository.GetAll().FirstOrDefault().ClientId,
+                    ClientId = clientRepository.GetAll().FirstOrDefault().ClientId,
                     AgentId = agentRepository.GetAll().FirstOrDefault().AgentId,
                     CompanyDetails = "Our company has been on the market for many years and proven to have high quality standards.",
                     DateCreated = DateTime.Now,

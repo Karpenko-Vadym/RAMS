@@ -24,7 +24,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple positions with matching client id</returns>
         public IEnumerable<Position> GetManyByClientId(int id)
         {
-            return this.GetContext.Positions.Where(p => p.CleintId == id).ToList();
+            return this.GetContext.Positions.Where(p => p.ClientId == id).ToList();
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple positions with matching client</returns>
         public IEnumerable<Position> GetManyByClient(Client client)
         {
-            return this.GetContext.Positions.Where(p => p.CleintId == client.ClientId).ToList();
+            return this.GetContext.Positions.Where(p => p.ClientId == client.ClientId).ToList();
         }
 
         /// <summary>

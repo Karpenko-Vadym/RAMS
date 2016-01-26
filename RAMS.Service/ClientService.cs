@@ -107,7 +107,7 @@ namespace RAMS.Service
         /// </summary>
         /// <param name="role">Client's role to be compared with the context clients' data</param>
         /// <returns>Multiple clients with matching role</returns>
-        public IEnumerable<Client> GetManyCleintsByRole(Role role)
+        public IEnumerable<Client> GetManyClientsByRole(Role role)
         {
             return this.ClientRepository.GetManyByRole(role);
         }

@@ -43,7 +43,7 @@ namespace RAMS.ViewModels
         public int? AgentId { get; set; }
 
         [Display(Name = "Client")]
-        public int CleintId { get; set; }
+        public int ClientId { get; set; }
 
         [Required]
         [Display(Name = "Category")]
@@ -109,7 +109,52 @@ namespace RAMS.ViewModels
         public int PositionId { get; set; }
 
         [Display(Name = "Requestor")]
-        public string Cleint { get; set; }
+        public string Client { get; set; }
+
+        [Display(Name = "Category")]
+        public string Category { get; set; }
+
+        [Display(Name = "Date Created")]
+        public DateTime DateCreated { get; set; }
+
+        [Display(Name = "Expiry Date")]
+        public DateTime ExpiryDate { get; set; }
+
+        [Display(Name = "Title")]
+        public string Title { get; set; }
+
+        [Display(Name = "Description")]
+        public string Description { get; set; }
+
+        [Display(Name = "Company Details")]
+        public string CompanyDetails { get; set; }
+
+        [Display(Name = "Location")]
+        public string Location { get; set; }
+
+        [Display(Name = "Qualifications")]
+        public string Qualifications { get; set; }
+
+        [Display(Name = "Asset Skills")]
+        public string AssetSkills { get; set; }
+
+        [Display(Name = "People Needed")]
+        public int PeopleNeeded { get; set; }
+
+        [Display(Name = "Position Status")]
+        public PositionStatus Status { get; set; }
+    }
+
+    /// <summary>
+    /// PositionDetailsViewModel view model declares properties for _PositionDetails partial view
+    /// </summary>
+    public class PositionDetailsViewModel
+    {
+        [Display(Name = "Id")]
+        public int PositionId { get; set; }
+
+        [Display(Name = "Requestor")]
+        public string Client { get; set; }
 
         [Display(Name = "Category")]
         public string Category { get; set; }

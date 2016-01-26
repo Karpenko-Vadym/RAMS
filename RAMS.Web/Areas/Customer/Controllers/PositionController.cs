@@ -134,7 +134,7 @@ namespace RAMS.Web.Areas.Customer.Controllers
             var positionAddViewModel = new PositionAddViewModel();
 
             // Populate client id
-            positionAddViewModel.CleintId = client.ClientId;
+            positionAddViewModel.ClientId = client.ClientId;
 
             // Populate select list for categories
             positionAddViewModel.Categories = new[] { new SelectListItem { Text = "", Value = string.Empty } }.Concat(categories.Select(c => new SelectListItem { Text = c.Name, Value = c.CategoryId.ToString() }).ToList()).ToList();
@@ -179,7 +179,7 @@ namespace RAMS.Web.Areas.Customer.Controllers
             }
 
             // Perform manual model validation
-            if(model.AcceptanceScore == 0 && model.CleintId == 0) 
+            if(model.AcceptanceScore == 0 && model.ClientId == 0) 
             { 
                 ModelState.AddModelError(String.Empty, "Model state is not valid. Please try again in a moment"); 
             }
@@ -187,7 +187,7 @@ namespace RAMS.Web.Areas.Customer.Controllers
             {
                 ModelState.AddModelError(String.Empty, "Initial Acceptance Score could not be determined. Please try again in a moment");
             }
-            else if (model.CleintId == 0)
+            else if (model.ClientId == 0)
             {
                 ModelState.AddModelError(String.Empty, "Client could not be determined. Please try again in a moment");
             }
@@ -240,5 +240,27 @@ namespace RAMS.Web.Areas.Customer.Controllers
             return PartialView("_NewPosition", model);
         }
         #endregion
+
+        /// <summary>
+        /// PositionDetails action method retrieves the details of the position and passes it to _PositionDetails partial view
+        /// </summary>
+        /// <param name="positionId">Id of the position which details are being fetched</param>
+        /// <returns>_PositionDetails partial view with the details for the position</returns>
+        public async Task<PartialViewResult> PositionDetails(int positionId)
+        {
+            if (positionId > 0)
+            {
+                var response = await this.GetHttpClient().GetAsync(String.Format("Position?id={0}", positionId));
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var positionDetails = Mapper.Map<Position, PositionDetailsViewModel>(await response.Content.ReadAsAsync<Position>());
+
+                    return PartialView("_PositionDetails", positionDetails);
+                }
+            }
+
+            return PartialView("_PositionDetails");
+        }
     }
 }

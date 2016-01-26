@@ -189,7 +189,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                     return PartialView("_RegisterAgent", agentAddViewModel);
                 }
-                else if (Enum.GetName(typeof(Enums.UserType), UserType.Client) == model.SelectedValue) // Cleint is selected
+                else if (Enum.GetName(typeof(Enums.UserType), UserType.Client) == model.SelectedValue) // Client is selected
                 {
                     var clientAddViewModel = new ClientAddViewModel();
 

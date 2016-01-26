@@ -114,7 +114,7 @@ namespace RAMS.Data
             modelBuilder.Entity<Notification>().HasOptional(n => n.Admin).WithMany(a => a.Notifications).HasForeignKey(n => n.AdminId).WillCascadeOnDelete(true);
 
             modelBuilder.Entity<Position>().HasOptional(p => p.Agent).WithMany(a => a.Positions).HasForeignKey(p => p.AgentId).WillCascadeOnDelete(false);
-            modelBuilder.Entity<Position>().HasRequired(p => p.Client).WithMany(a => a.Positions).HasForeignKey(p => p.CleintId).WillCascadeOnDelete(true);
+            modelBuilder.Entity<Position>().HasRequired(p => p.Client).WithMany(a => a.Positions).HasForeignKey(p => p.ClientId).WillCascadeOnDelete(true);
         }
     }
 }

@@ -241,6 +241,8 @@ function CustomerModalControls()
     $("#new-position-modal").on("show.bs.modal", function (e) { LoadAction("new-position-modal-body-div", "/RAMS/Customer/Position/NewPosition"); });
 
     $("#new-position-modal").on("hidden.bs.modal", function (e) { $("#new-position-modal-body-div").empty(); });
+
+    $("#position-details-modal").on("show.bs.modal", function (e) { LoadAction("position-details-modal-body-div", "/RAMS/Customer/Position/PositionDetails?positionId=" + $(e.relatedTarget).data("position-id")); });
 }
 
 /********** END OF CUSTOMER MODAL CONTROLS **********/

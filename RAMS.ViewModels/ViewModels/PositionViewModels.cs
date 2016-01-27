@@ -153,6 +153,8 @@ namespace RAMS.ViewModels
         [Display(Name = "Id")]
         public int PositionId { get; set; }
 
+        public int AgentId { get; set; }
+
         [Display(Name = "Requestor")]
         public string Client { get; set; }
 
@@ -183,10 +185,60 @@ namespace RAMS.ViewModels
         [Display(Name = "Asset Skills")]
         public string AssetSkills { get; set; }
 
+        [Display(Name = "Assigned To")]
+        public string AssignedTo { get; set; }
+
         [Display(Name = "People Needed")]
         public int PeopleNeeded { get; set; }
 
         [Display(Name = "Position Status")]
         public PositionStatus Status { get; set; }
+    }
+
+    /// <summary>
+    /// PositionClosureConfirmationViewModel view model declares properties for _PositionClosureConfirmation partial view
+    /// </summary>
+    public class PositionClosureConfirmationViewModel
+    {
+        [Required]
+        public int AgentId { get; set; }
+
+        [Required]
+        public int PositionId { get; set; }
+
+        [Required]
+        public string PositionTitle { get; set; }
+
+        [Required]
+        public string ClientUserName { get; set; }
+
+        [Required]
+        public string ClientFullName { get; set; }
+
+        /// <summary>
+        /// Default PositionClosureConfirmationViewModel constructor
+        /// </summary>
+        public PositionClosureConfirmationViewModel() { }
+
+        /// <summary>
+        /// PositionClosureConfirmationViewModel constructor that sets all its properties
+        /// </summary>
+        /// <param name="agentId">Setter for AgentId</param>
+        /// <param name="positionId">Setter for PositionId</param>
+        /// <param name="positionTitle">Setter for PositionTitle</param>
+        /// <param name="clientUserName">Setter for ClientUserName</param>
+        /// <param name="clientFullName">Setter for ClientFullName</param>
+        public PositionClosureConfirmationViewModel(int agentId, int positionId, string positionTitle, string clientUserName, string clientFullName)
+        {
+            this.AgentId = agentId;
+
+            this.PositionId = positionId;
+
+            this.PositionTitle = positionTitle;
+
+            this.ClientUserName = clientUserName;
+
+            this.ClientFullName = clientFullName;
+        }
     }
 }

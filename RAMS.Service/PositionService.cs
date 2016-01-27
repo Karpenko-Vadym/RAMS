@@ -102,6 +102,18 @@ namespace RAMS.Service
         }
 
         /// <summary>
+        /// Get multiple positions that belong to specific client
+        /// </summary>
+        /// <param name="clientName">User name of the client who's positions are being retrieved</param>
+        /// <returns>Multiple positions that belong to specific client</returns>
+        public IEnumerable<Position> GetManyPositionsByClientName(string clientName)
+        {
+            var client = this.ClientRepository.GetOneByUserName(clientName);
+
+            return client.Positions;
+        }
+
+        /// <summary>
         /// Get multiple positions with specific category
         /// </summary>
         /// <param name="id">Id of the category for which positions are being retrieved</param>

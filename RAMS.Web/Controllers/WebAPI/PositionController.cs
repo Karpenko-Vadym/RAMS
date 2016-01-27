@@ -48,6 +48,24 @@ namespace RAMS.Web.Controllers.WebAPI
         }
 
         /// <summary>
+        /// Get the list of all positions for specific client
+        /// </summary>
+        /// <returns>The list of all positions for specific client</returns>
+        [HttpGet]
+        [ResponseType(typeof(IEnumerable<Position>))]
+        public IHttpActionResult GetAllPositionsForClient(string clientName)
+        {
+            var positions = this.PositionService.GetManyPositionsByClientName(clientName);
+
+            if (!Utilities.IsEmpty(positions))
+            {
+                return Ok(positions);
+            }
+
+            return NotFound();
+        }
+
+        /// <summary>
         /// Get a position by id
         /// </summary>
         /// <param name="id">Id of a position to be fetched</param>

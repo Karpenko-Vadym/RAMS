@@ -62,7 +62,7 @@ namespace RAMS.Web.Areas.Customer.Controllers
         {
             var positions = new List<PositionListViewModel>();
 
-            var response = await this.GetHttpClient().GetAsync("Position");
+            var response = await this.GetHttpClient().GetAsync(String.Format("Position?clientName={0}", User.Identity.Name));
 
             if (response.IsSuccessStatusCode)
             {
@@ -246,6 +246,7 @@ namespace RAMS.Web.Areas.Customer.Controllers
         /// </summary>
         /// <param name="positionId">Id of the position which details are being fetched</param>
         /// <returns>_PositionDetails partial view with the details for the position</returns>
+        [HttpGet]
         public async Task<PartialViewResult> PositionDetails(int positionId)
         {
             if (positionId > 0)
@@ -254,13 +255,42 @@ namespace RAMS.Web.Areas.Customer.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var positionDetails = Mapper.Map<Position, PositionDetailsViewModel>(await response.Content.ReadAsAsync<Position>());
+                    var positionDetailsViewModel = Mapper.Map<Position, PositionDetailsViewModel>(await response.Content.ReadAsAsync<Position>());
 
-                    return PartialView("_PositionDetails", positionDetails);
+                    return PartialView("_PositionDetails", positionDetailsViewModel);
                 }
             }
 
             return PartialView("_PositionDetails");
+        }
+
+        [HttpGet]
+        public PartialViewResult PositionClosure(int agentId, int positionId, string positionTitle, string clientUserName, string clientFullName)
+        {
+            var positionClosureConfirmationViewModel = new PositionClosureConfirmationViewModel(agentId, positionId, positionTitle, clientUserName, clientFullName);
+
+            return PartialView("_PositionClosureConfirmation", positionClosureConfirmationViewModel);
+        }
+
+        [HttpPost]
+        public async Task<PartialViewResult> PositionClosure(PositionClosureConfirmationViewModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                var notification = Mapper.Map<NotificationAddViewModel, Notification>(new NotificationAddViewModel("Position Removal Request", String.Format("Position {0} ({1}) has been flagged for removal by client {2} ({3})", model.PositionTitle, model.PositionId, model.ClientFullName, model.ClientUserName), model.AgentId));
+
+                var response = await this.GetHttpClient().PostAsJsonAsync("Notification", notification); // Attempt to persist notification to the data context
+
+                if (response.IsSuccessStatusCode)
+                {
+                    notification = await response.Content.ReadAsAsync<Notification>();
+
+                    return null;
+                }
+            }
+
+
+            return null;
         }
     }
 }

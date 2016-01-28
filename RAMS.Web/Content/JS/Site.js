@@ -244,7 +244,11 @@ function CustomerModalControls()
 
     $("#position-details-modal").on("show.bs.modal", function (e) { LoadAction("position-details-modal-body-div", "/RAMS/Customer/Position/PositionDetails?positionId=" + $(e.relatedTarget).data("position-id")); });
 
+    $("#position-details-modal").on("hidden.bs.modal", function (e) { $("#position-closure-confirmation-modal-body-div").empty(); $("#position-details-message-modal-body-div").empty(); });
+
     $("#position-closure-confirmation-modal").on("show.bs.modal", function (e) { LoadAction("position-closure-confirmation-modal-body-div", "/RAMS/Customer/Position/PositionClosure?agentId=" + $(e.relatedTarget).data("agent-id") + "&agentName=" + encodeURIComponent($(e.relatedTarget).data("agent-name")) + "&positionId=" + $(e.relatedTarget).data("position-id") + "&positionTitle=" + encodeURIComponent($(e.relatedTarget).data("position-title")) + "&clientUserName=" + $(e.relatedTarget).data("client-user-name") + "&clientFullName=" + encodeURIComponent($(e.relatedTarget).data("client-full-name"))); });
+
+    
 }
 
 /********** END OF CUSTOMER MODAL CONTROLS **********/

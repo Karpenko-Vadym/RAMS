@@ -3,7 +3,7 @@
 <!-- POSITION DETAILS PARTIAL VIEW -->
 @if (Model != null)
 {
-    if(Model.AgentId < 1)
+    if(Model.AgentId < 1 || Model.Status == RAMS.Enums.PositionStatus.Closed)
     { 
         <div class="btn-group btn-group-justified" role="group">
             <div class="btn-group" role="group">
@@ -31,7 +31,7 @@
                     <dt>@Html.LabelFor(model => model.Description)</dt>
                     <dd>@Html.Raw(Model.Description)</dd>
                     <dt>@Html.LabelFor(model => model.ExpiryDate)</dt>
-                    @if (Model.ExpiryDate > DateTime.Now)
+                    @if (Model.ExpiryDate < DateTime.Now)
                     { 
                         <dd><span class="label label-danger">@Model.ExpiryDate</span></dd>
                     }

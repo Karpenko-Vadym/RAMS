@@ -10,6 +10,8 @@
         OnFailure = "OnAjaxFailure",
         OnComplete = "OnAjaxComplete"
     };
+
+    var expiryDateValue = (Model.ExpiryDate == DateTime.MinValue) ? "" : Model.ExpiryDate.ToString();
 }
 
 <div class="well well-lg bottom-margin-0 background-white">
@@ -43,7 +45,7 @@
             <div class="form-group required">
                 @Html.LabelFor(model => model.ExpiryDate, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-7">
-                    @Html.TextBoxFor(model => model.ExpiryDate, new { @class = "form-control datepicker-field", @Value = "", @placeholder = "Please select or enter the date in following format: dd/mm/yyyy" })
+                    @Html.TextBoxFor(model => model.ExpiryDate, new { @class = "form-control datepicker-field", @Value = expiryDateValue, @placeholder = "Please select or enter the date in following format: dd/mm/yyyy" })
                     @Html.ValidationMessageFor(model => model.ExpiryDate, "", new { @class = "text-danger" })
                 </div>
             </div>

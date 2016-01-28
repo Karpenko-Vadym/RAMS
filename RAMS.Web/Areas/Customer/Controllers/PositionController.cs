@@ -264,6 +264,16 @@ namespace RAMS.Web.Areas.Customer.Controllers
             return PartialView("_PositionDetails");
         }
 
+        #region Position Closure
+        /// <summary>
+        /// PositionClosure action method sets PositionClosureConfirmationViewModel and passes it to _PositionClosureConfirmation partial view
+        /// </summary>
+        /// <param name="agentId">Setter for AgentId</param>
+        /// <param name="positionId">Setter for PositionId</param>
+        /// <param name="positionTitle">Setter for PositionTitle</param>
+        /// <param name="clientUserName">Setter for ClientUserName</param>
+        /// <param name="clientFullName">Setter for ClientFullName</param>
+        /// <returns>_PositionClosureConfirmation partial view</returns>
         [HttpGet]
         public PartialViewResult PositionClosure(int agentId, int positionId, string positionTitle, string clientUserName, string clientFullName)
         {
@@ -272,6 +282,11 @@ namespace RAMS.Web.Areas.Customer.Controllers
             return PartialView("_PositionClosureConfirmation", positionClosureConfirmationViewModel);
         }
 
+        /// <summary>
+        /// PositionClosure action method validates the model and attempts to create new notification for the agent who is assigned to current position
+        /// </summary>
+        /// <param name="model">Information required to create notification</param>
+        /// <returns>_SuccessConfirmation partial view if notification was created successfully, _FailureConfirmation otherwise</returns>
         [HttpPost]
         public async Task<PartialViewResult> PositionClosure(PositionClosureConfirmationViewModel model)
         {
@@ -285,12 +300,12 @@ namespace RAMS.Web.Areas.Customer.Controllers
                 {
                     notification = await response.Content.ReadAsAsync<Notification>();
 
-                    return null;
+                    return PartialView("_SuccessConfirmation");
                 }
             }
 
-
-            return null;
+            return PartialView("_FailureConfirmation");
         }
+        #endregion
     }
 }

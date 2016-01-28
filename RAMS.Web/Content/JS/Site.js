@@ -217,7 +217,6 @@ function SystemAdminModalControls()
 /************** CUSTOMER MODAL CONTROLS *************/
 function CustomerModalControls()
 {
-
     // Profile
     $("#upload-change-profile-picture-modal").on("show.bs.modal", function (e)
     {
@@ -252,6 +251,31 @@ function CustomerModalControls()
 }
 
 /********** END OF CUSTOMER MODAL CONTROLS **********/
+
+/************** AGENCY MODAL CONTROLS *************/
+function AgencyModalControls()
+{
+    // Profile
+    $("#upload-change-profile-picture-modal").on("show.bs.modal", function (e) {
+        if ($(e.relatedTarget).data("action") == "upload") {
+            $("#upload-change-profile-picture-modal-title").text("Upload Profile Picture");
+        }
+        else if ($(e.relatedTarget).data("action") == "change") {
+            $("#upload-change-profile-picture-modal-title").text("Change Profile Picture");
+        }
+
+        LoadAction("upload-change-profile-picture-modal-body-div", "/RAMS/Agency/Profile/UploadProfilePicture");
+    });
+
+    $("#change-notification-status-modal").on("show.bs.modal", function (e) { LoadAction("change-notification-status-div", "/RAMS/Agency/Profile/ChangeNotificationStatus?notificationId=" + $(e.relatedTarget).data("notification-id") + "&notificationTitle=" + encodeURIComponent($(e.relatedTarget).data("notification-title")) + "&notificationStatus=" + $(e.relatedTarget).data("notification-status")); });
+
+    $("#change-notification-status-modal").on("hidden.bs.modal", function (e) { $("#change-notification-status-div").empty(); });
+
+    // Position
+
+}
+
+/********** END OF AGENCY MODAL CONTROLS **********/
 
 /************** SYSTEM ADMIN FUNCTIONS **************/
 function RefreshEditForm(userName, userType)

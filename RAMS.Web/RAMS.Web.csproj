@@ -517,7 +517,6 @@
     <Content Include="Areas\SystemAdmin\Views\User\_RegisterClient.cshtml" />
     <Content Include="Areas\SystemAdmin\Views\User\_RegisterAdmin.cshtml" />
     <Content Include="Areas\Agency\Views\web.config" />
-    <Content Include="Areas\Agency\Views\Home\Index.cshtml" />
     <Content Include="Areas\Agency\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Agency\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Customer\Views\web.config" />
@@ -595,6 +594,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Agency\AgencyAreaRegistration.cs" />
     <Compile Include="Areas\Agency\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Agency\Controllers\ProfileController.cs" />
     <Compile Include="Areas\Customer\Controllers\HomeController.cs" />
     <Compile Include="Areas\Customer\Controllers\PositionController.cs" />
     <Compile Include="Areas\Customer\Controllers\ProfileController.cs" />
@@ -709,6 +709,12 @@
     <Content Include="Areas\Customer\Views\Position\_PositionClosureConfirmation.cshtml" />
     <Content Include="Areas\Customer\Views\Position\_SuccessConfirmation.cshtml" />
     <Content Include="Areas\Customer\Views\Position\_FailureConfirmation.cshtml" />
+    <Content Include="Areas\Agency\Views\Profile\Index.cshtml" />
+    <Content Include="Areas\Agency\Views\Profile\_ChangeNotificationStatus.cshtml" />
+    <Content Include="Areas\Agency\Views\Profile\_Confirmation.cshtml" />
+    <Content Include="Areas\Agency\Views\Profile\_NotificationList.cshtml" />
+    <Content Include="Areas\Agency\Views\Profile\_ProfileDetails.cshtml" />
+    <Content Include="Areas\Agency\Views\Profile\_UploadProfilePicture.cshtml" />
     <None Include="Content\JS\jquery-2.1.4.intellisense.js" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

@@ -52,6 +52,7 @@ namespace RAMS.Web.Configuration
             Mapper.CreateMap<Department, DepartmentAddViewModel>();
             Mapper.CreateMap<Department, DepartmentEditViewModel>();
 
+            Mapper.CreateMap<Agent, AgentProfileDetailsViewModel>().ForMember(c => c.FullName, map => map.MapFrom(model => model.FirstName + " " + model.LastName));
             Mapper.CreateMap<Client, ClientProfileDetailsViewModel>().ForMember(c => c.FullName, map => map.MapFrom(model => model.FirstName + " " + model.LastName));
             Mapper.CreateMap<Admin, AdminProfileDetailsViewModel>().ForMember(a => a.FullName, map => map.MapFrom(model => model.FirstName + " " + model.LastName));
 

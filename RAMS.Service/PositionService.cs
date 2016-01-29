@@ -114,6 +114,18 @@ namespace RAMS.Service
         }
 
         /// <summary>
+        /// Get multiple positions that belong to specific agent
+        /// </summary>
+        /// <param name="agentName">User name of the agent who's positions are being retrieved</param>
+        /// <returns>Multiple positions that belong to specific agent</returns>
+        public IEnumerable<Position> GetManyPositionsByAgentName(string agentName)
+        {
+            var agent = this.AgentRepository.GetOneByUserName(agentName);
+
+            return agent.Positions;
+        }
+
+        /// <summary>
         /// Get multiple positions with specific category
         /// </summary>
         /// <param name="id">Id of the category for which positions are being retrieved</param>

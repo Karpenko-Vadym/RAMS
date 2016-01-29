@@ -262,37 +262,84 @@ namespace RAMS.Web.Areas.Agency.Controllers
 
             if (model != null)
             {
-                if (model.NotificationStatus == NotificationStatus.Read.ToString()) // If user wants to change notification status from Unread to Read
+                try
                 {
-                    var response = await this.GetHttpClient().PutAsync(String.Format("Notification?id={0}&isReadStatus={1}", model.NotificationId, true), null);
-
-                    if (response.IsSuccessStatusCode)
+                    if (model.NotificationStatus == NotificationStatus.Read.ToString()) // If user wants to change notification status from Unread to Read
                     {
-                        var notification = await response.Content.ReadAsAsync<Notification>();
+                        var response = await this.GetHttpClient().PutAsync(String.Format("Notification?id={0}&isReadStatus={1}", model.NotificationId, true), null);
 
-                        if (notification.Status != NotificationStatus.Read) // If status did not change
+                        if (response.IsSuccessStatusCode)
                         {
+                            var notification = await response.Content.ReadAsAsync<Notification>();
+
+                            if (notification.Status != NotificationStatus.Read) // If status did not change
+                            {
+                                stringBuilder.Clear();
+
+                                stringBuilder.Append("<div class='text-center'><h4><strong>Notification status could NOT be changed at this time.</strong></h4></div>");
+
+                                stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Response is successfull, but notification status of returned model is not equal to READ. Please try again in a moment.</div>");
+
+                                stringBuilder.Append("<div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> If you encounter this issue again in the future, please contact Technical Support with exact steps to reproduce this issue.</div></div>");
+
+                                return PartialView("_Confirmation", new ConfirmationViewModel(stringBuilder.ToString()));
+                            }
+
                             stringBuilder.Clear();
 
-                            stringBuilder.Append("<div class='text-center'><h4><strong>Notification status could NOT be changed at this time.</strong></h4></div>");
+                            stringBuilder.Append("<div class='text-center'><h4><strong>Notification status has been changed successfully.</strong></h4></div>");
 
-                            stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Response is successfull, but notification status of returned model is not equal to READ. Please try again in a moment.</div>");
+                            stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> Notification status can be toggled at any time by selecting desired notification and clicking on \"Change\" button in the prompt dialog.</div></div>");
 
-                            stringBuilder.Append("<div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> If you encounter this issue again in the future, please contact Technical Support with exact steps to reproduce this issue.</div></div>");
-
-                            return PartialView("_Confirmation", new ConfirmationViewModel(stringBuilder.ToString()));
+                            return PartialView("_Confirmation", new ConfirmationViewModel(stringBuilder.ToString(), false, true));
                         }
-
-                        stringBuilder.Clear();
-
-                        stringBuilder.Append("<div class='text-center'><h4><strong>Notification status has been changed successfully.</strong></h4></div>");
-
-                        stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> Notification status can be toggled at any time by selecting desired notification and clicking on \"Change\" button in the prompt dialog.</div></div>");
-
-                        return PartialView("_Confirmation", new ConfirmationViewModel(stringBuilder.ToString(), false, true));
+                        else
+                        {
+                            // If notification could not be updated, throw NotificationUpdateException exception
+                            throw new NotificationUpdateException("Notification " + model.NotificationTitle + " could not be updated. Response: " + response.StatusCode);
+                        }
                     }
+                    else if (model.NotificationStatus == NotificationStatus.Unread.ToString()) // If user wants to change notification status from Read to Unread
+                    {
+                        var response = await this.GetHttpClient().PutAsync(String.Format("Notification?id={0}&isReadStatus={1}", model.NotificationId, false), null);
 
-                    // If response was unsuccessful, notify the user
+                        if (response.IsSuccessStatusCode)
+                        {
+                            var notification = await response.Content.ReadAsAsync<Notification>();
+
+                            if (notification.Status != NotificationStatus.Unread) // If status did not change
+                            {
+                                stringBuilder.Clear();
+
+                                stringBuilder.Append("<div class='text-center'><h4><strong>Notification status could NOT be changed at this time.</strong></h4></div>");
+
+                                stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Response is successfull, but notification status of returned model is not equal to READ. Please try again in a moment.</div>");
+
+                                stringBuilder.Append("<div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> If you encounter this issue again in the future, please contact Technical Support with exact steps to reproduce this issue.</div></div>");
+
+                                return PartialView("_Confirmation", new ConfirmationViewModel(stringBuilder.ToString()));
+                            }
+
+                            stringBuilder.Clear();
+
+                            stringBuilder.Append("<div class='text-center'><h4><strong>Notification status has been changed successfully.</strong></h4></div>");
+
+                            stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> Notification status can be toggled at any time by selecting desired notification and clicking on \"Change\" button in the prompt dialog.</div></div>");
+
+                            return PartialView("_Confirmation", new ConfirmationViewModel(stringBuilder.ToString(), false, true));
+                        }
+                        else
+                        {
+                            // If notification could not be updated, throw NotificationUpdateException exception
+                            throw new NotificationUpdateException("Notification " + model.NotificationTitle + " could not be updated. Response: " + response.StatusCode);
+                        }
+                    }
+                }
+                catch (NotificationUpdateException ex)
+                {
+                    // Log exception
+                    ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+
                     stringBuilder.Clear();
 
                     stringBuilder.Append("<div class='text-center'><h4><strong>Notification status could NOT be changed at this time.</strong></h4></div>");
@@ -303,48 +350,6 @@ namespace RAMS.Web.Areas.Agency.Controllers
 
                     return PartialView("_Confirmation", new ConfirmationViewModel(stringBuilder.ToString()));
                 }
-                else if (model.NotificationStatus == NotificationStatus.Unread.ToString()) // If user wants to change notification status from Read to Unread
-                {
-                    var response = await this.GetHttpClient().PutAsync(String.Format("Notification?id={0}&isReadStatus={1}", model.NotificationId, false), null);
-
-                    if (response.IsSuccessStatusCode) 
-                    {
-                        var notification = await response.Content.ReadAsAsync<Notification>();
-
-                        if (notification.Status != NotificationStatus.Unread) // If status did not change
-                        {
-                            stringBuilder.Clear();
-
-                            stringBuilder.Append("<div class='text-center'><h4><strong>Notification status could NOT be changed at this time.</strong></h4></div>");
-
-                            stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Response is successfull, but notification status of returned model is not equal to READ. Please try again in a moment.</div>");
-
-                            stringBuilder.Append("<div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> If you encounter this issue again in the future, please contact Technical Support with exact steps to reproduce this issue.</div></div>");
-
-                            return PartialView("_Confirmation", new ConfirmationViewModel(stringBuilder.ToString()));
-                        }
-
-                        stringBuilder.Clear();
-
-                        stringBuilder.Append("<div class='text-center'><h4><strong>Notification status has been changed successfully.</strong></h4></div>");
-
-                        stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> Notification status can be toggled at any time by selecting desired notification and clicking on \"Change\" button in the prompt dialog.</div></div>");
-
-                        return PartialView("_Confirmation", new ConfirmationViewModel(stringBuilder.ToString(), false, true));
-                    }
-
-                    // If response was unsuccessful, notify the user
-                    stringBuilder.Clear();
-
-                    stringBuilder.Append("<div class='text-center'><h4><strong>Notification status could NOT be changed at this time.</strong></h4></div>");
-
-                    stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Response is UNSUCCESSFUL. Please try again in a moment.</div>");
-
-                    stringBuilder.Append("<div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> If you encounter this issue again in the future, please contact Technical Support with exact steps to reproduce this issue.</div></div>");
-
-                    return PartialView("_Confirmation", new ConfirmationViewModel(stringBuilder.ToString()));
-                }
-
             }
 
             // If model is null or notification status is not equal to Read nor Unread, notify the user

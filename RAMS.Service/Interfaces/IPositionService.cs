@@ -23,6 +23,8 @@ namespace RAMS.Service
 
         IEnumerable<Position> GetManyPositionsByClientName(string clientName);
 
+        IEnumerable<Position> GetManyPositionsByAgentName(string agentName);
+
         IEnumerable<Position> GetManyPositionsByCategoryId(int id);
 
         IEnumerable<Position> GetManyPositionsByCreationDate(DateTime dateCreated);

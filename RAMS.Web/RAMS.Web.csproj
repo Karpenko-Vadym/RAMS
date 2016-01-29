@@ -594,6 +594,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Agency\AgencyAreaRegistration.cs" />
     <Compile Include="Areas\Agency\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Agency\Controllers\PositionController.cs" />
     <Compile Include="Areas\Agency\Controllers\ProfileController.cs" />
     <Compile Include="Areas\Customer\Controllers\HomeController.cs" />
     <Compile Include="Areas\Customer\Controllers\PositionController.cs" />
@@ -715,6 +716,10 @@
     <Content Include="Areas\Agency\Views\Profile\_NotificationList.cshtml" />
     <Content Include="Areas\Agency\Views\Profile\_ProfileDetails.cshtml" />
     <Content Include="Areas\Agency\Views\Profile\_UploadProfilePicture.cshtml" />
+    <Content Include="Areas\Agency\Views\Position\Index.cshtml" />
+    <Content Include="Areas\Agency\Views\Position\_PositionList.cshtml" />
+    <Content Include="Areas\Agency\Views\Position\_EditPosition.cshtml" />
+    <Content Include="Areas\Agency\Views\Position\_Error.cshtml" />
     <None Include="Content\JS\jquery-2.1.4.intellisense.js" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

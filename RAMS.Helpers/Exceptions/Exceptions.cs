@@ -161,4 +161,30 @@ namespace RAMS.Helpers
 
         public NotificationAddException(string message, Exception innerException) : base(message, innerException) { }
     }
+
+    /// <summary>
+    /// NotificationUpdateException is a custom exception that provides additional controls over the application and error handling
+    /// NotificationUpdateException is thrown when notification update issue occurs
+    /// </summary>
+    public class NotificationUpdateException : Exception
+    {
+        public NotificationUpdateException() : base("Notification could not be updated.") { }
+
+        public NotificationUpdateException(string message) : base(message) { }
+
+        public NotificationUpdateException(string message, Exception innerException) : base(message, innerException) { }
+    }
+
+    /// <summary>
+    /// PositionAddException is a custom exception that provides additional controls over the application and error handling
+    /// PositionAddException is thrown when position creation issue occurs
+    /// </summary>
+    public class PositionAddException : Exception
+    {
+        public PositionAddException() : base("Position could not be created.") { }
+
+        public PositionAddException(string message) : base(message) { }
+
+        public PositionAddException(string message, Exception innerException) : base(message, innerException) { }
+    }
 }

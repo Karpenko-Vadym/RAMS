@@ -54,7 +54,7 @@ namespace RAMS.Web.Areas.Customer.Controllers
 
         #region Position List
         /// <summary>
-        /// PositionList action method gets the list of all the positions and passes it to _PositionList partial view
+        /// PositionList action method gets the list of all the positions for current client and passes it to _PositionList partial view
         /// </summary>
         /// <returns>_PositionList partial view with the list of all the positions</returns>
         [HttpGet]
@@ -87,9 +87,7 @@ namespace RAMS.Web.Areas.Customer.Controllers
 
             var client = new Client();
 
-            var response = new HttpResponseMessage();
-
-            response = await this.GetHttpClient().GetAsync("Category"); // Get all categories
+            var response = await this.GetHttpClient().GetAsync("Category"); // Get all categories
 
             if (response.IsSuccessStatusCode)
             {
@@ -204,22 +202,33 @@ namespace RAMS.Web.Areas.Customer.Controllers
 
             if(ModelState.IsValid)
             {
-                var position = Mapper.Map<PositionAddViewModel, Position>(model);
-
-                response = await this.GetHttpClient().PostAsJsonAsync("Position", position); // Attempt to persist position to the data context
-
-                if (response.IsSuccessStatusCode)
+                try
                 {
-                    position = await response.Content.ReadAsAsync<Position>();
+                    var position = Mapper.Map<PositionAddViewModel, Position>(model);
 
-                    position.Category = categories.FirstOrDefault(c => c.CategoryId == position.CategoryId);
+                    response = await this.GetHttpClient().PostAsJsonAsync("Position", position); // Attempt to persist position to the data context
 
-                    var positionConfirmationViewModel = Mapper.Map<Position, PositionConfirmationViewModel>(position);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        position = await response.Content.ReadAsAsync<Position>();
 
-                    return PartialView("_PositionConfirmation", positionConfirmationViewModel);
+                        position.Category = categories.FirstOrDefault(c => c.CategoryId == position.CategoryId);
+
+                        var positionConfirmationViewModel = Mapper.Map<Position, PositionConfirmationViewModel>(position);
+
+                        return PartialView("_PositionConfirmation", positionConfirmationViewModel);
+                    }
+                    else
+                    {
+                        // If position could not be created, throw PositionAddException exception
+                        throw new PositionAddException("Position " + position.Title + " could not be created. Response: " + response.StatusCode);   
+                    }
                 }
-                else
+                catch(PositionAddException ex)
                 {
+                    // Log exception
+                    ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+
                     var stringBuilder = new StringBuilder();
 
                     stringBuilder.Append("<div class='text-center'><h4><strong>Failed to save position details.</strong></h4></div>");
@@ -292,15 +301,27 @@ namespace RAMS.Web.Areas.Customer.Controllers
         {
             if(ModelState.IsValid)
             {
-                var notification = Mapper.Map<NotificationAddViewModel, Notification>(new NotificationAddViewModel("Position Removal Request", String.Format("Position {0} ({1}) has been flagged for removal by client {2} ({3})", model.PositionTitle, model.PositionId, model.ClientFullName, model.ClientUserName), model.AgentId));
-
-                var response = await this.GetHttpClient().PostAsJsonAsync("Notification", notification); // Attempt to persist notification to the data context
-
-                if (response.IsSuccessStatusCode)
+                try
                 {
-                    notification = await response.Content.ReadAsAsync<Notification>();
+                    var notification = Mapper.Map<NotificationAddViewModel, Notification>(new NotificationAddViewModel("Position Removal Request", String.Format("Position {0} ({1}) has been flagged for removal by client {2} ({3})", model.PositionTitle, model.PositionId, model.ClientFullName, model.ClientUserName), model.AgentId));
 
-                    return PartialView("_SuccessConfirmation");
+                    var response = await this.GetHttpClient().PostAsJsonAsync("Notification", notification); // Attempt to persist notification to the data context
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        notification = await response.Content.ReadAsAsync<Notification>();
+
+                        return PartialView("_SuccessConfirmation");
+                    }
+                    else
+                    {
+                        throw new NotificationAddException(String.Format("Notification could NOT be added. Status Code: {1}", response.StatusCode));
+                    }
+                }
+                catch (NotificationAddException ex)
+                {
+                    // Log exception
+                    ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
                 }
             }
 

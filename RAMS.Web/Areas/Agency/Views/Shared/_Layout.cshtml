@@ -11,12 +11,14 @@
     @Styles.Render("~/bootstrap/css")
     @Styles.Render("~/dataTables/css")
     @Styles.Render("~/isLoading/css")
+    @Styles.Render("~/jQueryUI/css")
 
     <!-- END OF RENDER STYLES -->
     <!-- RENDER SCRIPTS -->
     @Scripts.Render("~/bootstrap/js")
     @Scripts.Render("~/dataTables/js")
     @Scripts.Render("~/isLoading/js")
+    @Scripts.Render("~/jQueryUI/js")
 
     <!-- END OF RENDER SCRIPTS -->
 </head>
@@ -117,5 +119,6 @@
         </footer>
     </div>   
     <script type="text/javascript">$(function () { GeneralModalControls(); });</script>
+    <script src="~/Content/CKEditor/ckeditor.js" type="text/javascript"></script>
 </body>
 </html>

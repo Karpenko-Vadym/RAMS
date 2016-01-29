@@ -46,6 +46,7 @@
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="ViewModels\AdminViewModels.cs" />
     <Compile Include="ViewModels\AgentViewModels.cs" />
+    <Compile Include="ViewModels\CandidateViewModels.cs" />
     <Compile Include="ViewModels\ClientViewModels.cs" />
     <Compile Include="ViewModels\DepartmentViewModels.cs" />
     <Compile Include="ViewModels\HelperViewModels.cs" />

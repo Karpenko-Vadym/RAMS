@@ -1,0 +1,35 @@
+﻿<!-- POSITION INDEX VIEW -->
+<button type="button" class="btn btn-info pull-right" onclick="LoadAction('position-list-div', '@Url.Action("PositionList", "Position", new { Area = "Agency" })' );">Refresh List</button>
+
+<div class="clearfix"></div>
+
+<div class="vertical-padding-24"></div>
+
+<div id="position-list-div"></div>
+
+<!-- EDIT POSITION MODAL -->
+<div id="edit-position-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- MODAL CONTENT -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" onclick="$('#edit-position-modal').modal('hide');">&times;</button>
+                <h4 class="modal-title text-center">Edit Position</h4>
+            </div>
+            <div class="modal-body">
+                <div id="edit-position-message-modal-body-div"></div>
+                <div class="well well-lg bottom-margin-0">
+                    <div id="edit-position-modal-body-div"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" onclick="$('#edit-position-modal').modal('hide');">Close</button>
+            </div>
+        </div>
+        <!-- END OF MODAL CONTENT-->
+    </div>
+</div>
+<!-- END OF EDIT POSITION MODAL -->
+
+<script type="text/javascript">$(function () { LoadAction("position-list-div", "@Url.Action("PositionList", "Position", new { Area = "Agency" })"); AgencyModalControls(); });</script>
+<!-- END OF POSITION INDEX VIEW -->

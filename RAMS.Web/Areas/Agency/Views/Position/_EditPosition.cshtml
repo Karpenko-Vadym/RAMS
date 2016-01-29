@@ -1,10 +1,10 @@
-﻿@model RAMS.ViewModels.PositionAddViewModel
+﻿@model RAMS.ViewModels.PositionEditViewModel
 
-<!-- NEW POSITION PARTIAL -->
+<!-- EDIT POSITION PARTIAL -->
 @{
     AjaxOptions ajaxOptions = new AjaxOptions
     {
-        UpdateTargetId = "new-position-modal-body-div",
+        UpdateTargetId = "edit-position-modal-body-div",
         OnBegin = "OnAjaxBegin",
         OnSuccess = "OnAjaxSuccess",
         OnFailure = "OnAjaxFailure",
@@ -17,14 +17,13 @@
 @if(Model != null)
 { 
 <div class="well well-lg bottom-margin-0 background-white">
-    @using (Ajax.BeginForm("NewPosition", "Position", new { Area = "Customer" }, ajaxOptions, new { id = "new-position-form" }))
+    @using (Ajax.BeginForm("EditPosition", "Position", new { Area = "Agency" }, ajaxOptions, new { id = "edit-position-form" }))
     {
         @Html.AntiForgeryToken()
 
         @Html.HiddenFor(model => model.DateCreated)
         @Html.HiddenFor(model => model.Status)
         @Html.HiddenFor(model => model.ClientId)
-        @Html.HiddenFor(model => model.AcceptanceScore)
 
         <div class="form-horizontal">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -77,6 +76,14 @@
             </div>
 
             <div class="form-group required">
+                @Html.LabelFor(model => model.AcceptanceScore, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.AcceptanceScore, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.AcceptanceScore, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group required">
                 @Html.LabelFor(model => model.CategoryId, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-7">
                     @Html.DropDownListFor(model => model.CategoryId, Model.Categories, new { @class = "form-control" })
@@ -124,11 +131,12 @@
 else
 {
 <div class='alert alert-danger bottom-margin-0' role='alert'>
-    <div class='text-center'><h4><strong>The information required to create new position is not available.</strong></h4></div>
+    <div class='text-center'><h4><strong>Position information is not available.</strong></h4></div>
     <div class="row">
-        <div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>List of categories could not be retrieved at this time.</div>
-        <div class='col-md-offset-1 col-md-11'>Please try again in a moment.</div>
+        <div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Position could have been physically deleted, or modified.</div>
+        <div class='col-md-offset-1 col-md-11'>Please refresh the list and try again in a moment.</div>
     </div>
 </div>
 }
-<!-- END OF NEW POSITION PARTIAL -->
+<!-- END OF EDIT POSITION PARTIAL -->
+

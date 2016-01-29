@@ -16,7 +16,7 @@
                     <dt>@Html.LabelFor(model => model.Description)</dt>
                     <dd>@Html.Raw(Model.Description)</dd>
                     <dt>@Html.LabelFor(model => model.ExpiryDate)</dt>
-                    <dd>@Model.ExpiryDate</dd>
+                    <dd>@Model.ExpiryDate.ToString("dd/mm/yyyy")</dd>
                     <dt>@Html.LabelFor(model => model.CompanyDetails)</dt>
                     <dd>@Html.Raw(Model.CompanyDetails)</dd>
                     <dt>@Html.LabelFor(model => model.Location)</dt>

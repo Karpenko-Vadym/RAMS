@@ -241,4 +241,75 @@ namespace RAMS.ViewModels
             this.ClientFullName = clientFullName;
         }
     }
+
+    /// <summary>
+    /// PositionEditViewModel view model declares properties for _EditPosition partial view for agency
+    /// </summary>
+    public class PositionEditViewModel
+    {
+        public int? AgentId { get; set; }
+
+        [Required]
+        [Display(Name = "Client")]
+        public int ClientId { get; set; }
+
+        [Required]
+        [Display(Name = "Category")]
+        public int CategoryId { get; set; }
+
+        public DateTime DateCreated { get; set; }
+
+        [Required]
+        [Display(Name = "Expiry Date")]
+        [DataType(DataType.Date)]
+        public DateTime ExpiryDate { get; set; }
+
+        [Required]
+        [Display(Name = "Title")]
+        public string Title { get; set; }
+
+        [Required]
+        [AllowHtml]
+        [Display(Name = "Description")]
+        public string Description { get; set; }
+
+        [Required]
+        [AllowHtml]
+        [Display(Name = "Company Details")]
+        public string CompanyDetails { get; set; } 
+
+        [Required]
+        [Display(Name = "Location")]
+        public string Location { get; set; }
+
+        [Required]
+        [Display(Name = "Qualifications")]
+        public string Qualifications { get; set; } 
+
+        [Display(Name = "Asset Skills")]
+        public string AssetSkills { get; set; } 
+
+        [Required]
+        [Display(Name = "People Needed")]
+        public int PeopleNeeded { get; set; }
+
+        [Required]
+        [Display(Name = "Acceptance Score")]
+        public int AcceptanceScore { get; set; }
+
+        [Required]
+        public PositionStatus Status { get; set; }
+
+        public List<System.Web.Mvc.SelectListItem> Categories { get; set; } // Select list for Category dropdown
+
+        public List<CandidateListViewModel> Candidates { get; set; }
+
+        /// <summary>
+        /// Default PositionEditViewModel constructor         
+        /// </summary>
+        public PositionEditViewModel()
+        {
+            this.Candidates = new List<CandidateListViewModel>();
+        }
+    }
 }

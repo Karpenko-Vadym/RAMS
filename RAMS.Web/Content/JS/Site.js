@@ -273,6 +273,10 @@ function AgencyModalControls()
 
     // Position
 
+    $("#edit-position-modal").on("show.bs.modal", function (e) { LoadAction("edit-position-modal-body-div", "/RAMS/Agency/Position/EditPosition?positionId=" + $(e.relatedTarget).data("position-id")); });
+
+    $("#edit-position-modal").on("hidden.bs.modal", function (e) { $("#edit-position-modal-body-div").empty(); $("#edit-position-message-modal-body-div").empty(); });
+
 }
 
 /********** END OF AGENCY MODAL CONTROLS **********/

@@ -140,5 +140,70 @@ namespace RAMS.Web.Areas.Agency.Controllers
             return PartialView("_EditPosition");
         }
 
+
+        [HttpPost]
+        public async Task<PartialViewResult> EditPosition(PositionEditViewModel model)
+        {
+            model.DateCreated = DateTime.Now;
+
+            var response = new HttpResponseMessage();
+
+            var categories = new List<Category>();
+
+            response = await this.GetHttpClient().GetAsync("Category"); // Get all categories
+
+            if (response.IsSuccessStatusCode)
+            {
+                categories = await response.Content.ReadAsAsync<List<Category>>();
+            }
+            else
+            {
+                var stringBuilder = new StringBuilder();
+
+                stringBuilder.Append("<div class='text-center'><h4><strong>Failed to retrieve the list of categories.</strong></h4></div>");
+
+                stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Server returned status code '{0}' while attempting to retrieve the list of categories. Please try again in a moment.</div>");
+
+                stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> If you encounter this issue again in the future, please contact Technical Support with exact steps to reproduce this issue.</div></div>");
+
+                var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+
+                return PartialView("_Error", confirmationViewModel);
+            }
+
+            // Perform manual model validation
+            if (model.AcceptanceScore == 0 && model.ClientId == 0)
+            {
+                ModelState.AddModelError(String.Empty, "Model state is not valid. Please try again in a moment");
+            }
+            else if (model.AcceptanceScore == 0)
+            {
+                ModelState.AddModelError(String.Empty, "Initial Acceptance Score could not be determined. Please try again in a moment");
+            }
+            else if (model.ClientId == 0)
+            {
+                ModelState.AddModelError(String.Empty, "Client could not be determined. Please try again in a moment");
+            }
+
+            if (model.PeopleNeeded < 1)
+            {
+                ModelState.AddModelError("PeopleNeeded", "The People Needed field is required and should be greater than 0.");
+            }
+
+            if (model.CategoryId == 0)
+            {
+                ModelState.AddModelError("CategoryId", "The Category field is required.");
+            }
+
+
+            if(ModelState.IsValid)
+            {
+                // TODO - Continue here...
+            }
+
+             
+
+            return PartialView("_EditPosition");
+        }
     }
 }

@@ -97,6 +97,8 @@ namespace RAMS.ViewModels
             this.AcceptanceScore = 50;
 
             this.Status = PositionStatus.New;
+
+            this.ExpiryDate = DateTime.Now;
         }
     }
 

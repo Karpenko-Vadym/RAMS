@@ -22,8 +22,13 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-7">
-                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                        <div class="input-group">
+                            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                            <div class="input-group-btn vertical-align-top">
+                                <input type="button" id="forgotPassword" class="btn btn-danger" data-toggle="modal" data-target="#forgot-password-modal" value="Forgot Password" />
+                            </div>
+                        </div>
                     </div>
                 </div>
 

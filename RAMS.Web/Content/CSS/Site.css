@@ -33,3 +33,64 @@ select option:disabled
     top: 50%;
     transform: translateY(-50%);
 }
+
+.cursor-pointer
+{
+    cursor: pointer;
+}
+
+#ui-datepicker-div a.ui-state-default
+{
+    border-radius: 50%;
+    text-align: center;
+}
+
+#ui-datepicker-div td
+{
+    width: 14%;
+}
+
+#ui-datepicker-div a.ui-state-highlight
+{
+    background-color: #f0ad4e;
+    border-color: #eea236;
+    color: white;
+}
+
+#ui-datepicker-div a.ui-state-highlight:hover
+{
+    background-color: #ec971f;
+    border-color: #d58512;
+    color: white;
+}
+
+#ui-datepicker-div a.ui-state-active
+{
+    background-color: #31B0D5;
+    border-color: #46B8DA;
+    color: white;
+    
+}
+
+#ui-datepicker-div a.ui-state-active:hover
+{
+    background-color: #2aabd2;
+    border-color: #28a4c9;
+    color: white;
+}
+
+.form-group.required .control-label:before 
+{ 
+   content: "*";
+   color: red;
+}
+
+div.modal .modal-content
+{
+    min-width: 600px;
+}
+
+div.container.body-content
+{
+    min-width: 700px;
+}

@@ -1,0 +1,142 @@
+﻿@model RAMS.ViewModels.PositionEditViewModel
+
+<!-- EDIT POSITION PARTIAL -->
+@{
+    AjaxOptions ajaxOptions = new AjaxOptions
+    {
+        UpdateTargetId = "edit-position-modal-body-div",
+        OnBegin = "OnAjaxBegin",
+        OnSuccess = "OnAjaxSuccess",
+        OnFailure = "OnAjaxFailure",
+        OnComplete = "OnAjaxComplete"
+    };
+}
+
+@if(Model != null)
+{ 
+<div class="well well-lg bottom-margin-0 background-white">
+    @using (Ajax.BeginForm("EditPosition", "Position", new { Area = "Agency" }, ajaxOptions, new { id = "edit-position-form" }))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.HiddenFor(model => model.PositionId)
+        @Html.HiddenFor(model => model.DateCreated)
+        @Html.HiddenFor(model => model.Status)
+        @Html.HiddenFor(model => model.ClientId)
+        @Html.HiddenFor(model => model.Timestamp)
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group required">
+                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group required">
+                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-7">
+                    @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group required">
+                @Html.LabelFor(model => model.ExpiryDate, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-7">
+                    @Html.TextBoxFor(model => model.ExpiryDate, "{0:dd/MM/yyyy}", new { @class = "form-control datepicker-field", @placeholder = "Please select or enter the date in following format: dd/mm/yyyy" })
+                    @Html.ValidationMessageFor(model => model.ExpiryDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group required">
+                @Html.LabelFor(model => model.CompanyDetails, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-7">
+                    @Html.TextAreaFor(model => model.CompanyDetails, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CompanyDetails, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group required">
+                @Html.LabelFor(model => model.Location, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.Location, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group required">
+                @Html.LabelFor(model => model.PeopleNeeded, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.PeopleNeeded, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.PeopleNeeded, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group required">
+                @Html.LabelFor(model => model.AcceptanceScore, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.AcceptanceScore, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.AcceptanceScore, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group required">
+                @Html.LabelFor(model => model.CategoryId, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-7">
+                    @Html.DropDownListFor(model => model.CategoryId, Model.Categories, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="alert alert-warning">
+                <div class='row'>
+                    <div class='col-md-offset-1'>Please enter "Qualifications" and "Asset Skills" keywords that are most related to this position.</div>
+                    <div class='col-md-12'><p></p></div>
+                    <div class='col-md-offset-1'><strong>NOTE:</strong> Please use semicolon as a separator between the keywords.</div>
+                </div>
+            </div>
+
+            <div class="form-group required">
+                @Html.LabelFor(model => model.Qualifications, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.Qualifications, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Qualifications, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.AssetSkills, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.AssetSkills, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.AssetSkills, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group bottom-margin-0">
+                <div class="col-md-offset-3 col-lg-offset-3 col-md-6 col-lg-6">
+                    <input type="submit" value="Create New Position" class="btn btn-danger btn-block" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<script type="text/javascript">$(function () { DisableEmptyOptions(); $(".datepicker-field").datepicker({ dateFormat: "dd/mm/yy", onSelect: function (dateText, inst) { $(this).attr('value', dateText); } }); CKEDITOR.replace('Description'); CKEDITOR.replace('CompanyDetails'); });</script>
+}
+else
+{
+<div class='alert alert-danger bottom-margin-0' role='alert'>
+    <div class='text-center'><h4><strong>Position information is not available.</strong></h4></div>
+    <div class="row">
+        <div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Position could have been physically deleted, or modified.</div>
+        <div class='col-md-offset-1 col-md-11'>Please refresh the list and try again in a moment.</div>
+    </div>
+</div>
+}
+<!-- END OF EDIT POSITION PARTIAL -->
+

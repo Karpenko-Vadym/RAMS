@@ -13,13 +13,11 @@ namespace RAMS.Models
     {
         public int PositionId { get; set; }
 
-        public int CleintId { get; set; }
+        public int ClientId { get; set; }
 
         public int? AgentId { get; set; }
 
         public int CategoryId { get; set; }
-
-        public int DepartmentId { get; set; }
 
         public DateTime DateCreated { get; set; }
 
@@ -35,9 +33,7 @@ namespace RAMS.Models
 
         public string Qualifications { get; set; } // Skills & Qualifications
 
-        public string AssetSkills { get; set; } // Skills that are assets
-
-        public virtual Department Department { get; set; } // Department to which position is assigned
+        public string AssetSkills { get; set; } // Skills that are an asset
 
         public virtual Category Category { get; set; } // Position category
 

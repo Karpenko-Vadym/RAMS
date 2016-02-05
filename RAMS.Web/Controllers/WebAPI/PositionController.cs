@@ -48,6 +48,44 @@ namespace RAMS.Web.Controllers.WebAPI
         }
 
         /// <summary>
+        /// Get the list of all positions for specific client
+        /// </summary>
+        /// <param name="clientName">User name of the client who's positions are being retrieved</param>
+        /// <returns>The list of all positions for specific client</returns>
+        [HttpGet]
+        [ResponseType(typeof(IEnumerable<Position>))]
+        public IHttpActionResult GetAllPositionsForClient(string clientName)
+        {
+            var positions = this.PositionService.GetManyPositionsByClientName(clientName);
+
+            if (!Utilities.IsEmpty(positions))
+            {
+                return Ok(positions);
+            }
+
+            return NotFound();
+        }
+
+        /// <summary>
+        /// Get the list of all positions for specific agent
+        /// </summary>
+        /// <param name="agentName">User name of the agent who's positions are being retrieved</param>
+        /// <returns>The list of all positions for specific agent</returns>
+        [HttpGet]
+        [ResponseType(typeof(IEnumerable<Position>))]
+        public IHttpActionResult GetAllPositionsForAgent(string agentName)
+        {
+            var positions = this.PositionService.GetManyPositionsByAgentName(agentName);
+
+            if (!Utilities.IsEmpty(positions))
+            {
+                return Ok(positions);
+            }
+
+            return NotFound();
+        }
+
+        /// <summary>
         /// Get a position by id
         /// </summary>
         /// <param name="id">Id of a position to be fetched</param>
@@ -63,27 +101,6 @@ namespace RAMS.Web.Controllers.WebAPI
                 if (position != null)
                 {
                     return Ok(position);
-                }
-            }
-
-            return NotFound();
-        }
-
-        /// <summary>
-        /// Get the list of positions for specific deparment
-        /// </summary>
-        /// <returns>The list of positions for specific deparment</returns>
-        [HttpGet]
-        [ResponseType(typeof(IEnumerable<Position>))]
-        public IHttpActionResult GetManyPositionsByDepartmentId(int departmentId)
-        {
-            if (departmentId > 0)
-            {
-                var positions = this.PositionService.GetManyPositionsByDepartmentId(departmentId);
-
-                if (!Utilities.IsEmpty(positions))
-                {
-                    return Ok(positions);
                 }
             }
 

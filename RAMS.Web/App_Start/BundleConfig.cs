@@ -24,12 +24,18 @@ namespace RAMS.Web.App_Start
 
             bundles.Add(new ScriptBundle("~/isLoading/js").Include("~/Content/JS/jquery.isloading.js"));
 
+            bundles.Add(new ScriptBundle("~/jQueryUI/js").Include("~/Content/JS/jquery-ui.js"));
+
+
             //CSS files
             bundles.Add(new StyleBundle("~/bootstrap/css").Include("~/Content/CSS/bootstrap.css", "~/Content/CSS/site.css"));
 
             bundles.Add(new StyleBundle("~/dataTables/css").Include("~/Content/CSS/dataTables.bootstrap.css"));
 
             bundles.Add(new StyleBundle("~/isLoading/css").Include("~/Content/CSS/isloading.css"));
+
+            bundles.Add(new StyleBundle("~/jQueryUI/css").Include("~/Content/CSS/jquery-ui.css"));
+
 
             BundleTable.EnableOptimizations = true;
         }

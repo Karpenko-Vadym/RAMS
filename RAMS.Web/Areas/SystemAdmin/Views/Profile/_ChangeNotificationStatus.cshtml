@@ -1,0 +1,43 @@
+﻿@model RAMS.ViewModels.NotificationChangeStatusViewModel
+<!-- CHANGE NOTIFICATION STATUS PARTIAL -->
+@{
+    AjaxOptions ajaxOptions = new AjaxOptions
+    {
+        UpdateTargetId = "confirmation-message-div",
+        OnBegin = "OnAjaxBegin",
+        OnSuccess = "OnAjaxSuccess",
+        OnFailure = "OnAjaxFailure",
+        OnComplete = "OnAjaxComplete"
+    };
+}
+
+@using (Ajax.BeginForm("ChangeNotificationStatus", "Profile", new { Area = "SystemAdmin" }, ajaxOptions, new { id = "change-notification-status-form" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(model => model.NotificationId)
+    @Html.HiddenFor(model => model.NotificationTitle)
+    @Html.HiddenFor(model => model.NotificationStatus)
+
+    <div class="well well-lg bottom-margin-0">
+        <div class="alert alert-warning bottom-margin-0" role="alert">
+            <p>Are you sure that you want to change notification status of "<strong>@Model.NotificationTitle</strong>" notification to "<strong>@Model.NotificationStatus</strong>"?</p>
+            <p><strong>NOTE: </strong>This action can be undone by selecting this notification from notification list at any time.</p>
+        </div>
+    </div>
+
+    <div class="vertical-padding-24"></div>
+
+    <div class="form-group bottom-margin-0">
+        <div class="col-md-offset-0 col-lg-offset-0 col-md-3 col-lg-3">
+            <input type="submit" value="Change" class="btn btn-danger btn-block" onclick="$('#change-notification-status-modal').modal('hide');" />
+        </div>
+
+        <div class="col-md-offset-6 col-lg-offset-6 col-md-3 col-lg-3">
+            <input type="button" value="Cancel" class="btn btn-info btn-block" onclick="$('#change-notification-status-modal').modal('hide');" />
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+}
+<!-- END OF CHANGE NOTIFICATION STATUS PARTIAL -->

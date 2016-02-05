@@ -16,7 +16,7 @@ namespace RAMS.Data.Repositories
     {
         IEnumerable<Position> GetManyByClientId(int id);
 
-        IEnumerable<Position> GetManyByClient(Client cleint);
+        IEnumerable<Position> GetManyByClient(Client client);
 
         IEnumerable<Position> GetManyByAgentId(int id);
 

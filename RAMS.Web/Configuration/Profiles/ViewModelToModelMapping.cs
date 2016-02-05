@@ -26,15 +26,20 @@ namespace RAMS.Web.Configuration
             Mapper.CreateMap<AdminAddViewModel, Admin>().ForMember(a => a.Role, map => map.MapFrom(vm => (Role)Enum.Parse(typeof(Role), vm.SelectedRole)));
 
             Mapper.CreateMap<AgentEditViewModel, Agent>().ForMember(a => a.Role, map => map.MapFrom(vm => (Role)Enum.Parse(typeof(Role), vm.SelectedRole))).ForMember(a => a.AgentStatus, map => map.MapFrom(vm => (AgentStatus)Enum.Parse(typeof(AgentStatus), vm.SelectedAgentStatus)));
-            Mapper.CreateMap<ClientEditViewModel, Client>().ForMember(a => a.Role, map => map.MapFrom(vm => Role.Employee));
+            Mapper.CreateMap<ClientEditViewModel, Client>().ForMember(c => c.Role, map => map.MapFrom(vm => Role.Employee));
             Mapper.CreateMap<AdminEditViewModel, Admin>().ForMember(a => a.Role, map => map.MapFrom(vm => (Role)Enum.Parse(typeof(Role), vm.SelectedRole)));
 
-            Mapper.CreateMap<UserEditProfileViewModel, Agent>();
-            Mapper.CreateMap<UserEditProfileViewModel, Client>();
-            Mapper.CreateMap<UserEditProfileViewModel, Admin>();
+            Mapper.CreateMap<UserEditProfileViewModel, Agent>().ForMember(a => a.AgentId, map => map.MapFrom(vm => vm.UserId));
+            Mapper.CreateMap<UserEditProfileViewModel, Client>().ForMember(c => c.ClientId, map => map.MapFrom(vm => vm.UserId));
+            Mapper.CreateMap<UserEditProfileViewModel, Admin>().ForMember(a => a.AdminId, map => map.MapFrom(vm => vm.UserId));
 
             Mapper.CreateMap<DepartmentAddViewModel, Department>();
             Mapper.CreateMap<DepartmentEditViewModel, Department>();
+
+            Mapper.CreateMap<PositionAddViewModel, Position>();
+            Mapper.CreateMap<PositionEditViewModel, Position>();
+
+            Mapper.CreateMap<NotificationAddViewModel, Notification>();
         }
     }
 }

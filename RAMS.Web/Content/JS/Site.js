@@ -64,11 +64,13 @@ function GenerateRandomString(stringLength, allowedCharacters, regexString)
 }
 
 // LoadDataTable method loads DataTable for the table with provided id
-function LoadDataTable(id, lengthMenuArray)
+function LoadDataTable(id, lengthMenuArray, order)
 {
     lengthMenuArray = (typeof lengthMenuArray === "undefined") ? [[10, 15, 20, 25], [10, 15, 20, 25]] : lengthMenuArray;
 
-    $("#" + id).DataTable({ "lengthMenu": lengthMenuArray });
+    order = (typeof order === "undefined") ? [[0, "asc"]] : order;
+
+    $("#" + id).DataTable({ "lengthMenu" : lengthMenuArray, "order" : order });
 }
 
 // LoadAction method loads an action method into a div with provided id
@@ -121,6 +123,13 @@ function ProfilePictureUpload()
     });
 }
 
+function setDatepicker()
+{
+    $(".datepicker-field").datepicker();
+
+    
+}
+
 /************* END OF GENERAL FUNCTIONS *************/
 
 /*************** GENERAL MODAL CONTROLS *************/
@@ -131,6 +140,8 @@ function GeneralModalControls()
     $("#change-password-modal").on("show.bs.modal", function (e) { LoadAction("password-change-div", "/RAMS/Account/ChangePassword?userName=" + $(e.relatedTarget).data("user-name") + "&userType=" + $(e.relatedTarget).data("user-type")); });
 
     $("#edit-profile-modal").on("hidden.bs.modal", function (e) { $("#edit-user-profile-modal-body-div").empty(); $("#edit-user-profile-message-modal-body-div").empty(); });
+
+    $("#forgot-password-modal").on("show.bs.modal", function (e) { LoadAction("forgot-password-div", "/RAMS/Account/ForgotPassword"); });
 }
 /*********** END OF GENERAL MODAL CONTROLS **********/
 
@@ -193,12 +204,20 @@ function SystemAdminModalControls()
 
         LoadAction("upload-change-profile-picture-modal-body-div", "/RAMS/SystemAdmin/Profile/UploadProfilePicture");
     });
+
+    $("#change-notification-status-modal").on("show.bs.modal", function (e) { LoadAction("change-notification-status-div", "/RAMS/SystemAdmin/Profile/ChangeNotificationStatus?notificationId=" + $(e.relatedTarget).data("notification-id") + "&notificationTitle=" + encodeURIComponent($(e.relatedTarget).data("notification-title")) + "&notificationStatus=" + $(e.relatedTarget).data("notification-status")); });
+
+    $("#change-notification-status-modal").on("hidden.bs.modal", function (e) { $("#change-notification-status-div").empty(); });
+
+
+    
 }
 /******** END OF SYSTEM ADMIN MODAL CONTROLS ********/
 
 /************** CUSTOMER MODAL CONTROLS *************/
 function CustomerModalControls()
 {
+    // Profile
     $("#upload-change-profile-picture-modal").on("show.bs.modal", function (e)
     {
         if ($(e.relatedTarget).data("action") == "upload")
@@ -212,9 +231,55 @@ function CustomerModalControls()
 
         LoadAction("upload-change-profile-picture-modal-body-div", "/RAMS/Customer/Profile/UploadProfilePicture");
     });
+
+    $("#change-notification-status-modal").on("show.bs.modal", function (e) { LoadAction("change-notification-status-div", "/RAMS/Customer/Profile/ChangeNotificationStatus?notificationId=" + $(e.relatedTarget).data("notification-id") + "&notificationTitle=" + encodeURIComponent($(e.relatedTarget).data("notification-title")) + "&notificationStatus=" + $(e.relatedTarget).data("notification-status")); });
+
+    $("#change-notification-status-modal").on("hidden.bs.modal", function (e) { $("#change-notification-status-div").empty(); });
+
+    // Position
+    $("#new-position-modal").on("show.bs.modal", function (e) { LoadAction("new-position-modal-body-div", "/RAMS/Customer/Position/NewPosition"); });
+
+    $("#new-position-modal").on("hidden.bs.modal", function (e) { $("#new-position-modal-body-div").empty(); });
+
+    $("#position-details-modal").on("show.bs.modal", function (e) { LoadAction("position-details-modal-body-div", "/RAMS/Customer/Position/PositionDetails?positionId=" + $(e.relatedTarget).data("position-id")); });
+
+    $("#position-details-modal").on("hidden.bs.modal", function (e) { $("#position-closure-confirmation-modal-body-div").empty(); $("#position-details-message-modal-body-div").empty(); });
+
+    $("#position-closure-confirmation-modal").on("show.bs.modal", function (e) { LoadAction("position-closure-confirmation-modal-body-div", "/RAMS/Customer/Position/PositionClosure?agentId=" + $(e.relatedTarget).data("agent-id") + "&agentName=" + encodeURIComponent($(e.relatedTarget).data("agent-name")) + "&positionId=" + $(e.relatedTarget).data("position-id") + "&positionTitle=" + encodeURIComponent($(e.relatedTarget).data("position-title")) + "&clientUserName=" + $(e.relatedTarget).data("client-user-name") + "&clientFullName=" + encodeURIComponent($(e.relatedTarget).data("client-full-name"))); });
+
+    
 }
 
 /********** END OF CUSTOMER MODAL CONTROLS **********/
+
+/************** AGENCY MODAL CONTROLS *************/
+function AgencyModalControls()
+{
+    // Profile
+    $("#upload-change-profile-picture-modal").on("show.bs.modal", function (e) {
+        if ($(e.relatedTarget).data("action") == "upload") {
+            $("#upload-change-profile-picture-modal-title").text("Upload Profile Picture");
+        }
+        else if ($(e.relatedTarget).data("action") == "change") {
+            $("#upload-change-profile-picture-modal-title").text("Change Profile Picture");
+        }
+
+        LoadAction("upload-change-profile-picture-modal-body-div", "/RAMS/Agency/Profile/UploadProfilePicture");
+    });
+
+    $("#change-notification-status-modal").on("show.bs.modal", function (e) { LoadAction("change-notification-status-div", "/RAMS/Agency/Profile/ChangeNotificationStatus?notificationId=" + $(e.relatedTarget).data("notification-id") + "&notificationTitle=" + encodeURIComponent($(e.relatedTarget).data("notification-title")) + "&notificationStatus=" + $(e.relatedTarget).data("notification-status")); });
+
+    $("#change-notification-status-modal").on("hidden.bs.modal", function (e) { $("#change-notification-status-div").empty(); });
+
+    // Position
+
+    $("#edit-position-modal").on("show.bs.modal", function (e) { LoadAction("edit-position-modal-body-div", "/RAMS/Agency/Position/EditPosition?positionId=" + $(e.relatedTarget).data("position-id")); });
+
+    $("#edit-position-modal").on("hidden.bs.modal", function (e) { $("#edit-position-modal-body-div").empty(); $("#edit-position-message-modal-body-div").empty(); });
+
+}
+
+/********** END OF AGENCY MODAL CONTROLS **********/
 
 /************** SYSTEM ADMIN FUNCTIONS **************/
 function RefreshEditForm(userName, userType)

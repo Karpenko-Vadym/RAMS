@@ -17,7 +17,7 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr data-toggle="modal" data-target="#edit-user-modal" data-user-name="@item.UserName" data-user-type="@item.UserType">
+                    <tr class="cursor-pointer" data-toggle="modal" data-target="#edit-user-modal" data-user-name="@item.UserName" data-user-type="@item.UserType">
                         <td>@item.UserId</td>
                         <td>@item.UserName</td>
                         <td>@item.FullName</td>

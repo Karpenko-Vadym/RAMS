@@ -18,6 +18,21 @@ namespace RAMS.Web.Identity
         [Display(Name = "Password")]
         public string Password { get; set; }
     }
+
+    /// <summary>
+    /// ForgotPasswordViewModel view model declares properties for _ForgotPassword partial view
+    /// </summary>
+    public class ForgotPasswordViewModel
+    {
+        [Required]
+        [Display(Name = "User Name")]
+        public string UserName { get; set; }
+
+        [Required]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+    }
 }
 
 namespace RAMS.ViewModels 
@@ -25,7 +40,7 @@ namespace RAMS.ViewModels
     /// <summary>
     /// EmployeeViewModel view model is a base view model for AgentAddViewModel, ClientAddViewModel, AdminAddViewModel and declares common properties of those view models
     /// </summary>
-    public class EmployeeViewModel
+    public class EmployeeAddViewModel
     {
         [Required]
         [Display(Name = "User Name")]
@@ -85,13 +100,13 @@ namespace RAMS.ViewModels
     /// <summary>
     /// AgentAddViewModel view model declares properties for _RegisterAgent partial view
     /// </summary>
-    public class AgentAddViewModel : EmployeeViewModel
+    public class AgentAddViewModel : EmployeeAddViewModel
     {
         [Required]
         [Display(Name = "Department")]
         public int DepartmentId { get; set; }
 
-        public List<System.Web.Mvc.SelectListItem> Departments { get; set; } // Select list for dropdowns
+        public List<System.Web.Mvc.SelectListItem> Departments { get; set; } // Select list for Department dropdown
 
         [Required]
         [Display(Name = "Agent Status")]
@@ -118,7 +133,7 @@ namespace RAMS.ViewModels
     /// <summary>
     /// ClientAddViewModel view model declares properties for _RegisterClient partial view
     /// </summary>
-    public class ClientAddViewModel : EmployeeViewModel 
+    public class ClientAddViewModel : EmployeeAddViewModel 
     {
         /// <summary>
         /// ClientAddViewModel constructor sets UserType to Client, UserStatus to Active, and Role to Employee
@@ -134,7 +149,7 @@ namespace RAMS.ViewModels
     /// <summary>
     /// AdminAddViewModel view model declares properties for _RegisterAdmin partial view
     /// </summary>
-    public class AdminAddViewModel : EmployeeViewModel 
+    public class AdminAddViewModel : EmployeeAddViewModel 
     {
         [Required]
         [Display(Name = "Role")]
@@ -367,7 +382,7 @@ namespace RAMS.ViewModels
     }
 
     /// <summary>
-    /// UserConfirmationViewModel view model declares properties for _Confirmation, _Success, and _Error partial views
+    /// UserConfirmationViewModel view model declares properties for _SuccessConfirmation, _FailureConfirmation, and _Error partial views
     /// </summary>
     public class UserConfirmationViewModel
     {
@@ -583,6 +598,13 @@ namespace RAMS.ViewModels
         public Role Role { get; set; }
 
         [Required]
+        [Display(Name = "User Status")]
+        public UserStatus UserStatus { get; set; }
+
+        [Display(Name = "Agent Status")]
+        public AgentStatus AgentStatus { get; set; }
+
+        [Required]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
@@ -611,7 +633,38 @@ namespace RAMS.ViewModels
         [Display(Name = "Company Name")]
         public string Company { get; set; }
 
+        [Required]
+        [Display(Name = "Phone Number")]
+        public string PhoneNumber { get; set; }
+
+        [Display(Name = "Department Id")]
+        public int DepartmentId { get; set; }
+
         public byte[] Timestamp { get; set; }
+    }
+
+    /// <summary>
+    /// EditUserConfirmationViewModel view model declares properties for _EditUserConfirmation partial view
+    /// </summary>
+    public class EditUserConfirmationViewModel
+    {
+        [Display(Name = "User Name")]
+        public string UserName { get; set; }
+
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        [Display(Name = "Job Title")]
+        public string JobTitle { get; set; }
+
+        [Display(Name = "Company Name")]
+        public string Company { get; set; }
     }
 
     /// <summary>
@@ -666,5 +719,61 @@ namespace RAMS.ViewModels
 
             this.UserType = userType;
         }
+    }
+
+    /// <summary>
+    /// EmployeeAddEditConfirmationViewModel view model is a base view model for AgentAddEditConfirmationViewModel, ClientAddEditConfirmationViewModel, AdminAddEditConfirmationViewModel and declares common properties of those view models
+    /// </summary>
+    public class EmployeeAddEditConfirmationViewModel
+    {
+        [Display(Name = "Username")]
+        public string UserName { get; set; }
+
+        [Display(Name = "User Type")]
+        public UserType UserType { get; set; }
+
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        [Display(Name = "Job Title")]
+        public string JobTitle { get; set; }
+
+        [Display(Name = "Company Name")]
+        public string Company { get; set; }
+
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        [Display(Name = "Phone Number")]
+        public string PhoneNumber { get; set; }
+    }
+
+    /// <summary>
+    /// AgentAddEditConfirmationViewModel view model declares properties for _RegisterAgentConfirmation and _EditAgentConfirmation partial views
+    /// </summary>
+    public class AgentAddEditConfirmationViewModel : EmployeeAddEditConfirmationViewModel
+    {
+        [Display(Name = "Role")]
+        public Role Role { get; set; }
+
+        [Display(Name = "Department")]
+        public string DepartmentName { get; set; }
+    }
+
+    /// <summary>
+    /// ClientAddEditConfirmationViewModel view model declares properties for _RegisterClientConfirmation and _EditClientConfirmation partial views
+    /// </summary>
+    public class ClientAddEditConfirmationViewModel : EmployeeAddEditConfirmationViewModel { }
+
+    /// <summary>
+    /// AdminAddEditConfirmationViewModel view model declares properties for _RegisterAdminConfirmation and _EditAdminConfirmation partial views
+    /// </summary>
+    public class AdminAddEditConfirmationViewModel : EmployeeAddEditConfirmationViewModel
+    {
+        [Display(Name = "Role")]
+        public Role Role { get; set; }
     }
 }

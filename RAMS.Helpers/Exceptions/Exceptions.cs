@@ -187,4 +187,17 @@ namespace RAMS.Helpers
 
         public PositionAddException(string message, Exception innerException) : base(message, innerException) { }
     }
+
+    /// <summary>
+    /// PositionEditException is a custom exception that provides additional controls over the application and error handling
+    /// PositionEditException is thrown when position edition issue occurs
+    /// </summary>
+    public class PositionEditException : Exception
+    {
+        public PositionEditException() : base("Position could not be created.") { }
+
+        public PositionEditException(string message) : base(message) { }
+
+        public PositionEditException(string message, Exception innerException) : base(message, innerException) { }
+    }
 }

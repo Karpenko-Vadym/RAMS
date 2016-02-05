@@ -249,6 +249,10 @@ namespace RAMS.ViewModels
     /// </summary>
     public class PositionEditViewModel
     {
+        [Required]
+        [Display(Name = "Position Id")]
+        public int PositionId { get; set; }
+
         public int? AgentId { get; set; }
 
         [Required]
@@ -298,6 +302,8 @@ namespace RAMS.ViewModels
         [Required]
         [Display(Name = "Acceptance Score")]
         public int AcceptanceScore { get; set; }
+
+        public byte[] Timestamp { get; set; }
 
         [Required]
         public PositionStatus Status { get; set; }

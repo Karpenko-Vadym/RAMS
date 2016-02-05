@@ -37,6 +37,7 @@ namespace RAMS.Web.Configuration
             Mapper.CreateMap<DepartmentEditViewModel, Department>();
 
             Mapper.CreateMap<PositionAddViewModel, Position>();
+            Mapper.CreateMap<PositionEditViewModel, Position>();
 
             Mapper.CreateMap<NotificationAddViewModel, Notification>();
         }

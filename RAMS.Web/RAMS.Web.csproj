@@ -720,6 +720,7 @@
     <Content Include="Areas\Agency\Views\Position\_PositionList.cshtml" />
     <Content Include="Areas\Agency\Views\Position\_EditPosition.cshtml" />
     <Content Include="Areas\Agency\Views\Position\_Error.cshtml" />
+    <Content Include="Areas\Agency\Views\Position\_PositionConfirmation.cshtml" />
     <None Include="Content\JS\jquery-2.1.4.intellisense.js" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

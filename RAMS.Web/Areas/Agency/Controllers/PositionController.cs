@@ -249,5 +249,25 @@ namespace RAMS.Web.Areas.Agency.Controllers
 
             return PartialView("_EditPosition", model);
         }
+
+
+        [HttpGet]
+        public async Task<PartialViewResult> EditCandidate(int candidateId)
+        {
+            if (candidateId > 0)
+            {
+                var response = await this.GetHttpClient().GetAsync(String.Format("Candidate?id={0}", candidateId));
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var candidateEditViewModel = Mapper.Map<Candidate, CandidateEditViewModel>(await response.Content.ReadAsAsync<Candidate>());
+
+
+                    return PartialView("_EditCandidate", candidateEditViewModel);
+                }
+            }
+
+            return PartialView("_EditCandidate");
+        }
     }
 }

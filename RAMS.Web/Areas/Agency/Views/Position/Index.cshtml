@@ -17,7 +17,6 @@
                 <h4 class="modal-title text-center">Edit Position</h4>
             </div>
             <div class="modal-body">
-                <div id="edit-position-message-modal-body-div"></div>
                 <div class="well well-lg bottom-margin-0">
                     <div id="edit-position-modal-body-div"></div>
                 </div>
@@ -30,6 +29,29 @@
     </div>
 </div>
 <!-- END OF EDIT POSITION MODAL -->
+
+<!-- EDIT CANDIDATE MODAL -->
+<div id="edit-candidate-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- MODAL CONTENT -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" onclick="$('#edit-candidate-modal').modal('hide');">&times;</button>
+                <h4 class="modal-title text-center">Candidate Details</h4>
+            </div>
+            <div class="modal-body">
+                <div class="well well-lg bottom-margin-0">
+                    <div id="edit-candidate-modal-body-div"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" onclick="$('#edit-candidate-modal').modal('hide');">Close</button>
+            </div>
+        </div>
+        <!-- END OF MODAL CONTENT-->
+    </div>
+</div>
+<!-- END OF EDIT CANDIDATE MODAL -->
 
 <script type="text/javascript">$(function () { LoadAction("position-list-div", "@Url.Action("PositionList", "Position", new { Area = "Agency" })"); AgencyModalControls(); });</script>
 <!-- END OF POSITION INDEX VIEW -->

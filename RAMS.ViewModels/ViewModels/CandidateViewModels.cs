@@ -5,11 +5,12 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Web;
+using System.Web.Mvc;
 
 namespace RAMS.ViewModels
 {
     /// <summary>
-    /// CandidateListViewModel view model declares properties for _PositionList partial view
+    /// CandidateListViewModel view model declares properties for _EditPosition partial view
     /// </summary>
     public class CandidateListViewModel
     {
@@ -28,5 +29,49 @@ namespace RAMS.ViewModels
         public CandidateStatus Status { get; set; }
     }
 
+    /// <summary>
+    /// CandidateEditViewModel view model declares properties for _EditCandidate partial view
+    /// </summary>
+    public class CandidateEditViewModel
+    {
+        public int CandidateId { get; set; }
 
+        [Display(Name = "Id")]
+        public string CandidateIdDisplay { get; set; }
+
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        [Display(Name = "Email Address")]
+        public string Email { get; set; }
+
+        [Display(Name = "Country")]
+        public string Country { get; set; }
+
+        [Display(Name = "Postal Code")]
+        public string PostalCode { get; set; }
+
+        [Display(Name = "Phone Number")]
+        public string PhoneNumber { get; set; }
+
+        [Required]
+        [AllowHtml]
+        [Display(Name = "Feedback")]
+        public string Feedback { get; set; }
+
+        public string FileName { get; set; }
+
+        public string MediaType { get; set; } 
+
+        public byte[] FileContent { get; set; }
+
+        [Display(Name = "Score")]
+        public int Score { get; set; }
+
+        [Display(Name = "Status")]
+        public CandidateStatus Status { get; set; }
+    }
 }

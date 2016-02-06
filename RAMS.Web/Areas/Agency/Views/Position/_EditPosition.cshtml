@@ -12,6 +12,37 @@
     };
 }
 
+@if (!RAMS.Helpers.Utilities.IsEmpty(Model.Candidates))
+{
+    <div class="well well-lg bottom-margin-0 background-white">
+        <table id="candidate-list-table" class="table table-striped table-bordered table-hover bottom-margin-0" cellspacing="0">
+            <thead>
+                <tr class="active">
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Score</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Candidates)
+                {
+                    <tr class="cursor-pointer" data-toggle="modal" data-target="#edit-candidate-modal" data-candidate-id="@item.CandidateId">
+                        <td>@item.CandidateIdDisplay</td>
+                        <td>@item.FullName</td>
+                        <td>@item.Score</td>
+                        <td>@item.Status</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="vertical-padding-24"></div>
+
+    <script type="text/javascript">$(function () { LoadDataTable("candidate-list-table") });</script>
+}
+
 @if(Model != null)
 { 
 <div class="well well-lg bottom-margin-0 background-white">

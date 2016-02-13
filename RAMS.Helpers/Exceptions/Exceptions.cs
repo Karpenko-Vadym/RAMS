@@ -194,10 +194,23 @@ namespace RAMS.Helpers
     /// </summary>
     public class PositionEditException : Exception
     {
-        public PositionEditException() : base("Position could not be created.") { }
+        public PositionEditException() : base("Position could not be updated.") { }
 
         public PositionEditException(string message) : base(message) { }
 
         public PositionEditException(string message, Exception innerException) : base(message, innerException) { }
+    }
+
+    /// <summary>
+    /// CandidateEditException is a custom exception that provides additional controls over the application and error handling
+    /// CandidateEditException is thrown when candidate edition issue occurs
+    /// </summary>
+    public class CandidateEditException : Exception
+    {
+        public CandidateEditException() : base("Candidate could not be updated.") { }
+
+        public CandidateEditException(string message) : base(message) { }
+
+        public CandidateEditException(string message, Exception innerException) : base(message, innerException) { }
     }
 }

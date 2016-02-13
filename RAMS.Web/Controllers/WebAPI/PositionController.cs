@@ -86,6 +86,44 @@ namespace RAMS.Web.Controllers.WebAPI
         }
 
         /// <summary>
+        /// Get the list of multiple positions with specific category
+        /// </summary>
+        /// <param name="categoryName">Category for which positions are being retrieved</param>
+        /// <returns>The list of multiple positions with specific category</returns>
+        [HttpGet]
+        [ResponseType(typeof(IEnumerable<Position>))]
+        public IHttpActionResult GetManyPositionByCategoryName(string categoryName)
+        {
+            var positions = this.PositionService.GetManyPositionsByCategoryName(categoryName);
+
+            if (!Utilities.IsEmpty(positions))
+            {
+                return Ok(positions);
+            }
+
+            return NotFound();
+        }
+
+        /// <summary>
+        /// Get the list of multiple positions that match the keyword
+        /// </summary>
+        /// <param name="keyword">Keyword to match with positions' data</param>
+        /// <returns>The list of multiple positions that match the keyword</returns>
+        [HttpGet]
+        [ResponseType(typeof(IEnumerable<Position>))]
+        public IHttpActionResult GetManyPositionByKeyword(string keyword)
+        {
+            var positions = this.PositionService.GetManyPositionsByKeyword(keyword);
+
+            if (!Utilities.IsEmpty(positions))
+            {
+                return Ok(positions);
+            }
+
+            return NotFound();
+        }
+
+        /// <summary>
         /// Get a position by id
         /// </summary>
         /// <param name="id">Id of a position to be fetched</param>

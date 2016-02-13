@@ -250,7 +250,11 @@ namespace RAMS.Web.Areas.Agency.Controllers
             return PartialView("_EditPosition", model);
         }
 
-
+        /// <summary>
+        /// EditCandidate action method retrieves candidate's data and displays it in _EditCandidate partial view
+        /// </summary>
+        /// <param name="candidateId">Id of the candidate whos information will be displayed</param>
+        /// <returns>_EditCandidate partial view with candidates information</returns>
         [HttpGet]
         public async Task<PartialViewResult> EditCandidate(int candidateId)
         {
@@ -268,6 +272,56 @@ namespace RAMS.Web.Areas.Agency.Controllers
             }
 
             return PartialView("_EditCandidate");
+        }
+
+        /// <summary>
+        /// EditCandidate action method attempts to update candidate's feedback
+        /// </summary>
+        /// <param name="model">Candidate information required to update candidate's feedback</param>
+        /// <returns>_CandidateEditConfirmation partial view if candidate's feedback has been updated successfully, _Error partial view otherwise</returns>
+        [HttpPost]
+        public async Task<PartialViewResult> EditCandidate(CandidateEditViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var response = await this.GetHttpClient().PutAsync(String.Format("Candidate?candidateId={0}&feedback={1}", model.CandidateId, model.Feedback), null); // Attempt to update the feedback
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var candidate = await response.Content.ReadAsAsync<Candidate>();
+
+                        var candidateEditConfirmationViewModel = Mapper.Map<Candidate, CandidateEditConfirmationViewModel>(candidate);
+
+                        return PartialView("_CandidateEditConfirmation", candidateEditConfirmationViewModel);
+                    }
+                    else
+                    {
+                        // If candidate could not be updated, throw CandidateEditException exception
+                        throw new CandidateEditException("Candidate " + model.FirstName + model.LastName + " could not be updated. Response: " + response.StatusCode);
+                    }
+                }
+                catch (CandidateEditException ex)
+                {
+                    // Log exception
+                    ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+
+                    var stringBuilder = new StringBuilder();
+
+                    stringBuilder.Append("<div class='text-center'><h4><strong>Failed to update candidate details.</strong></h4></div>");
+
+                    stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Server returned status code '{0}' while attempting to persist candidate details to the database. Please try again in a moment.</div>");
+
+                    stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> If you encounter this issue again in the future, please contact Technical Support with exact steps to reproduce this issue.</div></div>");
+
+                    var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+
+                    return PartialView("_Error", confirmationViewModel);
+                }
+            }
+
+            return PartialView("_EditCandidate", model);
         }
     }
 }

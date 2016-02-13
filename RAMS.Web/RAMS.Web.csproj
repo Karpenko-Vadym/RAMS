@@ -534,7 +534,6 @@
     <Content Include="Areas\SystemAdmin\Views\Department\Index.cshtml" />
     <Content Include="Areas\SystemAdmin\Views\Department\_DepartmentList.cshtml" />
     <Content Include="Areas\SystemAdmin\Views\Department\_NewDepartment.cshtml" />
-    <Content Include="Areas\SystemAdmin\Views\Department\_Success.cshtml" />
     <Content Include="Areas\SystemAdmin\Views\Department\_Error.cshtml" />
     <Content Include="Areas\SystemAdmin\Views\Department\_EditDepartment.cshtml" />
     <Content Include="Areas\Customer\Views\Profile\Index.cshtml" />
@@ -722,6 +721,9 @@
     <Content Include="Areas\Agency\Views\Position\_Error.cshtml" />
     <Content Include="Areas\Agency\Views\Position\_PositionConfirmation.cshtml" />
     <Content Include="Areas\Agency\Views\Position\_EditCandidate.cshtml" />
+    <Content Include="Areas\SystemAdmin\Views\Department\_NewDepartmentConfirmation.cshtml" />
+    <Content Include="Areas\SystemAdmin\Views\Department\_EditDepartmentConfirmation.cshtml" />
+    <Content Include="Areas\Agency\Views\Position\_CandidateEditConfirmation.cshtml" />
     <None Include="Content\JS\jquery-2.1.4.intellisense.js" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

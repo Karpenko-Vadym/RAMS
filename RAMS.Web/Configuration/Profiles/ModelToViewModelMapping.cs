@@ -20,6 +20,8 @@ namespace RAMS.Web.Configuration
         /// </summary>
         protected override void Configure()
         {
+            /***** USER MAPPING *****/
+
             Mapper.CreateMap<Agent, AgentAddViewModel>();
             Mapper.CreateMap<Client, ClientAddViewModel>();
             Mapper.CreateMap<Admin, AdminAddViewModel>();
@@ -48,28 +50,40 @@ namespace RAMS.Web.Configuration
             Mapper.CreateMap<Client, UserEditProfileViewModel>().ForMember(c => c.UserId, map => map.MapFrom(model => model.ClientId)).ForMember(c => c.CurrentFullName, map => map.MapFrom(model => String.Format("{0} {1}", model.FirstName, model.LastName))).ForMember(c => c.CurrentEmail, map => map.MapFrom(model => model.Email));
             Mapper.CreateMap<Admin, UserEditProfileViewModel>().ForMember(a => a.UserId, map => map.MapFrom(model => model.AdminId)).ForMember(a => a.CurrentFullName, map => map.MapFrom(model => String.Format("{0} {1}", model.FirstName, model.LastName))).ForMember(a => a.CurrentEmail, map => map.MapFrom(model => model.Email));
 
-            Mapper.CreateMap<Department, DepartmentListViewModel>().ForMember(d => d.NumOfAgents, map => map.MapFrom(model => model.Agents.Count()));
-            Mapper.CreateMap<Department, DepartmentAddViewModel>();
-            Mapper.CreateMap<Department, DepartmentEditViewModel>();
-
             Mapper.CreateMap<Agent, AgentProfileDetailsViewModel>().ForMember(c => c.FullName, map => map.MapFrom(model => String.Format("{0} {1}", model.FirstName, model.LastName)));
             Mapper.CreateMap<Client, ClientProfileDetailsViewModel>().ForMember(c => c.FullName, map => map.MapFrom(model => String.Format("{0} {1}", model.FirstName, model.LastName)));
             Mapper.CreateMap<Admin, AdminProfileDetailsViewModel>().ForMember(a => a.FullName, map => map.MapFrom(model => String.Format("{0} {1}", model.FirstName, model.LastName)));
 
+            Mapper.CreateMap<Department, DepartmentListViewModel>().ForMember(d => d.NumOfAgents, map => map.MapFrom(model => model.Agents.Count()));
+            Mapper.CreateMap<Department, DepartmentAddViewModel>();
+            Mapper.CreateMap<Department, DepartmentEditViewModel>();
+            Mapper.CreateMap<Department, DepartmentAddEditConfirmationViewModel>();
+
+            /***** END OF USER MAPPING *****/
+            /***** NOTIFICATION MAPPING *****/
+
             Mapper.CreateMap<Notification, NotificationListViewModel>();
+
+            /***** END OF NOTIFICATION MAPPING *****/
+            /***** POSITION MAPPING *****/
 
             Mapper.CreateMap<Position, PositionListViewModel>().ForMember(p => p.PositionIdForDisplay, map => map.MapFrom(model => model.PositionId.ToString("00000"))).ForMember(p => p.CategoryName, map => map.MapFrom(model => model.Category.Name)).ForMember(p => p.AssignedTo, map => map.MapFrom(model => String.Format("{0} {1}", model.Agent.FirstName, model.Agent.LastName)));
             Mapper.CreateMap<Position, PositionAddViewModel>();
-
-            
 
             Mapper.CreateMap<Position, PositionConfirmationViewModel>().ForMember(p => p.Client, map => map.MapFrom(model => model.Client.FirstName + " " + model.Client.LastName)).ForMember(p => p.Category, map => map.MapFrom(model => model.Category.Name));
             Mapper.CreateMap<Position, PositionDetailsViewModel>().ForMember(p => p.Client, map => map.MapFrom(model => model.Client.FirstName + " " + model.Client.LastName)).ForMember(p => p.Category, map => map.MapFrom(model => model.Category.Name)).ForMember(p => p.AssignedTo, map => map.MapFrom(model => String.Format("{0} {1}",model.Agent.FirstName, model.Agent.LastName))).ForMember(p => p.AgentId, map => map.MapFrom(model => model.Agent.AgentId));
 
             Mapper.CreateMap<Position, PositionEditViewModel>().ForMember(p => p.Candidates, map => map.MapFrom(model => Mapper.Map<List<Candidate>, List<CandidateListViewModel>>(model.Candidates)));
 
+            /***** END OF POSITION MAPPING *****/
+            /***** CANDIDATE MAPPING *****/
+
             Mapper.CreateMap<Candidate, CandidateListViewModel>().ForMember(c => c.CandidateIdDisplay, map => map.MapFrom(model => model.CandidateId.ToString("00000"))).ForMember(c => c.FullName, map => map.MapFrom(model => String.Format("{0} {1}",model.FirstName, model.LastName)));
             Mapper.CreateMap<Candidate, CandidateEditViewModel>().ForMember(c => c.CandidateIdDisplay, map => map.MapFrom(model => model.CandidateId.ToString("00000")));
+            Mapper.CreateMap<Candidate, CandidateEditConfirmationViewModel>().ForMember(c => c.CandidateIdDisplay, map => map.MapFrom(model => model.CandidateId.ToString("00000")));
+
+            /***** END OF CANDIDATE MAPPING *****/
+
 
         }
     }

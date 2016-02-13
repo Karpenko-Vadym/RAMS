@@ -20,33 +20,42 @@
             @Html.AntiForgeryToken()
 
             @Html.HiddenFor(model => model.CandidateId)
+            @Html.HiddenFor(model => model.Country)
+            @Html.HiddenFor(model => model.Email)
+            @Html.HiddenFor(model => model.FileContent)
+            @Html.HiddenFor(model => model.FileName)
+            @Html.HiddenFor(model => model.FirstName)
+            @Html.HiddenFor(model => model.LastName)
+            @Html.HiddenFor(model => model.MediaType)
+            @Html.HiddenFor(model => model.PhoneNumber)
+            @Html.HiddenFor(model => model.PostalCode)
+            @Html.HiddenFor(model => model.Score)
+            @Html.HiddenFor(model => model.Status)
 
             <div class="form-horizontal">
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="col-sm-7 col-md-7">
-                    <div class="vertical-padding-24"></div>
-                    <dl class="dl-horizontal">
-                        
-                        <dt>@Html.LabelFor(model => model.CandidateIdDisplay)</dt>
-                        <dd>@Model.CandidateIdDisplay</dd>
-                        <dt>@Html.LabelFor(model => model.FirstName)</dt>
-                        <dd> model.firstname</dd>
-                        <dt>@Html.LabelFor(model => model.LastName)</dt>
-                        <dd>@Model.LastName</dd>
-                        <dt>@Html.LabelFor(model => model.Email)</dt>
-                        <dd>@Model.Email</dd>
-                        <dt>@Html.LabelFor(model => model.PhoneNumber)</dt>
-                        <dd>@Model.PhoneNumber</dd>
-                        <dt>@Html.LabelFor(model => model.Country)</dt>
-                        <dd>@Model.Country</dd>
-                        <dt>@Html.LabelFor(model => model.PostalCode)</dt>
-                        <dd>@Model.PostalCode</dd>
-                        <dt>@Html.LabelFor(model => model.Score)</dt>
-                        <dd>@Model.Score</dd>
-                        <dt>@Html.LabelFor(model => model.Status)</dt>
-                        <dd>@Model.Status</dd>
-                    </dl>
-                </div>
+
+                <div class="vertical-padding-24"></div>
+                <dl class="dl-horizontal">
+                    <dt>@Html.LabelFor(model => model.CandidateIdDisplay)</dt>
+                    <dd>@Model.CandidateIdDisplay</dd>
+                    <dt>@Html.LabelFor(model => model.FirstName)</dt>
+                    <dd>@Model.FirstName</dd>
+                    <dt>@Html.LabelFor(model => model.LastName)</dt>
+                    <dd>@Model.LastName</dd>
+                    <dt>@Html.LabelFor(model => model.Email)</dt>
+                    <dd>@Model.Email</dd>
+                    <dt>@Html.LabelFor(model => model.PhoneNumber)</dt>
+                    <dd>@Model.PhoneNumber</dd>
+                    <dt>@Html.LabelFor(model => model.Country)</dt>
+                    <dd>@Model.Country</dd>
+                    <dt>@Html.LabelFor(model => model.PostalCode)</dt>
+                    <dd>@Model.PostalCode</dd>
+                    <dt>@Html.LabelFor(model => model.Score)</dt>
+                    <dd>@Model.Score</dd>
+                    <dt>@Html.LabelFor(model => model.Status)</dt>
+                    <dd>@Model.Status</dd>
+                </dl>
 
                 <div class="clearfix"></div>
 
@@ -57,8 +66,6 @@
                         <div class='col-md-offset-1'><strong>NOTE:</strong> Feedback can be updated at any time.</div>
                     </div>
                 </div>
-
-                
 
                 <div class="form-group required">
                     @Html.LabelFor(model => model.Feedback, htmlAttributes: new { @class = "control-label col-md-3" })

@@ -1,0 +1,28 @@
+﻿@model RAMS.ViewModels.DepartmentAddEditConfirmationViewModel
+
+<!-- EDIT DEPARTMENT CONFIRMATION PARTIAL VIEW -->
+@if (Model != null)
+{
+    <div class="well well-lg bottom-margin-0 background-white">
+        <div class="alert alert-success">
+            <div class='text-center'><h4><strong>Department @Model.Name has been successfully updated!</strong></h4></div>
+            <div class="text-center">Please ensure that department information is valid.</div>
+            <div class="text-center"><strong>NOTE:</strong> Employee can be assigned to this department from Edit User or New User interfaces.</div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-12">
+                <dl class="dl-horizontal bottom-margin-0">
+                    <dt>@Html.LabelFor(model => model.Name)</dt>
+                    <dd>@Model.Name</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">$(function () { LoadAction("department-list-div", "@Url.Action("DepartmentList", "Department", new { Area = "SystemAdmin" })"); });</script>
+}
+else
+{
+    <div class="alert alert-danger bottom-margin-0" role="alert">Department confirmation details are not available.</div>
+}
+<!-- END OF EDIT DEPARTMENT CONFIRMATION PARTIAL VIEW -->

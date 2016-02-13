@@ -70,7 +70,12 @@ namespace RAMS.Service.Interfaces
         {
             var agent = this.AgentRepository.GetById(id);
 
-            return agent.Department;
+            if (agent != null)
+            {
+                return agent.Department;
+            }
+
+            return null;
         }
         #endregion
 

@@ -71,7 +71,12 @@ namespace RAMS.Service
         {
             var position = this.PositionRepository.GetById(id);
 
-            return position.Candidates.ToList();
+            if (position != null)
+            {
+                return position.Candidates.ToList();
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -83,7 +88,12 @@ namespace RAMS.Service
         {
             var interview = this.InterviewRepository.GetById(id);
 
-            return interview.Candidate;
+            if (interview != null)
+            {
+                return interview.Candidate;
+            }
+
+            return null;
         }
 
         /// <summary>

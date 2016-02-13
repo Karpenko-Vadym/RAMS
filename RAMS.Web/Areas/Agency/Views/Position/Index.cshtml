@@ -53,5 +53,28 @@
 </div>
 <!-- END OF EDIT CANDIDATE MODAL -->
 
+<!-- SCHEDULE INTERVIEW MODAL -->
+<div id="schedule-interview-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- MODAL CONTENT -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" onclick="$('#schedule-interview-modal').modal('hide');">&times;</button>
+                <h4 class="modal-title text-center">Schedule Interview</h4>
+            </div>
+            <div class="modal-body">
+                <div class="well well-lg bottom-margin-0">
+                    <div id="schedule-interview-modal-body-div"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" onclick="$('#schedule-interview-modal').modal('hide');">Close</button>
+            </div>
+        </div>
+        <!-- END OF MODAL CONTENT-->
+    </div>
+</div>
+<!-- END OF SCHEDULE INTERVIEW MODAL -->
+
 <script type="text/javascript">$(function () { LoadAction("position-list-div", "@Url.Action("PositionList", "Position", new { Area = "Agency" })"); AgencyModalControls(); });</script>
 <!-- END OF POSITION INDEX VIEW -->

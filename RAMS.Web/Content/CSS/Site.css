@@ -94,3 +94,9 @@ div.container.body-content
 {
     min-width: 700px;
 }
+
+td.cell-btn
+{
+    padding: initial !important;
+    vertical-align: middle !important;
+}

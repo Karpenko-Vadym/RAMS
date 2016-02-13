@@ -1,5 +1,7 @@
 ﻿@model RAMS.ViewModels.PositionEditViewModel
 
+@using System.Security.Claims
+
 <!-- EDIT POSITION PARTIAL -->
 @{
     AjaxOptions ajaxOptions = new AjaxOptions
@@ -10,6 +12,8 @@
         OnFailure = "OnAjaxFailure",
         OnComplete = "OnAjaxComplete"
     };
+
+    var identity = User.Identity as ClaimsIdentity;
 }
 
 @if (!RAMS.Helpers.Utilities.IsEmpty(Model.Candidates))
@@ -22,17 +26,19 @@
                     <th>Name</th>
                     <th>Score</th>
                     <th>Status</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model.Candidates)
                 {
-                    <tr class="cursor-pointer" data-toggle="modal" data-target="#edit-candidate-modal" data-candidate-id="@item.CandidateId">
-                        <td>@item.CandidateIdDisplay</td>
-                        <td>@item.FullName</td>
-                        <td>@item.Score</td>
-                        <td>@item.Status</td>
-                    </tr>
+                    <tr class="cursor-pointer" >
+                        <td data-toggle="modal" data-target="#edit-candidate-modal" data-candidate-id="@item.CandidateId">@item.CandidateIdDisplay</td>
+                        <td data-toggle="modal" data-target="#edit-candidate-modal" data-candidate-id="@item.CandidateId">@item.FullName</td>
+                        <td data-toggle="modal" data-target="#edit-candidate-modal" data-candidate-id="@item.CandidateId">@item.Score</td>
+                        <td data-toggle="modal" data-target="#edit-candidate-modal" data-candidate-id="@item.CandidateId">@item.Status</td>
+                        <td class="cell-btn"><input type="button" class="btn btn-info btn-block" value="Schedule" data-toggle="modal" data-target="#schedule-interview-modal" data-candidate-id="@item.CandidateId" /></td>
+                    </tr> 
                 }
             </tbody>
         </table>
@@ -40,11 +46,48 @@
 
     <div class="vertical-padding-24"></div>
 
-    <script type="text/javascript">$(function () { LoadDataTable("candidate-list-table") });</script>
+    <script type="text/javascript">$(function () { LoadDataTable("candidate-list-table"); });</script>
 }
 
-@if(Model != null)
-{ 
+@if (Model != null)
+{
+
+<div class="btn-group btn-group-justified" role="group">
+    
+    @if (@Model.Status == RAMS.Enums.PositionStatus.New)
+    {
+        <div class="btn-group" role="group">
+            <input type="button" class="btn btn-info" value="Approve Position" />
+        </div>
+
+        <div class="btn-group" role="group">
+            <input type="button" class="btn btn-danger" value="Close Position" />
+        </div>
+
+        if (identity.HasClaim("Role", "Manager"))
+        {
+            <div class="btn-group" role="group">
+                <input type="button" class="btn btn-info" value="Assign" />
+            </div>
+        }
+    }
+    else
+    {
+        <div class="btn-group" role="group">
+            <input type="button" class="btn btn-danger" value="Close Position" />
+        </div>
+
+        if (identity.HasClaim("Role", "Manager"))
+        {
+            <div class="btn-group" role="group">
+                <input type="button" class="btn btn-info" value="Re-Assign" />
+            </div>
+        }
+    }
+</div>
+    
+    <div class="vertical-padding-24"></div>
+
 <div class="well well-lg bottom-margin-0 background-white">
     @using (Ajax.BeginForm("EditPosition", "Position", new { Area = "Agency" }, ajaxOptions, new { id = "edit-position-form" }))
     {

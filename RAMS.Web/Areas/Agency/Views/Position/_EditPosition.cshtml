@@ -69,17 +69,11 @@ if(Model.Status != RAMS.Enums.PositionStatus.Closed)
         <div class="btn-group" role="group">
             <input type="button" class="btn btn-info" data-toggle="modal" data-target="#approve-position-modal" data-position-id="@Model.PositionId" data-position-title="@Model.Title" value="Approve Position" />
         </div>
+    }
 
-        <div class="btn-group" role="group">
-            <input type="button" class="btn btn-danger" value="Close Position" />
-        </div>
-    }
-    else
-    {
-        <div class="btn-group" role="group">
-            <input type="button" class="btn btn-danger" value="Close Position" />
-        </div>
-    }
+    <div class="btn-group" role="group">
+        <input type="button" class="btn btn-danger" data-toggle="modal" data-target="#close-position-modal" data-position-id="@Model.PositionId" data-position-title="@Model.Title" value="Close Position" />
+    </div>
 
     @if (identity.HasClaim("Role", "Manager"))
     {

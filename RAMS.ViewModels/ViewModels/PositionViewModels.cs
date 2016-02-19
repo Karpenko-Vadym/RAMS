@@ -359,6 +359,40 @@ namespace RAMS.ViewModels
     }
 
     /// <summary>
+    /// PositionClosureViewModel view model declares properties for _ClosePosition partial view
+    /// </summary>
+    public class PositionClosureViewModel
+    {
+        [Required]
+        public int PositionId { get; set; }
+
+        [Required]
+        public string Title { get; set; }
+
+        /// <summary>
+        /// Default PositionClosureViewModel constructor
+        /// </summary>
+        public PositionClosureViewModel()
+        {
+            this.PositionId = 0;
+
+            this.Title = "";
+        }
+
+        /// <summary>
+        /// PositionClosureViewModel constructor that sets all its properties
+        /// </summary>
+        /// <param name="positionId">Setter for PositionId</param>
+        /// <param name="title">Setter for Title</param>
+        public PositionClosureViewModel(int positionId, string title)
+        {
+            this.PositionId = positionId;
+
+            this.Title = title;
+        }
+    }
+
+    /// <summary>
     /// PositionResultViewModel view model declares properties for _SuccessConfirmation, and _FailureConfirmation partial views in Position controller
     /// </summary>
     public class PositionResultViewModel

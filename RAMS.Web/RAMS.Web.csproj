@@ -727,6 +727,7 @@
     <Content Include="Areas\Agency\Views\Position\_ApprovePosition.cshtml" />
     <Content Include="Areas\Agency\Views\Position\_SuccessConfirmation.cshtml" />
     <Content Include="Areas\Agency\Views\Position\_FailureConfirmation.cshtml" />
+    <Content Include="Areas\Agency\Views\Position\_ClosePosition.cshtml" />
     <None Include="Content\JS\jquery-2.1.4.intellisense.js" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

@@ -129,6 +129,10 @@ function setDatepicker()
 
     
 }
+function DisableInput(divId)
+{
+    $("#" + divId + " :input").attr("disabled", true);
+}
 
 /************* END OF GENERAL FUNCTIONS *************/
 
@@ -275,19 +279,21 @@ function AgencyModalControls()
 
     $("#edit-position-modal").on("show.bs.modal", function (e) { LoadAction("edit-position-modal-body-div", "/RAMS/Agency/Position/EditPosition?positionId=" + $(e.relatedTarget).data("position-id")); });
 
-    $("#edit-position-modal").on("hidden.bs.modal", function (e) { $("#edit-position-modal-body-div").empty(); });
+    $("#edit-position-modal").on("hidden.bs.modal", function (e) { $("#edit-position-modal-body-div").empty(); $("#edit-position-message-modal-body-div").empty(); });
 
-    $("#edit-candidate-modal").on("show.bs.modal", function (e) { LoadAction("edit-candidate-modal-body-div", "/RAMS/Agency/Position/EditCandidate?candidateId=" + $(e.relatedTarget).data("candidate-id")); });
+    $("#edit-candidate-modal").on("show.bs.modal", function (e) { LoadAction("edit-candidate-modal-body-div", "/RAMS/Agency/Position/EditCandidate?candidateId=" + $(e.relatedTarget).data("candidate-id") + "&positionStatus=" + $(e.relatedTarget).data("position-status")); });
 
     $("#edit-candidate-modal").on("hidden.bs.modal", function (e) { $("#edit-candidate-modal-body-div").empty(); });
-    
 
+    $("#approve-position-modal").on("show.bs.modal", function (e) { LoadAction("approve-position-modal-body-div", "/RAMS/Agency/Position/ApprovePosition?positionId=" + $(e.relatedTarget).data("position-id") + "&positionTitle=" + encodeURIComponent($(e.relatedTarget).data("position-title"))); });
+
+    $("#approve-position-modal").on("hidden.bs.modal", function (e) { $("#approve-position-modal-body-div").empty(); });
 }
 
 /********** END OF AGENCY MODAL CONTROLS **********/
 
 /************** SYSTEM ADMIN FUNCTIONS **************/
-function RefreshEditForm(userName, userType)
+function RefreshUserEditForm(userName, userType)
 {
     LoadAction("edit-user-modal-body-div", "/RAMS/SystemAdmin/User/EditUser?userName=" + userName + "&userType=" + userType);
 }
@@ -302,6 +308,14 @@ function DisableEditForm()
 
 /********** END OF SYSTEM ADMIN FUNCTIONS ***********/
 
+/************** AGENCY FUNCTIONS **************/
+function RefreshPositionEditForm(positionId) {
+    LoadAction("edit-position-modal-body-div", "/RAMS/Agency/Position/EditPosition?positionId=" + positionId);
+}
+
+
+
+/********** END OF AGENCY FUNCTIONS ***********/
 
 
 /****************** MODAL UTILITIES *****************/

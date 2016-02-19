@@ -22,6 +22,9 @@ namespace RAMS.ViewModels
         [Display(Name = "Date Created")]
         public DateTime DateCreated { get; set; }
 
+        [Display(Name = "Expiry Date")]
+        public DateTime ExpiryDate { get; set; }
+
         [Display(Name = "Title")]
         public string Title { get; set; }
 
@@ -318,6 +321,121 @@ namespace RAMS.ViewModels
         public PositionEditViewModel()
         {
             this.Candidates = new List<CandidateListViewModel>();
+        }
+    }
+
+    /// <summary>
+    /// PositionApprovalViewModel view model declares properties for _ApprovePosition partial view
+    /// </summary>
+    public class PositionApprovalViewModel
+    {
+        [Required]
+        public int PositionId { get; set; }
+
+        [Required]
+        public string Title { get; set; }
+
+        /// <summary>
+        /// Default PositionApprovalViewModel constructor
+        /// </summary>
+        public PositionApprovalViewModel()
+        {
+            this.PositionId = 0;
+
+            this.Title = "";
+        }
+
+        /// <summary>
+        /// PositionApprovalViewModel constructor that sets all its properties
+        /// </summary>
+        /// <param name="positionId">Setter for PositionId</param>
+        /// <param name="title">Setter for Title</param>
+        public PositionApprovalViewModel(int positionId, string title)
+        {
+            this.PositionId = positionId;
+
+            this.Title = title;
+        }
+    }
+
+    /// <summary>
+    /// PositionResultViewModel view model declares properties for _SuccessConfirmation, and _FailureConfirmation partial views in Position controller
+    /// </summary>
+    public class PositionResultViewModel
+    {
+        public int PositionId {get; set; }
+
+        [Display(Name = "Message")]
+        public string Message { get; set; }
+
+        [Display(Name = "Refresh Edit Form?")]
+        public bool RefreshEditForm { get; set; }
+
+        [Display(Name = "Refresh List?")]
+        public bool RefreshList { get; set; }
+
+        [Display(Name = "Clear Messages?")]
+        public bool ClearMessages { get; set; }
+
+        /// <summary>
+        /// Default PositionResultViewModel constructor sets all the properties default values
+        /// </summary>
+        public PositionResultViewModel()
+        {
+            this.Message = "";
+
+            this.RefreshEditForm = false;
+
+            this.RefreshList = false;
+
+            this.ClearMessages = false;
+        }
+
+        /// <summary>
+        /// PositionResultViewModel constructor which sets the Message property
+        /// </summary>
+        /// <param name="message">Setter for message property</param>
+        public PositionResultViewModel(string message)
+        {
+            this.Message = message;
+
+            this.RefreshEditForm = false;
+
+            this.RefreshList = false;
+
+            this.ClearMessages = false;
+        }
+
+        /// <summary>
+        /// PositionResultViewModel constructor which sets Message, RefreshEditForm, and RefreshList properties
+        /// </summary>
+        /// <param name="message">Setter for Message property</param>
+        /// <param name="refreshEditForm">Setter for RefreshEditForm property</param>
+        /// <param name="refreshList">Setter for RefreshList property</param>
+        public PositionResultViewModel(string message, bool refreshEditForm, bool refreshList)
+        {
+            this.Message = message;
+
+            this.RefreshEditForm = refreshEditForm;
+
+            this.RefreshList = refreshList;
+        }
+
+        /// <summary>
+        /// PositionResultViewModel constructor which sets Message, RefreshEditForm, and RefreshList properties
+        /// </summary>
+        /// <param name="message">Setter for Message property</param>
+        /// <param name="refreshEditForm">Setter for RefreshEditForm property</param>
+        /// <param name="refreshList">Setter for RefreshList property</param>
+        public PositionResultViewModel(string message, bool refreshEditForm, bool refreshList, int positionId)
+        {
+            this.Message = message;
+
+            this.RefreshEditForm = refreshEditForm;
+
+            this.RefreshList = refreshList;
+
+            this.PositionId = positionId; 
         }
     }
 }

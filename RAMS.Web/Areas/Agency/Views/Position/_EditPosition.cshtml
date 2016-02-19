@@ -26,18 +26,26 @@
                     <th>Name</th>
                     <th>Score</th>
                     <th>Status</th>
-                    <th>Action</th>
+
+                    @if(Model.Status != RAMS.Enums.PositionStatus.Closed)
+                    { 
+                        <th>Action</th>
+                    }
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model.Candidates)
                 {
                     <tr class="cursor-pointer" >
-                        <td data-toggle="modal" data-target="#edit-candidate-modal" data-candidate-id="@item.CandidateId">@item.CandidateIdDisplay</td>
-                        <td data-toggle="modal" data-target="#edit-candidate-modal" data-candidate-id="@item.CandidateId">@item.FullName</td>
-                        <td data-toggle="modal" data-target="#edit-candidate-modal" data-candidate-id="@item.CandidateId">@item.Score</td>
-                        <td data-toggle="modal" data-target="#edit-candidate-modal" data-candidate-id="@item.CandidateId">@item.Status</td>
-                        <td class="cell-btn"><input type="button" class="btn btn-info btn-block" value="Schedule" data-toggle="modal" data-target="#schedule-interview-modal" data-candidate-id="@item.CandidateId" /></td>
+                        <td data-toggle="modal" data-target="#edit-candidate-modal" data-candidate-id="@item.CandidateId" data-position-status="@Model.Status">@item.CandidateIdDisplay</td>
+                        <td data-toggle="modal" data-target="#edit-candidate-modal" data-candidate-id="@item.CandidateId" data-position-status="@Model.Status">@item.FullName</td>
+                        <td data-toggle="modal" data-target="#edit-candidate-modal" data-candidate-id="@item.CandidateId" data-position-status="@Model.Status">@item.Score</td>
+                        <td data-toggle="modal" data-target="#edit-candidate-modal" data-candidate-id="@item.CandidateId" data-position-status="@Model.Status">@item.Status</td>
+
+                        @if(Model.Status != RAMS.Enums.PositionStatus.Closed)
+                        { 
+                            <td class="cell-btn"><input type="button" class="btn btn-info btn-block" value="Schedule" data-toggle="modal" data-target="#schedule-interview-modal" data-candidate-id="@item.CandidateId" /></td>
+                        }
                     </tr> 
                 }
             </tbody>
@@ -52,43 +60,52 @@
 @if (Model != null)
 {
 
+if(Model.Status != RAMS.Enums.PositionStatus.Closed)
+{ 
 <div class="btn-group btn-group-justified" role="group">
     
     @if (@Model.Status == RAMS.Enums.PositionStatus.New)
     {
         <div class="btn-group" role="group">
-            <input type="button" class="btn btn-info" value="Approve Position" />
+            <input type="button" class="btn btn-info" data-toggle="modal" data-target="#approve-position-modal" data-position-id="@Model.PositionId" data-position-title="@Model.Title" value="Approve Position" />
         </div>
 
         <div class="btn-group" role="group">
             <input type="button" class="btn btn-danger" value="Close Position" />
         </div>
-
-        if (identity.HasClaim("Role", "Manager"))
-        {
-            <div class="btn-group" role="group">
-                <input type="button" class="btn btn-info" value="Assign" />
-            </div>
-        }
     }
     else
     {
         <div class="btn-group" role="group">
             <input type="button" class="btn btn-danger" value="Close Position" />
         </div>
+    }
 
-        if (identity.HasClaim("Role", "Manager"))
-        {
+    @if (identity.HasClaim("Role", "Manager"))
+    {
+        if(Model.AgentId != null && Model.AgentId > 0)
+        { 
             <div class="btn-group" role="group">
                 <input type="button" class="btn btn-info" value="Re-Assign" />
             </div>
         }
+        else
+        {
+            <div class="btn-group" role="group">
+                <input type="button" class="btn btn-info" value="Assign" />
+            </div>
+        }
     }
 </div>
-    
-    <div class="vertical-padding-24"></div>
+ 
+<div class="vertical-padding-24"></div>
+}
+else
+{
+    <script type="text/javascript">$(function () { DisableInput("position-edit-form") });</script>
+} 
 
-<div class="well well-lg bottom-margin-0 background-white">
+<div id="position-edit-form" class="well well-lg bottom-margin-0 background-white">
     @using (Ajax.BeginForm("EditPosition", "Position", new { Area = "Agency" }, ajaxOptions, new { id = "edit-position-form" }))
     {
         @Html.AntiForgeryToken()
@@ -191,11 +208,14 @@
                 </div>
             </div>
 
-            <div class="form-group bottom-margin-0">
-                <div class="col-md-offset-3 col-lg-offset-3 col-md-6 col-lg-6">
-                    <input type="submit" value="Update Position Details" class="btn btn-danger btn-block" />
+            @if(Model.Status != RAMS.Enums.PositionStatus.Closed)
+            { 
+                <div class="form-group bottom-margin-0">
+                    <div class="col-md-offset-3 col-lg-offset-3 col-md-6 col-lg-6">
+                        <input type="submit" value="Update Position Details" class="btn btn-danger btn-block" />
+                    </div>
                 </div>
-            </div>
+            }
         </div>
     }
 </div>

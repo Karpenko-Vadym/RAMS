@@ -56,18 +56,21 @@
                     <dt>@Html.LabelFor(model => model.Status)</dt>
                     <dd>@Model.Status</dd>
                 </dl>
+                
+                @if(Model.PositionStatus != "Closed")
+                {
+                    <div class="clearfix"></div>
 
-                <div class="clearfix"></div>
-
-                <div class="alert alert-warning">
-                    <div class='row'>
-                        <div class='col-md-offset-1'>Please provide your detailed feedback.</div>
-                        <div class='col-md-12'><p></p></div>
-                        <div class='col-md-offset-1'><strong>NOTE:</strong> Feedback can be updated at any time.</div>
+                    <div class="alert alert-warning">
+                        <div class='row'>
+                            <div class='col-md-offset-1'>Please provide your detailed feedback.</div>
+                            <div class='col-md-12'><p></p></div>
+                            <div class='col-md-offset-1'><strong>NOTE:</strong> Feedback can be updated at any time.</div>
+                        </div>
                     </div>
-                </div>
-
-                <div class="form-group required">
+                }
+                
+                <div id="feedback-textarea" class="form-group required">
                     @Html.LabelFor(model => model.Feedback, htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-7">
                         @Html.TextAreaFor(model => model.Feedback, new { htmlAttributes = new { @class = "form-control" } })
@@ -75,15 +78,23 @@
                     </div>
                 </div>
 
-                <div class="form-group bottom-margin-0">
-                    <div class="col-md-offset-3 col-lg-offset-3 col-md-6 col-lg-6">
-                        <input type="submit" value="Update Feedback" class="btn btn-danger btn-block" />
+                @if(Model.PositionStatus != "Closed")
+                {
+                    <div class="form-group bottom-margin-0">
+                        <div class="col-md-offset-3 col-lg-offset-3 col-md-6 col-lg-6">
+                            <input type="submit" value="Update Feedback" class="btn btn-danger btn-block" />
+                        </div>
                     </div>
-                </div>
+                }
             </div>
         }
     </div>
-
+ 
+    if (Model.PositionStatus == "Closed")
+    {
+        <script type="text/javascript">$(function () { DisableInput("feedback-textarea"); });</script>
+    }
+    
     <script type="text/javascript">$(function () { CKEDITOR.replace('Feedback'); });</script>
 }
 else

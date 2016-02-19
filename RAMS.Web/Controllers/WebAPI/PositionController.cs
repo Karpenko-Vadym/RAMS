@@ -1,4 +1,5 @@
-﻿using RAMS.Helpers;
+﻿using RAMS.Enums;
+using RAMS.Helpers;
 using RAMS.Models;
 using RAMS.Service;
 using System;
@@ -218,6 +219,62 @@ namespace RAMS.Web.Controllers.WebAPI
             }
 
             return BadRequest(ModelState);
+        }
+
+        /// <summary>
+        /// Update existing position's status
+        /// </summary>
+        /// <param name="positionId">Id of the position for which status is going to be updated</param>
+        /// <param name="status">Integer representation of the status to be updated</param>
+        /// <returns>HttpResponseMessage with status code dependning on the outcome of this method</returns>
+        [HttpPut]
+        [ResponseType(typeof(Candidate))]
+        public IHttpActionResult UpdatePositionStatus(int positionId, int status)
+        {
+            if (positionId > 0)
+            {
+                var position = this.PositionService.GetOnePositionById(positionId);
+
+                if (position != null)
+                {
+                    if (status == (int)position.Status)
+                    {
+                        return Ok(position);
+                    }
+
+                    position.Status = (PositionStatus)status;
+
+                    this.PositionService.UpdatePosition(position);
+
+                    try
+                    {
+                        this.PositionService.SaveChanges();
+                    }
+                    catch (DbUpdateConcurrencyException ex)
+                    {
+                        // Log exception
+                        ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+
+                        return Conflict();
+                    }
+                    catch (DbUpdateException ex)
+                    {
+                        // Log exception
+                        ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+
+                        if (!this.PositionExists(position.PositionId))
+                        {
+                            return NotFound();
+                        }
+
+                        return Conflict();
+                    }
+
+                    return Ok(position);
+                }
+            }
+
+            return NotFound();
         }
 
         /// <summary>

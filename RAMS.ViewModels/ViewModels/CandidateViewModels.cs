@@ -74,6 +74,8 @@ namespace RAMS.ViewModels
 
         [Display(Name = "Status")]
         public CandidateStatus Status { get; set; }
+
+        public string PositionStatus { get; set; }
     }
 
     /// <summary>

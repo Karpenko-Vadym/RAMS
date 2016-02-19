@@ -148,6 +148,7 @@ namespace RAMS.Web.Areas.Agency.Controllers
         /// <param name="model">Position information required to update the position</param>
         /// <returns>_PositionConfirmation partial view if position has been updated successfully, _Error partial view otherwise</returns>
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<PartialViewResult> EditPosition(PositionEditViewModel model)
         {
             model.DateCreated = DateTime.Now;
@@ -254,9 +255,10 @@ namespace RAMS.Web.Areas.Agency.Controllers
         /// EditCandidate action method retrieves candidate's data and displays it in _EditCandidate partial view
         /// </summary>
         /// <param name="candidateId">Id of the candidate whos information will be displayed</param>
+        /// <param name="positionStatus">Status of the position (Needed for access control)</param>
         /// <returns>_EditCandidate partial view with candidates information</returns>
         [HttpGet]
-        public async Task<PartialViewResult> EditCandidate(int candidateId)
+        public async Task<PartialViewResult> EditCandidate(int candidateId, string positionStatus)
         {
             if (candidateId > 0)
             {
@@ -266,6 +268,7 @@ namespace RAMS.Web.Areas.Agency.Controllers
                 {
                     var candidateEditViewModel = Mapper.Map<Candidate, CandidateEditViewModel>(await response.Content.ReadAsAsync<Candidate>());
 
+                    candidateEditViewModel.PositionStatus = positionStatus;
 
                     return PartialView("_EditCandidate", candidateEditViewModel);
                 }
@@ -280,6 +283,7 @@ namespace RAMS.Web.Areas.Agency.Controllers
         /// <param name="model">Candidate information required to update candidate's feedback</param>
         /// <returns>_CandidateEditConfirmation partial view if candidate's feedback has been updated successfully, _Error partial view otherwise</returns>
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<PartialViewResult> EditCandidate(CandidateEditViewModel model)
         {
             if (ModelState.IsValid)
@@ -322,6 +326,108 @@ namespace RAMS.Web.Areas.Agency.Controllers
             }
 
             return PartialView("_EditCandidate", model);
+        }
+
+        /// <summary>
+        /// ApprovePosition action method displays confirmation for position approval in _ApprovePosition partial view
+        /// </summary>
+        /// <param name="positionId">Id of the position to be approved</param>
+        /// <param name="positionTitle">Title of the position to be approved</param>
+        /// <returns>_ApprovePosition partial view with prompt of confirmation to approve the position</returns>
+        [HttpGet]
+        public PartialViewResult ApprovePosition(int positionId, string positionTitle)
+        {
+            var positionApprovalViewModel = new PositionApprovalViewModel(positionId, positionTitle);
+
+            return PartialView("_ApprovePosition", positionApprovalViewModel);
+        }
+
+        /// <summary>
+        /// EditCandidate action method attempts to update position status to approved
+        /// </summary>
+        /// <param name="model">Position information required to update position status</param>
+        /// <returns>_SuccessConfirmation partial view if position status has been updated successfully, _FailureConfirmation partial view otherwise</returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<PartialViewResult> ApprovePosition(PositionApprovalViewModel model)
+        {
+            var stringBuilder = new StringBuilder();
+
+            var positionResultViewModel = new PositionResultViewModel();
+
+            if(ModelState.IsValid)
+            {
+                try
+                {
+                    var response = await this.GetHttpClient().PutAsync(String.Format("Position?PositionId={0}&status={1}", model.PositionId, (int)PositionStatus.Approved), null); // Attempt to update the status
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var position = await response.Content.ReadAsAsync<Position>();
+
+                        if (position.Status == PositionStatus.Approved)
+                        {
+                            stringBuilder.Append("<div class='text-center'><h4><strong>Position has been approved successfully!</strong></h4></div>");
+
+                            stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Position will now be available for applicants to apply.</div>");
+
+                            stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> Details of this position can be modified at anytime, unless position is closed.</div></div>");
+
+                            positionResultViewModel.Message = stringBuilder.ToString();
+
+                            positionResultViewModel.RefreshList = true;
+
+                            positionResultViewModel.RefreshEditForm = true;
+
+                            positionResultViewModel.PositionId = model.PositionId;
+
+                            return PartialView("_SuccessConfirmation", positionResultViewModel);
+                        }
+                        else
+                        {
+                            stringBuilder.Append("<div class='text-center'><h4><strong>Failed to update position details.</strong></h4></div>");
+
+                            stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Server returned status code '{0}', but position status was not updated. Please try again in a moment.</div>");
+
+                            stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> If you encounter this issue again in the future, please contact Technical Support with exact steps to reproduce this issue.</div></div>");
+
+                            positionResultViewModel.Message = stringBuilder.ToString();
+
+                            return PartialView("_FailureConfirmation", positionResultViewModel);
+                        }
+                    }
+                    else
+                    {
+                        // If position could not be updated, throw PositionEditException exception
+                        throw new PositionEditException("Position " + model.Title + " could not be updated. Response: " + response.StatusCode);
+                    }
+                }
+                catch (PositionEditException ex)
+                {
+                    // Log exception
+                    ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+
+                    stringBuilder.Append("<div class='text-center'><h4><strong>Failed to update position details.</strong></h4></div>");
+
+                    stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Server returned status code '{0}' while attempting to persist position details to the database. Please try again in a moment.</div>");
+
+                    stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> If you encounter this issue again in the future, please contact Technical Support with exact steps to reproduce this issue.</div></div>");
+
+                    positionResultViewModel.Message = stringBuilder.ToString();
+
+                    return PartialView("_FailureConfirmation", positionResultViewModel);
+                }
+            }
+
+            stringBuilder.Append("<div class='text-center'><h4><strong>Position details could NOT be retrieved at this moment.</strong></h4></div>");
+
+            stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Model state is not valid. Please try again in a moment.</div>");
+
+            stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> If you encounter this issue again in the future, please contact Technical Support with exact steps to reproduce this issue.</div></div>");
+
+            positionResultViewModel.Message = stringBuilder.ToString();
+
+            return PartialView("_FailureConfirmation", positionResultViewModel); 
         }
     }
 }

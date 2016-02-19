@@ -22,7 +22,7 @@
                         <td>@item.Title</td>
                         <td>@item.Status</td>
                         <td>@item.CategoryName</td>
-                        <td>@item.DateCreated</td>
+                        <td>@item.DateCreated.ToString("dd/MM/yyyy")</td>
 
                         @if (String.IsNullOrEmpty(item.AssignedTo))
                         {

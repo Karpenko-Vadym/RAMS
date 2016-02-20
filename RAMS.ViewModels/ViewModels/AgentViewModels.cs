@@ -58,4 +58,21 @@ namespace RAMS.ViewModels
             this.UserName = userName;
         }
     }
+
+    /// <summary>
+    /// AgentAssignPositionViewModel view model declares properties for _AssignPosition partial view
+    /// </summary>
+    public class AgentAssignPositionViewModel
+    {
+        public int AgentId { get; set; }
+
+        [Display(Name = "Id")]
+        public string AgentIdForDisplay { get; set; }
+
+        [Display(Name = "Full Name")]
+        public string FullName { get; set; }
+
+        [Display(Name = "Positions")]
+        public int Positions { get; set; }
+    }
 }

@@ -359,7 +359,7 @@ namespace RAMS.Web.Areas.Agency.Controllers
             {
                 try
                 {
-                    var response = await this.GetHttpClient().PutAsync(String.Format("Position?PositionId={0}&status={1}", model.PositionId, (int)PositionStatus.Approved), null); // Attempt to update the status
+                    var response = await this.GetHttpClient().PutAsync(String.Format("Position?positionId={0}&status={1}", model.PositionId, (int)PositionStatus.Approved), null); // Attempt to update the status
 
                     if (response.IsSuccessStatusCode)
                     {
@@ -461,7 +461,7 @@ namespace RAMS.Web.Areas.Agency.Controllers
             {
                 try
                 {
-                    var response = await this.GetHttpClient().PutAsync(String.Format("Position?PositionId={0}&status={1}", model.PositionId, (int)PositionStatus.Closed), null); // Attempt to update the status
+                    var response = await this.GetHttpClient().PutAsync(String.Format("Position?positionId={0}&status={1}", model.PositionId, (int)PositionStatus.Closed), null); // Attempt to update the status
 
                     if (response.IsSuccessStatusCode)
                     {
@@ -522,6 +522,118 @@ namespace RAMS.Web.Areas.Agency.Controllers
             }
 
             stringBuilder.Append("<div class='text-center'><h4><strong>Position details could NOT be retrieved at this moment.</strong></h4></div>");
+
+            stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Model state is not valid. Please try again in a moment.</div>");
+
+            stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> If you encounter this issue again in the future, please contact Technical Support with exact steps to reproduce this issue.</div></div>");
+
+            positionResultViewModel.Message = stringBuilder.ToString();
+
+            return PartialView("_FailureConfirmation", positionResultViewModel);
+        }
+
+        /// <summary>
+        /// AssignPosition action method displays the list of agents that can be assigned to the position
+        /// </summary>
+        /// <param name="positionId">Id of the position to which an agent to be assigned</param>
+        /// <param name="agentId">Id of the agent that is currently assigned to this position (If any)</param>
+        /// <param name="positionTitle">Title of the position</param>
+        /// <returns>_AssignPosition partial view with the list of agents that can be assigned to the position</returns>
+        [HttpGet]
+        public async Task<PartialViewResult> AssignPosition(int positionId, int agentId, string positionTitle)
+        {
+            var positionAssignViewModel = new PositionAssignViewModel(positionId, agentId, positionTitle);
+
+            var response = await this.GetHttpClient().GetAsync("Agent");
+
+            if (response.IsSuccessStatusCode)
+            {
+                positionAssignViewModel.Agents.AddRange(Mapper.Map<List<Agent>, List<AgentAssignPositionViewModel>>(await response.Content.ReadAsAsync<List<Agent>>()));
+
+                return PartialView("_AssignPosition", positionAssignViewModel);
+            }
+
+            return PartialView("_AssignPosition");
+        }
+
+        /// <summary>
+        /// AssignPosition action method attempts to assign an agent to the position
+        /// </summary>
+        /// <param name="model">Position information required to assign an agent to the position</param>
+        /// <returns>_SuccessConfirmation partial view if an agent has been successfully assigned to the position, _FailureConfirmation partial view otherwise</returns>
+        [HttpPost]
+        public async Task<PartialViewResult> AssignPosition(PositionAssignViewModel model)
+        {
+            var stringBuilder = new StringBuilder();
+
+            var positionResultViewModel = new PositionResultViewModel();
+             
+            if(ModelState.IsValid)
+            {
+                if(model.AgentId != model.SelectedAgentId)
+                {
+                    try
+                    {
+                        var response = await this.GetHttpClient().PutAsync(String.Format("Position?positionId={0}&agentId={1}", model.PositionId, model.SelectedAgentId), null); // Attempt to assign an agent
+
+                        if (!response.IsSuccessStatusCode)
+                        {
+                            // If position could not be updated, throw PositionEditException exception
+                            throw new PositionEditException("Position " + model.Title + " could not be updated. Response: " + response.StatusCode);
+                        }
+                        else
+                        {
+                            var position = await response.Content.ReadAsAsync<Position>();
+
+                            if (position.AgentId != model.SelectedAgentId)
+                            {
+                                stringBuilder.Append("<div class='text-center'><h4><strong>Failed to update position details.</strong></h4></div>");
+
+                                stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Server returned status code '{0}', but position status was not updated. Please try again in a moment.</div>");
+
+                                stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> If you encounter this issue again in the future, please contact Technical Support with exact steps to reproduce this issue.</div></div>");
+
+                                positionResultViewModel.Message = stringBuilder.ToString();
+
+                                return PartialView("_FailureConfirmation", positionResultViewModel);
+                            }
+                        }
+                    }
+                    catch (PositionEditException ex)
+                    {
+                        // Log exception
+                        ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+
+                        stringBuilder.Append("<div class='text-center'><h4><strong>Failed to update position details.</strong></h4></div>");
+
+                        stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Server returned status code '{0}' while attempting to persist position details to the database. Please try again in a moment.</div>");
+
+                        stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> If you encounter this issue again in the future, please contact Technical Support with exact steps to reproduce this issue.</div></div>");
+
+                        positionResultViewModel.Message = stringBuilder.ToString();
+
+                        return PartialView("_FailureConfirmation", positionResultViewModel);
+                    }
+                }
+
+                stringBuilder.Append(String.Format("<div class='text-center'><h4><strong>An agent has been successfully assigned to \"{0}\" position!</strong></h4></div>", model.Title));
+
+                stringBuilder.Append(String.Format("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Position \"{0}\" is now available for the assigned agent</div>", model.Title));
+
+                stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> An agent can be re-assigned at any time as long as position is not closed.</div></div>");
+
+                positionResultViewModel.Message = stringBuilder.ToString();
+
+                positionResultViewModel.RefreshList = true;
+
+                positionResultViewModel.RefreshEditForm = true;
+
+                positionResultViewModel.PositionId = model.PositionId;
+
+                return PartialView("_SuccessConfirmation", positionResultViewModel);
+            }
+
+            stringBuilder.Append("<div class='text-center'><h4><strong>Agent could not be assigned to this position at the moment.</strong></h4></div>");
 
             stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Model state is not valid. Please try again in a moment.</div>");
 

@@ -277,6 +277,70 @@ namespace RAMS.Web.Controllers.WebAPI
             return NotFound();
         }
 
+
+        /// <summary>
+        /// Assign an agent to an existing position
+        /// </summary>
+        /// <param name="positionId">Id of the position to which an agent to be assigned</param>
+        /// <param name="agentId">Id of the agent to be assigned</param>
+        /// <returns>HttpResponseMessage with status code dependning on the outcome of this method</returns>
+        [HttpPut]
+        [ResponseType(typeof(Candidate))]
+        public IHttpActionResult AssignPosition(int positionId, int agentId)
+        {
+            if (positionId > 0)
+            {
+                var position = this.PositionService.GetOnePositionById(positionId);
+
+                if (position != null)
+                {
+                    if (agentId == position.AgentId)
+                    {
+                        return Ok(position);
+                    }
+
+                    if (agentId != 0)
+                    {
+                        position.AgentId = agentId;
+                    }
+                    else
+                    {
+                        position.AgentId = null;
+                    }
+
+                    this.PositionService.UpdatePosition(position);
+
+                    try
+                    {
+                        this.PositionService.SaveChanges();
+                    }
+                    catch (DbUpdateConcurrencyException ex)
+                    {
+                        // Log exception
+                        ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+
+                        return Conflict();
+                    }
+                    catch (DbUpdateException ex)
+                    {
+                        // Log exception
+                        ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+
+                        if (!this.PositionExists(position.PositionId))
+                        {
+                            return NotFound();
+                        }
+
+                        return Conflict();
+                    }
+
+                    return Ok(position);
+                }
+            }
+
+            return NotFound();
+        }
+
         /// <summary>
         /// Delete existing position
         /// </summary>

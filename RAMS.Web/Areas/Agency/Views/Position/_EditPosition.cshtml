@@ -77,18 +77,9 @@ if(Model.Status != RAMS.Enums.PositionStatus.Closed)
 
     @if (identity.HasClaim("Role", "Manager"))
     {
-        if(Model.AgentId != null && Model.AgentId > 0)
-        { 
-            <div class="btn-group" role="group">
-                <input type="button" class="btn btn-info" value="Re-Assign" />
-            </div>
-        }
-        else
-        {
-            <div class="btn-group" role="group">
-                <input type="button" class="btn btn-info" value="Assign" />
-            </div>
-        }
+        <div class="btn-group" role="group">
+            <input type="button" class="btn btn-info" data-toggle="modal" data-target="#assign-position-modal" data-position-id="@Model.PositionId" data-agent-id="@((Model.AgentId == null) ? 0 : Model.AgentId)" data-position-title="@Model.Title" value="@((Model.AgentId != null && Model.AgentId > 0) ? "Re-Assign" : "Assign")" />
+        </div>
     }
 </div>
  

@@ -342,7 +342,7 @@ namespace RAMS.ViewModels
         {
             this.PositionId = 0;
 
-            this.Title = "";
+            this.Title = String.Empty;
         }
 
         /// <summary>
@@ -376,7 +376,7 @@ namespace RAMS.ViewModels
         {
             this.PositionId = 0;
 
-            this.Title = "";
+            this.Title = String.Empty;
         }
 
         /// <summary>
@@ -389,6 +389,57 @@ namespace RAMS.ViewModels
             this.PositionId = positionId;
 
             this.Title = title;
+        }
+    }
+
+    /// <summary>
+    /// PositionAssignViewModel view model declares properties for _AssignPosition partial view
+    /// </summary>
+    public class PositionAssignViewModel
+    {
+        [Required]
+        public int PositionId { get; set; }
+
+        [Required]
+        public int AgentId {get; set; }
+
+        [Required]
+        public int SelectedAgentId { get; set; }
+
+        [Required]
+        public string Title { get; set; }
+
+        public List<AgentAssignPositionViewModel> Agents { set; get; }
+
+        /// <summary>
+        /// Default PositionAssignViewModel constructor
+        /// </summary>
+        public PositionAssignViewModel()
+        {
+            this.PositionId = 0;
+
+            this.AgentId = 0;
+
+            this.Title = String.Empty;
+
+            this.Agents = new List<AgentAssignPositionViewModel>();
+        }
+
+        /// <summary>
+        /// PositionAssignViewModel constructor that sets all its properties
+        /// </summary>
+        /// <param name="positionId">Setter for PositionId</param>
+        /// <param name="agentId">Setter for AgentId</param>
+        /// <param name="title">Setter for Title</param>
+        public PositionAssignViewModel(int positionId, int agentId = 0, string title = "")
+        {
+            this.PositionId = positionId;
+
+            this.AgentId = agentId;
+
+            this.Title = title;
+
+            this.Agents = new List<AgentAssignPositionViewModel>();
         }
     }
 
@@ -416,7 +467,7 @@ namespace RAMS.ViewModels
         /// </summary>
         public PositionResultViewModel()
         {
-            this.Message = "";
+            this.Message = String.Empty;
 
             this.RefreshEditForm = false;
 

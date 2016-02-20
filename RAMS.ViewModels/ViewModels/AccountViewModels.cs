@@ -1,4 +1,5 @@
 ﻿using RAMS.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -360,13 +361,13 @@ namespace RAMS.ViewModels
 
         public ResetPasswordViewModel()
         {
-            this.UserName = "";
+            this.UserName = String.Empty;
 
-            this.UserType = "";
+            this.UserType = String.Empty;
 
-            this.Email = "";
+            this.Email = String.Empty;
 
-            this.FirstName = "";
+            this.FirstName = String.Empty;
         }
 
         public ResetPasswordViewModel(string userName, string userType, string email, string firstName)
@@ -415,7 +416,7 @@ namespace RAMS.ViewModels
         /// </summary>
         public UserConfirmationViewModel()
         {
-            this.Message = "";
+            this.Message = String.Empty;
 
             this.RefreshEditForm = false;
 
@@ -450,7 +451,7 @@ namespace RAMS.ViewModels
         /// <param name="userType">Setter for user type property</param>
         public UserConfirmationViewModel(string userName, string userType)
         {
-            this.Message = "";
+            this.Message = String.Empty;
 
             this.UserName = userName;
 
@@ -534,7 +535,7 @@ namespace RAMS.ViewModels
         /// <param name="refreshList">Setter for RefreshList property</param>
         public UserConfirmationViewModel(string userName, string userType, bool refreshEditForm, bool refreshList)
         {
-            this.Message = "";
+            this.Message = String.Empty;
 
             this.UserName = userName;
 
@@ -703,7 +704,7 @@ namespace RAMS.ViewModels
         /// </summary>
         public ChangePasswordViewModel()
         {
-            this.UserName = "";
+            this.UserName = String.Empty;
 
             this.UserType = null;
         }

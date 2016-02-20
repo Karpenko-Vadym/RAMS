@@ -100,3 +100,20 @@ td.cell-btn
     padding: initial !important;
     vertical-align: middle !important;
 }
+
+input.horizontal-align-center
+{
+    display: block;
+    margin: 0 auto;
+}
+
+
+
+#assign-position-agent-list-table input[type="radio"] 
+{
+    -moz-transform: scale(1.5);
+    -ms-transform: scale(1.5);
+    -o-transform: scale(1.5);
+    -webkit-transform: scale(1.5) !important;
+    transform: scale(1.5) !important;
+}

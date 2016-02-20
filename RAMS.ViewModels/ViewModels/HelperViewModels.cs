@@ -29,7 +29,7 @@ namespace RAMS.ViewModels
         /// </summary>
         public ConfirmationViewModel()
         {
-            this.Message = "";
+            this.Message = String.Empty;
 
             this.RefreshEditForm = false;
 

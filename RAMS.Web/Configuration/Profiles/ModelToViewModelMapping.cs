@@ -50,16 +50,21 @@ namespace RAMS.Web.Configuration
             Mapper.CreateMap<Client, UserEditProfileViewModel>().ForMember(c => c.UserId, map => map.MapFrom(model => model.ClientId)).ForMember(c => c.CurrentFullName, map => map.MapFrom(model => String.Format("{0} {1}", model.FirstName, model.LastName))).ForMember(c => c.CurrentEmail, map => map.MapFrom(model => model.Email));
             Mapper.CreateMap<Admin, UserEditProfileViewModel>().ForMember(a => a.UserId, map => map.MapFrom(model => model.AdminId)).ForMember(a => a.CurrentFullName, map => map.MapFrom(model => String.Format("{0} {1}", model.FirstName, model.LastName))).ForMember(a => a.CurrentEmail, map => map.MapFrom(model => model.Email));
 
-            Mapper.CreateMap<Agent, AgentProfileDetailsViewModel>().ForMember(c => c.FullName, map => map.MapFrom(model => String.Format("{0} {1}", model.FirstName, model.LastName)));
+            Mapper.CreateMap<Agent, AgentProfileDetailsViewModel>().ForMember(a => a.FullName, map => map.MapFrom(model => String.Format("{0} {1}", model.FirstName, model.LastName)));
             Mapper.CreateMap<Client, ClientProfileDetailsViewModel>().ForMember(c => c.FullName, map => map.MapFrom(model => String.Format("{0} {1}", model.FirstName, model.LastName)));
             Mapper.CreateMap<Admin, AdminProfileDetailsViewModel>().ForMember(a => a.FullName, map => map.MapFrom(model => String.Format("{0} {1}", model.FirstName, model.LastName)));
+
+            Mapper.CreateMap<Agent, AgentAssignPositionViewModel>().ForMember(c => c.FullName, map => map.MapFrom(model => String.Format("{0} {1}", model.FirstName, model.LastName))).ForMember(a => a.AgentIdForDisplay, map => map.MapFrom(model => model.UserType.ToString().Substring(0, 2).ToUpper() + model.AgentId.ToString("00000"))).ForMember(a => a.Positions, map => map.MapFrom(model => model.Positions.Count()));
+
+            /***** END OF USER MAPPING *****/
+            /***** DEPARTMENT MAPPING *****/
 
             Mapper.CreateMap<Department, DepartmentListViewModel>().ForMember(d => d.NumOfAgents, map => map.MapFrom(model => model.Agents.Count()));
             Mapper.CreateMap<Department, DepartmentAddViewModel>();
             Mapper.CreateMap<Department, DepartmentEditViewModel>();
             Mapper.CreateMap<Department, DepartmentAddEditConfirmationViewModel>();
 
-            /***** END OF USER MAPPING *****/
+            /***** END OF DEPARTMENT MAPPING *****/
             /***** NOTIFICATION MAPPING *****/
 
             Mapper.CreateMap<Notification, NotificationListViewModel>();
@@ -71,7 +76,7 @@ namespace RAMS.Web.Configuration
             Mapper.CreateMap<Position, PositionAddViewModel>();
 
             Mapper.CreateMap<Position, PositionConfirmationViewModel>().ForMember(p => p.Client, map => map.MapFrom(model => model.Client.FirstName + " " + model.Client.LastName)).ForMember(p => p.Category, map => map.MapFrom(model => model.Category.Name));
-            Mapper.CreateMap<Position, PositionDetailsViewModel>().ForMember(p => p.Client, map => map.MapFrom(model => model.Client.FirstName + " " + model.Client.LastName)).ForMember(p => p.Category, map => map.MapFrom(model => model.Category.Name)).ForMember(p => p.AssignedTo, map => map.MapFrom(model => String.Format("{0} {1}",model.Agent.FirstName, model.Agent.LastName))).ForMember(p => p.AgentId, map => map.MapFrom(model => model.Agent.AgentId));
+            Mapper.CreateMap<Position, PositionDetailsViewModel>().ForMember(p => p.Client, map => map.MapFrom(model => model.Client.FirstName + " " + model.Client.LastName)).ForMember(p => p.Category, map => map.MapFrom(model => model.Category.Name)).ForMember(p => p.AssignedTo, map => map.MapFrom(model => String.Format("{0} {1}",model.Agent.FirstName, model.Agent.LastName)));
 
             Mapper.CreateMap<Position, PositionEditViewModel>().ForMember(p => p.Candidates, map => map.MapFrom(model => Mapper.Map<List<Candidate>, List<CandidateListViewModel>>(model.Candidates)));
 

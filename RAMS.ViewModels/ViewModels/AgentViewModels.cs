@@ -75,4 +75,63 @@ namespace RAMS.ViewModels
         [Display(Name = "Positions")]
         public int Positions { get; set; }
     }
+
+    /// <summary>
+    /// AgentListViewModel view model declares properties for _AgentList partial view
+    /// </summary>
+    public class AgentListViewModel
+    {
+        public int AgentId { get; set; }
+
+        [Display(Name = "Id")]
+        public string AgentIdForDisplay { get; set; }
+
+        [Display(Name = "Full Name")]
+        public string FullName { get; set; }
+
+        [Display(Name = "Positions Assigned")]
+        public int Positions { get; set; }
+
+        [Display(Name = "Status")]
+        public AgentStatus AgentStatus { get; set; }
+
+        [Display(Name = "Department")]
+        public string Department { get; set; }
+    }
+
+    /// <summary>
+    /// AgentDetailsViewModel view model declares properties for _AgentDetails partial view
+    /// </summary>
+    public class AgentDetailsViewModel
+    {
+        [Display(Name = "Full Name")]
+        public string FullName { get; set; }
+
+        [Display(Name = "Total Positions")]
+        public int PositionsTotal { get; set; }
+
+        [Display(Name = "Current Positions")]
+        public int PositionsCurrent { get; set; }
+
+        [Display(Name = "Interviews Conducted")]
+        public int InterviewsCompleted { get; set; }
+
+        [Display(Name = "Interviews Pending")]
+        public int InterviewsPending { get; set; }
+
+        [Display(Name = "Status")]
+        public AgentStatus AgentStatus { get; set; }
+
+        [Display(Name = "Role")]
+        public Role Role { get; set; }
+
+        [Display(Name = "Department")]
+        public string Department { get; set; }
+
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        [Display(Name = "Phone Number")]
+        public string PhoneNumber { get; set; }
+    }
 }

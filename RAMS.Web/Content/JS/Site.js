@@ -296,6 +296,10 @@ function AgencyModalControls()
     $("#assign-position-modal").on("show.bs.modal", function (e) { LoadAction("assign-position-modal-body-div", "/RAMS/Agency/Position/AssignPosition?positionId=" + $(e.relatedTarget).data("position-id") + "&agentId=" + $(e.relatedTarget).data("agent-id") + "&positionTitle=" + encodeURIComponent($(e.relatedTarget).data("position-title"))); });
 
     $("#assign-position-modal").on("hidden.bs.modal", function (e) { $("#assign-position-modal-body-div").empty(); });
+
+    $("#agent-details-modal").on("show.bs.modal", function (e) { LoadAction("agent-details-modal-body-div", "/RAMS/Agency/Agent/AgentDetails?agentId=" + $(e.relatedTarget).data("agent-id")); });
+
+    $("#agent-details-modal").on("hidden.bs.modal", function (e) { $("#agent-details-modal-body-div").empty(); });
 }
 
 /********** END OF AGENCY MODAL CONTROLS **********/

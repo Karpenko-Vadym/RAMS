@@ -13,11 +13,8 @@
 
 }
 
-
-
 @if (!RAMS.Helpers.Utilities.IsEmpty(Model.Agents))
 {
-    
     using (Ajax.BeginForm("AssignPosition", "Position", new { Area = "Agency" }, ajaxOptions, new { id = "assign-position-form" }))
     {
         @Html.AntiForgeryToken()

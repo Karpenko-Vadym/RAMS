@@ -26,13 +26,12 @@ namespace RAMS.Web.Areas.Agency.Controllers
     public class PositionController : BaseController
     {
         /// <summary>
-        /// Default action method that returns main view of Profile controller
+        /// Default action method that returns main view of Position controller
         /// User will be redirected to appropriate location depending on his/her UserType if user does not belong to this area
         /// </summary>
-        /// <param name="message">Message that will be displayed in the view. This message will inform the user about success or failure of particular operation</param>
         /// <returns>Main view of Position controller</returns>
         [HttpGet]
-        public ActionResult Index(string message = "")
+        public ActionResult Index()
         {
             var identity = User.Identity as ClaimsIdentity;
 
@@ -92,7 +91,8 @@ namespace RAMS.Web.Areas.Agency.Controllers
             return PartialView("_PositionList");
         }
         #endregion
-        
+
+        #region Edit Position
         /// <summary>
         /// EditPosition action method gets requested position's details and passes it to _EditPosition partial view
         /// </summary>
@@ -250,7 +250,9 @@ namespace RAMS.Web.Areas.Agency.Controllers
 
             return PartialView("_EditPosition", model);
         }
+        #endregion
 
+        #region Edit Candidate
         /// <summary>
         /// EditCandidate action method retrieves candidate's data and displays it in _EditCandidate partial view
         /// </summary>
@@ -327,7 +329,9 @@ namespace RAMS.Web.Areas.Agency.Controllers
 
             return PartialView("_EditCandidate", model);
         }
+        #endregion
 
+        #region Approve Position
         /// <summary>
         /// ApprovePosition action method displays confirmation for position approval in _ApprovePosition partial view
         /// </summary>
@@ -429,7 +433,9 @@ namespace RAMS.Web.Areas.Agency.Controllers
 
             return PartialView("_FailureConfirmation", positionResultViewModel); 
         }
+        #endregion
 
+        #region Close Position
         /// <summary>
         /// ClosePosition action method displays confirmation for position closure in _ClosePosition partial view
         /// </summary>
@@ -531,7 +537,9 @@ namespace RAMS.Web.Areas.Agency.Controllers
 
             return PartialView("_FailureConfirmation", positionResultViewModel);
         }
+        #endregion
 
+        #region Assign Position
         /// <summary>
         /// AssignPosition action method displays the list of agents that can be assigned to the position
         /// </summary>
@@ -643,5 +651,6 @@ namespace RAMS.Web.Areas.Agency.Controllers
 
             return PartialView("_FailureConfirmation", positionResultViewModel);
         }
+        #endregion
     }
 }

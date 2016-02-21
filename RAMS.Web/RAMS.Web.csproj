@@ -592,12 +592,16 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Agency\AgencyAreaRegistration.cs" />
+    <Compile Include="Areas\Agency\Controllers\AgentController.cs" />
+    <Compile Include="Areas\Agency\Controllers\ClientController.cs" />
     <Compile Include="Areas\Agency\Controllers\HomeController.cs" />
     <Compile Include="Areas\Agency\Controllers\PositionController.cs" />
     <Compile Include="Areas\Agency\Controllers\ProfileController.cs" />
+    <Compile Include="Areas\Agency\Controllers\ReportController.cs" />
     <Compile Include="Areas\Customer\Controllers\HomeController.cs" />
     <Compile Include="Areas\Customer\Controllers\PositionController.cs" />
     <Compile Include="Areas\Customer\Controllers\ProfileController.cs" />
+    <Compile Include="Areas\Customer\Controllers\ReportController.cs" />
     <Compile Include="Areas\Customer\CustomerAreaRegistration.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
     <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
@@ -729,6 +733,12 @@
     <Content Include="Areas\Agency\Views\Position\_FailureConfirmation.cshtml" />
     <Content Include="Areas\Agency\Views\Position\_ClosePosition.cshtml" />
     <Content Include="Areas\Agency\Views\Position\_AssignPosition.cshtml" />
+    <Content Include="Areas\Agency\Views\Agent\Index.cshtml" />
+    <Content Include="Areas\Agency\Views\Client\Index.cshtml" />
+    <Content Include="Areas\Agency\Views\Report\Index.cshtml" />
+    <Content Include="Areas\Customer\Views\Report\Index.cshtml" />
+    <Content Include="Areas\Agency\Views\Agent\_AgentList.cshtml" />
+    <Content Include="Areas\Agency\Views\Agent\_AgentDetails.cshtml" />
     <None Include="Content\JS\jquery-2.1.4.intellisense.js" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

@@ -523,4 +523,32 @@ namespace RAMS.ViewModels
             this.PositionId = positionId; 
         }
     }
+
+    /// <summary>
+    /// PositionListForReportViewModel view model declares properties for _PositionList partial view in Report controller
+    /// </summary>
+    public class PositionListForReportViewModel : PositionListViewModel
+    {
+        [Display(Name = "Report Type")]
+        public string ReportType { get; set; }
+    }
+
+    /// <summary>
+    /// PositionReportDetailsViewModel view model declares properties for _PositionFinalReport, and _PositionStatusReport partial views in Report controller
+    /// </summary>
+    public class PositionReportDetailsViewModel : PositionEditViewModel
+    {
+        [Display(Name = "Total Candidates")]
+        public int TotalCandidates { get; set; }
+
+        [Display(Name = "Top Candidate")]
+        public int TopCandidate { get; set; }
+
+        [Display(Name = "Candidates Selected")]
+        public int CandidatesSelected { get; set; }
+
+        [Display(Name = "Average Score")]
+        public int AverageScore { get; set; }
+    }
+
 }

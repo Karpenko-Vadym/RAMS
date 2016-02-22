@@ -58,6 +58,9 @@ namespace RAMS.Web.Configuration
             Mapper.CreateMap<Agent, AgentListViewModel>().ForMember(c => c.FullName, map => map.MapFrom(model => String.Format("{0} {1}", model.FirstName, model.LastName))).ForMember(a => a.AgentIdForDisplay, map => map.MapFrom(model => model.UserType.ToString().Substring(0, 2).ToUpper() + model.AgentId.ToString("00000"))).ForMember(a => a.Positions, map => map.MapFrom(model => model.Positions.Where(p => p.Status != Enums.PositionStatus.Closed).Count())).ForMember(a => a.Department, map => map.MapFrom(model => model.Department.Name));
             Mapper.CreateMap<Agent, AgentDetailsViewModel>().ForMember(c => c.FullName, map => map.MapFrom(model => String.Format("{0} {1}", model.FirstName, model.LastName))).ForMember(a => a.PositionsCurrent, map => map.MapFrom(model => model.Positions.Where(p => p.Status != Enums.PositionStatus.Closed).Count())).ForMember(a => a.PositionsTotal, map => map.MapFrom(model => model.Positions.Count())).ForMember(a => a.Department, map => map.MapFrom(model => model.Department.Name));
 
+            Mapper.CreateMap<Client, ClientListViewModel>().ForMember(c => c.FullName, map => map.MapFrom(model => String.Format("{0} {1}", model.FirstName, model.LastName))).ForMember(c => c.ClientIdForDisplay, map => map.MapFrom(model => model.UserType.ToString().Substring(0, 2).ToUpper() + model.ClientId.ToString("00000"))).ForMember(c => c.Positions, map => map.MapFrom(model => model.Positions.Count()));
+            Mapper.CreateMap<Client, ClientDetailsViewModel>().ForMember(c => c.FullName, map => map.MapFrom(model => String.Format("{0} {1}", model.FirstName, model.LastName))).ForMember(c => c.Positions, map => map.MapFrom(model => model.Positions.Count()));
+
             /***** END OF USER MAPPING *****/
             /***** DEPARTMENT MAPPING *****/
 
@@ -81,6 +84,8 @@ namespace RAMS.Web.Configuration
             Mapper.CreateMap<Position, PositionDetailsViewModel>().ForMember(p => p.Client, map => map.MapFrom(model => model.Client.FirstName + " " + model.Client.LastName)).ForMember(p => p.Category, map => map.MapFrom(model => model.Category.Name)).ForMember(p => p.AssignedTo, map => map.MapFrom(model => String.Format("{0} {1}",model.Agent.FirstName, model.Agent.LastName)));
 
             Mapper.CreateMap<Position, PositionEditViewModel>().ForMember(p => p.Candidates, map => map.MapFrom(model => Mapper.Map<List<Candidate>, List<CandidateListViewModel>>(model.Candidates)));
+
+            Mapper.CreateMap<Position, PositionListForReportViewModel>().ForMember(p => p.PositionIdForDisplay, map => map.MapFrom(model => model.PositionId.ToString("00000"))).ForMember(p => p.CategoryName, map => map.MapFrom(model => model.Category.Name)).ForMember(p => p.AssignedTo, map => map.MapFrom(model => String.Format("{0} {1}", model.Agent.FirstName, model.Agent.LastName))).ForMember(p => p.ReportType, map => map.MapFrom(model => (model.Status == Enums.PositionStatus.Closed) ? "Final Report" : "Status Report" ));
 
             /***** END OF POSITION MAPPING *****/
             /***** CANDIDATE MAPPING *****/

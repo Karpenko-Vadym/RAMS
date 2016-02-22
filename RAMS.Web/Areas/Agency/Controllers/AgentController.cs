@@ -74,7 +74,7 @@ namespace RAMS.Web.Areas.Agency.Controllers
 
         #region Agent Details
         /// <summary>
-        /// AgentDetails action method gets requested agents's details and passes it to _AgentDetails partial view
+        /// AgentDetails action method gets requested agent's details and passes it to _AgentDetails partial view
         /// </summary>
         /// <param name="agentId">Id of the agent that is being fetched</param>
         /// <returns>_AgentDetails partial view with agent details</returns>
@@ -102,10 +102,5 @@ namespace RAMS.Web.Areas.Agency.Controllers
             return PartialView("_AgentDetails");
         }
         #endregion
-
-
-
-
-
     }
 }

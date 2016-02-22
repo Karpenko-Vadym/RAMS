@@ -300,6 +300,10 @@ function AgencyModalControls()
     $("#agent-details-modal").on("show.bs.modal", function (e) { LoadAction("agent-details-modal-body-div", "/RAMS/Agency/Agent/AgentDetails?agentId=" + $(e.relatedTarget).data("agent-id")); });
 
     $("#agent-details-modal").on("hidden.bs.modal", function (e) { $("#agent-details-modal-body-div").empty(); });
+
+    $("#client-details-modal").on("show.bs.modal", function (e) { LoadAction("client-details-modal-body-div", "/RAMS/Agency/Client/ClientDetails?clientId=" + $(e.relatedTarget).data("client-id")); });
+
+    $("#client-details-modal").on("hidden.bs.modal", function (e) { $("#client-details-modal-body-div").empty(); });
 }
 
 /********** END OF AGENCY MODAL CONTROLS **********/

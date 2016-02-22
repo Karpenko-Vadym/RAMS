@@ -739,7 +739,11 @@
     <Content Include="Areas\Customer\Views\Report\Index.cshtml" />
     <Content Include="Areas\Agency\Views\Agent\_AgentList.cshtml" />
     <Content Include="Areas\Agency\Views\Agent\_AgentDetails.cshtml" />
+    <Content Include="Areas\Agency\Views\Client\_ClientList.cshtml" />
+    <Content Include="Areas\Agency\Views\Client\_ClientDetails.cshtml" />
+    <Content Include="Areas\Agency\Views\Report\_PositionList.cshtml" />
     <None Include="Content\JS\jquery-2.1.4.intellisense.js" />
+    <Content Include="Views\Identity\Account\FailedLogin.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

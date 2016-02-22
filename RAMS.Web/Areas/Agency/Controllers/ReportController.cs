@@ -1,8 +1,13 @@
-﻿using RAMS.Web.Controllers;
+﻿using AutoMapper;
+using RAMS.Models;
+using RAMS.ViewModels;
+using RAMS.Web.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -39,7 +44,81 @@ namespace RAMS.Web.Areas.Agency.Controllers
             return RedirectToAction("Index", "Home", new { Area = "" });
         }
 
+        #region Position List
+        /// <summary>
+        /// PositionList action method gets the list of all the positions and passes it to _PositionList partial view
+        /// </summary>
+        /// <returns>_PositionList partial view with the list of all the positions</returns>
+        [HttpGet]
+        public async Task<PartialViewResult> PositionList()
+        {
+            var positions = new List<PositionListForReportViewModel>();
 
+            var response = new HttpResponseMessage();
+
+            response = await this.GetHttpClient().GetAsync("Position");
+
+            if (response.IsSuccessStatusCode)
+            {
+                positions.AddRange(Mapper.Map<List<Position>, List<PositionListForReportViewModel>>(await response.Content.ReadAsAsync<List<Position>>()));
+
+                return PartialView("_PositionList", positions);
+            }
+
+            return PartialView("_PositionList");
+        }
+        #endregion
+
+        #region Position Report
+        /// <summary>
+        /// PositionStatusReport action method gets requested position's details and passes it to _PositionStatusReport partial view
+        /// </summary>
+        /// <param name="positionId">Id of the position that is being fetched</param>
+        /// <returns>_PositionStatusReport partial view with position details</returns>
+        [HttpGet]
+        public async Task<PartialViewResult> PositionStatusReport(int positionId)
+        {
+            if (positionId > 0)
+            {
+                var response = await this.GetHttpClient().GetAsync(String.Format("Position?id={0}", positionId));
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var positionEditViewModel = Mapper.Map<Position, PositionReportDetailsViewModel>(await response.Content.ReadAsAsync<Position>());
+
+                    return PartialView("_PositionStatusReport", positionEditViewModel);
+                }
+            }
+
+            return PartialView("_PositionStatusReport");
+        }
+
+        /// <summary>
+        /// PositionFinalReport action method gets requested position's details and passes it to _PositionFinalReport partial view
+        /// </summary>
+        /// <param name="positionId">Id of the position that is being fetched</param>
+        /// <returns>_PositionFinalReport partial view with position details</returns>
+        [HttpGet]
+        public async Task<PartialViewResult> PositionFinalReport(int positionId)
+        {
+            if (positionId > 0)
+            {
+                var response = await this.GetHttpClient().GetAsync(String.Format("Position?id={0}", positionId));
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var positionEditViewModel = Mapper.Map<Position, PositionReportDetailsViewModel>(await response.Content.ReadAsAsync<Position>());
+
+                    return PartialView("_PositionFinalReport", positionEditViewModel);
+                }
+            }
+
+            // TODO - Add mapping for PositionReportDetailsViewModel
+
+            return PartialView("_PositionFinalReport");
+        }
+
+        #endregion
 
     }
 }

@@ -87,6 +87,8 @@ namespace RAMS.Web.Configuration
 
             Mapper.CreateMap<Position, PositionListForReportViewModel>().ForMember(p => p.PositionIdForDisplay, map => map.MapFrom(model => model.PositionId.ToString("00000"))).ForMember(p => p.CategoryName, map => map.MapFrom(model => model.Category.Name)).ForMember(p => p.AssignedTo, map => map.MapFrom(model => String.Format("{0} {1}", model.Agent.FirstName, model.Agent.LastName))).ForMember(p => p.ReportType, map => map.MapFrom(model => (model.Status == Enums.PositionStatus.Closed) ? "Final Report" : "Status Report" ));
 
+            Mapper.CreateMap<Position, PositionReportDetailsViewModel>().ForMember(p => p.TopCandidates, map => map.MapFrom(model => model.Candidates.Where(c => c.Score >= model.AcceptanceScore).Count())).ForMember(p => p.TotalCandidates, map => map.MapFrom(model => model.Candidates.Count())).ForMember(p => p.CandidatesSelected, map => map.MapFrom(model => model.Candidates.Where(c => c.Interviews.Count() > 0).Count()));
+
             /***** END OF POSITION MAPPING *****/
             /***** CANDIDATE MAPPING *****/
 

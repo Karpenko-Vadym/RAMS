@@ -84,9 +84,11 @@ namespace RAMS.Web.Areas.Agency.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var positionEditViewModel = Mapper.Map<Position, PositionReportDetailsViewModel>(await response.Content.ReadAsAsync<Position>());
+                    var positionReportDetailsViewModel = Mapper.Map<Position, PositionReportDetailsViewModel>(await response.Content.ReadAsAsync<Position>());
 
-                    return PartialView("_PositionStatusReport", positionEditViewModel);
+                    positionReportDetailsViewModel.AverageScore = positionReportDetailsViewModel.Candidates.Average(c => c.Score);
+
+                    return PartialView("_PositionStatusReport", positionReportDetailsViewModel);
                 }
             }
 
@@ -107,13 +109,11 @@ namespace RAMS.Web.Areas.Agency.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var positionEditViewModel = Mapper.Map<Position, PositionReportDetailsViewModel>(await response.Content.ReadAsAsync<Position>());
+                    var positionReportDetailsViewModel = Mapper.Map<Position, PositionReportDetailsViewModel>(await response.Content.ReadAsAsync<Position>());
 
-                    return PartialView("_PositionFinalReport", positionEditViewModel);
+                    return PartialView("_PositionFinalReport", positionReportDetailsViewModel);
                 }
             }
-
-            // TODO - Add mapping for PositionReportDetailsViewModel
 
             return PartialView("_PositionFinalReport");
         }

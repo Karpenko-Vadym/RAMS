@@ -304,6 +304,17 @@ function AgencyModalControls()
     $("#client-details-modal").on("show.bs.modal", function (e) { LoadAction("client-details-modal-body-div", "/RAMS/Agency/Client/ClientDetails?clientId=" + $(e.relatedTarget).data("client-id")); });
 
     $("#client-details-modal").on("hidden.bs.modal", function (e) { $("#client-details-modal-body-div").empty(); });
+
+
+
+    $("#position-status-report-modal").on("show.bs.modal", function (e) { LoadAction("position-status-report-modal-body-div", "/RAMS/Agency/Report/PositionStatusReport?positionId=" + $(e.relatedTarget).data("position-id")); });
+
+    $("#position-status-report-modal").on("hidden.bs.modal", function (e) { $("#position-status-report-modal-body-div").empty(); });
+
+    $("#position-final-report-modal").on("show.bs.modal", function (e) { LoadAction("position-final-report-modal-body-div", "/RAMS/Agency/Report/PositionFinalReport?positionId=" + $(e.relatedTarget).data("position-id")); });
+
+    $("#position-final-report-modal").on("hidden.bs.modal", function (e) { $("#position-final-report-modal-body-div").empty(); });
+
 }
 
 /********** END OF AGENCY MODAL CONTROLS **********/

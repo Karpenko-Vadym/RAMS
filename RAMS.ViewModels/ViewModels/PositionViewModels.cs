@@ -542,13 +542,13 @@ namespace RAMS.ViewModels
         public int TotalCandidates { get; set; }
 
         [Display(Name = "Top Candidate")]
-        public int TopCandidate { get; set; }
+        public int TopCandidates { get; set; }
 
         [Display(Name = "Candidates Selected")]
         public int CandidatesSelected { get; set; }
 
         [Display(Name = "Average Score")]
-        public int AverageScore { get; set; }
+        public double AverageScore { get; set; }
     }
 
 }

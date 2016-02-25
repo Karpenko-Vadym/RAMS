@@ -86,7 +86,14 @@ namespace RAMS.Web.Areas.Agency.Controllers
                 {
                     var positionReportDetailsViewModel = Mapper.Map<Position, PositionReportDetailsViewModel>(await response.Content.ReadAsAsync<Position>());
 
-                    positionReportDetailsViewModel.AverageScore = positionReportDetailsViewModel.Candidates.Average(c => c.Score);
+                    if (positionReportDetailsViewModel.TotalCandidates > 0)
+                    {
+                        positionReportDetailsViewModel.TopCandidates = positionReportDetailsViewModel.Candidates.Where(c => c.Score >= positionReportDetailsViewModel.AcceptanceScore).Count();
+                    
+                        positionReportDetailsViewModel.CandidatesSelected = positionReportDetailsViewModel.Candidates.Where(c => c.Selected == true).Count();
+
+                        positionReportDetailsViewModel.AverageScore = positionReportDetailsViewModel.Candidates.Average(c => c.Score);
+                    }
 
                     return PartialView("_PositionStatusReport", positionReportDetailsViewModel);
                 }
@@ -111,6 +118,15 @@ namespace RAMS.Web.Areas.Agency.Controllers
                 {
                     var positionReportDetailsViewModel = Mapper.Map<Position, PositionReportDetailsViewModel>(await response.Content.ReadAsAsync<Position>());
 
+                    if (positionReportDetailsViewModel.TotalCandidates > 0)
+                    {
+                        positionReportDetailsViewModel.TopCandidates = positionReportDetailsViewModel.Candidates.Where(c => c.Score >= positionReportDetailsViewModel.AcceptanceScore).Count();
+
+                        positionReportDetailsViewModel.CandidatesSelected = positionReportDetailsViewModel.Candidates.Where(c => c.Selected == true).Count();
+
+                        positionReportDetailsViewModel.AverageScore = positionReportDetailsViewModel.Candidates.Average(c => c.Score);
+                    }
+
                     return PartialView("_PositionFinalReport", positionReportDetailsViewModel);
                 }
             }
@@ -120,5 +136,29 @@ namespace RAMS.Web.Areas.Agency.Controllers
 
         #endregion
 
+        #region Candidate Report
+        /// <summary>
+        /// CandidateReport action method gets requested candidate's details and passes it to _CandidateReport partial view
+        /// </summary>
+        /// <param name="candidateId">Id of the candidate that is being fetched</param>
+        /// <returns>_CandidateReport partial view with candidate details</returns>
+        [HttpGet]
+        public async Task<PartialViewResult> CandidateReport(int candidateId)
+        {
+            if (candidateId > 0)
+            {
+                var response = await this.GetHttpClient().GetAsync(String.Format("Candidate?id={0}", candidateId));
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var candidateReportDetailsViewModel = Mapper.Map<Candidate, CandidateReportDetailsViewModel>(await response.Content.ReadAsAsync<Candidate>());
+
+                    return PartialView("_CandidateReport", candidateReportDetailsViewModel);
+                }
+            }
+
+            return PartialView("_CandidateReport");
+        }
+        #endregion
     }
 }

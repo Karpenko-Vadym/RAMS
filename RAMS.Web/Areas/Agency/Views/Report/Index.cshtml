@@ -14,7 +14,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" onclick="$('#position-status-report-modal').modal('hide');">&times;</button>
-                <h4 class="modal-title text-center">Position Status Report</h4>
+                <h4 class="modal-title text-center">Status Report</h4>
             </div>
             <div class="modal-body">
                 <div class="well well-lg bottom-margin-0">
@@ -37,7 +37,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" onclick="$('#position-final-report-modal').modal('hide');">&times;</button>
-                <h4 class="modal-title text-center">Position Final Report</h4>
+                <h4 class="modal-title text-center">Final Report</h4>
             </div>
             <div class="modal-body">
                 <div class="well well-lg bottom-margin-0">
@@ -52,6 +52,29 @@
     </div>
 </div>
 <!-- END OF POSITION FINAL REPORT MODAL -->
+
+<!-- CANDIDATE REPORT MODAL -->
+<div id="candidate-report-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- MODAL CONTENT -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" onclick="$('#candidate-report-modal').modal('hide');">&times;</button>
+                <h4 class="modal-title text-center">Candidate Report</h4>
+            </div>
+            <div class="modal-body">
+                <div class="well well-lg bottom-margin-0">
+                    <div id="candidate-report-modal-body-div"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" onclick="$('#candidate-report-modal').modal('hide');">Close</button>
+            </div>
+        </div>
+        <!-- END OF MODAL CONTENT-->
+    </div>
+</div>
+<!-- END OF CANDIDATE REPORT MODAL -->
 
 <script type="text/javascript">$(function () { LoadAction("position-list-div", "@Url.Action("PositionList", "Report", new { Area = "Agency" })"); AgencyModalControls(); });</script>
 <!-- END OF REPORT INDEX VIEW -->

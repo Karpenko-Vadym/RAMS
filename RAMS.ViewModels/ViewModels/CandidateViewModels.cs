@@ -27,6 +27,8 @@ namespace RAMS.ViewModels
 
         [Display(Name = "Status")]
         public CandidateStatus Status { get; set; }
+
+        public bool Selected { get; set; }
     }
 
     /// <summary>
@@ -106,6 +108,47 @@ namespace RAMS.ViewModels
 
         [Display(Name = "Feedback")]
         public string Feedback { get; set; }
+
+        [Display(Name = "Score")]
+        public int Score { get; set; }
+
+        [Display(Name = "Status")]
+        public CandidateStatus Status { get; set; }
+    }
+
+    public class CandidateReportDetailsViewModel
+    {
+        public int CandidateId { get; set; }
+
+        [Display(Name = "Id")]
+        public string CandidateIdDisplay { get; set; }
+
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        [Display(Name = "Email Address")]
+        public string Email { get; set; }
+
+        [Display(Name = "Country")]
+        public string Country { get; set; }
+
+        [Display(Name = "Postal Code")]
+        public string PostalCode { get; set; }
+
+        [Display(Name = "Phone Number")]
+        public string PhoneNumber { get; set; }
+
+        [Display(Name = "Feedback")]
+        public string Feedback { get; set; }
+
+        public string FileName { get; set; }
+
+        public string MediaType { get; set; }
+
+        public byte[] FileContent { get; set; }
 
         [Display(Name = "Score")]
         public int Score { get; set; }

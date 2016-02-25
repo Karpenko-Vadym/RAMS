@@ -315,6 +315,10 @@ function AgencyModalControls()
 
     $("#position-final-report-modal").on("hidden.bs.modal", function (e) { $("#position-final-report-modal-body-div").empty(); });
 
+    $("#candidate-report-modal").on("show.bs.modal", function (e) { LoadAction("candidate-report-modal-body-div", "/RAMS/Agency/Report/CandidateReport?candidateId=" + $(e.relatedTarget).data("candidate-id")); });
+
+    $("#candidate-report-modal").on("hidden.bs.modal", function (e) { $("#candidate-report-modal-body-div").empty(); });
+
 }
 
 /********** END OF AGENCY MODAL CONTROLS **********/

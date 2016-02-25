@@ -538,13 +538,16 @@ namespace RAMS.ViewModels
     /// </summary>
     public class PositionReportDetailsViewModel : PositionEditViewModel
     {
-        [Display(Name = "Total Candidates")]
+        [Display(Name = "Id")]
+        public string PositionIdForDisplay { get; set; }
+
+        [Display(Name = "Total Applicants")]
         public int TotalCandidates { get; set; }
 
-        [Display(Name = "Top Candidate")]
+        [Display(Name = "Applications Qualified")]
         public int TopCandidates { get; set; }
 
-        [Display(Name = "Candidates Selected")]
+        [Display(Name = "Selected for Interview")]
         public int CandidatesSelected { get; set; }
 
         [Display(Name = "Average Score")]

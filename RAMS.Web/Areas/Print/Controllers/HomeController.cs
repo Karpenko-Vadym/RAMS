@@ -24,11 +24,11 @@ namespace RAMS.Web.Areas.Print.Controllers
         /// <param name="positionId">Id of the position that is being fetched</param>
         /// <returns>PositionStatusReportPrint view with position details</returns>
         [HttpGet]
-        public async Task<ViewResult> PositionStatusReport(int positionId)
+        public async Task<ViewResult> PositionStatusReport(string positionId)
         {
-            if (positionId > 0)
+            if (!String.IsNullOrEmpty(positionId))
             {
-                var response = await this.GetHttpClient().GetAsync(String.Format("Position?id={0}", positionId));
+                var response = await this.GetHttpClient().GetAsync(String.Format("Position?id={0}", (RAMS.Helpers.Utilities.ConvertBase64StringToInt(positionId) - Int32.Parse(Session["SquareSeconds"].ToString()))));
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -50,18 +50,17 @@ namespace RAMS.Web.Areas.Print.Controllers
             return View("PositionStatusReport");
         }
 
-
         /// <summary>
         /// PositionFinalReportPrint action method gets requested position's details and passes it to PositionFinalReportPrint view
         /// </summary>
         /// <param name="positionId">Id of the position that is being fetched</param>
         /// <returns>PositionFinalReportPrint view with position details</returns>
         [HttpGet]
-        public async Task<ViewResult> PositionFinalReport(int positionId)
+        public async Task<ViewResult> PositionFinalReport(string positionId)
         {
-            if (positionId > 0)
+            if (!String.IsNullOrEmpty(positionId))
             {
-                var response = await this.GetHttpClient().GetAsync(String.Format("Position?id={0}", positionId));
+                var response = await this.GetHttpClient().GetAsync(String.Format("Position?id={0}", (RAMS.Helpers.Utilities.ConvertBase64StringToInt(positionId) - Int32.Parse(Session["SquareSeconds"].ToString()))));
 
                 if (response.IsSuccessStatusCode)
                 {

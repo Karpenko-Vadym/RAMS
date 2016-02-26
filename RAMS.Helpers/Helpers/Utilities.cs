@@ -75,5 +75,25 @@ namespace RAMS.Helpers
 
             return String.Empty;
         }
+
+        /// <summary>
+        /// ConvertIntToBase64String moethod converts int to encoded string
+        /// </summary>
+        /// <param name="data">Integer to be converted</param>
+        /// <returns>Encoded string</returns>
+        public static string ConvertIntToBase64String(int data)
+        {
+            return Convert.ToBase64String(BitConverter.GetBytes(data));
+        }
+
+        /// <summary>
+        /// ConvertBase64StringToInt converts encoded string to int
+        /// </summary>
+        /// <param name="data">String to be converted</param>
+        /// <returns>Decoded int</returns>
+        public static int ConvertBase64StringToInt(string data)
+        {
+            return BitConverter.ToInt32(Convert.FromBase64String(data), 0);
+        }
     }
 }

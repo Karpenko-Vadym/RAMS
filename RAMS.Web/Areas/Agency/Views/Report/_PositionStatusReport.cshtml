@@ -2,11 +2,15 @@
 
 <!-- POSITION STATUS REPORT PARTIAL -->
 
+@{
+    HttpContext.Current.Session["SquareSeconds"] = (DateTime.Now.Second * 10) * (DateTime.Now.Second * 10);
+}
+
 @if (Model != null)
 {
     <div class="btn-group btn-group-justified" role="group">
         <div class="btn-group" role="group">
-            @Html.ActionLink("Printer Fiendly Page", "PositionStatusReport", "Home", new { positionId = Model.PositionId, Area = "Print" }, new { @Class = "btn btn-info", target = "_blank" })
+            @Html.ActionLink("Printer Fiendly Page", "PositionStatusReport", "Home", new { positionId = RAMS.Helpers.Utilities.ConvertIntToBase64String(Model.PositionId + Int32.Parse(HttpContext.Current.Session["SquareSeconds"].ToString())), Area = "Print" }, new { @Class = "btn btn-info", target = "_blank" })
         </div>
     </div>
 

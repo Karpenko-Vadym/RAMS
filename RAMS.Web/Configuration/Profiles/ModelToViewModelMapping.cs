@@ -88,6 +88,8 @@ namespace RAMS.Web.Configuration
             Mapper.CreateMap<Position, PositionListForReportViewModel>().ForMember(p => p.PositionIdForDisplay, map => map.MapFrom(model => model.PositionId.ToString("00000"))).ForMember(p => p.CategoryName, map => map.MapFrom(model => model.Category.Name)).ForMember(p => p.AssignedTo, map => map.MapFrom(model => String.Format("{0} {1}", model.Agent.FirstName, model.Agent.LastName))).ForMember(p => p.ReportType, map => map.MapFrom(model => (model.Status == Enums.PositionStatus.Closed) ? "Final Report" : "Status Report" ));
 
             Mapper.CreateMap<Position, PositionReportDetailsViewModel>().ForMember(p => p.TotalCandidates, map => map.MapFrom(model => model.Candidates.Count())).ForMember(p => p.PositionIdForDisplay, map => map.MapFrom(model => model.PositionId.ToString("00000")));
+            Mapper.CreateMap<Position, PositionReportDetailsForPrintViewModel>().ForMember(p => p.TotalCandidates, map => map.MapFrom(model => model.Candidates.Count())).ForMember(p => p.PositionIdForDisplay, map => map.MapFrom(model => model.PositionId.ToString("00000"))).ForMember(p => p.Candidates, map => map.MapFrom(model => Mapper.Map<List<Candidate>, List<CandidateReportDetailsViewModel>>(model.Candidates)));
+
 
             /***** END OF POSITION MAPPING *****/
             /***** CANDIDATE MAPPING *****/
@@ -95,7 +97,7 @@ namespace RAMS.Web.Configuration
             Mapper.CreateMap<Candidate, CandidateListViewModel>().ForMember(c => c.CandidateIdDisplay, map => map.MapFrom(model => model.CandidateId.ToString("00000"))).ForMember(c => c.FullName, map => map.MapFrom(model => String.Format("{0} {1}",model.FirstName, model.LastName))).ForMember(c => c.Selected, map => map.MapFrom(model => (model.Interviews.Count() > 0)));
             Mapper.CreateMap<Candidate, CandidateEditViewModel>().ForMember(c => c.CandidateIdDisplay, map => map.MapFrom(model => model.CandidateId.ToString("00000")));
             Mapper.CreateMap<Candidate, CandidateEditConfirmationViewModel>().ForMember(c => c.CandidateIdDisplay, map => map.MapFrom(model => model.CandidateId.ToString("00000")));
-            Mapper.CreateMap<Candidate, CandidateReportDetailsViewModel>().ForMember(c => c.CandidateIdDisplay, map => map.MapFrom(model => model.CandidateId.ToString("00000")));
+            Mapper.CreateMap<Candidate, CandidateReportDetailsViewModel>().ForMember(c => c.CandidateIdDisplay, map => map.MapFrom(model => model.CandidateId.ToString("00000"))).ForMember(c => c.Selected, map => map.MapFrom(model => (model.Interviews.Count() > 0)));
 
             /***** END OF CANDIDATE MAPPING *****/
 

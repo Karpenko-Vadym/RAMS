@@ -133,7 +133,6 @@ namespace RAMS.Web.Areas.Agency.Controllers
 
             return PartialView("_PositionFinalReport");
         }
-
         #endregion
 
         #region Candidate Report

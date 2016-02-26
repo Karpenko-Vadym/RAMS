@@ -116,6 +116,9 @@ namespace RAMS.ViewModels
         public CandidateStatus Status { get; set; }
     }
 
+    /// <summary>
+    /// CandidateReportDetailsViewModel view model declares properties for various types of reports
+    /// </summary>
     public class CandidateReportDetailsViewModel
     {
         public int CandidateId { get; set; }
@@ -155,5 +158,7 @@ namespace RAMS.ViewModels
 
         [Display(Name = "Status")]
         public CandidateStatus Status { get; set; }
+
+        public bool Selected { get; set; }
     }
 }

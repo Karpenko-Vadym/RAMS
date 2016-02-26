@@ -631,6 +631,8 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Areas\Print\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Print\PrintAreaRegistration.cs" />
     <Compile Include="Areas\SystemAdmin\Controllers\DepartmentController.cs" />
     <Compile Include="Areas\SystemAdmin\Controllers\HomeController.cs" />
     <Compile Include="Areas\SystemAdmin\Controllers\ProfileController.cs" />
@@ -745,6 +747,11 @@
     <Content Include="Areas\Agency\Views\Report\_PositionStatusReport.cshtml" />
     <Content Include="Areas\Agency\Views\Report\_PositionFinalReport.cshtml" />
     <Content Include="Areas\Agency\Views\Report\_CandidateReport.cshtml" />
+    <Content Include="Areas\Print\Views\web.config" />
+    <Content Include="Areas\Print\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Print\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Print\Views\Home\PositionFinalReport.cshtml" />
+    <Content Include="Areas\Print\Views\Home\PositionStatusReport.cshtml" />
     <None Include="Content\JS\jquery-2.1.4.intellisense.js" />
     <Content Include="Views\Identity\Account\FailedLogin.cshtml" />
     <None Include="Web.Debug.config">

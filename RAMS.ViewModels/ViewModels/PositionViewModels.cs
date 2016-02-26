@@ -554,4 +554,67 @@ namespace RAMS.ViewModels
         public double AverageScore { get; set; }
     }
 
+
+    /// <summary>
+    /// PositionReportDetailsForPrintViewModel view model declares properties for position report views
+    /// </summary>
+    public class PositionReportDetailsForPrintViewModel
+    {
+        [Display(Name = "Id")]
+        public string PositionIdForDisplay { get; set; }
+
+        [Display(Name = "Date Created")]
+        public DateTime DateCreated { get; set; }
+
+        [Display(Name = "Expiry Date")]
+        public DateTime ExpiryDate { get; set; }
+
+        [Display(Name = "Title")]
+        public string Title { get; set; }
+
+        [Display(Name = "Description")]
+        public string Description { get; set; }
+
+        [Display(Name = "Company Details")]
+        public string CompanyDetails { get; set; }
+
+        [Display(Name = "Location")]
+        public string Location { get; set; }
+
+        [Display(Name = "Qualifications")]
+        public string Qualifications { get; set; }
+
+        [Display(Name = "Asset Skills")]
+        public string AssetSkills { get; set; }
+
+        [Display(Name = "People Needed")]
+        public int PeopleNeeded { get; set; }
+
+        [Display(Name = "Acceptance Score")]
+        public int AcceptanceScore { get; set; }
+
+        [Display(Name = "Total Applicants")]
+        public int TotalCandidates { get; set; }
+
+        [Display(Name = "Applications Qualified")]
+        public int TopCandidates { get; set; }
+
+        [Display(Name = "Selected for Interview")]
+        public int CandidatesSelected { get; set; }
+
+        [Display(Name = "Average Score")]
+        public double AverageScore { get; set; }
+
+        public PositionStatus Status { get; set; }
+
+        public List<CandidateReportDetailsViewModel> Candidates { get; set; }
+
+        /// <summary>
+        /// Default PositionReportDetailsForPrintViewModel constructor         
+        /// </summary>
+        public PositionReportDetailsForPrintViewModel()
+        {
+            this.Candidates = new List<CandidateReportDetailsViewModel>();
+        }
+    }
 }

@@ -3,7 +3,15 @@
 <!-- POSITION STATUS REPORT PARTIAL -->
 
 @if (Model != null)
-{     
+{
+    <div class="btn-group btn-group-justified" role="group">
+        <div class="btn-group" role="group">
+            @Html.ActionLink("Printer Fiendly Page", "PositionStatusReport", "Home", new { positionId = Model.PositionId, Area = "Print" }, new { @Class = "btn btn-info", target = "_blank" })
+        </div>
+    </div>
+
+    <div class="vertical-padding-24"></div>
+
     <div class="well well-lg bottom-margin-0 background-white">
         <dl class="dl-horizontal bottom-margin-0">    
             <dt>@Html.LabelFor(model => model.PositionIdForDisplay)</dt>

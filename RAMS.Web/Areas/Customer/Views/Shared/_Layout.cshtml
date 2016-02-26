@@ -11,13 +11,15 @@
     @Styles.Render("~/bootstrap/css")
     @Styles.Render("~/dataTables/css")
     @Styles.Render("~/isLoading/css")
+    @Styles.Render("~/jQueryUI/css")
 
     <!-- END OF RENDER STYLES -->
     <!-- RENDER SCRIPTS -->
     @Scripts.Render("~/bootstrap/js")
     @Scripts.Render("~/dataTables/js")
     @Scripts.Render("~/isLoading/js")
-
+    @Scripts.Render("~/jQueryUI/js")
+    
     <!-- END OF RENDER SCRIPTS -->
 </head>
 <body>
@@ -37,6 +39,12 @@
                 <ul class="nav navbar-nav">
                     <li class='@Html.IsActive("Profile")'>
                         @Html.ActionLink("Profile", "Index", "Profile", new { area = "Customer" }, new { @class = "" })
+                    </li>
+                    <li class='@Html.IsActive("Position")'>
+                        @Html.ActionLink("Positions", "Index", "Position", new { area = "Customer" }, new { @class = "" })
+                    </li>
+                    <li class='@Html.IsActive("Report")'>
+                        @Html.ActionLink("Reports", "Index", "Report", new { area = "Customer" }, new { @class = "" })
                     </li>
                     <li class='@Html.IsActive("Help", "Index")'>
                         @Html.ActionLink("API", "Index", "Help", new { area = "HelpPage" }, new { @class = "" })
@@ -68,7 +76,7 @@
                     <div class="modal-body">
                         <div id="edit-user-profile-message-modal-body-div"></div>
                         <div class="well well-lg bottom-margin-0">
-                            <div id="edit-user-profile-modal-body-div" class="well well-lg bottom-margin-0 background-white"></div>
+                            <div id="edit-user-profile-modal-body-div"></div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -111,5 +119,6 @@
         </footer>
     </div>
     <script type="text/javascript">$(function () { GeneralModalControls(); });</script>
+    <script src="~/Content/CKEditor/ckeditor.js" type="text/javascript"></script>
 </body>
 </html>

@@ -1,0 +1,92 @@
+﻿@model string
+
+<!-- PROFILE INDEX VIEW -->
+<div class="well well-lg bottom-margin-0 background-white">
+
+    @if (!String.IsNullOrEmpty(Model))
+    {
+        <div class='alert alert-warning bottom-margin-0' role='alert'>
+            <div class='text-center'>@Model</div>
+        </div>
+    }
+
+    <div id="profile-details-div"></div>
+    <div id="confirmation-message-div"></div>
+    <div id="notification-list-div"></div>
+</div>
+
+<!-- UPLOAD CHANGE PROFILE PICTURE MODAL -->
+<div id="upload-change-profile-picture-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- MODAL CONTENT -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" onclick="$('#upload-change-profile-picture-modal').modal('hide');">&times;</button>
+                <h4 id="upload-change-profile-picture-modal-title" class="modal-title text-center">Upload/Change Profile Picture</h4>
+            </div>
+            <div class="modal-body">
+                <div id="upload-change-profile-picture-modal-body-div"></div>
+            </div>
+        </div>
+        <!-- END OF MODAL CONTENT-->
+    </div>
+</div>
+<!-- END OF UPLOAD CHANGE PROFILE PICTURE MODAL -->
+<!-- DELETE PROFILE PICTURE MODAL -->
+<div id="delete-profile-picture-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- MODAL CONTENT -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" onclick="$('#delete-profile-picture-modal').modal('hide');">&times;</button>
+                <h4 class="modal-title text-center">Delete Profile Picture</h4>
+            </div>
+            <div class="modal-body">
+                <div id="delete-profile-picture-div">
+                    <div class="well well-lg bottom-margin-0">
+                        <div class="alert alert-warning bottom-margin-0" role="alert">
+                            <p>Are you sure that you want to <strong>DELETE</strong> your profile picture?</p>
+                            <p><strong>NOTE: </strong>This action cannot be undone. Profile picture will be premenatly removed from the system.</p>
+                        </div>
+                    </div>
+
+                    <div class="vertical-padding-24"></div>
+
+                    <div class="form-group bottom-margin-0">
+                        <div class="col-md-offset-0 col-lg-offset-0 col-md-3 col-lg-3">
+                            <input type="button" value="Delete" class="btn btn-danger btn-block" onclick="location.href = '@Url.Action("DeleteProfilePicture", "Profile")'; $('#delete-profile-picture-modal').modal('hide');" />
+                        </div>
+
+                        <div class="col-md-offset-6 col-lg-offset-6 col-md-3 col-lg-3">
+                            <input type="button" value="Cancel" class="btn btn-info btn-block" onclick="$('#delete-profile-picture-modal').modal('hide');" />
+                        </div>
+                    </div>
+
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+        <!-- END OF MODAL CONTENT-->
+    </div>
+</div>
+<!-- END OF DELETE PROFILE PICTURE MODAL -->
+<!-- CHANGE NOTIFICATION STATUS MODAL -->
+<div id="change-notification-status-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- MODAL CONTENT -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" onclick="$('#change-notification-status-modal').modal('hide');">&times;</button>
+                <h4 class="modal-title text-center">Change Notification Status</h4>
+            </div>
+            <div class="modal-body">
+                <div id="change-notification-status-div"></div>
+            </div>
+        </div>
+        <!-- END OF MODAL CONTENT-->
+    </div>
+</div>
+<!-- END OF CHANGE NOTIFICATION STATUS MODAL -->
+
+<script type="text/javascript">$(function () { LoadAction("profile-details-div", "@Url.Action("ProfileDetails", "Profile", new { Area = "Agency" })"); LoadAction("notification-list-div", "@Url.Action("GetNotificationList", "Profile", new { Area = "Agency" })"); AgencyModalControls(); });</script>
+<!-- END OF PROFILE INDEX VIEW -->

@@ -1,0 +1,41 @@
+﻿@model RAMS.ViewModels.CandidateReportDetailsViewModel
+
+<!-- CANDIDATE REPORT PARTIAL -->
+
+@if (Model != null)
+{
+    <div class="well well-lg bottom-margin-0 background-white">
+        <dl class="dl-horizontal bottom-margin-0">
+            <dt>@Html.LabelFor(model => model.CandidateIdDisplay)</dt>
+            <dd>@Model.CandidateIdDisplay</dd>
+            <dt>@Html.LabelFor(model => model.FirstName)</dt>
+            <dd>@Model.FirstName</dd>
+            <dt>@Html.LabelFor(model => model.LastName)</dt>
+            <dd>@Html.Raw(Model.LastName)</dd>
+            <dt>@Html.LabelFor(model => model.PhoneNumber)</dt>
+            <dd>@Html.Raw(Model.PhoneNumber)</dd>
+            <dt>@Html.LabelFor(model => model.Email)</dt>
+            <dd>@Model.Email</dd>
+            <dt>@Html.LabelFor(model => model.Country)</dt>
+            <dd>@Model.Country</dd>
+            <dt>@Html.LabelFor(model => model.PostalCode)</dt>
+            <dd>@Model.PostalCode</dd>
+            <dt>@Html.LabelFor(model => model.Score)</dt>
+            <dd>@Model.Score</dd>
+            <dt>@Html.LabelFor(model => model.Feedback)</dt>
+            <dd><div class='alert alert-warning bottom-margin-0' role='alert'>@Html.Raw((String.IsNullOrEmpty(Model.Feedback) ? "Not Specified" : Model.Feedback))</div></dd>
+        </dl>
+    </div>
+}
+else
+{
+    <div class='alert alert-danger bottom-margin-0' role='alert'>
+        <div class='text-center'><h4><strong>Candidate information is not available.</strong></h4></div>
+        <div class="row">
+            <div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Candidate could have been physically deleted, or modified.</div>
+            <div class='col-md-offset-1 col-md-11'>Please refresh the list and try again in a moment.</div>
+        </div>
+    </div>
+}
+<!-- END OF CANDIDATE REPORT PARTIAL -->
+

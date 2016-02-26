@@ -56,4 +56,13 @@ namespace RAMS.ViewModels
             this.Agents = new List<Agent>();
         }
     }
+
+    /// <summary>
+    /// DepartmentAddEditConfirmationViewModel view model declares properties for _NewDepartmentConfirmation and _EditDepartmentConfirmation partial views
+    /// </summary>
+    public class DepartmentAddEditConfirmationViewModel
+    {
+        [Display(Name = "Department Name")]
+        public string Name { get; set; }
+    }
 }

@@ -70,19 +70,12 @@ namespace RAMS.Service.Interfaces
         {
             var agent = this.AgentRepository.GetById(id);
 
-            return agent.Department;
-        }
+            if (agent != null)
+            {
+                return agent.Department;
+            }
 
-        /// <summary>
-        /// Get department for specific position
-        /// </summary>
-        /// <param name="id">Id of the position for which department is being retrieved</param>
-        /// <returns>Department for specific position</returns>
-        public Department GetOneDepartmentByPositionId(int id)
-        {
-            var position = this.PositionRepository.GetById(id);
-
-            return position.Department;
+            return null;
         }
         #endregion
 

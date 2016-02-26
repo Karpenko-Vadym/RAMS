@@ -65,7 +65,12 @@ namespace RAMS.Service
         {
             var position = this.PositionRepository.GetById(id);
 
-            return position.Category;
+            if (position != null)
+            {
+                return position.Category;
+            }
+
+            return null;
         }
         #endregion
 

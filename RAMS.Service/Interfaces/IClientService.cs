@@ -25,7 +25,7 @@ namespace RAMS.Service
 
         IEnumerable<Client> GetManyClientsByUserStatus(UserStatus userStatus);
 
-        IEnumerable<Client> GetManyCleintsByRole(Role role);
+        IEnumerable<Client> GetManyClientsByRole(Role role);
 
         Client GetOneClientByPositionId(int id);
 

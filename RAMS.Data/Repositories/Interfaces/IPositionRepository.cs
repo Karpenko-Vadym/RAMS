@@ -16,7 +16,7 @@ namespace RAMS.Data.Repositories
     {
         IEnumerable<Position> GetManyByClientId(int id);
 
-        IEnumerable<Position> GetManyByClient(Client cleint);
+        IEnumerable<Position> GetManyByClient(Client client);
 
         IEnumerable<Position> GetManyByAgentId(int id);
 
@@ -39,6 +39,8 @@ namespace RAMS.Data.Repositories
         IEnumerable<Position> GetManyByLocation(string location);
 
         IEnumerable<Position> GetManyByQualifications(string qualifications);
+
+        IEnumerable<Position> GetManyByKeyword(string keyword);
 
         IEnumerable<Position> GetManyByAssetSkills(string assetSkills);
 

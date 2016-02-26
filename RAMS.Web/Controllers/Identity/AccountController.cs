@@ -107,6 +107,26 @@ namespace RAMS.Web.Controllers
 
             var result = await this.GetSignInManager.PasswordSignInAsync(model.UserName, model.Password, false, shouldLockout: false);
 
+            if (result == SignInStatus.Success)
+            {
+                var identity = await this.GetUserManager.FindByNameAsync(model.UserName);
+
+                var claims = identity.Claims;
+
+                if(identity.Claims.Where(c => c.ClaimType == "UserStatus" && c.ClaimValue == "Blocked").Count() > 0)
+                {
+                    this.GetSignInManager.AuthenticationManager.SignOut();
+
+                    return RedirectToAction("BlockedUserLogin", "Account");
+                }
+                else if (identity.Claims.Where(c => c.ClaimType == "UserStatus" && c.ClaimValue == "Deleted").Count() > 0)
+                {
+                    this.GetSignInManager.AuthenticationManager.SignOut();
+
+                    return RedirectToAction("DeletedUserLogin", "Account");
+                }
+            }
+
             switch (result)
             {
                 case SignInStatus.Success:
@@ -121,6 +141,35 @@ namespace RAMS.Web.Controllers
 
                     return View(model);
             }
+            
+        }
+
+        /// <summary>
+        /// BlockedUserLogin action method signs out the user if their account has been blocked and displays an error message in FailedLogin view
+        /// </summary>
+        /// <returns>FailedLogin view with an error message</returns>
+        [HttpGet]
+        public ActionResult BlockedUserLogin()
+        {
+            AuthenticationManager.SignOut();
+
+            var result = "Your account has been blocked. Please contact System Administrator in order to unblock your account.";
+
+            return View("FailedLogin", null, result);
+        }
+
+        /// <summary>
+        /// DeletedUserLogin action method signs out the user if their account has been deleted and displays an error message in FailedLogin view
+        /// </summary>
+        /// <returns>FailedLogin view with an error message</returns>
+        [HttpGet]
+        public ActionResult DeletedUserLogin()
+        {
+            AuthenticationManager.SignOut();
+
+            var result = "Your account has been deleted. You may no longer access this application.";
+
+            return View("FailedLogin", null, result);
         }
 
         /// <summary>
@@ -205,7 +254,7 @@ namespace RAMS.Web.Controllers
         /// EditUserProfile method persists updated user details and returns success message if update was successful, error message otherwise
         /// </summary>
         /// <param name="model">ViewModel with updated user details</param>
-        /// <returns>Success message if update was successful (_Success partial view), error message otherwise (_Error partial view)</returns>
+        /// <returns>Success message if update was successful (_EditUserConfirmation partial view), error message otherwise (_Error partial view)</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<PartialViewResult> EditUserProfile(UserEditProfileViewModel model)
@@ -276,16 +325,7 @@ namespace RAMS.Web.Controllers
                         if(model.UserType == UserType.Agent)
                         {
                             // If FullName user claim successfully updated, attempt to update employee profile
-                            var agent = new Agent();
-
-                            response = await this.GetHttpClient().GetAsync(String.Format("Agent?userName={0}", model.UserName));
-
-                            if (response.IsSuccessStatusCode) // Ensure that data that is not being changed, remain in the database
-                            {
-                                agent = await response.Content.ReadAsAsync<Agent>();
-                            }
-
-                            Mapper.Map<UserEditProfileViewModel, Agent>(model, agent);
+                            var agent = Mapper.Map<UserEditProfileViewModel, Agent>(model);
 
                             response = await this.GetHttpClient().PutAsJsonAsync("Agent", agent);
 
@@ -295,25 +335,9 @@ namespace RAMS.Web.Controllers
 
                                 if (agent != null)
                                 {
-                                    var stringBuilder = new StringBuilder();
+                                    var editUserConfirmationViewModel = Mapper.Map<Agent, EditUserConfirmationViewModel>(agent);
 
-                                    stringBuilder.AppendFormat("<div class='text-center'><h4><strong>User {0} has been successfully updated!</strong></h4></div>", agent.UserName);
-
-                                    stringBuilder.AppendFormat("<div class='row'><div class='col-md-offset-2 col-md-3'>First Name: </div><div class='col-md-7'><strong>{0}</strong></div>", agent.FirstName);
-
-                                    stringBuilder.AppendFormat("<div class='col-md-offset-2 col-md-3'>Last Name: </div><div class='col-md-7'><strong>{0}</strong></div>", agent.LastName);
-
-                                    stringBuilder.AppendFormat("<div class='col-md-offset-2 col-md-3'>Job Title: </div><div class='col-md-7'><strong>{0}</strong></div>", agent.JobTitle);
-
-                                    stringBuilder.AppendFormat("<div class='col-md-offset-2 col-md-3'>Company Name: </div><div class='col-md-7'><strong>{0}</strong></div>", agent.Company);
-
-                                    stringBuilder.AppendFormat("<div class='col-md-offset-2 col-md-3'>Email: </div><div class='col-md-7'><strong>{0}</strong></div>", agent.Email);
-
-                                    stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1'>Please remember NOT to share your login credentials with anyone.</div></div>");
-
-                                    var userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString(), false, false, true);
-
-                                    return PartialView("_Success", userConfirmationViewModel);
+                                    return PartialView("_EditUserConfirmation", editUserConfirmationViewModel);
                                 }
                                 else
                                 {
@@ -328,16 +352,7 @@ namespace RAMS.Web.Controllers
                         else if (model.UserType == UserType.Client)
                         {
                             // If FullName user claim successfully updated, attempt to update employee profile
-                            var client = new Client();
-
-                            response = await this.GetHttpClient().GetAsync(String.Format("Client?userName={0}", model.UserName));
-
-                            if (response.IsSuccessStatusCode) // Ensure that data that is not being changed, remain in the database
-                            {
-                                client = await response.Content.ReadAsAsync<Client>();
-                            }
-
-                            Mapper.Map<UserEditProfileViewModel, Client>(model, client);
+                            var client = Mapper.Map<UserEditProfileViewModel, Client>(model);
 
                             response = await this.GetHttpClient().PutAsJsonAsync("Client", client);
 
@@ -347,25 +362,9 @@ namespace RAMS.Web.Controllers
 
                                 if (client != null)
                                 {
-                                    var stringBuilder = new StringBuilder();
+                                    var editUserConfirmationViewModel = Mapper.Map<Client, EditUserConfirmationViewModel>(client);
 
-                                    stringBuilder.AppendFormat("<div class='text-center'><h4><strong>User {0} has been successfully updated!</strong></h4></div>", client.UserName);
-
-                                    stringBuilder.AppendFormat("<div class='row'><div class='col-md-offset-2 col-md-3'>First Name: </div><div class='col-md-7'><strong>{0}</strong></div>", client.FirstName);
-
-                                    stringBuilder.AppendFormat("<div class='col-md-offset-2 col-md-3'>Last Name: </div><div class='col-md-7'><strong>{0}</strong></div>", client.LastName);
-
-                                    stringBuilder.AppendFormat("<div class='col-md-offset-2 col-md-3'>Job Title: </div><div class='col-md-7'><strong>{0}</strong></div>", client.JobTitle);
-
-                                    stringBuilder.AppendFormat("<div class='col-md-offset-2 col-md-3'>Company Name: </div><div class='col-md-7'><strong>{0}</strong></div>", client.Company);
-
-                                    stringBuilder.AppendFormat("<div class='col-md-offset-2 col-md-3'>Email: </div><div class='col-md-7'><strong>{0}</strong></div>", client.Email);
-
-                                    stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1'>Please remember NOT to share your login credentials with anyone.</div></div>");
-
-                                    var userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString(), false, false, true);
-
-                                    return PartialView("_Success", userConfirmationViewModel);
+                                    return PartialView("_EditUserConfirmation", editUserConfirmationViewModel);
                                 }
                                 else
                                 {
@@ -380,16 +379,7 @@ namespace RAMS.Web.Controllers
                         else if(model.UserType == UserType.Admin)
                         {
                             // If FullName user claim successfully updated, attempt to update employee profile
-                            var admin = new Admin();
-
-                            response = await this.GetHttpClient().GetAsync(String.Format("Admin?userName={0}", model.UserName));
-
-                            if (response.IsSuccessStatusCode) // Ensure that data that is not being changed, remain in the database
-                            {
-                                admin = await response.Content.ReadAsAsync<Admin>();
-                            }
-
-                            Mapper.Map<UserEditProfileViewModel, Admin>(model, admin);
+                            var admin = Mapper.Map<UserEditProfileViewModel, Admin>(model);
 
                             response = await this.GetHttpClient().PutAsJsonAsync("Admin", admin);
 
@@ -399,25 +389,9 @@ namespace RAMS.Web.Controllers
 
                                 if (admin != null)
                                 {
-                                    var stringBuilder = new StringBuilder();
+                                    var editUserConfirmationViewModel = Mapper.Map<Admin, EditUserConfirmationViewModel>(admin);
 
-                                    stringBuilder.AppendFormat("<div class='text-center'><h4><strong>User {0} has been successfully updated!</strong></h4></div>", admin.UserName);
-
-                                    stringBuilder.AppendFormat("<div class='row'><div class='col-md-offset-2 col-md-3'>First Name: </div><div class='col-md-7'><strong>{0}</strong></div>", admin.FirstName);
-
-                                    stringBuilder.AppendFormat("<div class='col-md-offset-2 col-md-3'>Last Name: </div><div class='col-md-7'><strong>{0}</strong></div>", admin.LastName);
-
-                                    stringBuilder.AppendFormat("<div class='col-md-offset-2 col-md-3'>Job Title: </div><div class='col-md-7'><strong>{0}</strong></div>", admin.JobTitle);
-
-                                    stringBuilder.AppendFormat("<div class='col-md-offset-2 col-md-3'>Company Name: </div><div class='col-md-7'><strong>{0}</strong></div>", admin.Company);
-
-                                    stringBuilder.AppendFormat("<div class='col-md-offset-2 col-md-3'>Email: </div><div class='col-md-7'><strong>{0}</strong></div>", admin.Email);
-
-                                    stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1'>Please remember NOT to share your login credentials with anyone.</div></div>");
-
-                                    var userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString(), false, false, true);
-
-                                    return PartialView("_Success", userConfirmationViewModel);
+                                    return PartialView("_EditUserConfirmation", editUserConfirmationViewModel);
                                 }
                                 else
                                 {
@@ -515,7 +489,7 @@ namespace RAMS.Web.Controllers
         /// ChangePassword method validates current and new password and displays an error message if new password does not match password criteria or old password does not match database records, otherwise replaces old password with a new password
         /// </summary>
         /// <param name="model">User information required to reset password</param>
-        /// <returns>_Success partial view with success message, or _Error partial view with error message depending on the outcome of this method</returns>
+        /// <returns>_SuccessConfirmation partial view with success message, or _Error partial view with error message depending on the outcome of this method</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<PartialViewResult> ChangePassword(ChangePasswordViewModel model)
@@ -539,7 +513,7 @@ namespace RAMS.Web.Controllers
 
                 userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString());
 
-                return PartialView("_Confirmation", userConfirmationViewModel);
+                return PartialView("_FailureConfirmation", userConfirmationViewModel);
                 
             }
 
@@ -558,7 +532,7 @@ namespace RAMS.Web.Controllers
 
                     userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString());
 
-                    return PartialView("_Confirmation", userConfirmationViewModel);
+                    return PartialView("_FailureConfirmation", userConfirmationViewModel);
                 }
             }
 
@@ -577,7 +551,7 @@ namespace RAMS.Web.Controllers
 
                     userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString());
 
-                    return PartialView("_Confirmation", userConfirmationViewModel);
+                    return PartialView("_FailureConfirmation", userConfirmationViewModel);
                 }
                 // If password is invalid format, display _Error partial view with following error message "Passwords must have at least one non letter or digit character, least one lowercase ('a'-'z'), least one uppercase ('A'-'Z')."
                 else if (!Utilities.RegexMatch(this.PasswordRegex, model.Password))
@@ -592,7 +566,7 @@ namespace RAMS.Web.Controllers
 
                     userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString());
 
-                    return PartialView("_Confirmation", userConfirmationViewModel);
+                    return PartialView("_FailureConfirmation", userConfirmationViewModel);
                 }
             }
 
@@ -630,7 +604,7 @@ namespace RAMS.Web.Controllers
 
                         userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString());
 
-                        return PartialView("_Confirmation", userConfirmationViewModel);
+                        return PartialView("_SuccessConfirmation", userConfirmationViewModel);
                     }
                     catch (PasswordChangeException ex)
                     {
@@ -645,7 +619,7 @@ namespace RAMS.Web.Controllers
 
                         userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString());
 
-                        return PartialView("_Confirmation", userConfirmationViewModel);
+                        return PartialView("_FailureConfirmation", userConfirmationViewModel);
                     }
                 }
             }
@@ -660,7 +634,7 @@ namespace RAMS.Web.Controllers
 
             userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString());
 
-            return PartialView("_Confirmation", userConfirmationViewModel);
+            return PartialView("_FailureConfirmation", userConfirmationViewModel);
         }
         #endregion
 
@@ -679,7 +653,7 @@ namespace RAMS.Web.Controllers
         /// ForgotPassword method checks if an email address and user name provided by user match to email address and user name stored in data context, and if it matches, an email will be sent to administration with request to change password. Otherwise form will be redisplayed with an error message
         /// </summary>
         /// <param name="model">Email address and user name provided by user</param>
-        /// <returns>_Confirmation partial view with success message if outcome of this method is success, _ForgotPassword partial view with model errors otherwise</returns>
+        /// <returns>_ForgotPasswordConfirmation partial view with success message if outcome of this method is success, _ForgotPassword partial view with model errors otherwise</returns>
         [HttpPost]
         public async Task<PartialViewResult> ForgotPassword(ForgotPasswordViewModel model)
         {

@@ -1,0 +1,17 @@
+﻿@model RAMS.ViewModels.PositionResultViewModel
+
+<!-- FAILURE CONFIRMATION PARTIAL -->
+@if (Model != null)
+{
+    if (Model.RefreshList)
+    {
+        <script type="text/javascript">$(function () { LoadAction("position-list-div", "@Url.Action("Position", "Position", new { Area = "Agency" })"); });</script>
+    }
+
+    <div class="alert alert-danger bottom-margin-0" role="alert">
+        @Html.Raw(Model.Message)
+    </div>
+
+    <div class="vertical-padding-24"></div>
+}
+<!-- END OF FAILURE CONFIRMATION PARTIAL -->

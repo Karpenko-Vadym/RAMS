@@ -131,7 +131,12 @@ namespace RAMS.Service
         {
             var position = this.PositionRepository.GetById(id);
 
-            return position.Agent;
+            if (position != null)
+            {
+                return position.Agent;
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -143,7 +148,12 @@ namespace RAMS.Service
         {
             var notification = this.NotificationRepository.GetById(id);
 
-            return notification.Agent;
+            if (notification != null)
+            {
+                return notification.Agent;
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -155,7 +165,12 @@ namespace RAMS.Service
         {
             var department = this.DepartmentRepository.GetById(id);
 
-            return department.Agents;
+            if (department != null)
+            {
+                return department.Agents;
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -167,7 +182,12 @@ namespace RAMS.Service
         {
             var interview = this.InterviewRepository.GetById(id);
 
-            return interview.Interviewer;
+            if (interview != null)
+            {
+                return interview.Interviewer;
+            }
+
+            return null;
         }
 
         /// <summary>

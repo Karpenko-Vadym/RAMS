@@ -86,7 +86,12 @@ namespace RAMS.Service
         {
             var agent = this.AgentRepository.GetById(id);
 
-            return agent.Positions;
+            if (agent != null)
+            {
+                return agent.Positions;
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -98,31 +103,80 @@ namespace RAMS.Service
         {
             var client = this.ClientRepository.GetById(id);
 
-            return client.Positions;
+            if (client != null)
+            {
+                return client.Positions;
+            }
+
+            return null;
         }
 
         /// <summary>
-        /// Get multiple positions with specific category
+        /// Get multiple positions that belong to specific client
+        /// </summary>
+        /// <param name="clientName">User name of the client who's positions are being retrieved</param>
+        /// <returns>Multiple positions that belong to specific client</returns>
+        public IEnumerable<Position> GetManyPositionsByClientName(string clientName)
+        {
+            var client = this.ClientRepository.GetOneByUserName(clientName);
+
+            if (client != null)
+            {
+                return client.Positions;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Get multiple positions that belong to specific agent
+        /// </summary>
+        /// <param name="agentName">User name of the agent who's positions are being retrieved</param>
+        /// <returns>Multiple positions that belong to specific agent</returns>
+        public IEnumerable<Position> GetManyPositionsByAgentName(string agentName)
+        {
+            var agent = this.AgentRepository.GetOneByUserName(agentName);
+
+            if (agent != null)
+            {
+                return agent.Positions;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Get multiple positions with specific category by category id
         /// </summary>
         /// <param name="id">Id of the category for which positions are being retrieved</param>
-        /// <returns>Multiple positions with specific category</returns>
+        /// <returns>Multiple positions with specific category by category id</returns>
         public IEnumerable<Position> GetManyPositionsByCategoryId(int id)
         {
             var category = this.CategoryRepository.GetById(id);
 
-            return category.Positions;
+            if (category != null)
+            {
+                return category.Positions;
+            }
+
+            return null;
         }
 
         /// <summary>
-        /// Get multiple positions for specific department
+        /// Get multiple positions with specific category by category name
         /// </summary>
-        /// <param name="id">Id of the department for which positions are being retrieved</param>
-        /// <returns>Multiple positions for specific department</returns>
-        public IEnumerable<Position> GetManyPositionsByDepartmentId(int id)
+        /// <param name="name">Name of the category for which positions are being retrieved</param>
+        /// <returns>Multiple positions with specific category by category name</returns>
+        public IEnumerable<Position> GetManyPositionsByCategoryName(string name)
         {
-            var department = this.DepartmentRepository.GetById(id);
+            var category = this.CategoryRepository.GetOneByName(name);
 
-            return department.Positions;
+            if (category != null)
+            {
+                return category.Positions;
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -196,6 +250,16 @@ namespace RAMS.Service
         }
 
         /// <summary>
+        /// Get multiple positions with matching keyword
+        /// </summary>
+        /// <param name="keyword">Keyword to be compared with the context positions' data</param>
+        /// <returns>Multiple positions with matching keyword</returns>
+        public IEnumerable<Position> GetManyPositionsByKeyword(string keyword)
+        {
+            return this.PositionRepository.GetManyByKeyword(keyword);
+        }
+
+        /// <summary>
         /// Get multiple positions with matching asset skills (Full or partial)
         /// </summary>
         /// <param name="assetSkills">Asset skills to be compared with the context positions' data</param>
@@ -214,7 +278,12 @@ namespace RAMS.Service
         {
             var candidate = this.CandidateRepository.GetById(id);
 
-            return candidate.Position;
+            if (candidate != null)
+            {
+                return candidate.Position;
+            }
+
+            return null;
         }
 
         /// <summary>

@@ -1,0 +1,90 @@
+﻿@model RAMS.ViewModels.PositionDetailsViewModel
+
+<!-- POSITION DETAILS PARTIAL VIEW -->
+@if (Model != null)
+{
+    if(Model.AgentId < 1 || Model.Status == RAMS.Enums.PositionStatus.Closed)
+    { 
+        <div class="btn-group btn-group-justified" role="group">
+            <div class="btn-group" role="group">
+                <input type="button" disabled class="btn btn-danger" value="Request to Close Position" />
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="btn-group btn-group-justified" role="group">
+            <div class="btn-group" role="group">
+                <input type="button" class="btn btn-danger" data-toggle="modal" data-target="#position-closure-confirmation-modal" data-agent-id="@Model.AgentId" data-agent-name="@Model.AssignedTo" data-position-id="@Model.PositionId" data-position-title="@Model.Title" data-client-user-name="@User.Identity.Name" data-client-full-name="@Model.Client" value="Request to Close Position" />
+            </div>
+        </div>
+    }
+
+    <div class="vertical-padding-24"></div>
+
+    <div class="well well-lg background-white bottom-margin-0">
+        <div class="row">
+            <div class="col-sm-11 col-md-11">
+                <dl class="dl-horizontal bottom-margin-0">
+                    <dt>@Html.LabelFor(model => model.Title)</dt>
+                    <dd>@Model.Title</dd>
+                    <dt>@Html.LabelFor(model => model.Description)</dt>
+                    <dd>@Html.Raw(Model.Description)</dd>
+                    <dt>@Html.LabelFor(model => model.ExpiryDate)</dt>
+                    @if (Model.ExpiryDate < DateTime.Now)
+                    { 
+                        <dd><span class="label label-danger">@Model.ExpiryDate.ToString("dd/MM/yyyy")</span></dd>
+                    }
+                    else
+                    {
+                        <dd><span class="label label-success">@Model.ExpiryDate.ToString("dd/MM/yyyy")</span></dd>
+                    }
+                    <dt>@Html.LabelFor(model => model.CompanyDetails)</dt>
+                    <dd>@Html.Raw(Model.CompanyDetails)</dd>
+                    <dt>@Html.LabelFor(model => model.Location)</dt>
+                    <dd>@Model.Location</dd>
+                    <dt>@Html.LabelFor(model => model.PeopleNeeded)</dt>
+                    <dd>@Model.PeopleNeeded</dd>
+                    <dt>@Html.LabelFor(model => model.Category)</dt>
+                    <dd>@Model.Category</dd>
+                    <dt>@Html.LabelFor(model => model.DateCreated)</dt>
+                    <dd>@Model.DateCreated</dd>
+                    <dt>@Html.LabelFor(model => model.Status)</dt>
+                    <dd>@Model.Status</dd>
+                    <dt>@Html.LabelFor(model => model.AssignedTo)</dt>
+                    @if (String.IsNullOrEmpty(Model.AssignedTo))
+                    {
+                        <dd>Not Assigned</dd>
+                    }
+                    else
+                    {
+                        <dd>@Model.AssignedTo</dd>
+                    }    
+                    <dt>@Html.LabelFor(model => model.Qualifications)</dt>
+                    @if (String.IsNullOrEmpty(Model.Qualifications))
+                    {
+                        <dd>Not Specified</dd>
+                    }
+                    else
+                    {
+                        <dd>@Model.Qualifications</dd>
+                    }
+                    <dt>@Html.LabelFor(model => model.AssetSkills)</dt>
+                    @if (String.IsNullOrEmpty(Model.AssetSkills))
+                    {
+                        <dd>Not Specified</dd>
+                    }
+                    else
+                    {
+                        <dd>@Model.AssetSkills</dd>
+                    }
+                </dl>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="alert alert-danger bottom-margin-0" role="alert">Position details are not available.</div>
+}
+<!-- END OF POSITION DETAILS PARTIAL VIEW -->

@@ -101,19 +101,16 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                     {
                         department = await response.Content.ReadAsAsync<Department>();
 
-                        var stringBuilder = new StringBuilder();
+                        if (department != null)
+                        {
+                            var departmentAddEditConfirmationViewModel = Mapper.Map<Department, DepartmentAddEditConfirmationViewModel>(department);
 
-                        stringBuilder.AppendFormat("<div class='text-center'><h4><strong>Department {0} has been successfully created!</strong></h4></div>", department.Name);
-
-                        stringBuilder.Append("<div class='row'><div class='col-md-offset-1'>Employees can now be assigned to this department.</div>");
-
-                        stringBuilder.AppendFormat("<div class='col-md-12'><p></p></div><div class='col-md-offset-2 col-md-3'>Department Name: </div><div class='col-md-7'><strong>{0}</strong></div>", department.Name);
-
-                        stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1'><strong>NOTE:</strong> Employee can be assigned to this department from Edit User or New User interfaces.</div></div>");
-
-                        var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString(), false, true);
-
-                        return PartialView("_Success", confirmationViewModel);
+                            return PartialView("_NewDepartmentConfirmation", departmentAddEditConfirmationViewModel);
+                        }
+                        else
+                        {
+                            throw new DepartmentAddException("Null is returned after creating new department. Status Code: " + response.StatusCode);
+                        }
                     }
                     else
                     {
@@ -199,19 +196,9 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                         if (department != null)
                         {
-                            var stringBuilder = new StringBuilder();
+                            var departmentAddEditConfirmationViewModel = Mapper.Map<Department, DepartmentAddEditConfirmationViewModel>(department);
 
-                            stringBuilder.AppendFormat("<div class='text-center'><h4><strong>Department {0} has been successfully updated!</strong></h4></div>", department.Name);
-
-                            stringBuilder.Append("<div class='row'><div class='col-md-offset-1'>Please ensure that department information is valid.</div>");
-
-                            stringBuilder.AppendFormat("<div class='col-md-12'><p></p></div><div class='col-md-offset-2 col-md-3'>Department Name: </div><div class='col-md-7'><strong>{0}</strong></div>", department.Name);
-
-                            stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1'><strong>NOTE:</strong> Employee can be assigned to this department from Edit User or New User interfaces.</div></div>");
-
-                            var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString(), false, true);
-
-                            return PartialView("_Success", confirmationViewModel);
+                            return PartialView("_EditDepartmentConfirmation", departmentAddEditConfirmationViewModel);
                         }
                         else
                         {

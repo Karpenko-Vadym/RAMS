@@ -232,7 +232,7 @@ namespace RAMS.Web.Controllers.WebAPI
         [ResponseType(typeof(Notification))]
         public IHttpActionResult ChangeNotificationStatus(int id, bool isReadStatus = false)
         {
-            if (id != null || id != 0)
+            if (id > 0)
             {
                 var notification = this.NotificationService.GetOneNotificationById(id);
 

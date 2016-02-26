@@ -1,0 +1,44 @@
+﻿@model RAMS.ViewModels.AgentAddEditConfirmationViewModel
+
+<!-- REGISTER AGENT CONFIRMATION PARTIAL VIEW -->
+@if (Model != null)
+{
+    <div class="alert alert-success">
+        <div class='text-center'><h4><strong>User @Model.UserName has been successfully created!</strong></h4></div>
+        <div class="text-center">Please review user details and ensure that all the information is valid.</div>
+        <div class="text-center"><strong>NOTE:</strong> Login credentials have been sent to the user via an email.</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-md-12">
+            <dl class="dl-horizontal bottom-margin-0">
+                <dt>@Html.LabelFor(model => model.UserName)</dt>
+                <dd>@Model.UserName</dd>
+                <dt>@Html.LabelFor(model => model.UserType)</dt>
+                <dd>@Html.Raw(Model.UserType)</dd>
+                <dt>@Html.LabelFor(model => model.FirstName)</dt>
+                <dd>@Model.FirstName</dd>
+                <dt>@Html.LabelFor(model => model.LastName)</dt>
+                <dd>@Html.Raw(Model.LastName)</dd>
+                <dt>@Html.LabelFor(model => model.JobTitle)</dt>
+                <dd>@Model.JobTitle</dd>
+                <dt>@Html.LabelFor(model => model.Company)</dt>
+                <dd>@Model.Company</dd>
+                <dt>@Html.LabelFor(model => model.DepartmentName)</dt>
+                <dd>@Model.DepartmentName</dd>
+                <dt>@Html.LabelFor(model => model.Email)</dt>
+                <dd>@Model.Email</dd>
+                <dt>@Html.LabelFor(model => model.PhoneNumber)</dt>
+                <dd>@Model.PhoneNumber</dd>
+                <dt>@Html.LabelFor(model => model.Role)</dt>
+                <dd>@Model.Role</dd>
+            </dl>
+        </div>
+    </div>
+
+    <script type="text/javascript">$(function () { LoadAction("user-list-div", "@Url.Action("UserList", "User", new { Area = "SystemAdmin" })"); });</script>
+}
+else
+{
+    <div class="alert alert-danger bottom-margin-0" role="alert">User confirmation details are not available.</div>
+}
+<!-- END OF REGISTER AGENT CONFIRMATION PARTIAL VIEW -->

@@ -1,0 +1,43 @@
+﻿@model RAMS.ViewModels.ClientAddEditConfirmationViewModel
+
+<!-- EDIT CLIENT CONFIRMATION PARTIAL VIEW -->
+@if (Model != null)
+{
+    <div class="well well-lg bottom-margin-0 background-white">
+        <div class="alert alert-success">
+            <div class='text-center'><h4><strong>User @Model.UserName has been successfully updated!</strong></h4></div>
+            <div class="text-center">Please review user details and ensure that all the information is valid.</div>
+            <div class="text-center"><strong>NOTE:</strong> The user has been notified about the profile changes via an email.</div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-12">
+                <dl class="dl-horizontal bottom-margin-0">
+                    <dt>@Html.LabelFor(model => model.UserName)</dt>
+                    <dd>@Model.UserName</dd>
+                    <dt>@Html.LabelFor(model => model.UserType)</dt>
+                    <dd>@Html.Raw(Model.UserType)</dd>
+                    <dt>@Html.LabelFor(model => model.FirstName)</dt>
+                    <dd>@Model.FirstName</dd>
+                    <dt>@Html.LabelFor(model => model.LastName)</dt>
+                    <dd>@Html.Raw(Model.LastName)</dd>
+                    <dt>@Html.LabelFor(model => model.JobTitle)</dt>
+                    <dd>@Model.JobTitle</dd>
+                    <dt>@Html.LabelFor(model => model.Company)</dt>
+                    <dd>@Model.Company</dd>
+                    <dt>@Html.LabelFor(model => model.Email)</dt>
+                    <dd>@Model.Email</dd>
+                    <dt>@Html.LabelFor(model => model.PhoneNumber)</dt>
+                    <dd>@Model.PhoneNumber</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">$(function () { LoadAction("user-list-div", "@Url.Action("UserList", "User", new { Area = "SystemAdmin" })"); $("#edit-user-message-modal-body-div").empty(); });</script>
+}
+else
+{
+    <div class="alert alert-danger bottom-margin-0" role="alert">User confirmation details are not available.</div>
+}
+<!-- END OF EDIT CLIENT CONFIRMATION PARTIAL VIEW -->
+

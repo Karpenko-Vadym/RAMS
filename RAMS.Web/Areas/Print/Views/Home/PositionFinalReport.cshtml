@@ -1,18 +1,224 @@
 ﻿@model RAMS.ViewModels.PositionReportDetailsForPrintViewModel
 
-<!-- POSITION FINAL REPORT PRINTER FRIENDLY PARTIAL -->
+@{
+    var numCandidates = 1;
+}
+
+<!-- POSITION FINAL REPORT PRINTER FRIENDLY VIEW -->
 @if (Model != null)
-{
-    if (!RAMS.Helpers.Utilities.IsEmpty(Model.Candidates))
-    {
-        
-    }
-    
-    <p>Final Report</p>
-    
+{   
+    <div class="print-navbar not-printable">
+        <div class="well well-sm bottom-margin-0">
+            <input type="button" class="btn btn-danger" onclick="window.print();" value="Print" />
+        </div>
+    </div>
+
+    <div class="print-container">
+        <h3 class="text-center">Final Report</h3>
+
+        @* Not sure if this should be shown
+            
+        @if (!RAMS.Helpers.Utilities.IsEmpty(Model.Candidates.Where(c => c.Status == RAMS.Enums.CandidateStatus.Recommended || c.Status == RAMS.Enums.CandidateStatus.Interviewed)))
+        {
+            <table id="candidate-list-table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Score</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Candidates.Where(c => c.Status == RAMS.Enums.CandidateStatus.Recommended || c.Status == RAMS.Enums.CandidateStatus.Interviewed))
+                    {
+                        <tr>
+                            <td>@item.CandidateIdDisplay</td>
+                            <td>@item.FileName @item.LastName</td>
+                            <td>@item.Score</td>
+                            <td>@item.Status</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <hr />
+        }*@
+ 
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 180px"></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td class="text-right"><strong>Section: Position</strong></td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(model => model.PositionIdForDisplay)</td>
+                    <td>@Model.PositionIdForDisplay</td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(model => model.Title)</td>
+                    <td>@Model.Title</td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(model => model.Description)</td>
+                    <td>@Html.Raw(Model.Description)</td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(model => model.CompanyDetails)</td>
+                    <td>@Html.Raw(Model.CompanyDetails)</td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(model => model.DateCreated)</td>
+                    <td>@Model.DateCreated.ToString("dd/MM/yyyy")</td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(model => model.ExpiryDate)</td>
+                    <td>@Model.ExpiryDate.ToString("dd/MM/yyyy")</td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(model => model.Location)</td>
+                    <td>@Model.Location</td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(model => model.Status)</td>
+                    <td>@Model.Status</td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(model => model.PeopleNeeded)</td>
+                    <td>@Model.PeopleNeeded</td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(model => model.AcceptanceScore)</td>
+                    <td>@Model.AcceptanceScore</td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(model => model.Qualifications)</td>
+                    <td>@Model.Qualifications</td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(model => model.AssetSkills)</td>
+                    <td>@(String.IsNullOrEmpty(Model.AssetSkills) ? "Not Specified" : Model.AssetSkills)</td>
+                </tr>
+                <tr>
+                    <td><h2></h2></td>
+                    <td><h2></h2></td>
+                </tr>
+                <tr class="tr-hr">
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><h2></h2></td>
+                    <td><h2></h2></td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(model => model.TotalCandidates)</td>
+                    <td>@Model.TotalCandidates</td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(model => model.TopCandidates)</td>
+                    <td>@Model.TopCandidates</td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(model => model.CandidatesSelected)</td>
+                    <td>@Model.CandidatesSelected</td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(model => model.AverageScore)</td>
+                    <td>@Model.AverageScore</td>
+                </tr>
+            </tbody>
+
+        </table>
+        @if (!RAMS.Helpers.Utilities.IsEmpty(Model.Candidates.Where(c => c.Status == RAMS.Enums.CandidateStatus.Recommended || c.Status == RAMS.Enums.CandidateStatus.Interviewed)))
+        {
+            <hr class="not-printable" />
+            <div class="break-page-after"></div>
+            <table id="candidate-table">
+                <thead>
+                    <tr>
+                        <th style="width: 180px"></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Candidates.Where(c => c.Status == RAMS.Enums.CandidateStatus.Recommended || c.Status == RAMS.Enums.CandidateStatus.Interviewed))
+                    {
+                        <tr>
+                            <td></td>
+                            <td class="text-right"><strong>Section: Candidate #@numCandidates</strong></td>
+                        </tr>
+                        <tr>
+                            <td>@Html.LabelFor(model => item.CandidateIdDisplay)</td>
+                            <td>@item.CandidateIdDisplay</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.LabelFor(model => item.FirstName)</td>
+                            <td>@item.FirstName</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.LabelFor(model => item.LastName)</td>
+                            <td>@Html.Raw(item.LastName)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.LabelFor(model => item.PhoneNumber)</td>
+                            <td>@Html.Raw(item.PhoneNumber)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.LabelFor(model => item.Email)</td>
+                            <td>@item.Email</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.LabelFor(model => item.Country)</td>
+                            <td>@item.Country</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.LabelFor(model => item.PostalCode)</td>
+                            <td>@item.PostalCode</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.LabelFor(model => item.Score)</td>
+                            <td>@item.Score</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.LabelFor(model => item.Feedback)</td>
+                            <td>@Html.Raw((String.IsNullOrEmpty(item.Feedback) ? "Not Specified" : item.Feedback))</td>
+                        </tr>
+                        <tr>
+                            <td><h2></h2></td>
+                            <td><h2></h2></td>
+                        </tr>
+                        <tr class="tr-hr not-printable">
+                            <td></td>
+                            <td></td>   
+                        </tr>
+                        <tr>
+                            <td><h2></h2></td>
+                            <td><h2></h2></td>
+                        </tr>
+                        <tr class="break-page-after">
+                            <td></td>
+                            <td></td>   
+                        </tr>
+                        
+                        numCandidates++;
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
 }
 else
 {
-
+    <div class='alert alert-danger' style="margin: 20px;" role='alert'>
+        <div class='text-center'><h4><strong>Report information is not available.</strong></h4></div>
+        <div class='text-center'>Please ensure that you are accessing this report by clicking on "Printer Fiendly Button" in the Report area.</div>
+        <div class='text-center'>Please try again in a moment.</div>
+    </div>
 }
-<!-- END OF POSITION FINAL REPORT PRINTER FRIENDLY PARTIAL -->
+<!-- END OF POSITION FINAL REPORT PRINTER FRIENDLY VIEW -->

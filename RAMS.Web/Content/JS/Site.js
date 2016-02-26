@@ -251,7 +251,17 @@ function CustomerModalControls()
 
     $("#position-closure-confirmation-modal").on("show.bs.modal", function (e) { LoadAction("position-closure-confirmation-modal-body-div", "/RAMS/Customer/Position/PositionClosure?agentId=" + $(e.relatedTarget).data("agent-id") + "&agentName=" + encodeURIComponent($(e.relatedTarget).data("agent-name")) + "&positionId=" + $(e.relatedTarget).data("position-id") + "&positionTitle=" + encodeURIComponent($(e.relatedTarget).data("position-title")) + "&clientUserName=" + $(e.relatedTarget).data("client-user-name") + "&clientFullName=" + encodeURIComponent($(e.relatedTarget).data("client-full-name"))); });
 
-    
+    $("#position-status-report-modal").on("show.bs.modal", function (e) { LoadAction("position-status-report-modal-body-div", "/RAMS/Customer/Report/PositionStatusReport?positionId=" + $(e.relatedTarget).data("position-id")); });
+
+    $("#position-status-report-modal").on("hidden.bs.modal", function (e) { $("#position-status-report-modal-body-div").empty(); });
+
+    $("#position-final-report-modal").on("show.bs.modal", function (e) { LoadAction("position-final-report-modal-body-div", "/RAMS/Customer/Report/PositionFinalReport?positionId=" + $(e.relatedTarget).data("position-id")); });
+
+    $("#position-final-report-modal").on("hidden.bs.modal", function (e) { $("#position-final-report-modal-body-div").empty(); });
+
+    $("#candidate-report-modal").on("show.bs.modal", function (e) { LoadAction("candidate-report-modal-body-div", "/RAMS/Customer/Report/CandidateReport?candidateId=" + $(e.relatedTarget).data("candidate-id")); });
+
+    $("#candidate-report-modal").on("hidden.bs.modal", function (e) { $("#candidate-report-modal-body-div").empty(); });
 }
 
 /********** END OF CUSTOMER MODAL CONTROLS **********/
@@ -305,8 +315,6 @@ function AgencyModalControls()
 
     $("#client-details-modal").on("hidden.bs.modal", function (e) { $("#client-details-modal-body-div").empty(); });
 
-
-
     $("#position-status-report-modal").on("show.bs.modal", function (e) { LoadAction("position-status-report-modal-body-div", "/RAMS/Agency/Report/PositionStatusReport?positionId=" + $(e.relatedTarget).data("position-id")); });
 
     $("#position-status-report-modal").on("hidden.bs.modal", function (e) { $("#position-status-report-modal-body-div").empty(); });
@@ -318,7 +326,6 @@ function AgencyModalControls()
     $("#candidate-report-modal").on("show.bs.modal", function (e) { LoadAction("candidate-report-modal-body-div", "/RAMS/Agency/Report/CandidateReport?candidateId=" + $(e.relatedTarget).data("candidate-id")); });
 
     $("#candidate-report-modal").on("hidden.bs.modal", function (e) { $("#candidate-report-modal-body-div").empty(); });
-
 }
 
 /********** END OF AGENCY MODAL CONTROLS **********/

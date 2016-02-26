@@ -19,6 +19,31 @@ namespace RAMS.Web.Areas.Print.Controllers
     public class HomeController : BaseController
     {
         /// <summary>
+        /// Index action method will be called as soon as user navigates (Or gets redirected) to Print area by it's root URL
+        /// User will be redirected to appropriate location depending on his/her UserType
+        /// </summary>
+        /// <returns>Redirected to appropriate location depending on his/her UserType</returns>
+        public ActionResult Index()
+        {
+            var identity = User.Identity as ClaimsIdentity;
+
+            if (identity.HasClaim("UserType", "Agent"))
+            {
+                return RedirectToAction("Index", "Home", new { Area = "Agency" });
+            }
+            else if (identity.HasClaim("UserType", "Client"))
+            {
+                return RedirectToAction("Index", "Home", new { Area = "Customer" });
+            }
+            else if (identity.HasClaim("UserType", "Admin"))
+            {
+                return RedirectToAction("Index", "Home", new { Area = "SystemAdmin" });
+            }
+
+            return RedirectToAction("Index", "Home", new { Area = "" });
+        }
+
+        /// <summary>
         /// PositionStatusReportPrint action method gets requested position's details and passes it to PositionStatusReportPrint view
         /// </summary>
         /// <param name="positionId">Id of the position that is being fetched</param>
@@ -26,9 +51,9 @@ namespace RAMS.Web.Areas.Print.Controllers
         [HttpGet]
         public async Task<ViewResult> PositionStatusReport(string positionId)
         {
-            if (!String.IsNullOrEmpty(positionId))
+            if (!String.IsNullOrEmpty(positionId) && Session[User.Identity.Name] != null && positionId.Length % 4 == 0)
             {
-                var response = await this.GetHttpClient().GetAsync(String.Format("Position?id={0}", (RAMS.Helpers.Utilities.ConvertBase64StringToInt(positionId) - Int32.Parse(Session["SquareSeconds"].ToString()))));
+                var response = await this.GetHttpClient().GetAsync(String.Format("Position?id={0}", (RAMS.Helpers.Utilities.ConvertBase64StringToInt(positionId) - Int32.Parse(Session[User.Identity.Name].ToString()))));
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -58,9 +83,9 @@ namespace RAMS.Web.Areas.Print.Controllers
         [HttpGet]
         public async Task<ViewResult> PositionFinalReport(string positionId)
         {
-            if (!String.IsNullOrEmpty(positionId))
+            if (!String.IsNullOrEmpty(positionId) && Session[User.Identity.Name] != null && positionId.Length % 4 == 0)
             {
-                var response = await this.GetHttpClient().GetAsync(String.Format("Position?id={0}", (RAMS.Helpers.Utilities.ConvertBase64StringToInt(positionId) - Int32.Parse(Session["SquareSeconds"].ToString()))));
+                var response = await this.GetHttpClient().GetAsync(String.Format("Position?id={0}", (RAMS.Helpers.Utilities.ConvertBase64StringToInt(positionId) - Int32.Parse(Session[User.Identity.Name].ToString()))));
 
                 if (response.IsSuccessStatusCode)
                 {

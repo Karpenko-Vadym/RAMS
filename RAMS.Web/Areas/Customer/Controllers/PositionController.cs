@@ -29,10 +29,9 @@ namespace RAMS.Web.Areas.Customer.Controllers
         /// Default action method that returns main view of Profile controller
         /// User will be redirected to appropriate location depending on his/her UserType if user does not belong to this area
         /// </summary>
-        /// <param name="message">Message that will be displayed in the view. This message will inform the user about success or failure of particular operation</param>
         /// <returns>Main view of Position controller</returns>
         [HttpGet]
-        public ActionResult Index(string message = "")
+        public ActionResult Index()
         {
             var identity = User.Identity as ClaimsIdentity;
 

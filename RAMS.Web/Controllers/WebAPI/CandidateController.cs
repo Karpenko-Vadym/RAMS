@@ -145,6 +145,62 @@ namespace RAMS.Web.Controllers.WebAPI
         }
 
         /// <summary>
+        /// Update candidate feedback
+        /// </summary>
+        /// <param name="candidateId">If of the candidate to be updated</param>
+        /// <param name="feedback">Feedback to be updated</param>
+        /// <returns>HttpResponseMessage with status code dependning on the outcome of this method</returns>
+        [HttpPut]
+        [ResponseType(typeof(Candidate))]
+        public IHttpActionResult UpdateCandidateFeedback(int candidateId, string feedback)
+        {
+            if (candidateId > 0)
+            {
+                var candidate = this.CandidateService.GetOneCandidateById(candidateId);
+
+                if (candidate != null)
+                {
+                    if (feedback == candidate.Feedback)
+                    {
+                        return Ok(candidate);
+                    }
+
+                    candidate.Feedback = feedback;
+
+                    this.CandidateService.UpdateCandidate(candidate);
+
+                    try
+                    {
+                        this.CandidateService.SaveChanges();
+                    }
+                    catch (DbUpdateConcurrencyException ex)
+                    {
+                        // Log exception
+                        ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+
+                        return Conflict();
+                    }
+                    catch (DbUpdateException ex)
+                    {
+                        // Log exception
+                        ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+
+                        if (!this.CandidateExists(candidate.CandidateId))
+                        {
+                            return NotFound();
+                        }
+
+                        return Conflict();
+                    }
+
+                    return Ok(candidate);
+                }
+            }
+
+            return NotFound();
+        }
+
+        /// <summary>
         /// Delete existing candidate
         /// </summary>
         /// <param name="id">Id of the candidate to be deleted</param>

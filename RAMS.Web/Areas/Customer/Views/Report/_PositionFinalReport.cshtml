@@ -1,0 +1,107 @@
+﻿@model RAMS.ViewModels.PositionReportDetailsViewModel
+
+<!-- POSITION FINAL REPORT PARTIAL -->
+
+@{
+    HttpContext.Current.Session[User.Identity.Name] = (DateTime.Now.Second * 10) * (DateTime.Now.Second * 10);
+}
+
+@if (Model != null)
+{
+    <div class="btn-group btn-group-justified" role="group">
+        <div class="btn-group" role="group">
+            @Html.ActionLink("Printer Fiendly Page", "PositionFinalReport", "Home", new { positionId = RAMS.Helpers.Utilities.ConvertIntToBase64String(Model.PositionId + Int32.Parse(Session[User.Identity.Name].ToString())), Area = "Print" }, new { @Class = "btn btn-info", target = "_blank" })
+        </div>
+    </div>
+
+    <div class="vertical-padding-24"></div>
+
+    if (!RAMS.Helpers.Utilities.IsEmpty(Model.Candidates.Where(c => c.Status == RAMS.Enums.CandidateStatus.Recommended || c.Status == RAMS.Enums.CandidateStatus.Interviewed)))
+    {
+        <div class="well well-lg bottom-margin-0 background-white">
+            <table id="candidate-report-list-table" class="table table-striped table-bordered table-hover bottom-margin-0" cellspacing="0">
+                <thead>
+                    <tr class="active">
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Score</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Candidates.Where(c => c.Status == RAMS.Enums.CandidateStatus.Recommended || c.Status == RAMS.Enums.CandidateStatus.Interviewed))
+                    {
+                        <tr class="cursor-pointer" data-toggle="modal" data-target="#candidate-report-modal" data-candidate-id="@item.CandidateId">
+                            <td>@item.CandidateIdDisplay</td>
+                            <td>@item.FullName</td>
+                            <td>@item.Score</td>
+                            <td>@item.Status</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="vertical-padding-24"></div>
+
+        <script type="text/javascript">$(function () { LoadDataTable("candidate-report-list-table"); });</script>
+    }
+    <div class="well well-lg bottom-margin-0 background-white">
+        <dl class="dl-horizontal bottom-margin-0">
+            <dt>@Html.LabelFor(model => model.PositionIdForDisplay)</dt>
+            <dd>@Model.PositionIdForDisplay</dd>
+            <dt>@Html.LabelFor(model => model.Title)</dt>
+            <dd>@Model.Title</dd>
+            <dt>@Html.LabelFor(model => model.Description)</dt>
+            <dd>@Html.Raw(Model.Description)</dd>
+            <dt>@Html.LabelFor(model => model.CompanyDetails)</dt>
+            <dd>@Html.Raw(Model.CompanyDetails)</dd>
+            <dt>@Html.LabelFor(model => model.DateCreated)</dt>
+            <dd>@Model.DateCreated.ToString("dd/MM/yyyy")</dd>
+            <dt>@Html.LabelFor(model => model.ExpiryDate)</dt>
+            @if (Model.ExpiryDate < DateTime.Now)
+            {
+                <dd><span class="label label-danger">@Model.ExpiryDate.ToString("dd/MM/yyyy")</span></dd>
+            }
+            else
+            {
+                <dd><span class="label label-success">@Model.ExpiryDate.ToString("dd/MM/yyyy")</span></dd>
+            }
+            <dt>@Html.LabelFor(model => model.Location)</dt>
+            <dd>@Model.Location</dd>
+            <dt>@Html.LabelFor(model => model.Status)</dt>
+            <dd>@Model.Status</dd>
+            <dt>@Html.LabelFor(model => model.PeopleNeeded)</dt>
+            <dd>@Model.PeopleNeeded</dd>
+            <dt>@Html.LabelFor(model => model.AcceptanceScore)</dt>
+            <dd>@Model.AcceptanceScore</dd>
+            <dt>@Html.LabelFor(model => model.Qualifications)</dt>
+            <dd>@Model.Qualifications</dd>
+            <dt>@Html.LabelFor(model => model.AssetSkills)</dt>
+            <dd>@(String.IsNullOrEmpty(Model.AssetSkills) ? "Not Specified" : Model.AssetSkills)</dd>
+        </dl>
+        <hr />
+        <dl class="dl-horizontal bottom-margin-0">
+            <dt>@Html.LabelFor(model => model.TotalCandidates)</dt>
+            <dd>@Model.TotalCandidates</dd>
+            <dt>@Html.LabelFor(model => model.TopCandidates)</dt>
+            <dd>@Model.TopCandidates</dd>
+            <dt>@Html.LabelFor(model => model.CandidatesSelected)</dt>
+            <dd>@Model.CandidatesSelected</dd>
+            <dt>@Html.LabelFor(model => model.AverageScore)</dt>
+            <dd>@Model.AverageScore</dd>
+        </dl>
+    </div>
+}
+else
+{
+    <div class='alert alert-danger bottom-margin-0' role='alert'>
+        <div class='text-center'><h4><strong>Position information is not available.</strong></h4></div>
+        <div class="row">
+            <div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Position could have been physically deleted, or modified.</div>
+            <div class='col-md-offset-1 col-md-11'>Please refresh the list and try again in a moment.</div>
+        </div>
+    </div>
+}
+<!-- END OF POSITION FINAL REPORT PARTIAL -->
+

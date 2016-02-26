@@ -121,7 +121,12 @@ namespace RAMS.Service
         {
             var position = this.PositionRepository.GetById(id);
 
-            return position.Client;
+            if (position != null)
+            {
+                return position.Client;
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -133,7 +138,12 @@ namespace RAMS.Service
         {
             var notification = this.NotificationRepository.GetById(id);
 
-            return notification.Client;
+            if (notification != null)
+            {
+                return notification.Client;
+            }
+
+            return null;
         }
         #endregion
 

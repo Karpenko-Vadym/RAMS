@@ -43,6 +43,9 @@
                     <li class='@Html.IsActive("Position")'>
                         @Html.ActionLink("Positions", "Index", "Position", new { area = "Customer" }, new { @class = "" })
                     </li>
+                    <li class='@Html.IsActive("Report")'>
+                        @Html.ActionLink("Reports", "Index", "Report", new { area = "Customer" }, new { @class = "" })
+                    </li>
                     <li class='@Html.IsActive("Help", "Index")'>
                         @Html.ActionLink("API", "Index", "Help", new { area = "HelpPage" }, new { @class = "" })
                     </li>

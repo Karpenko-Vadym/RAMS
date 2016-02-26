@@ -22,6 +22,9 @@ namespace RAMS.ViewModels
         [Display(Name = "Date Created")]
         public DateTime DateCreated { get; set; }
 
+        [Display(Name = "Expiry Date")]
+        public DateTime ExpiryDate { get; set; }
+
         [Display(Name = "Title")]
         public string Title { get; set; }
 
@@ -318,6 +321,300 @@ namespace RAMS.ViewModels
         public PositionEditViewModel()
         {
             this.Candidates = new List<CandidateListViewModel>();
+        }
+    }
+
+    /// <summary>
+    /// PositionApprovalViewModel view model declares properties for _ApprovePosition partial view
+    /// </summary>
+    public class PositionApprovalViewModel
+    {
+        [Required]
+        public int PositionId { get; set; }
+
+        [Required]
+        public string Title { get; set; }
+
+        /// <summary>
+        /// Default PositionApprovalViewModel constructor
+        /// </summary>
+        public PositionApprovalViewModel()
+        {
+            this.PositionId = 0;
+
+            this.Title = String.Empty;
+        }
+
+        /// <summary>
+        /// PositionApprovalViewModel constructor that sets all its properties
+        /// </summary>
+        /// <param name="positionId">Setter for PositionId</param>
+        /// <param name="title">Setter for Title</param>
+        public PositionApprovalViewModel(int positionId, string title)
+        {
+            this.PositionId = positionId;
+
+            this.Title = title;
+        }
+    }
+
+    /// <summary>
+    /// PositionClosureViewModel view model declares properties for _ClosePosition partial view
+    /// </summary>
+    public class PositionClosureViewModel
+    {
+        [Required]
+        public int PositionId { get; set; }
+
+        [Required]
+        public string Title { get; set; }
+
+        /// <summary>
+        /// Default PositionClosureViewModel constructor
+        /// </summary>
+        public PositionClosureViewModel()
+        {
+            this.PositionId = 0;
+
+            this.Title = String.Empty;
+        }
+
+        /// <summary>
+        /// PositionClosureViewModel constructor that sets all its properties
+        /// </summary>
+        /// <param name="positionId">Setter for PositionId</param>
+        /// <param name="title">Setter for Title</param>
+        public PositionClosureViewModel(int positionId, string title)
+        {
+            this.PositionId = positionId;
+
+            this.Title = title;
+        }
+    }
+
+    /// <summary>
+    /// PositionAssignViewModel view model declares properties for _AssignPosition partial view
+    /// </summary>
+    public class PositionAssignViewModel
+    {
+        [Required]
+        public int PositionId { get; set; }
+
+        [Required]
+        public int AgentId {get; set; }
+
+        [Required]
+        public int SelectedAgentId { get; set; }
+
+        [Required]
+        public string Title { get; set; }
+
+        public List<AgentAssignPositionViewModel> Agents { set; get; }
+
+        /// <summary>
+        /// Default PositionAssignViewModel constructor
+        /// </summary>
+        public PositionAssignViewModel()
+        {
+            this.PositionId = 0;
+
+            this.AgentId = 0;
+
+            this.Title = String.Empty;
+
+            this.Agents = new List<AgentAssignPositionViewModel>();
+        }
+
+        /// <summary>
+        /// PositionAssignViewModel constructor that sets all its properties
+        /// </summary>
+        /// <param name="positionId">Setter for PositionId</param>
+        /// <param name="agentId">Setter for AgentId</param>
+        /// <param name="title">Setter for Title</param>
+        public PositionAssignViewModel(int positionId, int agentId = 0, string title = "")
+        {
+            this.PositionId = positionId;
+
+            this.AgentId = agentId;
+
+            this.Title = title;
+
+            this.Agents = new List<AgentAssignPositionViewModel>();
+        }
+    }
+
+    /// <summary>
+    /// PositionResultViewModel view model declares properties for _SuccessConfirmation, and _FailureConfirmation partial views in Position controller
+    /// </summary>
+    public class PositionResultViewModel
+    {
+        public int PositionId {get; set; }
+
+        [Display(Name = "Message")]
+        public string Message { get; set; }
+
+        [Display(Name = "Refresh Edit Form?")]
+        public bool RefreshEditForm { get; set; }
+
+        [Display(Name = "Refresh List?")]
+        public bool RefreshList { get; set; }
+
+        [Display(Name = "Clear Messages?")]
+        public bool ClearMessages { get; set; }
+
+        /// <summary>
+        /// Default PositionResultViewModel constructor sets all the properties default values
+        /// </summary>
+        public PositionResultViewModel()
+        {
+            this.Message = String.Empty;
+
+            this.RefreshEditForm = false;
+
+            this.RefreshList = false;
+
+            this.ClearMessages = false;
+        }
+
+        /// <summary>
+        /// PositionResultViewModel constructor which sets the Message property
+        /// </summary>
+        /// <param name="message">Setter for message property</param>
+        public PositionResultViewModel(string message)
+        {
+            this.Message = message;
+
+            this.RefreshEditForm = false;
+
+            this.RefreshList = false;
+
+            this.ClearMessages = false;
+        }
+
+        /// <summary>
+        /// PositionResultViewModel constructor which sets Message, RefreshEditForm, and RefreshList properties
+        /// </summary>
+        /// <param name="message">Setter for Message property</param>
+        /// <param name="refreshEditForm">Setter for RefreshEditForm property</param>
+        /// <param name="refreshList">Setter for RefreshList property</param>
+        public PositionResultViewModel(string message, bool refreshEditForm, bool refreshList)
+        {
+            this.Message = message;
+
+            this.RefreshEditForm = refreshEditForm;
+
+            this.RefreshList = refreshList;
+        }
+
+        /// <summary>
+        /// PositionResultViewModel constructor which sets Message, RefreshEditForm, and RefreshList properties
+        /// </summary>
+        /// <param name="message">Setter for Message property</param>
+        /// <param name="refreshEditForm">Setter for RefreshEditForm property</param>
+        /// <param name="refreshList">Setter for RefreshList property</param>
+        public PositionResultViewModel(string message, bool refreshEditForm, bool refreshList, int positionId)
+        {
+            this.Message = message;
+
+            this.RefreshEditForm = refreshEditForm;
+
+            this.RefreshList = refreshList;
+
+            this.PositionId = positionId; 
+        }
+    }
+
+    /// <summary>
+    /// PositionListForReportViewModel view model declares properties for _PositionList partial view in Report controller
+    /// </summary>
+    public class PositionListForReportViewModel : PositionListViewModel
+    {
+        [Display(Name = "Report Type")]
+        public string ReportType { get; set; }
+    }
+
+    /// <summary>
+    /// PositionReportDetailsViewModel view model declares properties for _PositionFinalReport, and _PositionStatusReport partial views in Report controller
+    /// </summary>
+    public class PositionReportDetailsViewModel : PositionEditViewModel
+    {
+        [Display(Name = "Id")]
+        public string PositionIdForDisplay { get; set; }
+
+        [Display(Name = "Total Applicants")]
+        public int TotalCandidates { get; set; }
+
+        [Display(Name = "Applications Qualified")]
+        public int TopCandidates { get; set; }
+
+        [Display(Name = "Selected for Interview")]
+        public int CandidatesSelected { get; set; }
+
+        [Display(Name = "Average Score")]
+        public double AverageScore { get; set; }
+    }
+
+
+    /// <summary>
+    /// PositionReportDetailsForPrintViewModel view model declares properties for position report views
+    /// </summary>
+    public class PositionReportDetailsForPrintViewModel
+    {
+        [Display(Name = "Id")]
+        public string PositionIdForDisplay { get; set; }
+
+        [Display(Name = "Date Created")]
+        public DateTime DateCreated { get; set; }
+
+        [Display(Name = "Expiry Date")]
+        public DateTime ExpiryDate { get; set; }
+
+        [Display(Name = "Title")]
+        public string Title { get; set; }
+
+        [Display(Name = "Description")]
+        public string Description { get; set; }
+
+        [Display(Name = "Company Details")]
+        public string CompanyDetails { get; set; }
+
+        [Display(Name = "Location")]
+        public string Location { get; set; }
+
+        [Display(Name = "Qualifications")]
+        public string Qualifications { get; set; }
+
+        [Display(Name = "Asset Skills")]
+        public string AssetSkills { get; set; }
+
+        [Display(Name = "People Needed")]
+        public int PeopleNeeded { get; set; }
+
+        [Display(Name = "Acceptance Score")]
+        public int AcceptanceScore { get; set; }
+
+        [Display(Name = "Total Applicants")]
+        public int TotalCandidates { get; set; }
+
+        [Display(Name = "Applications Qualified")]
+        public int TopCandidates { get; set; }
+
+        [Display(Name = "Selected for Interview")]
+        public int CandidatesSelected { get; set; }
+
+        [Display(Name = "Average Score")]
+        public double AverageScore { get; set; }
+
+        public PositionStatus Status { get; set; }
+
+        public List<CandidateReportDetailsViewModel> Candidates { get; set; }
+
+        /// <summary>
+        /// Default PositionReportDetailsForPrintViewModel constructor         
+        /// </summary>
+        public PositionReportDetailsForPrintViewModel()
+        {
+            this.Candidates = new List<CandidateReportDetailsViewModel>();
         }
     }
 }

@@ -107,6 +107,26 @@ namespace RAMS.Web.Controllers
 
             var result = await this.GetSignInManager.PasswordSignInAsync(model.UserName, model.Password, false, shouldLockout: false);
 
+            if (result == SignInStatus.Success)
+            {
+                var identity = await this.GetUserManager.FindByNameAsync(model.UserName);
+
+                var claims = identity.Claims;
+
+                if(identity.Claims.Where(c => c.ClaimType == "UserStatus" && c.ClaimValue == "Blocked").Count() > 0)
+                {
+                    this.GetSignInManager.AuthenticationManager.SignOut();
+
+                    return RedirectToAction("BlockedUserLogin", "Account");
+                }
+                else if (identity.Claims.Where(c => c.ClaimType == "UserStatus" && c.ClaimValue == "Deleted").Count() > 0)
+                {
+                    this.GetSignInManager.AuthenticationManager.SignOut();
+
+                    return RedirectToAction("DeletedUserLogin", "Account");
+                }
+            }
+
             switch (result)
             {
                 case SignInStatus.Success:
@@ -121,6 +141,35 @@ namespace RAMS.Web.Controllers
 
                     return View(model);
             }
+            
+        }
+
+        /// <summary>
+        /// BlockedUserLogin action method signs out the user if their account has been blocked and displays an error message in FailedLogin view
+        /// </summary>
+        /// <returns>FailedLogin view with an error message</returns>
+        [HttpGet]
+        public ActionResult BlockedUserLogin()
+        {
+            AuthenticationManager.SignOut();
+
+            var result = "Your account has been blocked. Please contact System Administrator in order to unblock your account.";
+
+            return View("FailedLogin", null, result);
+        }
+
+        /// <summary>
+        /// DeletedUserLogin action method signs out the user if their account has been deleted and displays an error message in FailedLogin view
+        /// </summary>
+        /// <returns>FailedLogin view with an error message</returns>
+        [HttpGet]
+        public ActionResult DeletedUserLogin()
+        {
+            AuthenticationManager.SignOut();
+
+            var result = "Your account has been deleted. You may no longer access this application.";
+
+            return View("FailedLogin", null, result);
         }
 
         /// <summary>

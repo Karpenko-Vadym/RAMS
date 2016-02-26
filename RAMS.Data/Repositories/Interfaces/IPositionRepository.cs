@@ -40,6 +40,8 @@ namespace RAMS.Data.Repositories
 
         IEnumerable<Position> GetManyByQualifications(string qualifications);
 
+        IEnumerable<Position> GetManyByKeyword(string keyword);
+
         IEnumerable<Position> GetManyByAssetSkills(string assetSkills);
 
         IEnumerable<Position> GetManyByPeopleNeeded(int poepleNeeded);

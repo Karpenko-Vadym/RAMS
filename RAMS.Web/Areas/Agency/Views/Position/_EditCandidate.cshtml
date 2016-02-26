@@ -1,0 +1,108 @@
+﻿@model RAMS.ViewModels.CandidateEditViewModel
+
+<!-- EDIT CANDIDATE PARTIAL -->
+@{
+    AjaxOptions ajaxOptions = new AjaxOptions
+    {
+        UpdateTargetId = "edit-candidate-modal-body-div",
+        OnBegin = "OnAjaxBegin",
+        OnSuccess = "OnAjaxSuccess",
+        OnFailure = "OnAjaxFailure",
+        OnComplete = "OnAjaxComplete"
+    };
+}
+
+@if (Model != null)
+{
+    <div class="well well-lg bottom-margin-0 background-white">
+        @using (Ajax.BeginForm("EditCandidate", "Position", new { Area = "Agency" }, ajaxOptions, new { id = "edit-candidate-form" }))
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.HiddenFor(model => model.CandidateId)
+            @Html.HiddenFor(model => model.Country)
+            @Html.HiddenFor(model => model.Email)
+            @Html.HiddenFor(model => model.FileContent)
+            @Html.HiddenFor(model => model.FileName)
+            @Html.HiddenFor(model => model.FirstName)
+            @Html.HiddenFor(model => model.LastName)
+            @Html.HiddenFor(model => model.MediaType)
+            @Html.HiddenFor(model => model.PhoneNumber)
+            @Html.HiddenFor(model => model.PostalCode)
+            @Html.HiddenFor(model => model.Score)
+            @Html.HiddenFor(model => model.Status)
+
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <dl class="dl-horizontal">
+                    <dt>@Html.LabelFor(model => model.CandidateIdDisplay)</dt>
+                    <dd>@Model.CandidateIdDisplay</dd>
+                    <dt>@Html.LabelFor(model => model.FirstName)</dt>
+                    <dd>@Model.FirstName</dd>
+                    <dt>@Html.LabelFor(model => model.LastName)</dt>
+                    <dd>@Model.LastName</dd>
+                    <dt>@Html.LabelFor(model => model.Email)</dt>
+                    <dd>@Model.Email</dd>
+                    <dt>@Html.LabelFor(model => model.PhoneNumber)</dt>
+                    <dd>@Model.PhoneNumber</dd>
+                    <dt>@Html.LabelFor(model => model.Country)</dt>
+                    <dd>@Model.Country</dd>
+                    <dt>@Html.LabelFor(model => model.PostalCode)</dt>
+                    <dd>@Model.PostalCode</dd>
+                    <dt>@Html.LabelFor(model => model.Score)</dt>
+                    <dd>@Model.Score</dd>
+                    <dt>@Html.LabelFor(model => model.Status)</dt>
+                    <dd>@Model.Status</dd>
+                </dl>
+                
+                @if(Model.PositionStatus != "Closed")
+                {
+                    <div class="clearfix"></div>
+
+                    <div class="alert alert-warning">
+                        <div class='row'>
+                            <div class='col-md-offset-1'>Please provide your detailed feedback.</div>
+                            <div class='col-md-12'><p></p></div>
+                            <div class='col-md-offset-1'><strong>NOTE:</strong> Feedback can be updated at any time.</div>
+                        </div>
+                    </div>
+                }
+                
+                <div id="feedback-textarea" class="form-group required">
+                    @Html.LabelFor(model => model.Feedback, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-7">
+                        @Html.TextAreaFor(model => model.Feedback, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Feedback, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                @if(Model.PositionStatus != "Closed")
+                {
+                    <div class="form-group bottom-margin-0">
+                        <div class="col-md-offset-3 col-lg-offset-3 col-md-6 col-lg-6">
+                            <input type="submit" value="Update Feedback" class="btn btn-danger btn-block" />
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+ 
+    if (Model.PositionStatus == "Closed")
+    {
+        <script type="text/javascript">$(function () { DisableInput("feedback-textarea"); });</script>
+    }
+    
+    <script type="text/javascript">$(function () { CKEDITOR.replace('Feedback'); });</script>
+}
+else
+{
+    <div class='alert alert-danger bottom-margin-0' role='alert'>
+        <div class='text-center'><h4><strong>Candidate information is not available.</strong></h4></div>
+        <div class="row">
+            <div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Candidate could have been physically deleted, or modified.</div>
+            <div class='col-md-offset-1 col-md-11'>Please refresh the list and try again in a moment.</div>
+        </div>
+    </div>
+}
+<!-- END OF EDIT CANDIDATE PARTIAL -->

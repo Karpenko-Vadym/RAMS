@@ -21,20 +21,38 @@ namespace RAMS.Web.Configuration
         /// </summary>
         protected override void Configure()
         {
+            /***** USER MAPPING *****/
+
             Mapper.CreateMap<AgentAddViewModel, Agent>().ForMember(a => a.Role, map => map.MapFrom(vm => (Role)Enum.Parse(typeof(Role), vm.SelectedRole))).ForMember(a => a.AgentStatus, map => map.MapFrom(vm => (AgentStatus)Enum.Parse(typeof(AgentStatus), vm.SelectedAgentStatus)));
             Mapper.CreateMap<ClientAddViewModel, Client>();
             Mapper.CreateMap<AdminAddViewModel, Admin>().ForMember(a => a.Role, map => map.MapFrom(vm => (Role)Enum.Parse(typeof(Role), vm.SelectedRole)));
 
             Mapper.CreateMap<AgentEditViewModel, Agent>().ForMember(a => a.Role, map => map.MapFrom(vm => (Role)Enum.Parse(typeof(Role), vm.SelectedRole))).ForMember(a => a.AgentStatus, map => map.MapFrom(vm => (AgentStatus)Enum.Parse(typeof(AgentStatus), vm.SelectedAgentStatus)));
-            Mapper.CreateMap<ClientEditViewModel, Client>().ForMember(a => a.Role, map => map.MapFrom(vm => Role.Employee));
+            Mapper.CreateMap<ClientEditViewModel, Client>().ForMember(c => c.Role, map => map.MapFrom(vm => Role.Employee));
             Mapper.CreateMap<AdminEditViewModel, Admin>().ForMember(a => a.Role, map => map.MapFrom(vm => (Role)Enum.Parse(typeof(Role), vm.SelectedRole)));
 
-            Mapper.CreateMap<UserEditProfileViewModel, Agent>();
-            Mapper.CreateMap<UserEditProfileViewModel, Client>();
-            Mapper.CreateMap<UserEditProfileViewModel, Admin>();
+            Mapper.CreateMap<UserEditProfileViewModel, Agent>().ForMember(a => a.AgentId, map => map.MapFrom(vm => vm.UserId));
+            Mapper.CreateMap<UserEditProfileViewModel, Client>().ForMember(c => c.ClientId, map => map.MapFrom(vm => vm.UserId));
+            Mapper.CreateMap<UserEditProfileViewModel, Admin>().ForMember(a => a.AdminId, map => map.MapFrom(vm => vm.UserId));
+
+            /***** END OF USER MAPPING *****/
+            /***** DEPARTMENT MAPPING *****/
 
             Mapper.CreateMap<DepartmentAddViewModel, Department>();
             Mapper.CreateMap<DepartmentEditViewModel, Department>();
+
+            /***** END OF DEPARTMENT MAPPING *****/
+            /***** POSITION MAPPING *****/
+
+            Mapper.CreateMap<PositionAddViewModel, Position>();
+            Mapper.CreateMap<PositionEditViewModel, Position>();
+
+            /***** END OF POSITION MAPPING *****/
+            /***** NOTIFICATION MAPPING *****/
+
+            Mapper.CreateMap<NotificationAddViewModel, Notification>();
+
+            /***** END OF NOTIFICATION MAPPING *****/
         }
     }
 }

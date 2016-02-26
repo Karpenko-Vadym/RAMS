@@ -1,0 +1,40 @@
+﻿@model List<RAMS.ViewModels.ClientListViewModel>
+<!-- CLIENT LIST PARTIAL -->
+@if (!RAMS.Helpers.Utilities.IsEmpty(Model))
+{
+    <div class="well well-lg bottom-margin-0 background-white">
+        <table id="client-list-table" class="table table-striped table-bordered table-hover bottom-margin-0" cellspacing="0">
+            <thead>
+                <tr class="active">
+                    <th>Id</th>
+                    <th>Full Name</th>
+                    <th>Company</th>
+                    <th>Positions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr class="cursor-pointer" data-toggle="modal" data-target="#client-details-modal" data-client-id="@item.ClientId">
+                        <td>@item.ClientIdForDisplay</td>
+                        <td>@item.FullName</td>
+                        <td>@item.Company</td>
+                        <td>@item.Positions</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <script type="text/javascript">$(function () { LoadDataTable("client-list-table") });</script>
+}
+else
+{
+    <div class="well well-lg bottom-margin-0 background-white">
+        <div class="alert alert-danger bottom-margin-0" role="alert">
+            <span>Oh no! <br /> There is no data available.</span>
+        </div>
+    </div>
+}
+<!-- END OF CLIENT LIST PARTIAL -->
+

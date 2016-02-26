@@ -1,0 +1,45 @@
+﻿@model RAMS.ViewModels.CandidateEditConfirmationViewModel
+
+<!-- EDIT CANDIDATE (FEEDBACK) CONFIRMATION PARTIAL VIEW -->
+@if (Model != null)
+{
+    <div class="well well-lg bottom-margin-0 background-white">
+        <div class="alert alert-success">
+            <div class='text-center'><h4><strong>Feedback has been successfully updated for candidate @Model.FirstName @Model.LastName</strong></h4></div>
+            <div class="text-center">Please ensure that updated information is valid.</div>
+            <div class="text-center"><strong>NOTE:</strong> Feedback can be modified at any time.</div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-12">
+                <dl class="dl-horizontal bottom-margin-0">
+                    <dt>@Html.LabelFor(model => model.CandidateIdDisplay)</dt>
+                    <dd>@Model.CandidateIdDisplay</dd>
+                    <dt>@Html.LabelFor(model => model.FirstName)</dt>
+                    <dd>@Model.FirstName</dd>
+                    <dt>@Html.LabelFor(model => model.LastName)</dt>
+                    <dd>@Model.LastName</dd>
+                    <dt>@Html.LabelFor(model => model.Email)</dt>
+                    <dd>@Model.Email</dd>
+                    <dt>@Html.LabelFor(model => model.PhoneNumber)</dt>
+                    <dd>@Model.PhoneNumber</dd>
+                    <dt>@Html.LabelFor(model => model.Country)</dt>
+                    <dd>@Model.Country</dd>
+                    <dt>@Html.LabelFor(model => model.PostalCode)</dt>
+                    <dd>@Model.PostalCode</dd>
+                    <dt>@Html.LabelFor(model => model.Score)</dt>
+                    <dd>@Model.Score</dd>
+                    <dt>@Html.LabelFor(model => model.Status)</dt>
+                    <dd>@Model.Status</dd>
+                    <dt>@Html.LabelFor(model => model.Feedback)</dt>
+                    <dd>@Html.Raw(Model.Feedback)</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="alert alert-danger bottom-margin-0" role="alert">Department confirmation details are not available.</div>
+}
+<!-- END OF EDIT CANDIDATE (FEEDBACK) CONFIRMATION PARTIAL VIEW -->
+

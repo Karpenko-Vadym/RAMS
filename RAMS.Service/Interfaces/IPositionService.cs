@@ -21,9 +21,13 @@ namespace RAMS.Service
 
         IEnumerable<Position> GetManyPositionsByClientId(int id);
 
+        IEnumerable<Position> GetManyPositionsByClientName(string clientName);
+
+        IEnumerable<Position> GetManyPositionsByAgentName(string agentName);
+
         IEnumerable<Position> GetManyPositionsByCategoryId(int id);
 
-        IEnumerable<Position> GetManyPositionsByDepartmentId(int id);
+        IEnumerable<Position> GetManyPositionsByCategoryName(string name);
 
         IEnumerable<Position> GetManyPositionsByCreationDate(DateTime dateCreated);
 
@@ -38,6 +42,8 @@ namespace RAMS.Service
         IEnumerable<Position> GetManyPositionsByLocation(string location);
 
         IEnumerable<Position> GetManyPositionsByQualifications(string qualifications);
+
+        IEnumerable<Position> GetManyPositionsByKeyword(string keyword);
 
         IEnumerable<Position> GetManyPositionsByAssetSkills(string assetSkills);
 

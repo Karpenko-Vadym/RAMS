@@ -76,7 +76,12 @@ namespace RAMS.Service.Interfaces
         {
             var client = this.ClientRepository.GetById(id);
 
-            return client.Notifications;
+            if (client != null)
+            {
+                return client.Notifications;
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -88,7 +93,12 @@ namespace RAMS.Service.Interfaces
         {
             var agent = this.AgentRepository.GetById(id);
 
-            return agent.Notifications;
+            if (agent != null)
+            {
+                return agent.Notifications;
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -100,7 +110,12 @@ namespace RAMS.Service.Interfaces
         {
             var admin = this.AdminRepository.GetById(id);
 
-            return admin.Notifications;
+            if (admin != null)
+            {
+                return admin.Notifications;
+            }
+
+            return null;
         }
 
         /// <summary>

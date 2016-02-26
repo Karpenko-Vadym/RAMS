@@ -24,7 +24,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple positions with matching client id</returns>
         public IEnumerable<Position> GetManyByClientId(int id)
         {
-            return this.GetContext.Positions.Where(p => p.CleintId == id).ToList();
+            return this.GetContext.Positions.Where(p => p.ClientId == id).ToList();
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple positions with matching client</returns>
         public IEnumerable<Position> GetManyByClient(Client client)
         {
-            return this.GetContext.Positions.Where(p => p.CleintId == client.ClientId).ToList();
+            return this.GetContext.Positions.Where(p => p.ClientId == client.ClientId).ToList();
         }
 
         /// <summary>
@@ -145,6 +145,16 @@ namespace RAMS.Data.Repositories
         public IEnumerable<Position> GetManyByQualifications(string qualifications)
         {
             return this.GetContext.Positions.Where(p => p.Qualifications.ToLower().Trim().Contains(qualifications.ToLower().Trim())).ToList();
+        }
+
+        /// <summary>
+        /// Get multiple positions with any field containing the phrase provided in the parameter list
+        /// </summary>
+        /// <param name="keyword">Keyword to match with all Positions' fields</param>
+        /// <returns>Multiple positions with any field containing the phrase provided in the parameter list</returns>
+        public IEnumerable<Position> GetManyByKeyword(string keyword)
+        {
+            return this.GetContext.Positions.Where(p => p.Category.Name.ToLower().Trim().Contains(keyword.ToLower().Trim()) || p.CompanyDetails.ToLower().Trim().Contains(keyword.ToLower().Trim()) || p.Description.ToLower().Trim().Contains(keyword.ToLower().Trim()) || p.Title.ToLower().Trim().Contains(keyword.ToLower().Trim()) || p.Location.ToLower().Trim().Contains(keyword.ToLower().Trim())).ToList();
         }
 
         /// <summary>

@@ -34,3 +34,16 @@ C:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.ViewModels\bin\Debug\Ent
 C:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.ViewModels\obj\Debug\RAMS.ViewModels.csprojResolveAssemblyReference.cache
 C:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.ViewModels\obj\Debug\RAMS.ViewModels.dll
 C:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.ViewModels\obj\Debug\RAMS.ViewModels.pdb
+C:\Users\at0mic\Documents\GitHub\RAMS\RAMS.ViewModels\bin\Debug\RAMS.ViewModels.dll
+C:\Users\at0mic\Documents\GitHub\RAMS\RAMS.ViewModels\bin\Debug\RAMS.ViewModels.pdb
+C:\Users\at0mic\Documents\GitHub\RAMS\RAMS.ViewModels\bin\Debug\RAMS.Models.dll
+C:\Users\at0mic\Documents\GitHub\RAMS\RAMS.ViewModels\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\at0mic\Documents\GitHub\RAMS\RAMS.ViewModels\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+C:\Users\at0mic\Documents\GitHub\RAMS\RAMS.ViewModels\bin\Debug\EntityFramework.dll
+C:\Users\at0mic\Documents\GitHub\RAMS\RAMS.ViewModels\bin\Debug\RAMS.Models.pdb
+C:\Users\at0mic\Documents\GitHub\RAMS\RAMS.ViewModels\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\at0mic\Documents\GitHub\RAMS\RAMS.ViewModels\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+C:\Users\at0mic\Documents\GitHub\RAMS\RAMS.ViewModels\bin\Debug\EntityFramework.xml
+C:\Users\at0mic\Documents\GitHub\RAMS\RAMS.ViewModels\obj\Debug\RAMS.ViewModels.csprojResolveAssemblyReference.cache
+C:\Users\at0mic\Documents\GitHub\RAMS\RAMS.ViewModels\obj\Debug\RAMS.ViewModels.dll
+C:\Users\at0mic\Documents\GitHub\RAMS\RAMS.ViewModels\obj\Debug\RAMS.ViewModels.pdb

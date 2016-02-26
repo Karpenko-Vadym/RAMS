@@ -18,8 +18,6 @@ namespace RAMS.Service
 
         Department GetOneDepartmentByAgentId(int id);
 
-        Department GetOneDepartmentByPositionId(int id);
-
         void CreateDepartment(Department department);
 
         void UpdateDepartment(Department department);

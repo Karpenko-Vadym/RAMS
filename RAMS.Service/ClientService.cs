@@ -107,7 +107,7 @@ namespace RAMS.Service
         /// </summary>
         /// <param name="role">Client's role to be compared with the context clients' data</param>
         /// <returns>Multiple clients with matching role</returns>
-        public IEnumerable<Client> GetManyCleintsByRole(Role role)
+        public IEnumerable<Client> GetManyClientsByRole(Role role)
         {
             return this.ClientRepository.GetManyByRole(role);
         }
@@ -121,7 +121,12 @@ namespace RAMS.Service
         {
             var position = this.PositionRepository.GetById(id);
 
-            return position.Client;
+            if (position != null)
+            {
+                return position.Client;
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -133,7 +138,12 @@ namespace RAMS.Service
         {
             var notification = this.NotificationRepository.GetById(id);
 
-            return notification.Client;
+            if (notification != null)
+            {
+                return notification.Client;
+            }
+
+            return null;
         }
         #endregion
 

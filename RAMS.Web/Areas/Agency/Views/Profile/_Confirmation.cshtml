@@ -1,0 +1,16 @@
+﻿@model RAMS.ViewModels.ConfirmationViewModel
+<!-- CONFIRMATION PARTIAL -->
+@if (Model != null)
+{
+    if (Model.RefreshList)
+    {
+        <script type="text/javascript">$(function () { LoadAction("notification-list-div", "@Url.Action("GetNotificationList", "Profile", new { Area = "Agency" })"); });</script>
+    }
+
+    <div class="vertical-padding-24"></div>
+
+    <div class="alert alert-warning bottom-margin-0" role="alert">
+        @Html.Raw(Model.Message)
+    </div>
+}
+<!-- END OF CONFIRMATION PARTIAL -->

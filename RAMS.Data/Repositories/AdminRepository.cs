@@ -72,7 +72,7 @@ namespace RAMS.Data.Repositories
         /// Get multiple admins with matching last name
         /// </summary>
         /// <param name="lastName">Last name to match with admins' data</param>
-        /// <returns>Multiple cleints with matching last name</returns>
+        /// <returns>Multiple clients with matching last name</returns>
         public IEnumerable<Admin> GetManyByLastName(string lastName)
         {
             return this.GetContext.Admins.Where(a => a.LastName == lastName).ToList();

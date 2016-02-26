@@ -1,0 +1,39 @@
+﻿@model RAMS.ViewModels.ClientDetailsViewModel
+
+<!-- CLIENT DETAILS PARTIAL -->
+@if (Model != null)
+{
+    <div class="well well-lg bottom-margin-0 background-white">
+        <div class="row">
+            <div class="col-md-2"><p></p></div>
+            <div class="col-md-10">
+                <dl class="dl-horizontal bottom-margin-0">
+                    <dt>@Html.LabelFor(model => model.FullName)</dt>
+                    <dd>@Model.FullName</dd>
+                    <dt>@Html.LabelFor(model => model.Email)</dt>
+                    <dd><a href="mailto:@Model.Email">@Model.Email</a></dd>
+                    <dt>@Html.LabelFor(model => model.PhoneNumber)</dt>
+                    <dd>@Model.PhoneNumber</dd>
+                    <dt>@Html.LabelFor(model => model.Company)</dt>
+                    <dd>@Model.Company</dd>
+                    <dt>@Html.LabelFor(model => model.JobTitle)</dt>
+                    <dd>@Model.JobTitle</dd>
+                    <dt>@Html.LabelFor(model => model.Positions)</dt>
+                    <dd>@Model.Positions</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class='alert alert-danger bottom-margin-0' role='alert'>
+        <div class='text-center'><h4><strong>Client information is not available.</strong></h4></div>
+        <div class="row">
+            <div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Client could have been deleted, or modified.</div>
+            <div class='col-md-offset-1 col-md-11'>Please refresh the list and try again in a moment.</div>
+        </div>
+    </div>
+}
+<!-- END OF CLIENT DETAILS PARTIAL -->
+

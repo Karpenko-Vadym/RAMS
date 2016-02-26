@@ -63,6 +63,409 @@
             </summary>
             <param name="configuration">Http configuration that allows to register path for WebAPI</param>    
         </member>
+        <member name="T:RAMS.Web.Areas.Agency.Controllers.AgentController">
+            <summary>
+            AgentController implements agent related methods
+            </summary>
+        </member>
+        <member name="T:RAMS.Web.Controllers.BaseController">
+            <summary>
+            BaseController controller implements common methods for accessing WebAPI via HttpClient
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Controllers.BaseController.#ctor">
+            <summary>
+            BaseController constructor initializes and configures HttpClient allowing controller that inherit from BaseController to access WebAPI using already configured HttpClient 
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Controllers.BaseController.GetHttpClient">
+            <summary>
+            GetHttpClient method allows to access HttpClient (HttpClient getter)
+            </summary>
+            <returns>Already configured instance of an HttpClient</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Agency.Controllers.AgentController.Index">
+            <summary>
+            Default action method that returns main view of Agent controller
+            User will be redirected to appropriate location depending on his/her UserType if user does not belong to this area
+            </summary>
+            <returns>Main view of Agent controller</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Agency.Controllers.AgentController.AgentList">
+            <summary>
+            AgentList action method gets the list of all the agents and passes it to _AgentList partial view
+            </summary>
+            <returns>_AgentList partial view with the list of all the agents</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Agency.Controllers.AgentController.AgentDetails(System.Int32)">
+            <summary>
+            AgentDetails action method gets requested agent's details and passes it to _AgentDetails partial view
+            </summary>
+            <param name="agentId">Id of the agent that is being fetched</param>
+            <returns>_AgentDetails partial view with agent details</returns>
+        </member>
+        <member name="T:RAMS.Web.Areas.Agency.Controllers.ClientController">
+            <summary>
+            ClientController implements client related methods
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Areas.Agency.Controllers.ClientController.Index">
+            <summary>
+            Default action method that returns main view of Client controller
+            User will be redirected to appropriate location depending on his/her UserType if user does not belong to this area
+            </summary>
+            <returns>Main view of Client controller</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Agency.Controllers.ClientController.ClientList">
+            <summary>
+            ClientList action method gets the list of all the clients and passes it to _ClientList partial view
+            </summary>
+            <returns>_ClientList partial view with the list of all the clients</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Agency.Controllers.ClientController.ClientDetails(System.Int32)">
+            <summary>
+            ClientDetails action method gets requested client's details and passes it to _ClientDetails partial view
+            </summary>
+            <param name="clientId">Id of the client that is being fetched</param>
+            <returns>_ClientDetails partial view with client details</returns>
+        </member>
+        <member name="T:RAMS.Web.Areas.Agency.Controllers.HomeController">
+            <summary>
+            HomeController controller will be (By default) accessed as soon as user navigates (Or gets redirected) to Agency area by it's root URL
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Areas.Agency.Controllers.HomeController.Index">
+            <summary>
+            Index action method will be called as soon as user navigates (Or gets redirected) to Agency area by it's root URL
+            User will be redirected to appropriate location depending on his/her UserType
+            </summary>
+            <returns>Redirects to Index method of User controller</returns>
+        </member>
+        <member name="T:RAMS.Web.Areas.Agency.Controllers.PositionController">
+            <summary>
+            PositionController implements position related methods
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Areas.Agency.Controllers.PositionController.Index">
+            <summary>
+            Default action method that returns main view of Position controller
+            User will be redirected to appropriate location depending on his/her UserType if user does not belong to this area
+            </summary>
+            <returns>Main view of Position controller</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Agency.Controllers.PositionController.PositionList">
+            <summary>
+            PositionList action method gets the list of all the positions and passes it to _PositionList partial view
+            </summary>
+            <returns>_PositionList partial view with the list of all the positions</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Agency.Controllers.PositionController.EditPosition(System.Int32)">
+            <summary>
+            EditPosition action method gets requested position's details and passes it to _EditPosition partial view
+            </summary>
+            <param name="positionId">Id of the position that is being fetched</param>
+            <returns>_EditPosition partial view with position details</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Agency.Controllers.PositionController.EditPosition(RAMS.ViewModels.PositionEditViewModel)">
+            <summary>
+            EditPosition action method attempts to update position details
+            </summary>
+            <param name="model">Position information required to update the position</param>
+            <returns>_PositionConfirmation partial view if position has been updated successfully, _Error partial view otherwise</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Agency.Controllers.PositionController.EditCandidate(System.Int32,System.String)">
+            <summary>
+            EditCandidate action method retrieves candidate's data and displays it in _EditCandidate partial view
+            </summary>
+            <param name="candidateId">Id of the candidate whos information will be displayed</param>
+            <param name="positionStatus">Status of the position (Needed for access control)</param>
+            <returns>_EditCandidate partial view with candidates information</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Agency.Controllers.PositionController.EditCandidate(RAMS.ViewModels.CandidateEditViewModel)">
+            <summary>
+            EditCandidate action method attempts to update candidate's feedback
+            </summary>
+            <param name="model">Candidate information required to update candidate's feedback</param>
+            <returns>_CandidateEditConfirmation partial view if candidate's feedback has been updated successfully, _Error partial view otherwise</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Agency.Controllers.PositionController.ApprovePosition(System.Int32,System.String)">
+            <summary>
+            ApprovePosition action method displays confirmation for position approval in _ApprovePosition partial view
+            </summary>
+            <param name="positionId">Id of the position to be approved</param>
+            <param name="positionTitle">Title of the position to be approved</param>
+            <returns>_ApprovePosition partial view with prompt of confirmation to approve the position</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Agency.Controllers.PositionController.ApprovePosition(RAMS.ViewModels.PositionApprovalViewModel)">
+            <summary>
+            ApprovePosition action method attempts to update position status to approved
+            </summary>
+            <param name="model">Position information required to update position status</param>
+            <returns>_SuccessConfirmation partial view if position status has been updated successfully, _FailureConfirmation partial view otherwise</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Agency.Controllers.PositionController.ClosePosition(System.Int32,System.String)">
+            <summary>
+            ClosePosition action method displays confirmation for position closure in _ClosePosition partial view
+            </summary>
+            <param name="positionId">Id of the position to be closed</param>
+            <param name="positionTitle">Title of the position to be closed</param>
+            <returns>_ClosePosition partial view with prompt of confirmation to close the position</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Agency.Controllers.PositionController.ClosePosition(RAMS.ViewModels.PositionClosureViewModel)">
+            <summary>
+            ClosePosition action method attempts to update position status to closed
+            </summary>
+            <param name="model">Position information required to update position status</param>
+            <returns>_SuccessConfirmation partial view if position status has been updated successfully, _FailureConfirmation partial view otherwise</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Agency.Controllers.PositionController.AssignPosition(System.Int32,System.Int32,System.String)">
+            <summary>
+            AssignPosition action method displays the list of agents that can be assigned to the position
+            </summary>
+            <param name="positionId">Id of the position to which an agent to be assigned</param>
+            <param name="agentId">Id of the agent that is currently assigned to this position (If any)</param>
+            <param name="positionTitle">Title of the position</param>
+            <returns>_AssignPosition partial view with the list of agents that can be assigned to the position</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Agency.Controllers.PositionController.AssignPosition(RAMS.ViewModels.PositionAssignViewModel)">
+            <summary>
+            AssignPosition action method attempts to assign an agent to the position
+            </summary>
+            <param name="model">Position information required to assign an agent to the position</param>
+            <returns>_SuccessConfirmation partial view if an agent has been successfully assigned to the position, _FailureConfirmation partial view otherwise</returns>
+        </member>
+        <member name="T:RAMS.Web.Areas.Agency.Controllers.ProfileController">
+            <summary>
+            ProfileController implements employee profile related methods
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Areas.Agency.Controllers.ProfileController.Index(System.String)">
+            <summary>
+            Default action method that returns main view of Profile controller
+            User will be redirected to appropriate location depending on his/her UserType if user does not belong to this area
+            </summary>
+            <param name="message">Message that will be displayed in the view. This message will inform the user about success or failure of particular operation</param>
+            <returns>Main view of Profile controller</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Agency.Controllers.ProfileController.ProfileDetails">
+            <summary>
+            ProfileDetails method gets employee's details and passes it to _ProfileDetails partial view
+            </summary>
+            <returns>_ProfileDetails partial view with current user's employee details</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Agency.Controllers.ProfileController.UploadProfilePicture">
+            <summary>
+            UploadProfilePicture method gets current user's user name and passes it to _UploadProfilePicture partial view 
+            </summary>
+            <returns>_UploadProfilePicture partial view with current user's user name passed in to it in a AgentProfilePictureViewModel view model</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Agency.Controllers.ProfileController.UploadProfilePicture(RAMS.ViewModels.AgentProfilePictureViewModel)">
+            <summary>
+            UploadProfilePicture method determines what is the content type of the uploaded file and if file content type is not supported passes an error message to Index action method. Otherwise, saves the file.
+            </summary>
+            <param name="model">View model with information required to save the file</param>
+            <returns>Redirects to Index view with success message, or failure message</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Agency.Controllers.ProfileController.DeleteProfilePicture">
+            <summary>
+            DeleteProfilePicture method deletes profile picture for current user
+            </summary>
+            <returns>Redirects to Index view with success message, or failure message</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Agency.Controllers.ProfileController.GetNotificationList">
+            <summary>
+            GetNotificationList method gets the list of notifications for current user and passes it to _NotificationList partial view
+            </summary>
+            <returns>_NotificationList partial view with the list of notifications for current user (If any)</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Agency.Controllers.ProfileController.ChangeNotificationStatus(System.Int32,System.String,System.String)">
+            <summary>
+            ChangeNotificationStatus method gets selected notification details and passes it to _ChangeNotificationStatus partial view
+            </summary>
+            <param name="notificationId">Id of selected notification</param>
+            <param name="notificationTitle">Title of selected notification</param>
+            <param name="notificationStatus">Status of selected notification (Already set to oposite of current for API)</param>
+            <returns>_ChangeNotificationStatus partial view with required information for updating the status</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Agency.Controllers.ProfileController.ChangeNotificationStatus(RAMS.ViewModels.NotificationChangeStatusViewModel)">
+            <summary>
+            ChangeNotificationStatus method changes the status of the notification and returns _Confirmation partial view with success message or failure message depending on the outcome of this method
+            </summary>
+            <param name="model">NotificationChangeStatusViewModel view model with information required for updating notification status</param>
+            <returns>_Confirmation partial view with success message or failure message depending on the outcome of this method</returns>
+        </member>
+        <member name="T:RAMS.Web.Areas.Agency.Controllers.ReportController">
+            <summary>
+            ReportController implements report related methods
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Areas.Agency.Controllers.ReportController.Index">
+            <summary>
+            Default action method that returns main view of Report controller
+            User will be redirected to appropriate location depending on his/her UserType if user does not belong to this area
+            </summary>
+            <returns>Main view of Report controller</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Agency.Controllers.ReportController.PositionList">
+            <summary>
+            PositionList action method gets the list of all the positions and passes it to _PositionList partial view
+            </summary>
+            <returns>_PositionList partial view with the list of all the positions</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Agency.Controllers.ReportController.PositionStatusReport(System.Int32)">
+            <summary>
+            PositionStatusReport action method gets requested position's details and passes it to _PositionStatusReport partial view
+            </summary>
+            <param name="positionId">Id of the position that is being fetched</param>
+            <returns>_PositionStatusReport partial view with position details</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Agency.Controllers.ReportController.PositionFinalReport(System.Int32)">
+            <summary>
+            PositionFinalReport action method gets requested position's details and passes it to _PositionFinalReport partial view
+            </summary>
+            <param name="positionId">Id of the position that is being fetched</param>
+            <returns>_PositionFinalReport partial view with position details</returns>
+        </member>
+        <member name="T:RAMS.Web.Areas.Customer.Controllers.HomeController">
+            <summary>
+            HomeController controller will be (By default) accessed as soon as user navigates (Or gets redirected) to Customer area by it's root URL
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Areas.Customer.Controllers.HomeController.Index">
+            <summary>
+            Index action method will be called as soon as user navigates (Or gets redirected) to Customer area by it's root URL
+            User will be redirected to appropriate location depending on his/her UserType
+            </summary>
+            <returns>Redirects to Index method of User controller</returns>
+        </member>
+        <member name="T:RAMS.Web.Areas.Customer.Controllers.PositionController">
+            <summary>
+            PositionController implements position related methods
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Areas.Customer.Controllers.PositionController.Index">
+            <summary>
+            Default action method that returns main view of Profile controller
+            User will be redirected to appropriate location depending on his/her UserType if user does not belong to this area
+            </summary>
+            <returns>Main view of Position controller</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Customer.Controllers.PositionController.PositionList">
+            <summary>
+            PositionList action method gets the list of all the positions for current client and passes it to _PositionList partial view
+            </summary>
+            <returns>_PositionList partial view with the list of all the positions</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Customer.Controllers.PositionController.NewPosition">
+            <summary>
+            NewPosition action method populates select lists and client id for the view model and passes it to _NewPosition partial view
+            </summary>
+            <returns>_NewPosition partial view if select lists and client id were populated successfully, _Error partial view with detailed error message otherwise</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Customer.Controllers.PositionController.NewPosition(RAMS.ViewModels.PositionAddViewModel)">
+            <summary>
+            NewPosition action method attempts to persist new position to the data context 
+            </summary>
+            <param name="model">Position information required persist position to the data context</param>
+            <returns>_PositionConfirmation partial view if position has been persisted successfully, _Error partial view otherwise</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Customer.Controllers.PositionController.PositionDetails(System.Int32)">
+            <summary>
+            PositionDetails action method retrieves the details of the position and passes it to _PositionDetails partial view
+            </summary>
+            <param name="positionId">Id of the position which details are being fetched</param>
+            <returns>_PositionDetails partial view with the details for the position</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Customer.Controllers.PositionController.PositionClosure(System.Int32,System.Int32,System.String,System.String,System.String)">
+            <summary>
+            PositionClosure action method sets PositionClosureConfirmationViewModel and passes it to _PositionClosureConfirmation partial view
+            </summary>
+            <param name="agentId">Setter for AgentId</param>
+            <param name="positionId">Setter for PositionId</param>
+            <param name="positionTitle">Setter for PositionTitle</param>
+            <param name="clientUserName">Setter for ClientUserName</param>
+            <param name="clientFullName">Setter for ClientFullName</param>
+            <returns>_PositionClosureConfirmation partial view</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Customer.Controllers.PositionController.PositionClosure(RAMS.ViewModels.PositionClosureConfirmationViewModel)">
+            <summary>
+            PositionClosure action method validates the model and attempts to create new notification for the agent who is assigned to current position
+            </summary>
+            <param name="model">Information required to create notification</param>
+            <returns>_SuccessConfirmation partial view if notification was created successfully, _FailureConfirmation otherwise</returns>
+        </member>
+        <member name="T:RAMS.Web.Areas.Customer.Controllers.ProfileController">
+            <summary>
+            ProfileController implements employee profile related methods
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Areas.Customer.Controllers.ProfileController.Index(System.String)">
+            <summary>
+            Default action method that returns main view of Profile controller
+            User will be redirected to appropriate location depending on his/her UserType if user does not belong to this area
+            </summary>
+            <param name="message">Message that will be displayed in the view. This message will inform the user about success or failure of particular operation</param>
+            <returns>Main view of Profile controller</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Customer.Controllers.ProfileController.ProfileDetails">
+            <summary>
+            ProfileDetails method gets employee's details and passes it to _ProfileDetails partial view
+            </summary>
+            <returns>_ProfileDetails partial view with current user's employee details</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Customer.Controllers.ProfileController.UploadProfilePicture">
+            <summary>
+            UploadProfilePicture method gets current user's user name and passes it to _UploadProfilePicture partial view 
+            </summary>
+            <returns>_UploadProfilePicture partial view with current user's user name passed in to it in a ClientProfilePictureViewModel view model</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Customer.Controllers.ProfileController.UploadProfilePicture(RAMS.ViewModels.ClientProfilePictureViewModel)">
+            <summary>
+            UploadProfilePicture method determines what is the content type of the uploaded file and if file content type is not supported passes an error message to Index action method. Otherwise, saves the file.
+            </summary>
+            <param name="model">View model with information required to save the file</param>
+            <returns>Redirects to Index view with success message, or failure message</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Customer.Controllers.ProfileController.DeleteProfilePicture">
+            <summary>
+            DeleteProfilePicture method deletes profile picture for current user
+            </summary>
+            <returns>Redirects to Index view with success message, or failure message</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Customer.Controllers.ProfileController.GetNotificationList">
+            <summary>
+            GetNotificationList method gets the list of notifications for current user and passes it to _NotificationList partial view
+            </summary>
+            <returns>_NotificationList partial view with the list of notifications for current user (If any)</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Customer.Controllers.ProfileController.ChangeNotificationStatus(System.Int32,System.String,System.String)">
+            <summary>
+            ChangeNotificationStatus method gets selected notification details and passes it to _ChangeNotificationStatus partial view
+            </summary>
+            <param name="notificationId">Id of selected notification</param>
+            <param name="notificationTitle">Title of selected notification</param>
+            <param name="notificationStatus">Status of selected notification (Already set to oposite of current for API)</param>
+            <returns>_ChangeNotificationStatus partial view with required information for updating the status</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Customer.Controllers.ProfileController.ChangeNotificationStatus(RAMS.ViewModels.NotificationChangeStatusViewModel)">
+            <summary>
+            ChangeNotificationStatus method changes the status of the notification and returns _Confirmation partial view with success message or failure message depending on the outcome of this method
+            </summary>
+            <param name="model">NotificationChangeStatusViewModel view model with information required for updating notification status</param>
+            <returns>_Confirmation partial view with success message or failure message depending on the outcome of this method</returns>
+        </member>
+        <member name="T:RAMS.Web.Areas.Customer.Controllers.ReportController">
+            <summary>
+            ReportController implements report related methods
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Areas.Customer.Controllers.ReportController.Index">
+            <summary>
+            Default action method that returns main view of Report controller
+            User will be redirected to appropriate location depending on his/her UserType if user does not belong to this area
+            </summary>
+            <returns>Main view of Report controller</returns>
+        </member>
         <member name="M:RAMS.Web.Areas.HelpPage.ApiDescriptionExtensions.GetFriendlyId(System.Web.Http.Description.ApiDescription)">
             <summary>
             Generates an URI-friendly ID for the <see cref="T:System.Web.Http.Description.ApiDescription"/>. E.g. "Get-Values-id_name" instead of "GetValues/{id}?name={name}"
@@ -540,33 +943,123 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
-        <member name="T:RAMS.Web.Controllers.BaseController">
+        <member name="T:RAMS.Web.Areas.SystemAdmin.Controllers.DepartmentController">
             <summary>
-            BaseController controller implements common methods for accessing WebAPI via HttpClient
+            DepartmentController controller implements CRUD operations for departments
             </summary>
         </member>
-        <member name="M:RAMS.Web.Controllers.BaseController.#ctor">
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.DepartmentController.Index">
             <summary>
-            BaseController constructor initializes and configures HttpClient allowing controller that inherit from BaseController to access WebAPI using already configured HttpClient 
+            Index action method will be called as soon as user navigates (Or gets redirected) to /RAMS/Departments
+            This method displays the main view where all department related CRUD operations take place 
+            User will be redirected to appropriate location depending on his/her UserType if user does not belong to this area
             </summary>
+            <returns>Main view where all department related CRUD operations take place</returns>
         </member>
-        <member name="M:RAMS.Web.Controllers.BaseController.GetHttpClient">
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.DepartmentController.DepartmentList">
             <summary>
-            GetHttpClient method allows to access HttpClient (HttpClient getter)
+            DepartmentList method gets the list of all departments and passess it to _DepartmentList partial view
             </summary>
-            <returns>Already configured instance of an HttpClient</returns>
+            <returns>_DepartmentList partial view with a list of departments as it's model</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.DepartmentController.NewDepartment">
+            <summary>
+            NewDepartment method returns _NewDepartment partial view
+            </summary>
+            <returns>_NewDepartment partial view</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.DepartmentController.NewDepartment(RAMS.ViewModels.DepartmentAddViewModel)">
+            <summary>
+            NewDepartment method validates the model and attempts to persist it database if model state is valid
+            </summary>
+            <param name="model">Model containing properties required for creating new department</param>
+            <returns>If model state is not valid, re-displays _NewDepartment partial view with an input form and an error message. Otherwise returns success message or error message depending on the outcome of this method</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.DepartmentController.EditDepartment(System.Int32)">
+            <summary>
+            EditDepartment method retrieves one department by it's id and displays it's information in _EditDepartment partial view
+            </summary>
+            <param name="id">Id of the department to be retrieved</param>
+            <returns>_EditDepartment partial view with details of retrieved department if department information could be retrieved, otherwise an error message</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.DepartmentController.EditDepartment(RAMS.ViewModels.DepartmentEditViewModel)">
+            <summary>
+            EditDepartment method validates the model and attempts to persist it database if model state is valid
+            </summary>
+            <param name="model">Model containing properties required for editing existing department</param>
+            <returns>If model state is not valid, re-displays _EditDepartment partial view with an input form and an error message. Otherwise returns success message or error message depending on the outcome of this method</returns>
         </member>
         <member name="T:RAMS.Web.Areas.SystemAdmin.Controllers.HomeController">
             <summary>
-            HomeController controller will be (By default) accessed as soon as user navigates to SystemAdmin area by it's root URL
+            HomeController controller will be (By default) accessed as soon as user navigates (Or gets redirected) to SystemAdmin area by it's root URL
             </summary>
         </member>
         <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.HomeController.Index">
             <summary>
-            Index action method will be called as soon as user navigates to SystemAdmin area by it's root URL
-            User will be redirected to Index method of User controller
+            Index action method will be called as soon as user navigates (Or gets redirected) to SystemAdmin area by it's root URL
+            User will be redirected to Index method of Profile controller if user's UserType is Admin, otherwise user will be redirected to appropriate location depending on his/her UserType
             </summary>
-            <returns>Redirects to Index method of User controller</returns>
+            <returns>Redirects to Index method of Profile controller if user's UserType is Admin, otherwise user will be redirected to appropriate location depending on his/her UserType</returns>
+        </member>
+        <member name="T:RAMS.Web.Areas.SystemAdmin.Controllers.ProfileController">
+            <summary>
+            ProfileController implements employee profile related methods
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.ProfileController.Index(System.String)">
+            <summary>
+            Default action method that returns main view of Profile controller
+            User will be redirected to appropriate location depending on his/her UserType if user does not belong to this area
+            </summary>
+            <param name="message">Message that will be displayed in the view. This message will inform the user about success or failure of particular operation</param>
+            <returns>Main view of Profile controller</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.ProfileController.ProfileDetails">
+            <summary>
+            ProfileDetails method gets employee's details and passes it to _ProfileDetails partial view
+            </summary>
+            <returns>_ProfileDetails partial view with current user's employee details</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.ProfileController.UploadProfilePicture">
+            <summary>
+            UploadProfilePicture method gets current user's user name and passes it to _UploadProfilePicture partial view 
+            </summary>
+            <returns>_UploadProfilePicture partial view with current user's user name passed in to it in a AdminProfilePictureViewModel view model</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.ProfileController.UploadProfilePicture(RAMS.ViewModels.AdminProfilePictureViewModel)">
+            <summary>
+            UploadProfilePicture method determines what is the content type of the uploaded file and if file content type is not supported passes an error message to Index action method. Otherwise, saves the file.
+            </summary>
+            <param name="model">View model with information required to save the file</param>
+            <returns>Redirects to Index view with success message, or failure message</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.ProfileController.DeleteProfilePicture">
+            <summary>
+            DeleteProfilePicture method deletes profile picture for current user
+            </summary>
+            <returns>Redirects to Index view with success message, or failure message</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.ProfileController.GetNotificationList">
+            <summary>
+            GetNotificationList method gets the list of notifications for current user and passes it to _NotificationList partial view
+            </summary>
+            <returns>_NotificationList partial view with the list of notifications for current user (If any)</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.ProfileController.ChangeNotificationStatus(System.Int32,System.String,System.String)">
+            <summary>
+            ChangeNotificationStatus method gets selected notification details and passes it to _ChangeNotificationStatus partial view
+            </summary>
+            <param name="notificationId">Id of selected notification</param>
+            <param name="notificationTitle">Title of selected notification</param>
+            <param name="notificationStatus">Status of selected notification (Already set to oposite of current for API)</param>
+            <returns>_ChangeNotificationStatus partial view with required information for updating the status</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.ProfileController.ChangeNotificationStatus(RAMS.ViewModels.NotificationChangeStatusViewModel)">
+            <summary>
+            ChangeNotificationStatus method changes the status of the notification and returns _Confirmation partial view with success message or failure message depending on the outcome of this method
+            </summary>
+            <param name="model">NotificationChangeStatusViewModel view model with information required for updating notification status</param>
+            <returns>_Confirmation partial view with success message or failure message depending on the outcome of this method</returns>
         </member>
         <member name="T:RAMS.Web.Areas.SystemAdmin.Controllers.UserController">
             <summary>
@@ -588,6 +1081,7 @@
         <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.Index">
             <summary>
             Default action method that returns main view of User controller
+            User will be redirected to appropriate location depending on his/her UserType if user does not belong to this area
             </summary>
             <returns>Main view of User controller</returns>
         </member>
@@ -616,26 +1110,26 @@
             <param name="model">Model that contains information about user selection</param>
             <returns>Different registration form depending on user selection from _UserTypeSelect partial view, or _Error partial view with error message if selection did not match to UserType enum values</returns>
         </member>
-        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.RegisterAgent(RAMS.ViewModels.RegisterAgentViewModel)">
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.RegisterAgent(RAMS.ViewModels.AgentAddViewModel)">
             <summary>
             RegisterAgent method creates new user and new employee 
             </summary>
             <param name="model">User and employee details required in order to create new user and employee</param>
-            <returns>_Success partial view with success message if user and employee were successfully created, _Error partial view with error message otherwise. If mode is not valid, returns _RegisterAgent partial view</returns>
+            <returns>_RegisterAgentConfirmation partial view with success message if user and employee were successfully created, _Error partial view with error message otherwise. If mode is not valid, returns _RegisterAgent partial view</returns>
         </member>
-        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.RegisterClient(RAMS.ViewModels.RegisterClientViewModel)">
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.RegisterClient(RAMS.ViewModels.ClientAddViewModel)">
             <summary>
             RegisterClient method creates new user and new employee
             </summary>
             <param name="model">User and employee details required in order to create new user and employee</param>
-            <returns>_Success partial view with success message if user and employee were successfully created, _Error partial view with error message otherwise. If mode is not valid, returns _RegisterClient partial view</returns>
+            <returns>_RegisterClientConfirmation partial view with success message if user and employee were successfully created, _Error partial view with error message otherwise. If mode is not valid, returns _RegisterClient partial view</returns>
         </member>
-        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.RegisterAdmin(RAMS.ViewModels.RegisterAdminViewModel)">
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.RegisterAdmin(RAMS.ViewModels.AdminAddViewModel)">
             <summary>
             RegisterAdmin method creates new user and new employee
             </summary>
             <param name="model">User and employee details required in order to create new user and employee</param>
-            <returns>_Success partial view with success message if user and employee were successfully created, _Error partial view with error message otherwise. If mode is not valid, returns _RegisterAdmin partial view</returns>
+            <returns>_RegisterAdminConfirmation partial view with success message if user and employee were successfully created, _Error partial view with error message otherwise. If mode is not valid, returns _RegisterAdmin partial view</returns>
         </member>
         <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.EditUser(System.String,System.String)">
             <summary>
@@ -645,26 +1139,26 @@
             <param name="userType">User type of selected user</param>
             <returns>Different edit form depending on user selection from _UserList partial view, or _Error partial view with error message if userType parameter value did not match to UserType enum values</returns>
         </member>
-        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.EditAgent(RAMS.ViewModels.EditAgentViewModel)">
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.EditAgent(RAMS.ViewModels.AgentEditViewModel)">
             <summary>
             EditAgent method updates user and employee profiles
             </summary>
             <param name="model">Updated user and employee details</param>
-            <returns>_Success partial view with success message if user and employee were successfully updated, _Error partial view with error message otherwise. If mode is not valid, returns _EditAgent partial view</returns>
+            <returns>_EditAgentConfirmation partial view with success message if user and employee were successfully updated, _Error partial view with error message otherwise. If mode is not valid, returns _EditAgent partial view</returns>
         </member>
-        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.EditClient(RAMS.ViewModels.EditClientViewModel)">
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.EditClient(RAMS.ViewModels.ClientEditViewModel)">
             <summary>
             EditClient method updates user and employee profiles
             </summary>
             <param name="model">Updated user and employee details</param>
-            <returns>_Success partial view with success message if user and employee were successfully updated, _Error partial view with error message otherwise. If mode is not valid, returns _EditClient partial view</returns>
+            <returns>_EditClientConfirmation partial view with success message if user and employee were successfully updated, _Error partial view with error message otherwise. If mode is not valid, returns _EditClient partial view</returns>
         </member>
-        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.EditAdmin(RAMS.ViewModels.EditAdminViewModel)">
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.EditAdmin(RAMS.ViewModels.AdminEditViewModel)">
             <summary>
             EditAdmin method updates user and employee profiles
             </summary>
             <param name="model">Updated user and employee details</param>
-            <returns>_Success partial view with success message if user and employee were successfully updated, _Error partial view with error message otherwise. If mode is not valid, returns _EditAdmin partial view</returns>
+            <returns>_EditAdminConfirmation partial view with success message if user and employee were successfully updated, _Error partial view with error message otherwise. If mode is not valid, returns _EditAdmin partial view</returns>
         </member>
         <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.ResetPassword(System.String,System.String,System.String,System.String)">
             <summary>
@@ -681,7 +1175,7 @@
             ResetPassword method validates new password and displays an error message if password does not match password criteria, otherwise replaces old password with a new password
             </summary>
             <param name="model">User information required to reset password</param>
-            <returns>_Confirmation partial view with confirmation message of success or failure depending on the outcome of this method</returns>
+            <returns>_SuccessConfirmation or _FailureConfirmation partial view with confirmation message of success or failure depending on the outcome of this method</returns>
         </member>
         <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.BlockUser(System.String,System.String)">
             <summary>
@@ -691,12 +1185,12 @@
             <param name="userType">Setter for UserType property</param>
             <returns>_BlockUser partial view with populated view model</returns>
         </member>
-        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.BlockUser(RAMS.ViewModels.ConfirmationViewModel)">
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.BlockUser(RAMS.ViewModels.UserConfirmationViewModel)">
             <summary>
-            BlockUser method sets employee UserStatus property and user UserStatus claim to BLOCKED and returns _Confirmation partial view with the result (Success or failure) of this method
+            BlockUser method sets employee UserStatus property and user UserStatus claim to BLOCKED and returns _SuccessConfirmation or _FailureConfirmation partial view with the result (Success or failure) of this method
             </summary>
             <param name="model">User details required to block the user</param>
-            <returns>_Confirmation partial view with confirmation message of success or failure depending on the outcome of this method</returns>
+            <returns>_SuccessConfirmation or _FailureConfirmation partial view with confirmation message of success or failure depending on the outcome of this method</returns>
         </member>
         <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.UnblockUser(System.String,System.String)">
             <summary>
@@ -706,12 +1200,12 @@
             <param name="userType">Setter for UserType property</param>
             <returns>_UnblockUser partial view with populated view model</returns>
         </member>
-        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.UnblockUser(RAMS.ViewModels.ConfirmationViewModel)">
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.UnblockUser(RAMS.ViewModels.UserConfirmationViewModel)">
             <summary>
-            UnblockUser method sets employee UserStatus property and user UserStatus claim to ACTIVE and returns _Confirmation partial view with the result (Success or failure) of this method
+            UnblockUser method sets employee UserStatus property and user UserStatus claim to ACTIVE and returns _SuccessConfirmation or _FailureConfirmation partial view with the result (Success or failure) of this method
             </summary>
             <param name="model">User details required to unblock the user</param>
-            <returns>_Confirmation partial view with confirmation message of success or failure depending on the outcome of this method</returns>
+            <returns>_SuccessConfirmation or _FailureConfirmation partial view with confirmation message of success or failure depending on the outcome of this method</returns>
         </member>
         <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.DeleteUser(System.String,System.String)">
             <summary>
@@ -721,12 +1215,18 @@
             <param name="userType">Property required to retrieve the employee profile from database</param>
             <returns>_DeleteUser partial view with populated view model</returns>
         </member>
-        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.DeleteUser(RAMS.ViewModels.ConfirmationViewModel)">
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.DeleteUser(RAMS.ViewModels.UserConfirmationViewModel)">
             <summary>
             DeleteUser method either physically deletes the user profile and employee profile, or flags both the user profile (By setting UserStatus claim to DELETED) and the employee profile (By setting UserStatus property to DELETED) as DELETED
             </summary>
             <param name="model">User details required to delete the user</param>
-            <returns>_Confirmation partial view with confirmation message of success or failure depending on the outcome of this method</returns>
+            <returns>_SuccessConfirmation or _FailureConfirmation partial view with confirmation message of success or failure depending on the outcome of this method</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.Dispose(System.Boolean)">
+            <summary>
+            Dispose method releases unmanaged resources and optionally releases managed resources
+            </summary>
+            <param name="disposing">If disposing is set to true releases both managed and unmanaged resources, otherwise only releases unmanaged resources</param> 
         </member>
         <member name="P:RAMS.Web.Areas.SystemAdmin.Controllers.UserController.PasswordRegex">
             <summary>
@@ -805,6 +1305,129 @@
             Once authenticated, user will be redirected to default controller and default action of the area where user belongs (UserType determines which area user belongs to)
             </summary>
             <returns>Redirects to default controller and default action of the area where user belongs</returns>
+        </member>
+        <member name="T:RAMS.Web.Controllers.AccountController">
+            <summary>
+            AccountController controller implements login and registration related action methods
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Controllers.AccountController.#ctor">
+            <summary>
+            Default AccountController constructor
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Controllers.AccountController.#ctor(RAMS.Web.ApplicationUserManager,RAMS.Web.ApplicationSignInManager)">
+            <summary>
+            AccountController constructor that sets UserManager and SignInManager
+            </summary>
+            <param name="userManager">UserManager setter</param>
+            <param name="signInManager">SignInManager setter</param>
+        </member>
+        <member name="M:RAMS.Web.Controllers.AccountController.Login(System.String)">
+            <summary>
+            Login 
+            </summary>
+            <param name="returnUrl"></param>
+            <returns>Login form</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.AccountController.Login(RAMS.Web.Identity.LoginViewModel,System.String)">
+            <summary>
+            Login method authenticates the user if provided credentials are valid, otherwise re-displays login form with an error message
+            </summary>
+            <param name="model">Login credentials</param>
+            <param name="returnUrl">URL of a page from where user was redirected to login form (In cases when cookie expires)</param>
+            <returns>Login form if there has been an error while logging in, otherwise redirects to returnUrl or Home view if returnUrl is null</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.AccountController.BlockedUserLogin">
+            <summary>
+            BlockedUserLogin action method signs out the user if their account has been blocked and displays an error message in FailedLogin view
+            </summary>
+            <returns>FailedLogin view with an error message</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.AccountController.DeletedUserLogin">
+            <summary>
+            DeletedUserLogin action method signs out the user if their account has been deleted and displays an error message in FailedLogin view
+            </summary>
+            <returns>FailedLogin view with an error message</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.AccountController.LogOff">
+            <summary>
+            LogOff method signs out the user and redirects to home view
+            </summary>
+            <returns>Home</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.AccountController.EditUserProfile">
+            <summary>
+            EditUserProfile method gets user details and returns _EditUserProfile partial view with the model containing user details
+            </summary>
+            <returns>_EditUserProfile partial view with the model containing user details</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.AccountController.EditUserProfile(RAMS.ViewModels.UserEditProfileViewModel)">
+            <summary>
+            EditUserProfile method persists updated user details and returns success message if update was successful, error message otherwise
+            </summary>
+            <param name="model">ViewModel with updated user details</param>
+            <returns>Success message if update was successful (_EditUserConfirmation partial view), error message otherwise (_Error partial view)</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.AccountController.ChangePassword(System.String,System.String)">
+            <summary>
+            ChangePassword method populates the view model with properties received from _EditUserProfile partial view and passes it to _ChangePassword partial view
+            </summary>
+            <param name="userName">Setter for UserName property</param>
+            <param name="userType">Setter for UserType property</param>
+            <returns>_ChangePassword partial view with populated view model</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.AccountController.ChangePassword(RAMS.ViewModels.ChangePasswordViewModel)">
+            <summary>
+            ChangePassword method validates current and new password and displays an error message if new password does not match password criteria or old password does not match database records, otherwise replaces old password with a new password
+            </summary>
+            <param name="model">User information required to reset password</param>
+            <returns>_SuccessConfirmation partial view with success message, or _Error partial view with error message depending on the outcome of this method</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.AccountController.ForgotPassword">
+            <summary>
+            ForgotPassword method returns _ForgotPassword partial view
+            </summary>
+            <returns>_ForgotPassword partial view</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.AccountController.ForgotPassword(RAMS.Web.Identity.ForgotPasswordViewModel)">
+            <summary>
+            ForgotPassword method checks if an email address and user name provided by user match to email address and user name stored in data context, and if it matches, an email will be sent to administration with request to change password. Otherwise form will be redisplayed with an error message
+            </summary>
+            <param name="model">Email address and user name provided by user</param>
+            <returns>_ForgotPasswordConfirmation partial view with success message if outcome of this method is success, _ForgotPassword partial view with model errors otherwise</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.AccountController.Dispose(System.Boolean)">
+            <summary>
+            Dispose method releases unmanaged resources and optionally releases managed resources
+            </summary>
+            <param name="disposing">If disposing is set to true releases both managed and unmanaged resources, otherwise only releases unmanaged resources</param> 
+        </member>
+        <member name="P:RAMS.Web.Controllers.AccountController.PasswordRegex">
+            <summary>
+            PasswordRegex getter 
+            </summary>
+        </member>
+        <member name="P:RAMS.Web.Controllers.AccountController.GetSignInManager">
+            <summary>
+            Getter and setter for SignInManager property
+            </summary>
+        </member>
+        <member name="P:RAMS.Web.Controllers.AccountController.GetUserManager">
+            <summary>
+            Getter and setter for UserManager property
+            </summary>
+        </member>
+        <member name="T:RAMS.Web.Controllers.TestController">
+            <summary>
+            Test controller is a controller for testing stuff 
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Controllers.TestController.Index">
+            <summary>
+            Method for testing stuff
+            </summary>
+            <returns>Positive test result</returns>
         </member>
         <member name="T:RAMS.Web.Controllers.WebAPI.AdminController">
             <summary>
@@ -1002,6 +1625,14 @@
             Update existing candidate
             </summary>
             <param name="candidate">Candidate to be updated</param>
+            <returns>HttpResponseMessage with status code dependning on the outcome of this method</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.CandidateController.UpdateCandidateFeedback(System.Int32,System.String)">
+            <summary>
+            Update candidate feedback
+            </summary>
+            <param name="candidateId">If of the candidate to be updated</param>
+            <param name="feedback">Feedback to be updated</param>
             <returns>HttpResponseMessage with status code dependning on the outcome of this method</returns>
         </member>
         <member name="M:RAMS.Web.Controllers.WebAPI.CandidateController.DeleteCandidate(System.Int32)">
@@ -1255,17 +1886,41 @@
             NotificationController is an api controller that allows to access context resources by sending http requests and responces
             </summary>
         </member>
-        <member name="M:RAMS.Web.Controllers.WebAPI.NotificationController.#ctor(RAMS.Service.INotificationService)">
+        <member name="M:RAMS.Web.Controllers.WebAPI.NotificationController.#ctor(RAMS.Service.INotificationService,RAMS.Service.IAgentService,RAMS.Service.IClientService,RAMS.Service.IAdminService)">
             <summary>
             Controller that sets notification service in order to access context resources
             </summary>
-            <param name="notificationService">Parameter for setting notification service</param>
+            <param name="notificationService">Parameter for setting NotificationService</param>
+            <param name="agentService">Parameter for setting AgentService</param>
+            <param name="clientService">Parameter for setting ClientService</param>
+            <param name="adminService">Parameter for setting AdminService</param>
         </member>
         <member name="M:RAMS.Web.Controllers.WebAPI.NotificationController.GetAllNotifications">
             <summary>
             Get the list of all notifications
             </summary>
             <returns>The list of all notifications</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.NotificationController.GetManyNotificationsByAgentUserName(System.String)">
+            <summary>
+            Get the list of notifications for specific agent
+            </summary>
+            <param name="agentUserName">User name of the agent whos notification are being fetched</param>
+            <returns>The list of notifications for specific agent</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.NotificationController.GetManyNotificationsByClientUserName(System.String)">
+            <summary>
+            Get the list of notifications for specific client
+            </summary>
+            <param name="clientUserName">User name of the client whos notification are being fetched</param>
+            <returns>The list of notifications for specific client</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.NotificationController.GetManyNotificationsByAdminUserName(System.String)">
+            <summary>
+            Get the list of notifications for specific admin
+            </summary>
+            <param name="adminUserName">User name of the admin whos notification are being fetched</param>
+            <returns>The list of notifications for specific admin</returns>
         </member>
         <member name="M:RAMS.Web.Controllers.WebAPI.NotificationController.GetNotification(System.Int32)">
             <summary>
@@ -1286,6 +1941,14 @@
             Update existing notification
             </summary>
             <param name="notification">Notification to be updated</param>
+            <returns>HttpResponseMessage with status code dependning on the outcome of this method</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.NotificationController.ChangeNotificationStatus(System.Int32,System.Boolean)">
+            <summary>
+            Update status of the existing notification
+            </summary>
+            <param name="id">Id of the notification to be updated</param>
+            <param name="isReadStatus">Status of the notification depends on the calue of isReadStatus (If isReadStatus is true, status will be set to Read. Otherwise, it will be set to Unread)</param>
             <returns>HttpResponseMessage with status code dependning on the outcome of this method</returns>
         </member>
         <member name="M:RAMS.Web.Controllers.WebAPI.NotificationController.DeleteNotification(System.Int32)">
@@ -1319,6 +1982,34 @@
             </summary>
             <returns>The list of all positions</returns>
         </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.PositionController.GetAllPositionsForClient(System.String)">
+            <summary>
+            Get the list of all positions for specific client
+            </summary>
+            <param name="clientName">User name of the client who's positions are being retrieved</param>
+            <returns>The list of all positions for specific client</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.PositionController.GetAllPositionsForAgent(System.String)">
+            <summary>
+            Get the list of all positions for specific agent
+            </summary>
+            <param name="agentName">User name of the agent who's positions are being retrieved</param>
+            <returns>The list of all positions for specific agent</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.PositionController.GetManyPositionByCategoryName(System.String)">
+            <summary>
+            Get the list of multiple positions with specific category
+            </summary>
+            <param name="categoryName">Category for which positions are being retrieved</param>
+            <returns>The list of multiple positions with specific category</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.PositionController.GetManyPositionByKeyword(System.String)">
+            <summary>
+            Get the list of multiple positions that match the keyword
+            </summary>
+            <param name="keyword">Keyword to match with positions' data</param>
+            <returns>The list of multiple positions that match the keyword</returns>
+        </member>
         <member name="M:RAMS.Web.Controllers.WebAPI.PositionController.GetPosition(System.Int32)">
             <summary>
             Get a position by id
@@ -1338,6 +2029,22 @@
             Update existing position
             </summary>
             <param name="position">Position to be updated</param>
+            <returns>HttpResponseMessage with status code dependning on the outcome of this method</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.PositionController.UpdatePositionStatus(System.Int32,System.Int32)">
+            <summary>
+            Update existing position's status
+            </summary>
+            <param name="positionId">Id of the position for which status is going to be updated</param>
+            <param name="status">Integer representation of the status to be updated</param>
+            <returns>HttpResponseMessage with status code dependning on the outcome of this method</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.PositionController.AssignPosition(System.Int32,System.Int32)">
+            <summary>
+            Assign an agent to an existing position
+            </summary>
+            <param name="positionId">Id of the position to which an agent to be assigned</param>
+            <param name="agentId">Id of the agent to be assigned</param>
             <returns>HttpResponseMessage with status code dependning on the outcome of this method</returns>
         </member>
         <member name="M:RAMS.Web.Controllers.WebAPI.PositionController.DeletePosition(System.Int32)">
@@ -1362,6 +2069,11 @@
         <member name="M:RAMS.Web.MvcApplication.Application_Start">
             <summary>
             Application_Start method is executed when application starts and it is used to configure all the components of the application
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.MvcApplication.Application_BeginRequest">
+            <summary>
+            Application_BeginRequest method is executed at the begining of each request
             </summary>
         </member>
     </members>

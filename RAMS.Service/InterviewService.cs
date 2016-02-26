@@ -70,7 +70,12 @@ namespace RAMS.Service
         {
             var candidate = this.CandidateRepository.GetById(id);
 
-            return candidate.Interviews;
+            if (candidate != null)
+            {
+                return candidate.Interviews;
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -82,7 +87,12 @@ namespace RAMS.Service
         {
             var agent = this.AgentRepository.GetById(id);
 
-            return agent.Interviews;
+            if (agent != null)
+            {
+                return agent.Interviews;
+            }
+
+            return null;
         }
 
         /// <summary>

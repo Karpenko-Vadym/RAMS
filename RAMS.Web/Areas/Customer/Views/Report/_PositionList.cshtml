@@ -1,0 +1,52 @@
+﻿@model List<RAMS.ViewModels.PositionListForReportViewModel>
+<!-- POSITION LIST FOR REPORT PARTIAL -->
+@if (!RAMS.Helpers.Utilities.IsEmpty(Model))
+{
+    <div class="well well-lg bottom-margin-0 background-white">
+        <table id="position-list-for-report-table" class="table table-striped table-bordered table-hover bottom-margin-0" cellspacing="0">
+            <thead>
+                <tr class="active">
+                    <th>Id</th>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>Category</th>
+                    <th>Assigned To</th>
+                    <th>Report Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr class="cursor-pointer" data-toggle="modal" data-target="#@((item.Status == RAMS.Enums.PositionStatus.Closed) ? "position-final-report-modal" : "position-status-report-modal")" data-position-id="@item.PositionId">
+                        <td>@item.PositionIdForDisplay</td>
+                        <td>@item.Title</td>
+                        <td>@item.Status</td>
+                        <td>@item.CategoryName</td>
+                        @if (String.IsNullOrEmpty(item.AssignedTo))
+                        {
+                            <td>Not Assigned</td>
+                        }
+                        else
+                        {
+                            <td>@item.AssignedTo</td>
+                        }
+
+                        <td class="text-center"><span class="label @((item.Status == RAMS.Enums.PositionStatus.Closed) ? "label-warning" : "label-success")">@item.ReportType</span></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <script type="text/javascript">$(function () { LoadDataTable("position-list-for-report-table") });</script>
+}
+else
+{
+    <div class="well well-lg bottom-margin-0 background-white">
+        <div class="alert alert-danger bottom-margin-0" role="alert">
+            <span>Oh no! <br /> There is no data available.</span>
+        </div>
+    </div>
+}
+<!-- END OF POSITION LIST FOR REPORT PARTIAL -->
+

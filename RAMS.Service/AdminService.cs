@@ -116,7 +116,12 @@ namespace RAMS.Service
         {
             var notification = this.NotificationRepository.GetById(id);
 
-            return notification.Admin;
+            if (notification != null)
+            {
+                return notification.Admin;
+            }
+
+            return null;
         }
         #endregion
 

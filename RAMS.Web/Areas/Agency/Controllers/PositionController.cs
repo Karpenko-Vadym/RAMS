@@ -652,5 +652,37 @@ namespace RAMS.Web.Areas.Agency.Controllers
             return PartialView("_FailureConfirmation", positionResultViewModel);
         }
         #endregion
+
+
+
+
+        #region Schedule Interview
+        /// <summary>
+        /// ScheduleInterview action method retrieves all the interviews for current user and displays the schedule for the next 4 days in _ScheduleInterview partial view
+        /// </summary>
+        /// <param name="candidateId">Id of the candidate for whom the interview is being scheduled</param>
+        /// <param name="displayDate">Schedule is displayed for this date, plus 3 days after</param>
+        /// <returns>_ScheduleInterview partial view with the schedule for the next 4 days</returns>
+        [HttpGet]
+        public async Task<PartialViewResult> ScheduleInterview(int candidateId, string displayDate)
+        {
+            var interviewScheduleViewModel = new InterviewScheduleViewModel(candidateId, displayDate);
+
+            var response = await this.GetHttpClient().GetAsync(String.Format("Interview?username={0}", User.Identity.Name));
+
+            if (response.IsSuccessStatusCode)
+            {
+                interviewScheduleViewModel.Interviews.AddRange(Mapper.Map<List<Interview>, List<InterviewListViewModel>>(await response.Content.ReadAsAsync<List<Interview>>()));
+
+                return PartialView("_ScheduleInterview", interviewScheduleViewModel);
+            }
+
+            return PartialView("_ScheduleInterview");
+        }
+
+
+
+        
+        #endregion
     }
 }

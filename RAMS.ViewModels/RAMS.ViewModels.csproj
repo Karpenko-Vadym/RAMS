@@ -50,6 +50,7 @@
     <Compile Include="ViewModels\ClientViewModels.cs" />
     <Compile Include="ViewModels\DepartmentViewModels.cs" />
     <Compile Include="ViewModels\HelperViewModels.cs" />
+    <Compile Include="ViewModels\InterviewViewModels.cs" />
     <Compile Include="ViewModels\NotificationViewModels.cs" />
     <Compile Include="ViewModels\PositionViewModels.cs" />
   </ItemGroup>

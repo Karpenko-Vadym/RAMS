@@ -48,6 +48,44 @@ namespace RAMS.Web.Controllers.WebAPI
         }
 
         /// <summary>
+        /// Get the list of many interviews for specific agent
+        /// </summary>
+        /// <param name="agentId">Id of the agent whos interviews are being fetched</param>
+        /// <returns>The list of many interviews for specific agent</returns>
+        [HttpGet]
+        [ResponseType(typeof(IEnumerable<Interview>))]
+        public IHttpActionResult GetManyInterviewsByAgentId(int agentId)
+        {
+            var interviews = this.InterviewService.GetManyInterviewsByAgentId(agentId);
+
+            if (!Utilities.IsEmpty(interviews))
+            {
+                return Ok(interviews);
+            }
+
+            return NotFound();
+        }
+
+        /// <summary>
+        /// Get the list of many interviews for specific agent by username
+        /// </summary>
+        /// <param name="username">Username of the agent whos interviews are being fetched</param>
+        /// <returns>The list of many interviews for specific agent by username</returns>
+        [HttpGet]
+        [ResponseType(typeof(IEnumerable<Interview>))]
+        public IHttpActionResult GetManyInterviewsByAgentId(string username)
+        {
+            var interviews = this.InterviewService.GetManyInterviewsByAgentUsername(username);
+
+            if (!Utilities.IsEmpty(interviews))
+            {
+                return Ok(interviews);
+            }
+
+            return NotFound();
+        }
+
+        /// <summary>
         /// Get an interview by id
         /// </summary>
         /// <param name="id">Id of an interview to be fetched</param>

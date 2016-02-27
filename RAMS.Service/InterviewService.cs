@@ -96,6 +96,23 @@ namespace RAMS.Service
         }
 
         /// <summary>
+        /// Get multiple interviews that belong to specific agent by username
+        /// </summary>
+        /// <param name="username">Username of the agent who's interviews are being retrieved</param>
+        /// <returns>Multiple interviews that belong to specific agent by username</returns>
+        public IEnumerable<Interview> GetManyInterviewsByAgentUsername(string username)
+        {
+            var agent = this.AgentRepository.GetOneByUserName(username);
+
+            if (agent != null)
+            {
+                return agent.Interviews;
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Get multiple interviews with matching date
         /// </summary>
         /// <param name="date">Interview date to be compared with the context interviews' data</param>

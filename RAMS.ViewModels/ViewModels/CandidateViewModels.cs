@@ -161,4 +161,14 @@ namespace RAMS.ViewModels
 
         public bool Selected { get; set; }
     }
+
+    /// <summary>
+    /// CandidateScheduleViewModel view model declares properties for scheduling partial views
+    /// </summary>
+    public class CandidateScheduleViewModel
+    {
+        public int CandidateId { get; set; }
+
+        public string FullName { get; set; }
+    }
 }

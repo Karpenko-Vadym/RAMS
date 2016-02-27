@@ -90,7 +90,6 @@ namespace RAMS.Web.Configuration
             Mapper.CreateMap<Position, PositionReportDetailsViewModel>().ForMember(p => p.TotalCandidates, map => map.MapFrom(model => model.Candidates.Count())).ForMember(p => p.PositionIdForDisplay, map => map.MapFrom(model => model.PositionId.ToString("00000")));
             Mapper.CreateMap<Position, PositionReportDetailsForPrintViewModel>().ForMember(p => p.TotalCandidates, map => map.MapFrom(model => model.Candidates.Count())).ForMember(p => p.PositionIdForDisplay, map => map.MapFrom(model => model.PositionId.ToString("00000"))).ForMember(p => p.Candidates, map => map.MapFrom(model => Mapper.Map<List<Candidate>, List<CandidateReportDetailsViewModel>>(model.Candidates)));
 
-
             /***** END OF POSITION MAPPING *****/
             /***** CANDIDATE MAPPING *****/
 
@@ -98,9 +97,14 @@ namespace RAMS.Web.Configuration
             Mapper.CreateMap<Candidate, CandidateEditViewModel>().ForMember(c => c.CandidateIdDisplay, map => map.MapFrom(model => model.CandidateId.ToString("00000")));
             Mapper.CreateMap<Candidate, CandidateEditConfirmationViewModel>().ForMember(c => c.CandidateIdDisplay, map => map.MapFrom(model => model.CandidateId.ToString("00000")));
             Mapper.CreateMap<Candidate, CandidateReportDetailsViewModel>().ForMember(c => c.CandidateIdDisplay, map => map.MapFrom(model => model.CandidateId.ToString("00000"))).ForMember(c => c.Selected, map => map.MapFrom(model => (model.Interviews.Count() > 0)));
+            Mapper.CreateMap<Candidate, CandidateScheduleViewModel>().ForMember(c => c.FullName, map => map.MapFrom(model => String.Format("{0} {1}", model.FirstName, model.LastName)));
 
             /***** END OF CANDIDATE MAPPING *****/
+            /***** INTERVIEW MAPPING *****/
 
+            Mapper.CreateMap<Interview, InterviewListViewModel>().ForMember(i => i.Candidate, map => map.MapFrom(model => Mapper.Map<Candidate, CandidateScheduleViewModel>(model.Candidate)));
+            
+            /***** END OF INTERVIEW MAPPING *****/
 
         }
     }

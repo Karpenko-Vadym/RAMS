@@ -123,6 +123,12 @@ input.horizontal-align-center
     margin-left: 10px;
 }
 
+#schedule-table td, #schedule-table th
+{
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
 div.print-container
 {
     margin: 0 auto;

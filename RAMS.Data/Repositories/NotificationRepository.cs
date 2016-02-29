@@ -18,13 +18,32 @@ namespace RAMS.Data.Repositories
 
         #region Getters
         /// <summary>
+        /// Get first notification with matching notification id
+        /// </summary>
+        /// <param name="id">Id to match with notifications' data</param>
+        /// <returns>First notification with matching id</returns>
+        public Notification GetOneByNotificationId(int id)
+        {
+            return this.GetContext.Notifications.Include("Agent").Include("Client").Include("Admin").FirstOrDefault(n => n.NotificationId == id);
+        }
+
+        /// <summary>
+        /// Get all notifications
+        /// </summary>
+        /// <returns>All notifications</returns>
+        public IEnumerable<Notification> GetAllNotifications()
+        {
+            return this.GetContext.Notifications.Include("Agent").Include("Client").Include("Admin");
+        }
+
+        /// <summary>
         /// Get multiple notifications with matching agent id
         /// </summary>
         /// <param name="id">Agent id to match with notifications' data</param>
         /// <returns>Multiple notifications with matching agent id</returns>
         public IEnumerable<Notification> GetManyByAgentId(int id)
         {
-            return this.GetContext.Notifications.Where(n => n.AgentId == id).ToList();
+            return this.GetContext.Notifications.Include("Agent").Include("Client").Include("Admin").Where(n => n.AgentId == id).ToList();
         }
 
         /// <summary>
@@ -34,7 +53,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple notifications with matching agent</returns>
         public IEnumerable<Notification> GetManyByAgent(Agent agent)
         {
-            return this.GetContext.Notifications.Where(n => n.AgentId == agent.AgentId).ToList();
+            return this.GetContext.Notifications.Include("Agent").Include("Client").Include("Admin").Where(n => n.AgentId == agent.AgentId).ToList();
         }
 
         /// <summary>
@@ -44,7 +63,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple notifications with matching client id</returns>
         public IEnumerable<Notification> GetManyByClientId(int id)
         {
-            return this.GetContext.Notifications.Where(n => n.ClientId == id).ToList();
+            return this.GetContext.Notifications.Include("Agent").Include("Client").Include("Admin").Where(n => n.ClientId == id).ToList();
         }
 
         /// <summary>
@@ -54,7 +73,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple notifications with matching client</returns>
         public IEnumerable<Notification> GetManyByClient(Client client)
         {
-            return this.GetContext.Notifications.Where(n => n.ClientId == client.ClientId).ToList();
+            return this.GetContext.Notifications.Include("Agent").Include("Client").Include("Admin").Where(n => n.ClientId == client.ClientId).ToList();
         }
 
         /// <summary>
@@ -64,7 +83,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple notifications with title containing the phrase provided in the parameter list</returns>
         public IEnumerable<Notification> GetManyByTitle(string title)
         {
-            return this.GetContext.Notifications.Where(n => n.Title.ToLower().Trim().Contains(title.ToLower().Trim())).ToList();
+            return this.GetContext.Notifications.Include("Agent").Include("Client").Include("Admin").Where(n => n.Title.ToLower().Trim().Contains(title.ToLower().Trim())).ToList();
         }
 
         /// <summary>
@@ -74,7 +93,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple notifications with details containing the phrase provided in the parameter list</returns>
         public IEnumerable<Notification> GetManyByDetails(string details)
         {
-            return this.GetContext.Notifications.Where(n => n.Details.ToLower().Trim().Contains(details.ToLower().Trim())).ToList();
+            return this.GetContext.Notifications.Include("Agent").Include("Client").Include("Admin").Where(n => n.Details.ToLower().Trim().Contains(details.ToLower().Trim())).ToList();
         }
 
         /// <summary>
@@ -84,7 +103,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple notifications with matching status</returns>
         public IEnumerable<Notification> GetManyByStatus(NotificationStatus status)
         {
-            return this.GetContext.Notifications.Where(n => n.Status == status).ToList();
+            return this.GetContext.Notifications.Include("Agent").Include("Client").Include("Admin").Where(n => n.Status == status).ToList();
         }
 
         /// <summary>
@@ -94,7 +113,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple notifications with matching date</returns>
         public IEnumerable<Notification> GetManyByDate(DateTime date)
         {
-            return this.GetContext.Notifications.Where(n => n.DateCreated == date).ToList();
+            return this.GetContext.Notifications.Include("Agent").Include("Client").Include("Admin").Where(n => n.DateCreated == date).ToList();
         }
         #endregion
     }

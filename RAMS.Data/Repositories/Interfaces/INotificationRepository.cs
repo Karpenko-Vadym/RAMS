@@ -14,6 +14,10 @@ namespace RAMS.Data.Repositories
     /// </summary>
     public interface INotificationRepository : IRepository<Notification> 
     {
+        Notification GetOneByNotificationId(int id);
+
+        IEnumerable<Notification> GetAllNotifications();
+
         IEnumerable<Notification> GetManyByAgentId(int id);
 
         IEnumerable<Notification> GetManyByAgent(Agent agent);

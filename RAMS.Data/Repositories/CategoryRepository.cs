@@ -17,13 +17,32 @@ namespace RAMS.Data.Repositories
 
         #region Getters
         /// <summary>
-        /// Get first Category with matching name
+        /// Get first category with matching category id
+        /// </summary>
+        /// <param name="id">Id to match with categoryies' data</param>
+        /// <returns>First category with matching id</returns>
+        public Category GetOneByCategoryId(int id)
+        {
+            return this.GetContext.Categories.Include("Positions").FirstOrDefault(c => c.CategoryId == id);
+        }
+
+        /// <summary>
+        /// Get all categories
+        /// </summary>
+        /// <returns>All categories</returns>
+        public IEnumerable<Category> GetAllCategories()
+        {
+            return this.GetContext.Categories.Include("Positions");
+        }
+
+        /// <summary>
+        /// Get first category with matching name
         /// </summary>
         /// <param name="name">Name for comparing with Categories' name</param>
-        /// <returns>First Category with matching name</returns>
+        /// <returns>First category with matching name</returns>
         public Category GetOneByName(string name)
         {
-            return this.GetContext.Categories.Where(c => c.Name == name).FirstOrDefault();
+            return this.GetContext.Categories.Include("Positions").FirstOrDefault(c => c.Name == name);
         }
 
         /// <summary>
@@ -33,7 +52,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Category that matches Position's category</returns>
         public Category GetOneByPosition(Position position)
         {
-            return this.GetContext.Categories.Where(c => c.CategoryId == position.CategoryId).FirstOrDefault();
+            return this.GetContext.Categories.Include("Positions").FirstOrDefault(c => c.CategoryId == position.CategoryId);
         }
 
         /// <summary>
@@ -43,9 +62,9 @@ namespace RAMS.Data.Repositories
         /// <returns>Category that matches Position's category</returns>
         public Category GetOneByPositionId(int id)
         {
-            var position = this.GetContext.Positions.Where(p => p.PositionId == id).FirstOrDefault() ?? new Position();
+            var position = this.GetContext.Positions.FirstOrDefault(p => p.PositionId == id) ?? new Position();
 
-            return this.GetContext.Categories.Where(c => c.CategoryId == position.CategoryId).FirstOrDefault();
+            return this.GetContext.Categories.Include("Positions").FirstOrDefault(c => c.CategoryId == position.CategoryId);
         }
         #endregion
     }

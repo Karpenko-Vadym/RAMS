@@ -13,6 +13,10 @@ namespace RAMS.Data.Repositories
     /// </summary>
     public interface ICategoryRepository : IRepository<Category>
     {
+        Category GetOneByCategoryId(int id);
+
+        IEnumerable<Category> GetAllCategories();
+
         Category GetOneByName(string name);
 
         Category GetOneByPosition(Position position);

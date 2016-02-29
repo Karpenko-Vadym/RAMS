@@ -355,7 +355,7 @@ function RefreshPositionEditForm(positionId) {
     LoadAction("edit-position-modal-body-div", "/RAMS/Agency/Position/EditPosition?positionId=" + positionId);
 }
 
-function CheckAssignRadioButton(obj)
+function CheckTableRadioButton(obj)
 {
     $(obj).find("td input:radio").prop("checked", true);
 }

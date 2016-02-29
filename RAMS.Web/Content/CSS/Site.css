@@ -127,6 +127,7 @@ input.horizontal-align-center
 {
     padding-top: 1px;
     padding-bottom: 1px;
+    line-height: 23px;
 }
 
 div.print-container

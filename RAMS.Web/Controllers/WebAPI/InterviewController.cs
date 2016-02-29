@@ -19,14 +19,20 @@ namespace RAMS.Web.Controllers.WebAPI
     public class InterviewController : ApiController
     {
         private readonly IInterviewService InterviewService;
+        private readonly IAgentService AgentService;
+        private readonly ICandidateService CandidateService;
 
         /// <summary>
         /// Controller that sets interview service in order to access context resources
         /// </summary>
         /// <param name="interviewService">Parameter for setting interview service</param>
-        public InterviewController(IInterviewService interviewService)
+        /// <param name="agentService">Parameter for setting agent service</param>
+        /// <param name="candidateService">Parameter for setting candidate service</param>
+        public InterviewController(IInterviewService interviewService, IAgentService agentService, ICandidateService candidateService)
         {
             this.InterviewService = interviewService;
+            this.AgentService = agentService;
+            this.CandidateService = candidateService;
         }
 
         /// <summary>
@@ -38,6 +44,8 @@ namespace RAMS.Web.Controllers.WebAPI
         public IHttpActionResult GetAllInterviews()
         {
             var interviews = this.InterviewService.GetAllInterviews();
+
+            interviews.ToList().ForEach(i => { i.Interviewer.Interviews = null; i.Candidate.Interviews = null; });
 
             if (!Utilities.IsEmpty(interviews))
             {
@@ -137,6 +145,48 @@ namespace RAMS.Web.Controllers.WebAPI
             }
 
             return BadRequest(ModelState);
+        }
+
+        /// <summary>
+        /// Create new interview from parameters
+        /// </summary>
+        /// <param name="candidateId">Setter for CandidateId</param>
+        /// <param name="selectedDate">Setter for InterviewDate</param>
+        /// <param name="agentUserName">Setter for InterviewerId</param>
+        /// <returns>The Uri of newly created interview</returns>
+        [HttpPost]
+        [ResponseType(typeof(Interview))]
+        public IHttpActionResult CreateInterview(int candidateId, string selectedDate, string agentUserName)
+        {
+            if (candidateId > 0 && !String.IsNullOrEmpty(selectedDate) && !String.IsNullOrEmpty(agentUserName))
+            {
+                var interview = new Interview();
+
+                interview.CandidateId = candidateId;
+                interview.InterviewDate = Convert.ToDateTime(selectedDate);
+                interview.InterviewerId = this.AgentService.GetOneAgentByUserName(agentUserName).AgentId;
+
+                this.InterviewService.CreateInterview(interview);
+
+                try
+                {
+                    this.InterviewService.SaveChanges();
+                }
+                catch (DbUpdateException ex)
+                {
+                    // Log exception
+                    ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+
+                    return Conflict();
+                }
+
+                interview.Candidate = this.CandidateService.GetOneCandidateById(candidateId);
+
+                return CreatedAtRoute("DefaultApi", new { id = interview.InterviewId }, interview);
+
+            }
+
+            return BadRequest();
         }
 
         /// <summary>

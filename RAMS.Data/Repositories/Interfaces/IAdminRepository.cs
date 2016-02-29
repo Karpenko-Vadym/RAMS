@@ -14,6 +14,10 @@ namespace RAMS.Data.Repositories
     /// </summary>
     public interface IAdminRepository : IRepository<Admin>
     {
+        Admin GetOneByAdminId(int id);
+
+        IEnumerable<Admin> GetAllAdmins();
+
         Admin GetOneByUserName(string userName);
 
         IEnumerable<Admin> GetManyByUserType(UserType userType);

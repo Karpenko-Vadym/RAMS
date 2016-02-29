@@ -44,7 +44,7 @@ namespace RAMS.Service
         /// <returns>All the admins</returns>
         public IEnumerable<Admin> GetAllAdmins()
         {
-            return this.AdminRepository.GetAll();
+            return this.AdminRepository.GetAllAdmins();
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace RAMS.Service
         /// <returns>An admin with matching id</returns>
         public Admin GetOneAdminById(int id)
         {
-            return this.AdminRepository.GetById(id);
+            return this.AdminRepository.GetOneByAdminId(id);
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace RAMS.Service
         /// <returns>An admin with specific notification</returns>
         public Admin GetOneAdminByNotificationId(int id)
         {
-            var notification = this.NotificationRepository.GetById(id);
+            var notification = this.NotificationRepository.GetOneByNotificationId(id);
 
             if (notification != null)
             {

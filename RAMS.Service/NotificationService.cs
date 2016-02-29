@@ -54,7 +54,7 @@ namespace RAMS.Service.Interfaces
         /// <returns>All the notifications</returns>
         public IEnumerable<Notification> GetAllNotifications()
         {
-            return this.NotificationRepository.GetAll();
+            return this.NotificationRepository.GetAllNotifications();
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace RAMS.Service.Interfaces
         /// <returns>Notification with matching id</returns>
         public Notification GetOneNotificationById(int id)
         {
-            return this.NotificationRepository.GetById(id);
+            return this.NotificationRepository.GetOneByNotificationId(id);
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace RAMS.Service.Interfaces
         /// <returns>Multiple notifications that belong to specific client</returns>
         public IEnumerable<Notification> GetManyNotificationsByClientId(int id)
         {
-            var client = this.ClientRepository.GetById(id);
+            var client = this.ClientRepository.GetOneByClientId(id);
 
             if (client != null)
             {
@@ -91,7 +91,7 @@ namespace RAMS.Service.Interfaces
         /// <returns>Multiple notifications that belong to specific agent</returns>
         public IEnumerable<Notification> GetManyNotificationsByAgentId(int id)
         {
-            var agent = this.AgentRepository.GetById(id);
+            var agent = this.AgentRepository.GetOneByAgentId(id);
 
             if (agent != null)
             {
@@ -108,7 +108,7 @@ namespace RAMS.Service.Interfaces
         /// <returns>Multiple notifications that belong to specific admin</returns>
         public IEnumerable<Notification> GetManyNotificationsByAdminId(int id)
         {
-            var admin = this.AdminRepository.GetById(id);
+            var admin = this.AdminRepository.GetOneByAdminId(id);
 
             if (admin != null)
             {

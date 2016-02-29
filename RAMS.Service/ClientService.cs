@@ -49,7 +49,7 @@ namespace RAMS.Service
         /// <returns>All the clients</returns>
         public IEnumerable<Client> GetAllClients()
         {
-            return this.ClientRepository.GetAll();
+            return this.ClientRepository.GetAllClients();
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace RAMS.Service
         /// <returns>A client with matching id</returns>
         public Client GetOneClientById(int id)
         {
-            return this.ClientRepository.GetById(id);
+            return this.ClientRepository.GetOneByClientId(id);
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace RAMS.Service
         /// <returns>A client with specific position</returns>
         public Client GetOneClientByPositionId(int id)
         {
-            var position = this.PositionRepository.GetById(id);
+            var position = this.PositionRepository.GetOneByPositionId(id);
 
             if (position != null)
             {
@@ -136,7 +136,7 @@ namespace RAMS.Service
         /// <returns>A client with specific notification</returns>
         public Client GetOneClientByNotificationId(int id)
         {
-            var notification = this.NotificationRepository.GetById(id);
+            var notification = this.NotificationRepository.GetOneByNotificationId(id);
 
             if (notification != null)
             {

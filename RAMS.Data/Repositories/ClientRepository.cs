@@ -18,13 +18,32 @@ namespace RAMS.Data.Repositories
 
         #region Getters
         /// <summary>
+        /// Get first client with matching client id
+        /// </summary>
+        /// <param name="id">Id to match with clients' data</param>
+        /// <returns>First client with matching id</returns>
+        public Client GetOneByClientId(int id)
+        {
+            return this.GetContext.Clients.Include("Positions").Include("Notifications").FirstOrDefault(c => c.ClientId == id);
+        }
+
+        /// <summary>
+        /// Get all clients
+        /// </summary>
+        /// <returns>All clients</returns>
+        public IEnumerable<Client> GetAllClients()
+        {
+            return this.GetContext.Clients.Include("Positions").Include("Notifications");
+        }
+
+        /// <summary>
         /// Get first client with matching user name
         /// </summary>
         /// <param name="userName">User name to match with clients' data</param>
         /// <returns>First client with matching user name</returns>
         public Client GetOneByUserName(string userName)
         {
-            return this.GetContext.Clients.Where(a => a.UserName == userName).FirstOrDefault();
+            return this.GetContext.Clients.Include("Positions").Include("Notifications").FirstOrDefault(c => c.UserName == userName);
         }
 
         /// <summary>
@@ -34,7 +53,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple clients with matching user type</returns>
         public IEnumerable<Client> GetManyByUserType(UserType userType)
         {
-            return this.GetContext.Clients.Where(a => a.UserType == userType).ToList();
+            return this.GetContext.Clients.Include("Positions").Include("Notifications").Where(c => c.UserType == userType).ToList();
         }
 
         /// <summary>
@@ -44,7 +63,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple clients with matching user status</returns>
         public IEnumerable<Client> GetManyByUserStatus(UserStatus userStatus)
         {
-            return this.GetContext.Clients.Where(a => a.UserStatus == userStatus).ToList();
+            return this.GetContext.Clients.Include("Positions").Include("Notifications").Where(c => c.UserStatus == userStatus).ToList();
         }
 
         /// <summary>
@@ -54,7 +73,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple clients with matching role</returns>
         public IEnumerable<Client> GetManyByRole(Role role)
         {
-            return this.GetContext.Clients.Where(a => a.Role == role).ToList();
+            return this.GetContext.Clients.Include("Positions").Include("Notifications").Where(c => c.Role == role).ToList();
         }
 
         /// <summary>
@@ -64,7 +83,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple clients with matching first name</returns>
         public IEnumerable<Client> GetManyByFirstName(string firstName)
         {
-            return this.GetContext.Clients.Where(a => a.FirstName == firstName).ToList();
+            return this.GetContext.Clients.Include("Positions").Include("Notifications").Where(c => c.FirstName == firstName).ToList();
         }
 
         /// <summary>
@@ -74,7 +93,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple clients with matching last name</returns>
         public IEnumerable<Client> GetManyByLastName(string lastName)
         {
-            return this.GetContext.Clients.Where(a => a.LastName == lastName).ToList();
+            return this.GetContext.Clients.Include("Positions").Include("Notifications").Where(c => c.LastName == lastName).ToList();
         }
 
         /// <summary>
@@ -84,7 +103,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple clients with matching job title</returns>
         public IEnumerable<Client> GetManyByJobTitle(string jobTitle)
         {
-            return this.GetContext.Clients.Where(a => a.JobTitle == jobTitle).ToList();
+            return this.GetContext.Clients.Include("Positions").Include("Notifications").Where(c => c.JobTitle == jobTitle).ToList();
         }
 
         /// <summary>
@@ -94,7 +113,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple clients with matching company name</returns>
         public IEnumerable<Client> GetManyByCompanyName(string companyName)
         {
-            return this.GetContext.Clients.Where(a => a.Company == companyName).ToList();
+            return this.GetContext.Clients.Include("Positions").Include("Notifications").Where(c => c.Company == companyName).ToList();
         }
 
         /// <summary>
@@ -104,7 +123,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple clients with matching phone number</returns>
         public IEnumerable<Client> GetManyByPhoneNumber(string phoneNumber)
         {
-            return this.GetContext.Clients.Where(a => a.PhoneNumber == phoneNumber).ToList();
+            return this.GetContext.Clients.Include("Positions").Include("Notifications").Where(c => c.PhoneNumber == phoneNumber).ToList();
         }
 
         /// <summary>
@@ -114,7 +133,7 @@ namespace RAMS.Data.Repositories
         /// <returns>First client with matching email</returns>
         public Client GetOneByEmail(string email)
         {
-            return this.GetContext.Clients.Where(a => a.Email == email).FirstOrDefault();
+            return this.GetContext.Clients.Include("Positions").Include("Notifications").FirstOrDefault(c => c.Email == email);
         }
 
         /// <summary>
@@ -124,7 +143,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple clients with matching partial email</returns>
         public IEnumerable<Client> GetManyByEmail(string email)
         {
-            return this.GetContext.Clients.Where(a => a.Email.ToLower().Trim().Contains(email.ToLower().Trim())).ToList();
+            return this.GetContext.Clients.Include("Positions").Include("Notifications").Where(c => c.Email.ToLower().Trim().Contains(email.ToLower().Trim())).ToList();
         }
 
         /// <summary>
@@ -134,9 +153,9 @@ namespace RAMS.Data.Repositories
         /// <returns>First client with matching position id</returns>
         public Client GetOneByPositionId(int id)
         {
-            var position = this.GetContext.Positions.Where(p => p.PositionId == id).FirstOrDefault() ?? new Position();
+            var position = this.GetContext.Positions.FirstOrDefault(p => p.PositionId == id) ?? new Position();
 
-            return this.GetContext.Clients.Where(a => a.ClientId == position.ClientId).FirstOrDefault();
+            return this.GetContext.Clients.Include("Positions").Include("Notifications").FirstOrDefault(c => c.ClientId == position.ClientId);
         }
 
         /// <summary>
@@ -146,7 +165,7 @@ namespace RAMS.Data.Repositories
         /// <returns>First client with matching position</returns>
         public Client GetOneByPosition(Position position)
         {
-            return this.GetContext.Clients.Where(a => a.ClientId == position.ClientId).FirstOrDefault();
+            return this.GetContext.Clients.Include("Positions").Include("Notifications").FirstOrDefault(c => c.ClientId == position.ClientId);
         }
 
         /// <summary>
@@ -156,9 +175,9 @@ namespace RAMS.Data.Repositories
         /// <returns>First client with matching notification id</returns>
         public Client GetOneByNotificationId(int id)
         {
-            var notification = this.GetContext.Notifications.Where(n => n.NotificationId == id).FirstOrDefault() ?? new Notification();
+            var notification = this.GetContext.Notifications.FirstOrDefault(n => n.NotificationId == id) ?? new Notification();
 
-            return this.GetContext.Clients.Where(a => a.ClientId == notification.ClientId).FirstOrDefault();
+            return this.GetContext.Clients.Include("Positions").Include("Notifications").FirstOrDefault(c => c.ClientId == notification.ClientId);
         }
 
         /// <summary>
@@ -168,7 +187,7 @@ namespace RAMS.Data.Repositories
         /// <returns>First client with matching notification</returns>
         public Client GetOneByNotification(Notification notification)
         {
-            return this.GetContext.Clients.Where(a => a.ClientId == notification.ClientId).FirstOrDefault();
+            return this.GetContext.Clients.Include("Positions").Include("Notifications").FirstOrDefault(c => c.ClientId == notification.ClientId);
         }
         #endregion
     }

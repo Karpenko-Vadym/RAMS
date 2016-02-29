@@ -14,6 +14,10 @@ namespace RAMS.Data.Repositories
     /// </summary>
     public interface IClientRepository : IRepository<Client> 
     {
+        Client GetOneByClientId(int id);
+
+        IEnumerable<Client> GetAllClients();
+
         Client GetOneByUserName(string userName);
 
         IEnumerable<Client> GetManyByUserType(UserType userType);

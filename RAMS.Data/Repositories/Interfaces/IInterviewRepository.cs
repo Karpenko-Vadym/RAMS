@@ -14,6 +14,10 @@ namespace RAMS.Data.Repositories
     /// </summary>
     public interface IInterviewRepository : IRepository<Interview> 
     {
+        Interview GetOneByInterviewId(int id);
+
+        IEnumerable<Interview> GetAllInterviews();
+
         IEnumerable<Interview> GetManyByCandidateId(int id);
 
         IEnumerable<Interview> GetManyByCandidate(Candidate candidate);

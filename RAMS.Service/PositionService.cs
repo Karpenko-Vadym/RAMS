@@ -64,7 +64,7 @@ namespace RAMS.Service
         /// <returns>All the positions</returns>
         public IEnumerable<Position> GetAllPositions()
         {
-            return this.PositionRepository.GetAll();
+            return this.PositionRepository.GetAllPositions();
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace RAMS.Service
         /// <returns>Position with matching id</returns>
         public Position GetOnePositionById(int id)
         {
-            return this.PositionRepository.GetById(id);
+            return this.PositionRepository.GetOneByPositionId(id);
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace RAMS.Service
         /// <returns>Multiple positions that belong to specific agent</returns>
         public IEnumerable<Position> GetManyPositionsByAgentId(int id)
         {
-            var agent = this.AgentRepository.GetById(id);
+            var agent = this.AgentRepository.GetOneByAgentId(id);
 
             if (agent != null)
             {
@@ -101,7 +101,7 @@ namespace RAMS.Service
         /// <returns>Multiple positions that belong to specific client</returns>
         public IEnumerable<Position> GetManyPositionsByClientId(int id)
         {
-            var client = this.ClientRepository.GetById(id);
+            var client = this.ClientRepository.GetOneByClientId(id);
 
             if (client != null)
             {
@@ -152,7 +152,7 @@ namespace RAMS.Service
         /// <returns>Multiple positions with specific category by category id</returns>
         public IEnumerable<Position> GetManyPositionsByCategoryId(int id)
         {
-            var category = this.CategoryRepository.GetById(id);
+            var category = this.CategoryRepository.GetOneByCategoryId(id);
 
             if (category != null)
             {
@@ -276,7 +276,7 @@ namespace RAMS.Service
         /// <returns>Single position with specific candidate</returns>
         public Position GetOnePositionByCandidateId(int id)
         {
-            var candidate = this.CandidateRepository.GetById(id);
+            var candidate = this.CandidateRepository.GetOneByCandidateId(id);
 
             if (candidate != null)
             {

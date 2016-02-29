@@ -177,6 +177,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\PasswordResetEmailTemplate.txt" />
+    <Content Include="App_Data\ScheduleInterviewEmailTemplate.txt" />
     <Content Include="App_Data\UserPasswordResetEmailTemplate.txt" />
     <Content Include="App_Data\UserRegistrationEmailTemplate.txt" />
     <Content Include="App_Data\UserUpdateEmailTemplate.txt" />

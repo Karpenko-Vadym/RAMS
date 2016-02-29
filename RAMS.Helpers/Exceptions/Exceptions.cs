@@ -213,4 +213,17 @@ namespace RAMS.Helpers
 
         public CandidateEditException(string message, Exception innerException) : base(message, innerException) { }
     }
+
+    /// <summary>
+    /// InterviewAddException is a custom exception that provides additional controls over the application and error handling
+    /// InterviewAddException is thrown when interview creation issue occurs
+    /// </summary>
+    public class InterviewAddException : Exception
+    {
+        public InterviewAddException() : base("Interview could not be created.") { }
+
+        public InterviewAddException(string message) : base(message) { }
+
+        public InterviewAddException(string message, Exception innerException) : base(message, innerException) { }
+    }
 }

@@ -680,8 +680,91 @@ namespace RAMS.Web.Areas.Agency.Controllers
             return PartialView("_ScheduleInterview");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<PartialViewResult> ScheduleInterview(InterviewScheduleViewModel model)
+        {
+            var stringBuilder = new StringBuilder();
 
+            var positionResultViewModel = new PositionResultViewModel();
 
+            if (model.CandidateId  > 0 && !String.IsNullOrEmpty(model.SelectedDateTime))
+            {
+                try
+                {
+                    var response = await this.GetHttpClient().PostAsync(String.Format("Interview?candidateId={0}&selectedDate={1}&agentUserName={2}", model.CandidateId, model.SelectedDateTime, User.Identity.Name), null); // Attempt to create new interview
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var interview = await response.Content.ReadAsAsync<Interview>();
+
+                        // Send email
+                        var template = HttpContext.Server.MapPath("~/App_Data/ScheduleInterviewEmailTemplate.txt");
+
+                        var message = System.IO.File.ReadAllText(template);
+
+                        message = message.Replace("%name%", interview.Candidate.FirstName).Replace("%datetime%", interview.InterviewDate.ToString("dddd, MMMM dd, yyyy at hh:mm tt")).Replace("%interviewer%", String.Format("{0} {1}", interview.Interviewer.FirstName, interview.Interviewer.LastName)).Replace("%email%", interview.Interviewer.Email);
+
+                        // TODO - Change "atomix0x@gmail.com" to the email address of the applicant
+                        Email.EmailService.SendEmail("atomix0x@gmail.com", "Your interview has been scheduled.", message); // Send interview confirmation via email
+
+                        stringBuilder.Append(String.Format("<div class='text-center'><h4><strong>An interview with {0} {1} has been scheduled successfully!</strong></h4></div>", interview.Candidate.FirstName, interview.Candidate.LastName));
+
+                        stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An interview can be re-scheduled at anytime by clicking on Re-Schedule button.</div>");
+
+                        stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> An applicant has been notified via email.</div></div>");
+
+                        positionResultViewModel.Message = stringBuilder.ToString();
+
+                        return PartialView("_SuccessConfirmation", positionResultViewModel);
+                    }
+                    else
+                    {
+                        // If interview could not be created, throw InterviewAddException exception
+                        throw new InterviewAddException("Interview could not be created. Response: " + response.StatusCode);
+                    }
+                }
+                catch (InterviewAddException ex)
+                {
+                    // Log exception
+                    ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+
+                    stringBuilder.Append("<div class='text-center'><h4><strong>Failed to schedule an interview.</strong></h4></div>");
+
+                    stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Server returned status code '{0}' while attempting to persist new interview details to the database.</div>");
+
+                    stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> Please review an exception log for more details about the exception.</div></div>");
+
+                    positionResultViewModel.Message = stringBuilder.ToString();
+
+                    return PartialView("_FailureConfirmation", positionResultViewModel);
+                }
+                catch (System.IO.FileNotFoundException ex)
+                {
+                    // Log exception
+                    ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+                }
+                catch (System.IO.IOException ex)
+                {
+                    // Log exception
+                    ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+                }
+            }
+
+            stringBuilder.Append("<div class='text-center'><h4><strong>Failed to schedule an interview.</strong></h4></div>");
+
+            stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Model state is not valid. Please try again in a moment.</div>");
+
+            stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> If you encounter this issue again in the future, please contact Technical Support with exact steps to reproduce this issue.</div></div>");
+
+            positionResultViewModel.Message = stringBuilder.ToString();
+
+            return PartialView("_FailureConfirmation", positionResultViewModel);
+        }
         
         #endregion
     }

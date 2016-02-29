@@ -17,13 +17,32 @@ namespace RAMS.Data.Repositories
 
         #region Getters
         /// <summary>
+        /// Get first department with matching department id
+        /// </summary>
+        /// <param name="id">Id to match with departments' data</param>
+        /// <returns>First department with matching id</returns>
+        public Department GetOneByDepartmentId(int id)
+        {
+            return this.GetContext.Departments.Include("Agents").FirstOrDefault(d => d.DepartmentId == id);
+        }
+
+        /// <summary>
+        /// Get all departments
+        /// </summary>
+        /// <returns>All departments</returns>
+        public IEnumerable<Department> GetAllDepartments()
+        {
+            return this.GetContext.Departments.Include("Agents");
+        }
+
+        /// <summary>
         /// Get first Department with matching name
         /// </summary>
         /// <param name="name">Name for comparing with Departments' name</param>
         /// <returns>First Department with matching name</returns>
         public Department GetOneByName(string name)
         {
-            return this.GetContext.Departments.Where(d => d.Name == name).FirstOrDefault();
+            return this.GetContext.Departments.Include("Agents").FirstOrDefault(d => d.Name == name);
         }
 
         /// <summary>
@@ -33,9 +52,9 @@ namespace RAMS.Data.Repositories
         /// <returns>First Department with matching agent id</returns>
         public Department GetOneByAgentId(int id)
         {
-            var agent = this.GetContext.Agents.Where(a => a.AgentId == id).FirstOrDefault() ?? new Agent();
+            var agent = this.GetContext.Agents.FirstOrDefault(a => a.AgentId == id) ?? new Agent();
 
-            return this.GetContext.Departments.Where(d => d.DepartmentId == agent.DepartmentId).FirstOrDefault();
+            return this.GetContext.Departments.Include("Agents").FirstOrDefault(d => d.DepartmentId == agent.DepartmentId);
         }
 
         /// <summary>
@@ -45,7 +64,7 @@ namespace RAMS.Data.Repositories
         /// <returns>First Department with matching agent</returns>
         public Department GetOneByAgent(Agent agent)
         {
-            return this.GetContext.Departments.Where(d => d.DepartmentId == agent.DepartmentId).FirstOrDefault();
+            return this.GetContext.Departments.Include("Agents").FirstOrDefault(d => d.DepartmentId == agent.DepartmentId);
         }
         #endregion
     }

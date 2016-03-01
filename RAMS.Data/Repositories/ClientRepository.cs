@@ -43,7 +43,7 @@ namespace RAMS.Data.Repositories
         /// <returns>First client with matching user name</returns>
         public Client GetOneByUserName(string userName)
         {
-            return this.GetContext.Clients.Include("Positions").Include("Notifications").FirstOrDefault(c => c.UserName == userName);
+            return this.GetContext.Clients.Include("Positions").Include("Notifications").Include("Positions.Agent").Include("Positions.Category").FirstOrDefault(c => c.UserName == userName);
         }
 
         /// <summary>

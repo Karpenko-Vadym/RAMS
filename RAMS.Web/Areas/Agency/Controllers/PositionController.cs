@@ -123,7 +123,7 @@ namespace RAMS.Web.Areas.Agency.Controllers
 
                         stringBuilder.Append("<div class='text-center'><h4><strong>Failed to retrieve the list of categories.</strong></h4></div>");
 
-                        stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Server returned status code '{0}' while attempting to retrieve the list of categories. Please try again in a moment.</div>");
+                        stringBuilder.Append(String.Format("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Server returned status code '{0}' while attempting to retrieve the list of categories. Please try again in a moment.</div>", response.StatusCode));
 
                         stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> If you encounter this issue again in the future, please contact Technical Support with exact steps to reproduce this issue.</div></div>");
 
@@ -169,7 +169,7 @@ namespace RAMS.Web.Areas.Agency.Controllers
 
                 stringBuilder.Append("<div class='text-center'><h4><strong>Failed to retrieve the list of categories.</strong></h4></div>");
 
-                stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Server returned status code '{0}' while attempting to retrieve the list of categories. Please try again in a moment.</div>");
+                stringBuilder.Append(String.Format("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Server returned status code '{0}' while attempting to retrieve the list of categories. Please try again in a moment.</div>", response.StatusCode));
 
                 stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> If you encounter this issue again in the future, please contact Technical Support with exact steps to reproduce this issue.</div></div>");
 
@@ -235,7 +235,7 @@ namespace RAMS.Web.Areas.Agency.Controllers
 
                     stringBuilder.Append("<div class='text-center'><h4><strong>Failed to save position details.</strong></h4></div>");
 
-                    stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Server returned status code '{0}' while attempting to persist position details to the database. Please try again in a moment.</div>");
+                    stringBuilder.Append(String.Format("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Server returned status code '{0}' while attempting to persist position details to the database. Please try again in a moment.</div>", response.StatusCode));
 
                     stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> If you encounter this issue again in the future, please contact Technical Support with exact steps to reproduce this issue.</div></div>");
 
@@ -290,9 +290,11 @@ namespace RAMS.Web.Areas.Agency.Controllers
         {
             if (ModelState.IsValid)
             {
+                var response = new HttpResponseMessage();
+
                 try
                 {
-                    var response = await this.GetHttpClient().PutAsync(String.Format("Candidate?candidateId={0}&feedback={1}", model.CandidateId, model.Feedback), null); // Attempt to update the feedback
+                    response = await this.GetHttpClient().PutAsync(String.Format("Candidate?candidateId={0}&feedback={1}", model.CandidateId, model.Feedback), null); // Attempt to update the feedback
 
                     if (response.IsSuccessStatusCode)
                     {
@@ -317,7 +319,7 @@ namespace RAMS.Web.Areas.Agency.Controllers
 
                     stringBuilder.Append("<div class='text-center'><h4><strong>Failed to update candidate details.</strong></h4></div>");
 
-                    stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Server returned status code '{0}' while attempting to persist candidate details to the database. Please try again in a moment.</div>");
+                    stringBuilder.Append(String.Format("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Server returned status code '{0}' while attempting to persist candidate details to the database. Please try again in a moment.</div>", response.StatusCode));
 
                     stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> If you encounter this issue again in the future, please contact Technical Support with exact steps to reproduce this issue.</div></div>");
 
@@ -361,9 +363,11 @@ namespace RAMS.Web.Areas.Agency.Controllers
 
             if(ModelState.IsValid)
             {
+                var response = new HttpResponseMessage();
+
                 try
                 {
-                    var response = await this.GetHttpClient().PutAsync(String.Format("Position?positionId={0}&status={1}", model.PositionId, (int)PositionStatus.Approved), null); // Attempt to update the status
+                    response = await this.GetHttpClient().PutAsync(String.Format("Position?positionId={0}&status={1}", model.PositionId, (int)PositionStatus.Approved), null); // Attempt to update the status
 
                     if (response.IsSuccessStatusCode)
                     {
@@ -391,7 +395,7 @@ namespace RAMS.Web.Areas.Agency.Controllers
                         {
                             stringBuilder.Append("<div class='text-center'><h4><strong>Failed to update position details.</strong></h4></div>");
 
-                            stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Server returned status code '{0}', but position status was not updated. Please try again in a moment.</div>");
+                            stringBuilder.Append(String.Format("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Server returned status code '{0}', but position status was not updated. Please try again in a moment.</div>", response.StatusCode));
 
                             stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> If you encounter this issue again in the future, please contact Technical Support with exact steps to reproduce this issue.</div></div>");
 
@@ -413,7 +417,7 @@ namespace RAMS.Web.Areas.Agency.Controllers
 
                     stringBuilder.Append("<div class='text-center'><h4><strong>Failed to update position details.</strong></h4></div>");
 
-                    stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Server returned status code '{0}' while attempting to persist position details to the database. Please try again in a moment.</div>");
+                    stringBuilder.Append(String.Format("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Server returned status code '{0}' while attempting to persist position details to the database. Please try again in a moment.</div>", response.StatusCode));
 
                     stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> If you encounter this issue again in the future, please contact Technical Support with exact steps to reproduce this issue.</div></div>");
 
@@ -465,9 +469,11 @@ namespace RAMS.Web.Areas.Agency.Controllers
 
             if (ModelState.IsValid)
             {
+                var response = new HttpResponseMessage();
+
                 try
                 {
-                    var response = await this.GetHttpClient().PutAsync(String.Format("Position?positionId={0}&status={1}", model.PositionId, (int)PositionStatus.Closed), null); // Attempt to update the status
+                    response = await this.GetHttpClient().PutAsync(String.Format("Position?positionId={0}&status={1}", model.PositionId, (int)PositionStatus.Closed), null); // Attempt to update the status
 
                     if (response.IsSuccessStatusCode)
                     {
@@ -495,7 +501,7 @@ namespace RAMS.Web.Areas.Agency.Controllers
                         {
                             stringBuilder.Append("<div class='text-center'><h4><strong>Failed to update position details.</strong></h4></div>");
 
-                            stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Server returned status code '{0}', but position status was not updated. Please try again in a moment.</div>");
+                            stringBuilder.Append(String.Format("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Server returned status code '{0}', but position status was not updated. Please try again in a moment.</div>", response.StatusCode));
 
                             stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> If you encounter this issue again in the future, please contact Technical Support with exact steps to reproduce this issue.</div></div>");
 
@@ -517,7 +523,7 @@ namespace RAMS.Web.Areas.Agency.Controllers
 
                     stringBuilder.Append("<div class='text-center'><h4><strong>Failed to update position details.</strong></h4></div>");
 
-                    stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Server returned status code '{0}' while attempting to persist position details to the database. Please try again in a moment.</div>");
+                    stringBuilder.Append(String.Format("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Server returned status code '{0}' while attempting to persist position details to the database. Please try again in a moment.</div>", response.StatusCode));
 
                     stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> If you encounter this issue again in the future, please contact Technical Support with exact steps to reproduce this issue.</div></div>");
 
@@ -580,9 +586,11 @@ namespace RAMS.Web.Areas.Agency.Controllers
             {
                 if(model.AgentId != model.SelectedAgentId)
                 {
+                    var response = new HttpResponseMessage();
+
                     try
                     {
-                        var response = await this.GetHttpClient().PutAsync(String.Format("Position?positionId={0}&agentId={1}", model.PositionId, model.SelectedAgentId), null); // Attempt to assign an agent
+                        response = await this.GetHttpClient().PutAsync(String.Format("Position?positionId={0}&agentId={1}", model.PositionId, model.SelectedAgentId), null); // Attempt to assign an agent
 
                         if (!response.IsSuccessStatusCode)
                         {
@@ -597,7 +605,7 @@ namespace RAMS.Web.Areas.Agency.Controllers
                             {
                                 stringBuilder.Append("<div class='text-center'><h4><strong>Failed to update position details.</strong></h4></div>");
 
-                                stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Server returned status code '{0}', but position status was not updated. Please try again in a moment.</div>");
+                                stringBuilder.Append(String.Format("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Server returned status code '{0}', but position status was not updated. Please try again in a moment.</div>", response.StatusCode));
 
                                 stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> If you encounter this issue again in the future, please contact Technical Support with exact steps to reproduce this issue.</div></div>");
 
@@ -614,7 +622,7 @@ namespace RAMS.Web.Areas.Agency.Controllers
 
                         stringBuilder.Append("<div class='text-center'><h4><strong>Failed to update position details.</strong></h4></div>");
 
-                        stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Server returned status code '{0}' while attempting to persist position details to the database. Please try again in a moment.</div>");
+                        stringBuilder.Append(String.Format("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Server returned status code '{0}' while attempting to persist position details to the database. Please try again in a moment.</div>", response.StatusCode));
 
                         stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> If you encounter this issue again in the future, please contact Technical Support with exact steps to reproduce this issue.</div></div>");
 
@@ -653,20 +661,18 @@ namespace RAMS.Web.Areas.Agency.Controllers
         }
         #endregion
 
-
-
-
         #region Schedule Interview
         /// <summary>
-        /// ScheduleInterview action method retrieves all the interviews for current user and displays the schedule for the next 4 days in _ScheduleInterview partial view
+        /// ScheduleInterview action method retrieves all the interviews for current user and displays the schedule for the week in _ScheduleInterview partial view
         /// </summary>
         /// <param name="candidateId">Id of the candidate for whom the interview is being scheduled</param>
-        /// <param name="displayDate">Schedule is displayed for this date, plus 3 days after</param>
-        /// <returns>_ScheduleInterview partial view with the schedule for the next 4 days</returns>
+        /// <param name="displayDate">Schedule is displayed for the week of this date</param>
+        /// <param name="selected">Indicates whether Candidate has previously scheduled interview</param>
+        /// <returns>_ScheduleInterview partial view with the schedule for the week</returns>
         [HttpGet]
-        public async Task<PartialViewResult> ScheduleInterview(int candidateId, string displayDate)
+        public async Task<PartialViewResult> ScheduleInterview(int candidateId, string displayDate, bool selected)
         {
-            var interviewScheduleViewModel = new InterviewScheduleViewModel(candidateId, displayDate);
+            var interviewScheduleViewModel = new InterviewScheduleViewModel(candidateId, displayDate, selected);
 
             var response = await this.GetHttpClient().GetAsync(String.Format("Interview?username={0}", User.Identity.Name));
 
@@ -681,10 +687,10 @@ namespace RAMS.Web.Areas.Agency.Controllers
         }
 
         /// <summary>
-        /// 
+        /// ScheduleInterview action method attempts to persist the interview
         /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
+        /// <param name="model">Data required to persist the interview</param>
+        /// <returns>_SuccessConfirmation partial view if an interview has been successfully persisted, _FailureConfirmation partial view otherwise</returns>
         [HttpPost]
         public async Task<PartialViewResult> ScheduleInterview(InterviewScheduleViewModel model)
         {
@@ -694,9 +700,11 @@ namespace RAMS.Web.Areas.Agency.Controllers
 
             if (model.CandidateId  > 0 && !String.IsNullOrEmpty(model.SelectedDateTime))
             {
+                var response = new HttpResponseMessage();
+
                 try
                 {
-                    var response = await this.GetHttpClient().PostAsync(String.Format("Interview?candidateId={0}&selectedDate={1}&agentUserName={2}", model.CandidateId, model.SelectedDateTime, User.Identity.Name), null); // Attempt to create new interview
+                    response = await this.GetHttpClient().PostAsync(String.Format("Interview?candidateId={0}&selectedDate={1}&agentUserName={2}&selected={3}", model.CandidateId, model.SelectedDateTime, User.Identity.Name, model.Selected), null); // Attempt to create new interview
 
                     if (response.IsSuccessStatusCode)
                     {
@@ -735,7 +743,7 @@ namespace RAMS.Web.Areas.Agency.Controllers
 
                     stringBuilder.Append("<div class='text-center'><h4><strong>Failed to schedule an interview.</strong></h4></div>");
 
-                    stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Server returned status code '{0}' while attempting to persist new interview details to the database.</div>");
+                    stringBuilder.Append(String.Format("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Server returned status code '{0}' while attempting to persist new interview details to the database.</div>", response.StatusCode));
 
                     stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> Please review an exception log for more details about the exception.</div></div>");
 
@@ -765,7 +773,6 @@ namespace RAMS.Web.Areas.Agency.Controllers
 
             return PartialView("_FailureConfirmation", positionResultViewModel);
         }
-        
         #endregion
     }
 }

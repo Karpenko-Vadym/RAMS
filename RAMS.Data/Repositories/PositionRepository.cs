@@ -24,7 +24,7 @@ namespace RAMS.Data.Repositories
         /// <returns>One position with matching position id</returns>
         public Position GetOneByPositionId(int id)
         {
-            return this.GetContext.Positions.Include("Category").Include("Client").Include("Agent").Include("Candidates").FirstOrDefault(p => p.PositionId == id);
+            return this.GetContext.Positions.Include("Category").Include("Client").Include("Agent").Include("Candidates").Include("Candidates.Interviews").FirstOrDefault(p => p.PositionId == id);
         }
 
         /// <summary>

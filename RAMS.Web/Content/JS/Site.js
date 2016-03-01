@@ -327,9 +327,13 @@ function AgencyModalControls()
 
     $("#candidate-report-modal").on("hidden.bs.modal", function (e) { $("#candidate-report-modal-body-div").empty(); });
 
-    $("#schedule-interview-modal").on("show.bs.modal", function (e) { LoadAction("schedule-interview-modal-body-div", "/RAMS/Agency/Position/ScheduleInterview?candidateId=" + $(e.relatedTarget).data("candidate-id") + "&displayDate=" + encodeURIComponent($(e.relatedTarget).data("date-time"))); });
+    $("#schedule-interview-modal").on("show.bs.modal", function (e) { LoadAction("schedule-interview-modal-body-div", "/RAMS/Agency/Position/ScheduleInterview?candidateId=" + $(e.relatedTarget).data("candidate-id") + "&displayDate=" + encodeURIComponent($(e.relatedTarget).data("date-time")) + "&selected=" + $(e.relatedTarget).data("selected")); });
 
     $("#schedule-interview-modal").on("hidden.bs.modal", function (e) { $("#schedule-interview-modal-body-div").empty(); });
+
+    $("#personal-schedule-modal").on("show.bs.modal", function (e) { LoadAction("personal-schedule-modal-body-div", "/RAMS/Agency/Profile/PersonalSchedule?displayDate=" + encodeURIComponent($(e.relatedTarget).data("date-time"))); });
+
+    $("#personal-schedule-modal").on("hidden.bs.modal", function (e) { $("#personal-schedule-modal-body-div").empty(); });
 }
 
 /********** END OF AGENCY MODAL CONTROLS **********/

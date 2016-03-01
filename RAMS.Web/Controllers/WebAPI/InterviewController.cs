@@ -153,13 +153,27 @@ namespace RAMS.Web.Controllers.WebAPI
         /// <param name="candidateId">Setter for CandidateId</param>
         /// <param name="selectedDate">Setter for InterviewDate</param>
         /// <param name="agentUserName">Setter for InterviewerId</param>
+        /// <param name="selected">Flag that indicates whether candidate has interviews</param>
         /// <returns>The Uri of newly created interview</returns>
         [HttpPost]
         [ResponseType(typeof(Interview))]
-        public IHttpActionResult CreateInterview(int candidateId, string selectedDate, string agentUserName)
+        public IHttpActionResult CreateInterview(int candidateId, string selectedDate, string agentUserName, bool selected)
         {
             if (candidateId > 0 && !String.IsNullOrEmpty(selectedDate) && !String.IsNullOrEmpty(agentUserName))
             {
+                if(selected)
+                {
+                    var interviews = this.InterviewService.GetManyInterviewsByCandidateId(candidateId);
+
+                    if(!Utilities.IsEmpty(interviews))
+                    {
+                        foreach(var item in interviews.ToList())
+                        {
+                            this.DeleteInterview(item.InterviewId);
+                        }
+                    }   
+                }
+
                 var interview = new Interview();
 
                 interview.CandidateId = candidateId;

@@ -30,6 +30,8 @@ namespace RAMS.ViewModels
 
         public string DisplayDate { get; set; }
 
+        public bool Selected { get; set; }
+
         public string SelectedDateTime { get; set; }
 
         public List<InterviewListViewModel> Interviews { get; set; }
@@ -45,13 +47,27 @@ namespace RAMS.ViewModels
         /// <summary>
         /// InterviewScheduleViewModel constructor that sets all its properties
         /// </summary>
+        /// <param name="displayDate">Setter for DisplayDate</param>
+        public InterviewScheduleViewModel(string displayDate)
+        {
+            this.DisplayDate = displayDate;
+
+            this.Interviews = new List<InterviewListViewModel>();
+        }
+
+        /// <summary>
+        /// InterviewScheduleViewModel constructor that sets all its properties
+        /// </summary>
         /// <param name="candidateId">Setter for CandidateId</param>
         /// <param name="displayDate">Setter for DisplayDate</param>
-        public InterviewScheduleViewModel(int candidateId, string displayDate)
+        /// /// <param name="selected">Setter for Selected</param>
+        public InterviewScheduleViewModel(int candidateId, string displayDate, bool selected)
         {
             this.DisplayDate = displayDate;
 
             this.CandidateId = candidateId;
+
+            this.Selected = selected;
 
             this.Interviews = new List<InterviewListViewModel>();
         }

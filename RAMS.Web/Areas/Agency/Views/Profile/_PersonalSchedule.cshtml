@@ -1,31 +1,14 @@
 ﻿@model RAMS.ViewModels.InterviewScheduleViewModel
 
-<!-- SCHEDULE INTERVIEW PARTIAL -->
-@{
-    AjaxOptions ajaxOptions = new AjaxOptions
-    {
-        UpdateTargetId = "edit-position-message-modal-body-div",
-        OnBegin = "OnAjaxBegin",
-        OnSuccess = "OnAjaxSuccess",
-        OnFailure = "OnAjaxFailure",
-        OnComplete = "OnAjaxComplete"
-    };
-}
+<!-- PERSONAL SCHEDULE PARTIAL -->
 
-@if (Model.CandidateId > 0)
+@if(!String.IsNullOrEmpty(Model.DisplayDate))
 {
-    using (Ajax.BeginForm("ScheduleInterview", "Position", new { Area = "Agency" }, ajaxOptions, new { id = "schedule-interview-form" }))
-    {
-        @Html.AntiForgeryToken()
-
-        @Html.HiddenFor(model => model.CandidateId)
-        @Html.HiddenFor(model => model.Selected)
-    
         <div class="well well-lg bottom-margin-0">
             <div class="btn-group btn-group-justified" role="group">
 
                 <div class="btn-group" role="group">
-                    <input type="button" class="btn btn-info" onclick="LoadAction('schedule-interview-modal-body-div', '@Url.Action("ScheduleInterview", "Position", new { candidateId = Model.CandidateId, displayDate = Convert.ToDateTime(Model.DisplayDate).AddDays(-7).ToString("dd/MM/yyyy"), selected = Model.Selected, Area = "Agency" })');" value="Previous Week" />
+                    <input type="button" class="btn btn-info" onclick="LoadAction('personal-schedule-modal-body-div', '@Url.Action("PersonalSchedule", "Profile", new { displayDate = Convert.ToDateTime(Model.DisplayDate).AddDays(-7).ToString("dd/MM/yyyy"), Area = "Agency" })');" value="Previous Week" />
                 </div>
 
                 <div class="btn-group" role="group">
@@ -35,11 +18,12 @@
                     }
                     else
                     {
-                        <input type="button" class="btn btn-danger" onclick="LoadAction('schedule-interview-modal-body-div', '@Url.Action("ScheduleInterview", "Position", new { candidateId = Model.CandidateId, displayDate = DateTime.Now.ToString("dd/MM/yyyy"), selected = Model.Selected, Area = "Agency" })');" value="Current Week" />
+                        <input type="button" class="btn btn-danger" onclick="LoadAction('personal-schedule-modal-body-div', '@Url.Action("PersonalSchedule", "Profile", new { displayDate = DateTime.Now.ToString("dd/MM/yyyy"), Area = "Agency" })');" value="Current Week" />
                     }
                 </div>
+
                 <div class="btn-group" role="group">
-                    <input type="button" class="btn btn-info" onclick="LoadAction('schedule-interview-modal-body-div', '@Url.Action("ScheduleInterview", "Position", new { candidateId = Model.CandidateId, displayDate = Convert.ToDateTime(Model.DisplayDate).AddDays(7).ToString("dd/MM/yyyy"), selected = Model.Selected, Area = "Agency" })');" value="Next Week" />
+                    <input type="button" class="btn btn-info" onclick="LoadAction('personal-schedule-modal-body-div', '@Url.Action("PersonalSchedule", "Profile", new { displayDate = Convert.ToDateTime(Model.DisplayDate).AddDays(7).ToString("dd/MM/yyyy"), Area = "Agency" })');" value="Next Week" />
                 </div>
             </div>
             <div class="vertical-padding-24"></div>
@@ -58,7 +42,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="cursor-pointer" onclick="CheckTableRadioButton(this);">
+                                    <tr class="cursor-pointer">
                                         @if (Model.Interviews.FirstOrDefault(i => i.InterviewDate == Convert.ToDateTime(Model.DisplayDate).AddDays(increment).AddHours(9)) != null)
                                         {
                                             <td class="danger">9:00</td>
@@ -67,10 +51,10 @@
                                         else
                                         {
                                             <td class="success">9:00</td>
-                                            <td class="success">Available<span class="pull-right margin-left-10"><input type="radio" name="SelectedDateTime" value="@Convert.ToDateTime(Model.DisplayDate).AddDays(increment).AddHours(9)"></span></td>
+                                            <td class="success">Available</td>
                                         }
                                     </tr>
-                                    <tr class="cursor-pointer" onclick="CheckTableRadioButton(this);">
+                                    <tr class="cursor-pointer">
                                         @if (Model.Interviews.FirstOrDefault(i => i.InterviewDate == Convert.ToDateTime(Model.DisplayDate).AddDays(increment).AddHours(10)) != null)
                                         {
                                             <td class="danger">10:00</td>
@@ -79,10 +63,10 @@
                                         else
                                         {
                                             <td class="success">10:00</td>
-                                            <td class="success">Available<span class="pull-right margin-left-10"><input type="radio" name="SelectedDateTime" value="@Convert.ToDateTime(Model.DisplayDate).AddDays(increment).AddHours(10)"></span></td>
+                                            <td class="success">Available</td>
                                         }
                                     </tr>
-                                    <tr class="cursor-pointer" onclick="CheckTableRadioButton(this);">
+                                    <tr class="cursor-pointer">
                                         @if (Model.Interviews.FirstOrDefault(i => i.InterviewDate == Convert.ToDateTime(Model.DisplayDate).AddDays(increment).AddHours(11)) != null)
                                         {
                                             <td class="danger">11:00</td>
@@ -91,10 +75,10 @@
                                         else
                                         {
                                             <td class="success">11:00</td>
-                                            <td class="success">Available<span class="pull-right margin-left-10"><input type="radio" name="SelectedDateTime" value="@Convert.ToDateTime(Model.DisplayDate).AddDays(increment).AddHours(11)"></span></td>
+                                            <td class="success">Available</td>
                                         }
                                     </tr>
-                                    <tr class="cursor-pointer" onclick="CheckTableRadioButton(this);">
+                                    <tr class="cursor-pointer">
                                         @if (Model.Interviews.FirstOrDefault(i => i.InterviewDate == Convert.ToDateTime(Model.DisplayDate).AddDays(increment).AddHours(12)) != null)
                                         {
                                             <td class="danger">12:00</td>
@@ -103,10 +87,10 @@
                                         else
                                         {
                                             <td class="success">12:00</td>
-                                            <td class="success">Available<span class="pull-right margin-left-10"><input type="radio" name="SelectedDateTime" value="@Convert.ToDateTime(Model.DisplayDate).AddDays(increment).AddHours(12)"></span></td>
+                                            <td class="success">Available</td>
                                         }
                                     </tr>
-                                    <tr class="cursor-pointer" onclick="CheckTableRadioButton(this);">
+                                    <tr class="cursor-pointer">
 
                                         @if (Model.Interviews.FirstOrDefault(i => i.InterviewDate == Convert.ToDateTime(Model.DisplayDate).AddDays(increment).AddHours(13)) != null)
                                         {
@@ -116,10 +100,10 @@
                                         else
                                         {
                                             <td class="success">13:00</td>
-                                            <td class="success">Available<span class="pull-right margin-left-10"><input type="radio" name="SelectedDateTime" value="@Convert.ToDateTime(Model.DisplayDate).AddDays(increment).AddHours(13)"></span></td>
+                                            <td class="success">Available</td>
                                         }
                                     </tr>
-                                    <tr class="cursor-pointer" onclick="CheckTableRadioButton(this);">
+                                    <tr class="cursor-pointer">
                                         @if (Model.Interviews.FirstOrDefault(i => i.InterviewDate == Convert.ToDateTime(Model.DisplayDate).AddDays(increment).AddHours(14)) != null)
                                         {
                                             <td class="danger">14:00</td>
@@ -128,10 +112,10 @@
                                         else
                                         {
                                             <td class="success">14:00</td>
-                                            <td class="success">Available<span class="pull-right margin-left-10"><input type="radio" name="SelectedDateTime" value="@Convert.ToDateTime(Model.DisplayDate).AddDays(increment).AddHours(14)"></span></td>
+                                            <td class="success">Available</td>
                                         }
                                     </tr>
-                                    <tr class="cursor-pointer" onclick="CheckTableRadioButton(this);">
+                                    <tr class="cursor-pointer">
                                         @if (Model.Interviews.FirstOrDefault(i => i.InterviewDate == Convert.ToDateTime(Model.DisplayDate).AddDays(increment).AddHours(15)) != null)
                                         {
                                             <td class="danger">15:00</td>
@@ -140,10 +124,10 @@
                                         else
                                         {
                                             <td class="success">15:00</td>
-                                            <td class="success">Available<span class="pull-right margin-left-10"><input type="radio" name="SelectedDateTime" value="@Convert.ToDateTime(Model.DisplayDate).AddDays(increment).AddHours(15)"></span></td>
+                                            <td class="success">Available</td>
                                         }
                                     </tr>
-                                    <tr class="cursor-pointer" onclick="CheckTableRadioButton(this);">
+                                    <tr class="cursor-pointer">
                                         @if (Model.Interviews.FirstOrDefault(i => i.InterviewDate == Convert.ToDateTime(Model.DisplayDate).AddDays(increment).AddHours(16)) != null)
                                         {
                                             <td class="danger">16:00</td>
@@ -152,10 +136,10 @@
                                         else
                                         {
                                             <td class="success">16:00</td>
-                                            <td class="success">Available<span class="pull-right margin-left-10"><input type="radio" name="SelectedDateTime" value="@Convert.ToDateTime(Model.DisplayDate).AddDays(increment).AddHours(16)"></span></td>
+                                            <td class="success">Available</td>
                                         }
                                     </tr>
-                                    <tr class="cursor-pointer" onclick="CheckTableRadioButton(this);">
+                                    <tr class="cursor-pointer">
                                         @if (Model.Interviews.FirstOrDefault(i => i.InterviewDate == Convert.ToDateTime(Model.DisplayDate).AddDays(increment).AddHours(17)) != null)
                                         {
                                             <td class="danger">17:00</td>
@@ -164,7 +148,7 @@
                                         else
                                         {
                                             <td class="success">17:00</td>
-                                            <td class="success">Available<span class="pull-right margin-left-10"><input type="radio" name="SelectedDateTime" value="@Convert.ToDateTime(Model.DisplayDate).AddDays(increment).AddHours(17)"></span></td>
+                                            <td class="success">Available</td>
                                         }
                                     </tr>
                                 </tbody>
@@ -174,24 +158,6 @@
                 </div>
             </div>
         </div>
-
-        <div class="vertical-padding-24"></div>
-
-        <div class="form-group bottom-margin-0">
-            <div class="col-md-offset-0 col-lg-offset-0 col-md-3 col-lg-3">
-                <input type="submit" value="Schedule" class="btn btn-danger btn-block" onclick="$('#schedule-interview-modal').modal('hide');" />
-            </div>
-
-            <div class="col-md-offset-6 col-lg-offset-6 col-md-3 col-lg-3">
-                <input type="button" value="Cancel" class="btn btn-info btn-block" onclick="$('#schedule-interview-modal').modal('hide');" />
-            </div>
-        </div>
-
-        <div class="clearfix"></div>
-
-    
-
-    }
 }
 else
 {
@@ -203,4 +169,4 @@ else
     </div>
 </div>
 }
-<!-- END OF SCHEDULE INTERVIEW PARTIAL -->
+<!-- END OF PERSONAL SCHEDULE PARTIAL -->

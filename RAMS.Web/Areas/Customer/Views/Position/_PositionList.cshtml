@@ -11,6 +11,7 @@
                     <th>Status</th>
                     <th>Category</th>
                     <th>Date Created</th>
+                    <th>Expiry Date</th>
                     <th>Assigned To</th>
                 </tr>
             </thead>
@@ -20,9 +21,21 @@
                     <tr class="cursor-pointer" data-toggle="modal" data-target="#position-details-modal" data-position-id="@item.PositionId">
                         <td>@item.PositionIdForDisplay</td>
                         <td>@item.Title</td>
-                        <td>@item.Status</td>
+                        @if (item.ExpiryDate < DateTime.Now && item.Status != RAMS.Enums.PositionStatus.Closed)
+                        {
+                            <td class="text-center"><span class="label label-danger">@item.Status</span></td>
+                        }
+                        else if (item.Status == RAMS.Enums.PositionStatus.Closed)
+                        {
+                            <td class="text-center"><span class="label label-default">@item.Status</span></td>
+                        }
+                        else
+                        {
+                            <td class="text-center"><span class="label label-success">@item.Status</span></td>
+                        }
                         <td>@item.CategoryName</td>
                         <td>@item.DateCreated.ToString("dd/MM/yyyy")</td>
+                        <td class="text-center"><span class="label @((item.Status == RAMS.Enums.PositionStatus.Closed) ? "label-default" : (item.ExpiryDate > DateTime.Now) ? "label-success" : "label-danger")">@item.ExpiryDate.ToString("dd/MM/yyyy")</span></td>
 
                         @if (String.IsNullOrEmpty(item.AssignedTo))
                         {

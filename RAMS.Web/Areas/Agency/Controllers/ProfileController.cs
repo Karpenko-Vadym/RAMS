@@ -363,5 +363,27 @@ namespace RAMS.Web.Areas.Agency.Controllers
 
             return PartialView("_Confirmation", new ConfirmationViewModel(stringBuilder.ToString()));
         }
+
+        /// <summary>
+        /// PersonalSchedule action method retrieves all the interviews for current user and displays the schedule for the week in _PersonalSchedule partial view
+        /// </summary>
+        /// <param name="displayDate">Schedule is displayed for the week of this date</param>
+        /// <returns>_PersonalSchedule partial view with the schedule for the week</returns>
+        [HttpGet]
+        public async Task<PartialViewResult> PersonalSchedule(string displayDate)
+        {
+            var interviewScheduleViewModel = new InterviewScheduleViewModel(displayDate);
+
+            var response = await this.GetHttpClient().GetAsync(String.Format("Interview?username={0}", User.Identity.Name));
+
+            if (response.IsSuccessStatusCode)
+            {
+                interviewScheduleViewModel.Interviews.AddRange(Mapper.Map<List<Interview>, List<InterviewListViewModel>>(await response.Content.ReadAsAsync<List<Interview>>()));
+
+                return PartialView("_PersonalSchedule", interviewScheduleViewModel);
+            }
+
+            return PartialView("_PersonalSchedule");
+        }
     }
 }

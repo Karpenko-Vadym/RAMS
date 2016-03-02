@@ -1,0 +1,56 @@
+﻿<!-- CATEGORY INDEX VIEW -->
+<button type="button" class="btn btn-info" data-toggle="modal" data-target="#new-category-modal">New Category</button>
+
+<button type="button" class="btn btn-info pull-right" onclick="LoadAction('category-list-div', '@Url.Action("CategoryList", "Category", new { Area = "SystemAdmin" })' );">Refresh List</button>
+
+<div class="vertical-padding-24"></div>
+
+<div id="category-list-div"></div>
+
+<!-- NEW CATEGORY MODAL -->
+<div id="new-category-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- MODAL CONTENT -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" onclick="$('#new-category-modal').modal('hide');">&times;</button>
+                <h4 class="modal-title text-center">New Category</h4>
+            </div>
+            <div class="modal-body">
+                <div class="well well-lg bottom-margin-0">
+                    <div id="new-category-modal-body-div"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" onclick="$('#new-category-modal').modal('hide');">Close</button>
+            </div>
+        </div>
+        <!-- END OF MODAL CONTENT-->
+    </div>
+</div>
+<!-- END OF NEW CATEGORY MODAL -->
+<!-- EDIT CATEGORY MODAL -->
+<div id="edit-category-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- MODAL CONTENT -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" onclick="$('#edit-category-modal').modal('hide');">&times;</button>
+                <h4 id="edit-category-modal-title" class="modal-title text-center">Edit Category</h4>
+            </div>
+            <div class="modal-body">
+                <div class="well well-lg bottom-margin-0">
+                    <div id="edit-category-modal-body-div"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" onclick="$('#edit-category-modal').modal('hide');">Close</button>
+            </div>
+        </div>
+        <!-- END OF MODAL CONTENT-->
+    </div>
+</div>
+<!-- END OF EDIT CATEGORY MODAL -->
+
+<script type="text/javascript">$(function () { LoadAction("category-list-div", "@Url.Action("CategoryList", "Category", new { Area = "SystemAdmin" })"); SystemAdminModalControls(); });</script>
+<!-- END OF CATEGORY INDEX VIEW -->

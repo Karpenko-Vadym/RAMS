@@ -1,0 +1,28 @@
+﻿@model RAMS.ViewModels.CategoryAddEditConfirmationViewModel
+
+<!-- EDIT CATEGORY CONFIRMATION PARTIAL VIEW -->
+@if (Model != null)
+{
+    <div class="well well-lg bottom-margin-0 background-white">
+        <div class="alert alert-success">
+            <div class='text-center'><h4><strong>Category @Model.Name has been successfully updated!</strong></h4></div>
+            <div class="text-center">Please ensure that category information is valid.</div>
+            <div class="text-center"><strong>NOTE:</strong> Positions can be assigned to this category from New Position or Edit Position interfaces.</div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-12">
+                <dl class="dl-horizontal bottom-margin-0">
+                    <dt>@Html.LabelFor(model => model.Name)</dt>
+                    <dd>@Model.Name</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">$(function () { LoadAction("category-list-div", "@Url.Action("CategoryList", "Category", new { Area = "SystemAdmin" })"); });</script>
+}
+else
+{
+    <div class="alert alert-danger bottom-margin-0" role="alert">Category confirmation details are not available.</div>
+}
+<!-- END OF EDIT CATEGORY CONFIRMATION PARTIAL VIEW -->

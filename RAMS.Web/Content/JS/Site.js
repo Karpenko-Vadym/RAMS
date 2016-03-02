@@ -213,7 +213,14 @@ function SystemAdminModalControls()
 
     $("#change-notification-status-modal").on("hidden.bs.modal", function (e) { $("#change-notification-status-div").empty(); });
 
+    //Categories
+    $("#new-category-modal").on("show.bs.modal", function (e) { LoadAction("new-category-modal-body-div", "/RAMS/SystemAdmin/Category/NewCategory"); });
 
+    $("#new-category-modal").on("hidden.bs.modal", function (e) { $("#new-category-modal-body-div").empty(); });
+
+    $("#edit-category-modal").on("show.bs.modal", function (e) { $("#edit-category-modal-title").text("Edit Category - " + $(e.relatedTarget).data("category-name")); LoadAction("edit-category-modal-body-div", "/RAMS/SystemAdmin/Category/EditCategory?id=" + $(e.relatedTarget).data("category-id")); });
+
+    $("#edit-category-modal").on("hidden.bs.modal", function (e) { $("#edit-category-modal-title").text("Edit Category"); $("#edit-category-modal-body-div").empty(); });
     
 }
 /******** END OF SYSTEM ADMIN MODAL CONTROLS ********/

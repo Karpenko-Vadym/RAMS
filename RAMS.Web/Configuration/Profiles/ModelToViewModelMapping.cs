@@ -64,7 +64,7 @@ namespace RAMS.Web.Configuration
             /***** END OF USER MAPPING *****/
             /***** DEPARTMENT MAPPING *****/
 
-            Mapper.CreateMap<Department, DepartmentListViewModel>().ForMember(d => d.NumOfAgents, map => map.MapFrom(model => model.Agents.Count()));
+            Mapper.CreateMap<Department, DepartmentListViewModel>().ForMember(d => d.NumOfAgents, map => map.MapFrom(model => model.Agents.Count())).ForMember(d => d.DepartmentIdForDisplay, map => map.MapFrom(model => model.DepartmentId.ToString("00000"))); ;
             Mapper.CreateMap<Department, DepartmentAddViewModel>();
             Mapper.CreateMap<Department, DepartmentEditViewModel>();
             Mapper.CreateMap<Department, DepartmentAddEditConfirmationViewModel>();
@@ -105,6 +105,14 @@ namespace RAMS.Web.Configuration
             Mapper.CreateMap<Interview, InterviewListViewModel>().ForMember(i => i.Candidate, map => map.MapFrom(model => Mapper.Map<Candidate, CandidateScheduleViewModel>(model.Candidate)));
             
             /***** END OF INTERVIEW MAPPING *****/
+            /***** CATEGORY MAPPING *****/
+
+            Mapper.CreateMap<Category, CategoryListViewModel>().ForMember(c => c.NumOfPositions, map => map.MapFrom(model => model.Positions.Count())).ForMember(c => c.CategoryIdForDisplay, map => map.MapFrom(model => model.CategoryId.ToString("00000")));
+            Mapper.CreateMap<Category, CategoryAddViewModel>();
+            Mapper.CreateMap<Category, CategoryEditViewModel>();
+            Mapper.CreateMap<Category, CategoryAddEditConfirmationViewModel>();
+
+            /***** END OF CATEGORY MAPPING *****/
 
         }
     }

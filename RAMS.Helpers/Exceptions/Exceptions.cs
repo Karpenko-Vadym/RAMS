@@ -226,4 +226,30 @@ namespace RAMS.Helpers
 
         public InterviewAddException(string message, Exception innerException) : base(message, innerException) { }
     }
+
+    /// <summary>
+    /// CategoryAddException is a custom exception that provides additional controls over the application and error handling
+    /// CategoryAddException is thrown when category creation issue occurs
+    /// </summary>
+    public class CategoryAddException : Exception
+    {
+        public CategoryAddException() : base("Category could not be added.") { }
+
+        public CategoryAddException(string message) : base(message) { }
+
+        public CategoryAddException(string message, Exception innerException) : base(message, innerException) { }
+    }
+
+    /// <summary>
+    /// CategoryUpdateException is a custom exception that provides additional controls over the application and error handling
+    /// CategoryUpdateException is thrown when category update issue occurs
+    /// </summary>
+    public class CategoryUpdateException : Exception
+    {
+        public CategoryUpdateException() : base("Category could not be updated.") { }
+
+        public CategoryUpdateException(string message) : base(message) { }
+
+        public CategoryUpdateException(string message, Exception innerException) : base(message, innerException) { }
+    }
 }

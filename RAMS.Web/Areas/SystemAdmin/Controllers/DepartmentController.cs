@@ -22,7 +22,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
     public class DepartmentController : BaseController
     {
         /// <summary>
-        /// Index action method will be called as soon as user navigates (Or gets redirected) to /RAMS/Departments
+        /// Index action method will be called as soon as user navigates (Or gets redirected) to /RAMS/Department
         /// This method displays the main view where all department related CRUD operations take place 
         /// User will be redirected to appropriate location depending on his/her UserType if user does not belong to this area
         /// </summary>
@@ -127,7 +127,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                     stringBuilder.Append("<div class='text-center'><h4><strong>Department could NOT be created.</strong></h4></div>");
 
-                    stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to update an employee profile. Please review an exception log for more details about the exception.</div></div>");
+                    stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to update an existing department. Please review an exception log for more details about the exception.</div></div>");
 
                     var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
 
@@ -161,7 +161,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
             stringBuilder.Append("<div class='text-center'><h4><strong>Department information is NOT available at this time.</strong></h4></div>");
 
-            stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>User could have been deleted from the system.</div>");
+            stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Department could have been deleted from the system.</div>");
 
             stringBuilder.Append("<div class='col-md-offset-1 col-md-11'>Please refresh the list and try again in a moment.</div></div>");
 

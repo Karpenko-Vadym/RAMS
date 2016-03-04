@@ -330,7 +330,7 @@ namespace RAMS.Web.Areas.Customer.Controllers
             {
                 try
                 {
-                    var notification = Mapper.Map<NotificationAddViewModel, Notification>(new NotificationAddViewModel("Position Removal Request", String.Format("Position {0} ({1}) has been flagged for removal by client {2} ({3})", model.PositionTitle, model.PositionId, model.ClientFullName, model.ClientUserName), model.AgentId));
+                    var notification = Mapper.Map<NotificationAddViewModel, Notification>(new NotificationAddViewModel("Position Removal Request", String.Format("Position '{0}' ({1}) has been flagged for removal by client '{2}' ({3})", model.PositionTitle, model.PositionId.ToString("POS00000"), model.ClientFullName, model.ClientUserName), model.AgentId));
 
                     var response = await this.GetHttpClient().PostAsJsonAsync("Notification", notification); // Attempt to persist notification to the data context
 

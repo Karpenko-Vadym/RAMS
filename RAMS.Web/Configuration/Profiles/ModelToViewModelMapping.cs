@@ -64,7 +64,7 @@ namespace RAMS.Web.Configuration
             /***** END OF USER MAPPING *****/
             /***** DEPARTMENT MAPPING *****/
 
-            Mapper.CreateMap<Department, DepartmentListViewModel>().ForMember(d => d.NumOfAgents, map => map.MapFrom(model => model.Agents.Count())).ForMember(d => d.DepartmentIdForDisplay, map => map.MapFrom(model => model.DepartmentId.ToString("D00000"))); ;
+            Mapper.CreateMap<Department, DepartmentListViewModel>().ForMember(d => d.NumOfAgents, map => map.MapFrom(model => model.Agents.Count())).ForMember(d => d.DepartmentIdForDisplay, map => map.MapFrom(model => model.DepartmentId.ToString("DEP00000"))); ;
             Mapper.CreateMap<Department, DepartmentAddViewModel>();
             Mapper.CreateMap<Department, DepartmentEditViewModel>();
             Mapper.CreateMap<Department, DepartmentAddEditConfirmationViewModel>();

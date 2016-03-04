@@ -273,8 +273,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                             if (notification.Status != NotificationStatus.Read) // If status did not change
                             {
-                                stringBuilder.Clear();
-
                                 stringBuilder.Append("<div class='text-center'><h4><strong>Notification status could NOT be changed at this time.</strong></h4></div>");
 
                                 stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Response is successfull, but notification status of returned model is not equal to READ. Please try again in a moment.</div>");
@@ -283,8 +281,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                                 return PartialView("_Confirmation", new ConfirmationViewModel(stringBuilder.ToString()));
                             }
-
-                            stringBuilder.Clear();
 
                             stringBuilder.Append("<div class='text-center'><h4><strong>Notification status has been changed successfully.</strong></h4></div>");
 
@@ -308,8 +304,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                             if (notification.Status != NotificationStatus.Unread) // If status did not change
                             {
-                                stringBuilder.Clear();
-
                                 stringBuilder.Append("<div class='text-center'><h4><strong>Notification status could NOT be changed at this time.</strong></h4></div>");
 
                                 stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Response is successfull, but notification status of returned model is not equal to READ. Please try again in a moment.</div>");
@@ -318,8 +312,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                                 return PartialView("_Confirmation", new ConfirmationViewModel(stringBuilder.ToString()));
                             }
-
-                            stringBuilder.Clear();
 
                             stringBuilder.Append("<div class='text-center'><h4><strong>Notification status has been changed successfully.</strong></h4></div>");
 
@@ -339,8 +331,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                     // Log exception
                     ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
 
-                    stringBuilder.Clear();
-
                     stringBuilder.Append("<div class='text-center'><h4><strong>Notification status could NOT be changed at this time.</strong></h4></div>");
 
                     stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Response is UNSUCCESSFUL. Please try again in a moment.</div>");
@@ -353,8 +343,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
             }
 
             // If model is null or notification status is not equal to Read nor Unread, notify the user
-            stringBuilder.Clear();
-
             stringBuilder.Append("<div class='text-center'><h4><strong>Notification status could NOT be changed at this time.</strong></h4></div>");
 
             stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Model could not be validated at this time. Please try again in a moment.</div>");

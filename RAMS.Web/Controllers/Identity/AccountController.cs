@@ -503,8 +503,6 @@ namespace RAMS.Web.Controllers
             // If any of password fields is empty, display _Error partial view with following error message "Not all required fields were entered."
             if (String.IsNullOrEmpty(model.CurrentPassword) || String.IsNullOrEmpty(model.Password) || String.IsNullOrEmpty(model.ConfirmPassword))
             { 
-                stringBuilder.Clear();
-
                 stringBuilder.Append("<div class='text-center'><h4><strong>Password could NOT be changed.</strong></h4></div>");
 
                 stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Not all required fields were entered.</div>");
@@ -522,8 +520,6 @@ namespace RAMS.Web.Controllers
                 // If current password does not match database records, display _Error partial view with following error message "Current Password does NOT match our records."
                 if ((identity = this.GetUserManager.Find(model.UserName, model.CurrentPassword)) == null)
                 {
-                    stringBuilder.Clear();
-
                     stringBuilder.Append("<div class='text-center'><h4><strong>Password could NOT be changed.</strong></h4></div>");
 
                     stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Current Password does NOT match our records.</div>");
@@ -541,8 +537,6 @@ namespace RAMS.Web.Controllers
                 // If password has less than 6 characters, display _Error partial view with following error message "Passwords must be at least 6 character long."
                 if (model.Password.Length < 6)
                 {
-                    stringBuilder.Clear();
-
                     stringBuilder.Append("<div class='text-center'><h4><strong>Password could NOT be changed.</strong></h4></div>");
 
                     stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Passwords must be at least 6 character long.</div>");
@@ -556,8 +550,6 @@ namespace RAMS.Web.Controllers
                 // If password is invalid format, display _Error partial view with following error message "Passwords must have at least one non letter or digit character, least one lowercase ('a'-'z'), least one uppercase ('A'-'Z')."
                 else if (!Utilities.RegexMatch(this.PasswordRegex, model.Password))
                 {
-                    stringBuilder.Clear();
-
                     stringBuilder.Append("<div class='text-center'><h4><strong>Password could NOT be changed.</strong></h4></div>");
 
                     stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>New Passwords must have at least one non letter or digit character, least one lowercase ('a'-'z'), least one uppercase ('A'-'Z').</div>");
@@ -594,8 +586,6 @@ namespace RAMS.Web.Controllers
                             throw new PasswordChangeException(message);
                         }                     
 
-                        stringBuilder.Clear();
-
                         stringBuilder.Append("<div class='text-center'><h4><strong>Success!</strong></h4></div>");
 
                         stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>User password has been successfully changed.</div>");
@@ -611,8 +601,6 @@ namespace RAMS.Web.Controllers
                         // Log exception
                         ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
 
-                        stringBuilder.Clear();
-
                         stringBuilder.Append("<div class='text-center'><h4><strong>Password could NOT be changed.</strong></h4></div>");
 
                         stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to change a user password. Please review an exception log for more details about the exception.</div></div>");
@@ -623,8 +611,6 @@ namespace RAMS.Web.Controllers
                     }
                 }
             }
-
-            stringBuilder.Clear();
 
             stringBuilder.Append("<div class='text-center'><h4><strong>Password could NOT be changed.</strong></h4></div>");
 

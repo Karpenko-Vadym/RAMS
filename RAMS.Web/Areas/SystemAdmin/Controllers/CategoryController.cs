@@ -105,6 +105,15 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                         if (category != null)
                         {
+                            var notification = Mapper.Map<NotificationAddViewModel, Notification>(new NotificationAddViewModel("New Category Confirmation", String.Format("Category '{0}' ({1}) has been successfully created.", category.Name, category.CategoryId.ToString("CAT00000"))));
+
+                            response = await this.GetHttpClient().PostAsJsonAsync(String.Format("Notification?adminUsername={0}", User.Identity.Name), notification); // Attempt to persist notification to the data context
+
+                            if (!response.IsSuccessStatusCode)
+                            {
+                                throw new NotificationAddException(String.Format("Notification could NOT be added. Status Code: {1}", response.StatusCode));
+                            }
+
                             var categoryAddEditConfirmationViewModel = Mapper.Map<Category, CategoryAddEditConfirmationViewModel>(category);
 
                             return PartialView("_NewCategoryConfirmation", categoryAddEditConfirmationViewModel);
@@ -130,6 +139,23 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                     stringBuilder.Append("<div class='text-center'><h4><strong>Category could NOT be created.</strong></h4></div>");
 
                     stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to update an existing category. Please review an exception log for more details about the exception.</div></div>");
+
+                    var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+
+                    return PartialView("_Error", confirmationViewModel);
+                }
+                catch (NotificationAddException ex)
+                {
+                    // Log exception
+                    ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+
+                    var stringBuilder = new StringBuilder();
+
+                    stringBuilder.Append("<div class='text-center'><h4><strong>Failed to create new notification.</strong></h4></div>");
+
+                    stringBuilder.Append(String.Format("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been thrown while attempting to create new notification.</div>"));
+
+                    stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> Please review an exception log for more information about the exception.</div></div>");
 
                     var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
 
@@ -185,6 +211,8 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
             if (ModelState.IsValid)
             {
+                var stringBuilder = new StringBuilder();
+
                 try
                 {
                     // Attempt to persist updated category
@@ -198,6 +226,15 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                         if (category != null)
                         {
+                            var notification = Mapper.Map<NotificationAddViewModel, Notification>(new NotificationAddViewModel("Category Update Confirmation", String.Format("Category '{0}' ({1}) has been successfully updated.", category.Name, category.CategoryId.ToString("CAT00000"))));
+
+                            response = await this.GetHttpClient().PostAsJsonAsync(String.Format("Notification?adminUsername={0}", User.Identity.Name), notification); // Attempt to persist notification to the data context
+
+                            if (!response.IsSuccessStatusCode)
+                            {
+                                throw new NotificationAddException(String.Format("Notification could NOT be added. Status Code: {1}", response.StatusCode));
+                            }
+
                             var categoryAddEditConfirmationViewModel = Mapper.Map<Category, CategoryAddEditConfirmationViewModel>(category);
 
                             return PartialView("_EditCategoryConfirmation", categoryAddEditConfirmationViewModel);
@@ -218,11 +255,24 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                     // Log exception
                     ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
 
-                    var stringBuilder = new StringBuilder();
-
                     stringBuilder.Append("<div class='text-center'><h4><strong>Category could NOT be updated.</strong></h4></div>");
 
                     stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to update category details. Please review an exception log for more details about the exception.</div></div>");
+
+                    var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+
+                    return PartialView("_Error", confirmationViewModel);
+                }
+                catch (NotificationAddException ex)
+                {
+                    // Log exception
+                    ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+
+                    stringBuilder.Append("<div class='text-center'><h4><strong>Failed to create new notification.</strong></h4></div>");
+
+                    stringBuilder.Append(String.Format("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been thrown while attempting to create new notification.</div>"));
+
+                    stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> Please review an exception log for more information about the exception.</div></div>");
 
                     var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
 

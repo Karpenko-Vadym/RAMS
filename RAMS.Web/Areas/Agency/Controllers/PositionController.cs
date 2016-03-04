@@ -216,7 +216,7 @@ namespace RAMS.Web.Areas.Agency.Controllers
                     {
                         position = await response.Content.ReadAsAsync<Position>();
 
-                        var notification = Mapper.Map<NotificationAddViewModel, Notification>(new NotificationAddViewModel("Position Update Confirmation", String.Format("Position {0} ({1}) has been successfully updated.", position.Title, position.PositionId.ToString("POS00000"))));
+                        var notification = Mapper.Map<NotificationAddViewModel, Notification>(new NotificationAddViewModel("Position Update Confirmation", String.Format("Position '{0}' ({1}) has been successfully updated.", position.Title, position.PositionId.ToString("POS00000"))));
 
                         response = await this.GetHttpClient().PostAsJsonAsync(String.Format("Notification?agentUsername={0}", User.Identity.Name), notification); // Attempt to persist notification to the data context
 
@@ -326,9 +326,9 @@ namespace RAMS.Web.Areas.Agency.Controllers
                     {
                         var candidate = await response.Content.ReadAsAsync<Candidate>();
 
-                        var notification = Mapper.Map<NotificationAddViewModel, Notification>(new NotificationAddViewModel("Candidate Update Confirmation", String.Format("Position {0} ({1}) has been successfully updated.", String.Format("{0} {1}", candidate.FirstName, candidate.LastName), candidate.CandidateId.ToString("CAN00000"))));
+                        var notification = Mapper.Map<NotificationAddViewModel, Notification>(new NotificationAddViewModel("Candidate Update Confirmation", String.Format("Candidate '{0}' ({1}) has been successfully updated.", String.Format("{0} {1}", candidate.FirstName, candidate.LastName), candidate.CandidateId.ToString("CAN00000"))));
 
-                        response = await this.GetHttpClient().PostAsJsonAsync("Notification", notification); // Attempt to persist notification to the data context
+                        response = await this.GetHttpClient().PostAsJsonAsync(String.Format("Notification?agentUsername={0}", User.Identity.Name), notification); // Attempt to persist notification to the data context
 
                         if (!response.IsSuccessStatusCode)
                         {
@@ -423,7 +423,7 @@ namespace RAMS.Web.Areas.Agency.Controllers
 
                         if (position.Status == PositionStatus.Approved)
                         {
-                            var notification = Mapper.Map<NotificationAddViewModel, Notification>(new NotificationAddViewModel(String.Format("Position Approval Confirmation", model.Title), String.Format("Position {0} ({1}) has been successfully approved and now available on a job portal.", model.Title, model.PositionId.ToString("POS00000")), null, position.ClientId));
+                            var notification = Mapper.Map<NotificationAddViewModel, Notification>(new NotificationAddViewModel(String.Format("Position Approval Confirmation", model.Title), String.Format("Position '{0}' ({1}) has been successfully approved and now available on a job portal.", model.Title, model.PositionId.ToString("POS00000")), null, position.ClientId));
 
                             response = await this.GetHttpClient().PostAsJsonAsync("Notification", notification); // Attempt to persist notification to the data context
 
@@ -552,7 +552,7 @@ namespace RAMS.Web.Areas.Agency.Controllers
 
                         if (position.Status == PositionStatus.Closed)
                         {
-                            var notification = Mapper.Map<NotificationAddViewModel, Notification>(new NotificationAddViewModel(String.Format("Position Closure Confirmation", model.Title), String.Format("Position {0} ({1}) has been successfully closed and no longer available on a job portal.", model.Title, model.PositionId.ToString("POS00000")), null, position.ClientId));
+                            var notification = Mapper.Map<NotificationAddViewModel, Notification>(new NotificationAddViewModel(String.Format("Position Closure Confirmation", model.Title), String.Format("Position '{0}' ({1}) has been successfully closed and no longer available on a job portal.", model.Title, model.PositionId.ToString("POS00000")), null, position.ClientId));
 
                             response = await this.GetHttpClient().PostAsJsonAsync("Notification", notification); // Attempt to persist notification to the data context
 
@@ -710,9 +710,8 @@ namespace RAMS.Web.Areas.Agency.Controllers
                                 return PartialView("_FailureConfirmation", positionResultViewModel);
                             }
                         }
-                    
 
-                        var notification = Mapper.Map<NotificationAddViewModel, Notification>(new NotificationAddViewModel(String.Format("Position Assignment Confirmation", model.Title), String.Format("Position '{0}' ({1}) has been successfully assigned to '{2}'.", model.Title, model.PositionId.ToString("POS00000"), String.Format("{0} {1}", position.Agent.FirstName, position.Agent.LastName)), model.AgentId));
+                        var notification = Mapper.Map<NotificationAddViewModel, Notification>(new NotificationAddViewModel(String.Format("Position Assignment Confirmation", model.Title), String.Format("Position '{0}' ({1}) has been successfully assigned to '{2}'.", model.Title, model.PositionId.ToString("POS00000"), String.Format("{0} {1}", position.Agent.FirstName, position.Agent.LastName)), model.SelectedAgentId));
 
                         response = await this.GetHttpClient().PostAsJsonAsync("Notification", notification); // Attempt to persist notification to the data context
 
@@ -766,7 +765,19 @@ namespace RAMS.Web.Areas.Agency.Controllers
 
                         return PartialView("_FailureConfirmation", positionResultViewModel);
                     }
-                }  
+                }
+
+                stringBuilder.Append(String.Format("<div class='text-center'><h4><strong>An agent has been successfully re-assigned to \"{0}\" position!</strong></h4></div>", model.Title));
+
+                stringBuilder.Append(String.Format("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Position \"{0}\" is available for the re-assigned agent</div>", model.Title));
+
+                stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> An agent can be re-assigned at any time as long as position is not closed.</div></div>");
+
+                positionResultViewModel.Message = stringBuilder.ToString();
+
+                
+
+                return PartialView("_SuccessConfirmation", positionResultViewModel);
             }
 
             stringBuilder.Append("<div class='text-center'><h4><strong>Agent could not be assigned to this position at the moment.</strong></h4></div>");
@@ -830,7 +841,7 @@ namespace RAMS.Web.Areas.Agency.Controllers
                     {
                         var interview = await response.Content.ReadAsAsync<Interview>();
 
-                        var notification = Mapper.Map<NotificationAddViewModel, Notification>(new NotificationAddViewModel("Interview Scheduling Confirmation", String.Format("Interview with {0} has been successfully scheduled on {1}.", String.Format("{0} {1}", interview.Candidate.FirstName, interview.Candidate.LastName), String.Format("{0} at {1}", interview.InterviewDate.ToString("dddd, MMMM dd, yyyy"), interview.InterviewDate.ToString("hh:mm tt"))), interview.Interviewer.AgentId));
+                        var notification = Mapper.Map<NotificationAddViewModel, Notification>(new NotificationAddViewModel("Interview Scheduling Confirmation", String.Format("Interview with '{0}' ({1}) has been successfully scheduled on {2}.", String.Format("{0} {1}", interview.Candidate.FirstName, interview.Candidate.LastName), interview.Candidate.CandidateId.ToString("CAN00000"), String.Format("{0} at {1}", interview.InterviewDate.ToString("dddd, MMMM dd, yyyy"), interview.InterviewDate.ToString("hh:mm tt"))), interview.Interviewer.AgentId));
 
                         response = await this.GetHttpClient().PostAsJsonAsync("Notification", notification); // Attempt to persist notification to the data context
 

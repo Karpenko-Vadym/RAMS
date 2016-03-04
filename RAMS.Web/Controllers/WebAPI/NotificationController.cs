@@ -182,7 +182,7 @@ namespace RAMS.Web.Controllers.WebAPI
         /// <summary>
         /// Create new notification when username is provided instead of agent id
         /// </summary>
-        /// <param name="username">Username of the agent to whom notification will be assigned</param>
+        /// <param name="agentUsername">Username of the agent to whom notification will be assigned</param>
         /// <param name="notification">Notification to be created</param>
         /// <returns>The Uri of newly created notification</returns>
         [HttpPost]
@@ -194,6 +194,43 @@ namespace RAMS.Web.Controllers.WebAPI
                 var agent = this.AgentService.GetOneAgentByUserName(agentUsername);
 
                 notification.AgentId = agent.AgentId;
+
+                this.NotificationService.CreateNotification(notification);
+
+                try
+                {
+                    this.NotificationService.SaveChanges();
+                }
+                catch (DbUpdateException ex)
+                {
+                    // Log exception
+                    ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+
+                    return Conflict();
+                }
+
+                return CreatedAtRoute("DefaultApi", new { id = notification.NotificationId }, notification);
+
+            }
+
+            return BadRequest(ModelState);
+        }
+
+        /// <summary>
+        /// Create new notification when username is provided instead of admin id
+        /// </summary>
+        /// <param name="adminUsername">Username of the admin to whom notification will be assigned</param>
+        /// <param name="notification">Notification to be created</param>
+        /// <returns>The Uri of newly created notification</returns>
+        [HttpPost]
+        [ResponseType(typeof(Notification))]
+        public IHttpActionResult PostNotificationByAdminUsername(string adminUsername, Notification notification)
+        {
+            if (ModelState.IsValid && !String.IsNullOrEmpty(adminUsername))
+            {
+                var admin = this.AdminService.GetOneAdminByUserName(adminUsername);
+
+                notification.AdminId = admin.AdminId;
 
                 this.NotificationService.CreateNotification(notification);
 

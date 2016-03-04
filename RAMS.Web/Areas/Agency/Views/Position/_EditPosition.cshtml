@@ -37,10 +37,10 @@
                 @foreach (var item in Model.Candidates.Where(c => c.Score >= Model.AcceptanceScore))
                 {
                     <tr class="cursor-pointer" >
-                        <td data-toggle="modal" data-target="#edit-candidate-modal" data-candidate-id="@item.CandidateId" data-position-status="@Model.Status">@item.CandidateIdDisplay</td>
-                        <td data-toggle="modal" data-target="#edit-candidate-modal" data-candidate-id="@item.CandidateId" data-position-status="@Model.Status">@item.FullName</td>
-                        <td data-toggle="modal" data-target="#edit-candidate-modal" data-candidate-id="@item.CandidateId" data-position-status="@Model.Status">@item.Score</td>
-                        <td data-toggle="modal" data-target="#edit-candidate-modal" data-candidate-id="@item.CandidateId" data-position-status="@Model.Status">@item.Status</td>
+                        <td data-toggle="modal" data-target="#edit-candidate-modal" data-candidate-id="@item.CandidateId" data-candidate-name="@item.FullName" data-position-status="@Model.Status">@item.CandidateIdDisplay</td>
+                        <td data-toggle="modal" data-target="#edit-candidate-modal" data-candidate-id="@item.CandidateId" data-candidate-name="@item.FullName" data-position-status="@Model.Status">@item.FullName</td>
+                        <td data-toggle="modal" data-target="#edit-candidate-modal" data-candidate-id="@item.CandidateId" data-candidate-name="@item.FullName" data-position-status="@Model.Status">@item.Score</td>
+                        <td data-toggle="modal" data-target="#edit-candidate-modal" data-candidate-id="@item.CandidateId" data-candidate-name="@item.FullName" data-position-status="@Model.Status">@item.Status</td>
 
                         @if (Model.Status != RAMS.Enums.PositionStatus.Closed)
                         {

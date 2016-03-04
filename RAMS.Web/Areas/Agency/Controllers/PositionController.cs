@@ -204,6 +204,8 @@ namespace RAMS.Web.Areas.Agency.Controllers
 
             if(ModelState.IsValid)
             {
+                var stringBuilder = new StringBuilder();
+
                 try
                 {
                     var position = Mapper.Map<PositionEditViewModel, Position>(model);
@@ -213,6 +215,15 @@ namespace RAMS.Web.Areas.Agency.Controllers
                     if (response.IsSuccessStatusCode)
                     {
                         position = await response.Content.ReadAsAsync<Position>();
+
+                        var notification = Mapper.Map<NotificationAddViewModel, Notification>(new NotificationAddViewModel("Position Update Confirmation", String.Format("Position {0} ({1}) has been successfully updated.", position.Title, position.PositionId.ToString("POS00000"))));
+
+                        response = await this.GetHttpClient().PostAsJsonAsync(String.Format("Notification?agentUsername={0}", User.Identity.Name), notification); // Attempt to persist notification to the data context
+
+                        if (!response.IsSuccessStatusCode)
+                        {
+                            throw new NotificationAddException(String.Format("Notification could NOT be added. Status Code: {1}", response.StatusCode));
+                        }
 
                         position.Category = categories.FirstOrDefault(c => c.CategoryId == position.CategoryId);
 
@@ -231,13 +242,26 @@ namespace RAMS.Web.Areas.Agency.Controllers
                     // Log exception
                     ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
 
-                    var stringBuilder = new StringBuilder();
-
                     stringBuilder.Append("<div class='text-center'><h4><strong>Failed to save position details.</strong></h4></div>");
 
                     stringBuilder.Append(String.Format("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Server returned status code '{0}' while attempting to persist position details to the database. Please try again in a moment.</div>", response.StatusCode));
 
                     stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> If you encounter this issue again in the future, please contact Technical Support with exact steps to reproduce this issue.</div></div>");
+
+                    var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+
+                    return PartialView("_Error", confirmationViewModel);
+                }
+                catch (NotificationAddException ex)
+                {
+                    // Log exception
+                    ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+
+                    stringBuilder.Append("<div class='text-center'><h4><strong>Failed to create new notification.</strong></h4></div>");
+
+                    stringBuilder.Append(String.Format("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been thrown while attempting to create new notification.</div>"));
+
+                    stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> Please review an exception log for more information about the exception.</div></div>");
 
                     var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
 
@@ -292,6 +316,8 @@ namespace RAMS.Web.Areas.Agency.Controllers
             {
                 var response = new HttpResponseMessage();
 
+                var stringBuilder = new StringBuilder();
+
                 try
                 {
                     response = await this.GetHttpClient().PutAsync(String.Format("Candidate?candidateId={0}&feedback={1}", model.CandidateId, model.Feedback), null); // Attempt to update the feedback
@@ -299,6 +325,15 @@ namespace RAMS.Web.Areas.Agency.Controllers
                     if (response.IsSuccessStatusCode)
                     {
                         var candidate = await response.Content.ReadAsAsync<Candidate>();
+
+                        var notification = Mapper.Map<NotificationAddViewModel, Notification>(new NotificationAddViewModel("Candidate Update Confirmation", String.Format("Position {0} ({1}) has been successfully updated.", String.Format("{0} {1}", candidate.FirstName, candidate.LastName), candidate.CandidateId.ToString("CAN00000"))));
+
+                        response = await this.GetHttpClient().PostAsJsonAsync("Notification", notification); // Attempt to persist notification to the data context
+
+                        if (!response.IsSuccessStatusCode)
+                        {
+                            throw new NotificationAddException(String.Format("Notification could NOT be added. Status Code: {1}", response.StatusCode));
+                        }
 
                         var candidateEditConfirmationViewModel = Mapper.Map<Candidate, CandidateEditConfirmationViewModel>(candidate);
 
@@ -315,13 +350,26 @@ namespace RAMS.Web.Areas.Agency.Controllers
                     // Log exception
                     ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
 
-                    var stringBuilder = new StringBuilder();
-
                     stringBuilder.Append("<div class='text-center'><h4><strong>Failed to update candidate details.</strong></h4></div>");
 
                     stringBuilder.Append(String.Format("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Server returned status code '{0}' while attempting to persist candidate details to the database. Please try again in a moment.</div>", response.StatusCode));
 
                     stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> If you encounter this issue again in the future, please contact Technical Support with exact steps to reproduce this issue.</div></div>");
+
+                    var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+
+                    return PartialView("_Error", confirmationViewModel);
+                }
+                catch (NotificationAddException ex)
+                {
+                    // Log exception
+                    ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+
+                    stringBuilder.Append("<div class='text-center'><h4><strong>Failed to create new notification.</strong></h4></div>");
+
+                    stringBuilder.Append(String.Format("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been thrown while attempting to create new notification.</div>"));
+
+                    stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> Please review an exception log for more information about the exception.</div></div>");
 
                     var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
 
@@ -375,6 +423,15 @@ namespace RAMS.Web.Areas.Agency.Controllers
 
                         if (position.Status == PositionStatus.Approved)
                         {
+                            var notification = Mapper.Map<NotificationAddViewModel, Notification>(new NotificationAddViewModel(String.Format("Position Approval Confirmation", model.Title), String.Format("Position {0} ({1}) has been successfully approved and now available on a job portal.", model.Title, model.PositionId.ToString("POS00000")), null, position.ClientId));
+
+                            response = await this.GetHttpClient().PostAsJsonAsync("Notification", notification); // Attempt to persist notification to the data context
+
+                            if (!response.IsSuccessStatusCode)
+                            {
+                                throw new NotificationAddException(String.Format("Notification could NOT be added. Status Code: {1}", response.StatusCode));
+                            }
+                            
                             stringBuilder.Append("<div class='text-center'><h4><strong>Position has been approved successfully!</strong></h4></div>");
 
                             stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Position will now be available for applicants to apply.</div>");
@@ -420,6 +477,20 @@ namespace RAMS.Web.Areas.Agency.Controllers
                     stringBuilder.Append(String.Format("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Server returned status code '{0}' while attempting to persist position details to the database. Please try again in a moment.</div>", response.StatusCode));
 
                     stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> If you encounter this issue again in the future, please contact Technical Support with exact steps to reproduce this issue.</div></div>");
+
+                    positionResultViewModel.Message = stringBuilder.ToString();
+
+                    return PartialView("_FailureConfirmation", positionResultViewModel);
+                }
+                catch (NotificationAddException ex)
+                {
+                    // Log exception
+                    ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+                    stringBuilder.Append("<div class='text-center'><h4><strong>Failed to create new notification.</strong></h4></div>");
+
+                    stringBuilder.Append(String.Format("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been thrown while attempting to create new notification.</div>"));
+
+                    stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> Please review an exception log for more information about the exception.</div></div>");
 
                     positionResultViewModel.Message = stringBuilder.ToString();
 
@@ -481,6 +552,15 @@ namespace RAMS.Web.Areas.Agency.Controllers
 
                         if (position.Status == PositionStatus.Closed)
                         {
+                            var notification = Mapper.Map<NotificationAddViewModel, Notification>(new NotificationAddViewModel(String.Format("Position Closure Confirmation", model.Title), String.Format("Position {0} ({1}) has been successfully closed and no longer available on a job portal.", model.Title, model.PositionId.ToString("POS00000")), null, position.ClientId));
+
+                            response = await this.GetHttpClient().PostAsJsonAsync("Notification", notification); // Attempt to persist notification to the data context
+
+                            if (!response.IsSuccessStatusCode)
+                            {
+                                throw new NotificationAddException(String.Format("Notification could NOT be added. Status Code: {1}", response.StatusCode));
+                            }
+
                             stringBuilder.Append("<div class='text-center'><h4><strong>Position has been closed successfully!</strong></h4></div>");
 
                             stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Position is no longer available on job portal.</div>");
@@ -526,6 +606,20 @@ namespace RAMS.Web.Areas.Agency.Controllers
                     stringBuilder.Append(String.Format("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Server returned status code '{0}' while attempting to persist position details to the database. Please try again in a moment.</div>", response.StatusCode));
 
                     stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> If you encounter this issue again in the future, please contact Technical Support with exact steps to reproduce this issue.</div></div>");
+
+                    positionResultViewModel.Message = stringBuilder.ToString();
+
+                    return PartialView("_FailureConfirmation", positionResultViewModel);
+                }
+                catch (NotificationAddException ex)
+                {
+                    // Log exception
+                    ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+                    stringBuilder.Append("<div class='text-center'><h4><strong>Failed to create new notification.</strong></h4></div>");
+
+                    stringBuilder.Append(String.Format("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been thrown while attempting to create new notification.</div>"));
+
+                    stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> Please review an exception log for more information about the exception.</div></div>");
 
                     positionResultViewModel.Message = stringBuilder.ToString();
 
@@ -588,6 +682,8 @@ namespace RAMS.Web.Areas.Agency.Controllers
                 {
                     var response = new HttpResponseMessage();
 
+                    var position = new Position();
+
                     try
                     {
                         response = await this.GetHttpClient().PutAsync(String.Format("Position?positionId={0}&agentId={1}", model.PositionId, model.SelectedAgentId), null); // Attempt to assign an agent
@@ -599,7 +695,7 @@ namespace RAMS.Web.Areas.Agency.Controllers
                         }
                         else
                         {
-                            var position = await response.Content.ReadAsAsync<Position>();
+                            position = await response.Content.ReadAsAsync<Position>();
 
                             if (position.AgentId != model.SelectedAgentId)
                             {
@@ -614,6 +710,32 @@ namespace RAMS.Web.Areas.Agency.Controllers
                                 return PartialView("_FailureConfirmation", positionResultViewModel);
                             }
                         }
+                    
+
+                        var notification = Mapper.Map<NotificationAddViewModel, Notification>(new NotificationAddViewModel(String.Format("Position Assignment Confirmation", model.Title), String.Format("Position '{0}' ({1}) has been successfully assigned to '{2}'.", model.Title, model.PositionId.ToString("POS00000"), String.Format("{0} {1}", position.Agent.FirstName, position.Agent.LastName)), model.AgentId));
+
+                        response = await this.GetHttpClient().PostAsJsonAsync("Notification", notification); // Attempt to persist notification to the data context
+
+                        if (!response.IsSuccessStatusCode)
+                        {
+                            throw new NotificationAddException(String.Format("Notification could NOT be added. Status Code: {1}", response.StatusCode));
+                        }
+
+                        stringBuilder.Append(String.Format("<div class='text-center'><h4><strong>An agent has been successfully assigned to \"{0}\" position!</strong></h4></div>", model.Title));
+
+                        stringBuilder.Append(String.Format("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Position \"{0}\" is now available for the assigned agent</div>", model.Title));
+
+                        stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> An agent can be re-assigned at any time as long as position is not closed.</div></div>");
+
+                        positionResultViewModel.Message = stringBuilder.ToString();
+
+                        positionResultViewModel.RefreshList = true;
+
+                        positionResultViewModel.RefreshEditForm = true;
+
+                        positionResultViewModel.PositionId = model.PositionId;
+
+                        return PartialView("_SuccessConfirmation", positionResultViewModel);
                     }
                     catch (PositionEditException ex)
                     {
@@ -630,23 +752,21 @@ namespace RAMS.Web.Areas.Agency.Controllers
 
                         return PartialView("_FailureConfirmation", positionResultViewModel);
                     }
-                }
+                    catch (NotificationAddException ex)
+                    {
+                        // Log exception
+                        ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+                        stringBuilder.Append("<div class='text-center'><h4><strong>Failed to create new notification.</strong></h4></div>");
 
-                stringBuilder.Append(String.Format("<div class='text-center'><h4><strong>An agent has been successfully assigned to \"{0}\" position!</strong></h4></div>", model.Title));
+                        stringBuilder.Append(String.Format("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been thrown while attempting to create new notification.</div>"));
 
-                stringBuilder.Append(String.Format("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Position \"{0}\" is now available for the assigned agent</div>", model.Title));
+                        stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> Please review an exception log for more information about the exception.</div></div>");
 
-                stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> An agent can be re-assigned at any time as long as position is not closed.</div></div>");
+                        positionResultViewModel.Message = stringBuilder.ToString();
 
-                positionResultViewModel.Message = stringBuilder.ToString();
-
-                positionResultViewModel.RefreshList = true;
-
-                positionResultViewModel.RefreshEditForm = true;
-
-                positionResultViewModel.PositionId = model.PositionId;
-
-                return PartialView("_SuccessConfirmation", positionResultViewModel);
+                        return PartialView("_FailureConfirmation", positionResultViewModel);
+                    }
+                }  
             }
 
             stringBuilder.Append("<div class='text-center'><h4><strong>Agent could not be assigned to this position at the moment.</strong></h4></div>");
@@ -710,12 +830,21 @@ namespace RAMS.Web.Areas.Agency.Controllers
                     {
                         var interview = await response.Content.ReadAsAsync<Interview>();
 
+                        var notification = Mapper.Map<NotificationAddViewModel, Notification>(new NotificationAddViewModel("Interview Scheduling Confirmation", String.Format("Interview with {0} has been successfully scheduled on {1}.", String.Format("{0} {1}", interview.Candidate.FirstName, interview.Candidate.LastName), String.Format("{0} at {1}", interview.InterviewDate.ToString("dddd, MMMM dd, yyyy"), interview.InterviewDate.ToString("hh:mm tt"))), interview.Interviewer.AgentId));
+
+                        response = await this.GetHttpClient().PostAsJsonAsync("Notification", notification); // Attempt to persist notification to the data context
+
+                        if (!response.IsSuccessStatusCode)
+                        {
+                            throw new NotificationAddException(String.Format("Notification could NOT be added. Status Code: {1}", response.StatusCode));
+                        }
+
                         // Send email
                         var template = HttpContext.Server.MapPath("~/App_Data/ScheduleInterviewEmailTemplate.txt");
 
                         var message = System.IO.File.ReadAllText(template);
 
-                        message = message.Replace("%name%", interview.Candidate.FirstName).Replace("%datetime%", interview.InterviewDate.ToString("dddd, MMMM dd, yyyy at hh:mm tt")).Replace("%interviewer%", String.Format("{0} {1}", interview.Interviewer.FirstName, interview.Interviewer.LastName)).Replace("%email%", interview.Interviewer.Email);
+                        message = message.Replace("%name%", interview.Candidate.FirstName).Replace("%datetime%", String.Format("{0} at {1}", interview.InterviewDate.ToString("dddd, MMMM dd, yyyy"), interview.InterviewDate.ToString("hh:mm tt"))).Replace("%interviewer%", String.Format("{0} {1}", interview.Interviewer.FirstName, interview.Interviewer.LastName)).Replace("%email%", interview.Interviewer.Email);
 
                         // TODO - Change "atomix0x@gmail.com" to the email address of the applicant
                         Email.EmailService.SendEmail("atomix0x@gmail.com", "Your interview has been scheduled.", message); // Send interview confirmation via email
@@ -746,6 +875,20 @@ namespace RAMS.Web.Areas.Agency.Controllers
                     stringBuilder.Append(String.Format("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Server returned status code '{0}' while attempting to persist new interview details to the database.</div>", response.StatusCode));
 
                     stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> Please review an exception log for more details about the exception.</div></div>");
+
+                    positionResultViewModel.Message = stringBuilder.ToString();
+
+                    return PartialView("_FailureConfirmation", positionResultViewModel);
+                }
+                catch (NotificationAddException ex)
+                {
+                    // Log exception
+                    ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+                    stringBuilder.Append("<div class='text-center'><h4><strong>Failed to create new notification.</strong></h4></div>");
+
+                    stringBuilder.Append(String.Format("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been thrown while attempting to create new notification.</div>"));
+
+                    stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> Please review an exception log for more information about the exception.</div></div>");
 
                     positionResultViewModel.Message = stringBuilder.ToString();
 

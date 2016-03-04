@@ -201,6 +201,8 @@ namespace RAMS.Web.Areas.Customer.Controllers
 
             if(ModelState.IsValid)
             {
+                var stringBuilder = new StringBuilder();
+
                 try
                 {
                     var position = Mapper.Map<PositionAddViewModel, Position>(model);
@@ -210,6 +212,15 @@ namespace RAMS.Web.Areas.Customer.Controllers
                     if (response.IsSuccessStatusCode)
                     {
                         position = await response.Content.ReadAsAsync<Position>();
+
+                        var notification = Mapper.Map<NotificationAddViewModel, Notification>(new NotificationAddViewModel("New Position Confirmation", String.Format("Position '{0}' has been successfully created and sent for approval.", position.Title), null, position.ClientId));
+
+                        response = await this.GetHttpClient().PostAsJsonAsync("Notification", notification); // Attempt to persist notification to the data context
+
+                        if (!response.IsSuccessStatusCode)
+                        {
+                            throw new NotificationAddException(String.Format("Notification could NOT be added. Status Code: {1}", response.StatusCode));
+                        }
 
                         position.Category = categories.FirstOrDefault(c => c.CategoryId == position.CategoryId);
 
@@ -228,13 +239,26 @@ namespace RAMS.Web.Areas.Customer.Controllers
                     // Log exception
                     ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
 
-                    var stringBuilder = new StringBuilder();
-
                     stringBuilder.Append("<div class='text-center'><h4><strong>Failed to save position details.</strong></h4></div>");
 
                     stringBuilder.Append(String.Format("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Server returned status code '{0}' while attempting to persist position details to the database. Please try again in a moment.</div>", response.StatusCode));
 
                     stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> If you encounter this issue again in the future, please contact Technical Support with exact steps to reproduce this issue.</div></div>");
+
+                    var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+
+                    return PartialView("_Error", confirmationViewModel);
+                }
+                catch (NotificationAddException ex)
+                {
+                    // Log exception
+                    ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+
+                    stringBuilder.Append("<div class='text-center'><h4><strong>Failed to create new notification.</strong></h4></div>");
+
+                    stringBuilder.Append(String.Format("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been thrown while attempting to create new notification.</div>"));
+
+                    stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> Please review an exception log for more information about the exception.</div></div>");
 
                     var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
 
@@ -298,6 +322,10 @@ namespace RAMS.Web.Areas.Customer.Controllers
         [HttpPost]
         public async Task<PartialViewResult> PositionClosure(PositionClosureConfirmationViewModel model)
         {
+            var positionResultViewModel = new PositionResultViewModel();
+
+            var stringBuilder = new StringBuilder();
+
             if(ModelState.IsValid)
             {
                 try
@@ -321,10 +349,28 @@ namespace RAMS.Web.Areas.Customer.Controllers
                 {
                     // Log exception
                     ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+
+                    stringBuilder.Append("<div class='text-center'><h4><strong>Failed to create new notification.</strong></h4></div>");
+
+                    stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been thrown while attempting to create new notification.</div>");
+
+                    stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> Please review an exception log for more information about the exception.</div></div>");
+
+                    positionResultViewModel.Message = stringBuilder.ToString();
+
+                    return PartialView("_FailureConfirmation", positionResultViewModel);
                 }
             }
 
-            return PartialView("_FailureConfirmation");
+            stringBuilder.Append("<div class='text-center'><h4><strong>Failed to send a close request!</strong></h4></div>");
+
+            stringBuilder.Append("<div class='text-center'>Position closure request could not be subitted at this time.</div>");
+
+            stringBuilder.Append("<div class='text-center'><strong>NOTE:</strong> If you encounter this issue again in the future, please contact Technical Support with exact steps to reproduce this issue.</div>");
+
+            positionResultViewModel.Message = stringBuilder.ToString();
+
+            return PartialView("_FailureConfirmation", positionResultViewModel);
         }
         #endregion
     }

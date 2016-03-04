@@ -1,5 +1,5 @@
 ﻿body {
-    min-width: 600px;
+    min-width: 700px;
 }
 
 .vertical-padding-24
@@ -92,7 +92,7 @@ div.modal .modal-content
 
 div.container.body-content
 {
-    min-width: 700px;
+    min-width: 800px;
 }
 
 td.cell-btn

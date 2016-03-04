@@ -180,6 +180,43 @@ namespace RAMS.Web.Controllers.WebAPI
         }
 
         /// <summary>
+        /// Create new notification when username is provided instead of agent id
+        /// </summary>
+        /// <param name="username">Username of the agent to whom notification will be assigned</param>
+        /// <param name="notification">Notification to be created</param>
+        /// <returns>The Uri of newly created notification</returns>
+        [HttpPost]
+        [ResponseType(typeof(Notification))]
+        public IHttpActionResult PostNotificationByAgentUsername(string agentUsername, Notification notification)
+        {
+            if (ModelState.IsValid && !String.IsNullOrEmpty(agentUsername))
+            {
+                var agent = this.AgentService.GetOneAgentByUserName(agentUsername);
+
+                notification.AgentId = agent.AgentId;
+
+                this.NotificationService.CreateNotification(notification);
+
+                try
+                {
+                    this.NotificationService.SaveChanges();
+                }
+                catch (DbUpdateException ex)
+                {
+                    // Log exception
+                    ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+
+                    return Conflict();
+                }
+
+                return CreatedAtRoute("DefaultApi", new { id = notification.NotificationId }, notification);
+
+            }
+
+            return BadRequest(ModelState);
+        }
+
+        /// <summary>
         /// Update existing notification
         /// </summary>
         /// <param name="notification">Notification to be updated</param>

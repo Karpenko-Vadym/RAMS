@@ -20,13 +20,13 @@
                     <td>@item.Title</td>
                     <td>@item.Details</td>
                     <td class="text-center"><span class="label @((item.Status == RAMS.Enums.NotificationStatus.Read) ? "label-success" : "label-danger")">@item.Status</span></td>
-                    <td>@item.DateCreated</td>
+                    <td><span class="hidden">@item.DateCreated.ToString("yyyyMMddhhmmss")</span>@item.DateCreated</td>
                 </tr>
             }
         </tbody>
     </table>
 
-    <script type="text/javascript">$(function () { LoadDataTable("notification-list-table", [[5, 10, 15], [5, 10, 15]], [[2, "desc"]]) });</script>
+    <script type="text/javascript">$(function () { LoadDataTable("notification-list-table", [[5, 10, 15], [5, 10, 15]], [[2, "desc"], [3, "asc"]]) });</script>
 }
 else
 {

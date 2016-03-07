@@ -152,7 +152,7 @@ namespace RAMS.Web.Controllers.WebAPI
         /// <returns>HttpResponseMessage with status code dependning on the outcome of this method</returns>
         [HttpPut]
         [ResponseType(typeof(Candidate))]
-        public IHttpActionResult UpdateCandidateFeedback(int candidateId, string feedback)
+        public IHttpActionResult UpdateCandidateFeedback(int candidateId, string feedback, bool isInterviewed)
         {
             if (candidateId > 0)
             {
@@ -166,6 +166,11 @@ namespace RAMS.Web.Controllers.WebAPI
                     }
 
                     candidate.Feedback = feedback;
+
+                    if(isInterviewed)
+                    {
+                        candidate.Status = Enums.CandidateStatus.Interviewed;
+                    }
 
                     this.CandidateService.UpdateCandidate(candidate);
 

@@ -44,7 +44,7 @@ namespace RAMS.Data.Repositories
         /// <returns>First agent with matching user name</returns>
         public Agent GetOneByUserName(string userName)
         {
-            return this.GetContext.Agents.Include("Department").Include("Positions").Include("Interviews").Include("Notifications").Include("Interviews.Candidate").Include("Interviews.Interviewer").FirstOrDefault(a => a.UserName == userName);
+            return this.GetContext.Agents.Include("Department").Include("Positions").Include("Positions.Candidates").Include("Positions.Category").Include("Interviews").Include("Notifications").Include("Interviews.Candidate").Include("Interviews.Interviewer").FirstOrDefault(a => a.UserName == userName);
         }
 
         /// <summary>

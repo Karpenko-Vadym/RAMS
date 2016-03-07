@@ -320,7 +320,7 @@ namespace RAMS.Web.Areas.Agency.Controllers
 
                 try
                 {
-                    response = await this.GetHttpClient().PutAsync(String.Format("Candidate?candidateId={0}&feedback={1}", model.CandidateId, model.Feedback), null); // Attempt to update the feedback
+                    response = await this.GetHttpClient().PutAsync(String.Format("Candidate?candidateId={0}&feedback={1}&isInterviewed={2}", model.CandidateId, model.Feedback, model.IsInterviewed), null); // Attempt to update the feedback
 
                     if (response.IsSuccessStatusCode)
                     {
@@ -867,6 +867,10 @@ namespace RAMS.Web.Areas.Agency.Controllers
                         stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> An applicant has been notified via email.</div></div>");
 
                         positionResultViewModel.Message = stringBuilder.ToString();
+
+                        positionResultViewModel.PositionId = interview.Candidate.PositionId;
+
+                        positionResultViewModel.RefreshEditForm = true;
 
                         return PartialView("_SuccessConfirmation", positionResultViewModel);
                     }

@@ -60,9 +60,6 @@
                             @Html.ActionLink("Clients", "Index", "Client", new { area = "Agency" }, new { @class = "" })
                         </li>
                     }
-                    <li class='@Html.IsActive("Help", "Index")'>
-                        @Html.ActionLink("API", "Index", "Help", new { area = "HelpPage" }, new { @class = "" })
-                    </li>
                 </ul>
                 <div class="navbar-form navbar-right">
                     @Html.Partial("_AccessControl")
@@ -131,7 +128,10 @@
 
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Recruiting Agency Management System</p>
+            <span class="pull-left text-center">&copy; @DateTime.Now.Year - Recruiting Agency Management System</span>
+            @Html.ActionLink("RAMS API Info", "Index", "Help", new { area = "HelpPage" }, new { @class = "badge pull-right" })
+            <div class="clearfix"></div>
+            <div class="vertical-padding-24"></div>
         </footer>
     </div>   
     <script type="text/javascript">$(function () { GeneralModalControls(); });</script>

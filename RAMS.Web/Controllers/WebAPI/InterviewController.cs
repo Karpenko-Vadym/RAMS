@@ -182,9 +182,16 @@ namespace RAMS.Web.Controllers.WebAPI
 
                 this.InterviewService.CreateInterview(interview);
 
+                var candidate = this.CandidateService.GetOneCandidateById(candidateId);
+
+                candidate.Status = Enums.CandidateStatus.Pending;
+
+                this.CandidateService.UpdateCandidate(candidate);
+
                 try
                 {
                     this.InterviewService.SaveChanges();
+                    this.CandidateService.SaveChanges();
                 }
                 catch (DbUpdateException ex)
                 {

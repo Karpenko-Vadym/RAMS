@@ -109,7 +109,7 @@ input.horizontal-align-center
 
 
 
-#assign-position-agent-list-table input[type="radio"] 
+#assign-position-agent-list-table input[type="radio"], .element-size-150
 {
     -moz-transform: scale(1.5);
     -ms-transform: scale(1.5);

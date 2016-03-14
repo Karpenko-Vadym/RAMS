@@ -78,6 +78,9 @@ namespace RAMS.ViewModels
         public CandidateStatus Status { get; set; }
 
         public string PositionStatus { get; set; }
+
+        [Display(Name = "Is Interviewed?")]
+        public bool IsInterviewed { get; set; }
     }
 
     /// <summary>
@@ -111,6 +114,8 @@ namespace RAMS.ViewModels
 
         [Display(Name = "Score")]
         public int Score { get; set; }
+
+        public int PositionId { get; set; }
 
         [Display(Name = "Status")]
         public CandidateStatus Status { get; set; }
@@ -160,5 +165,15 @@ namespace RAMS.ViewModels
         public CandidateStatus Status { get; set; }
 
         public bool Selected { get; set; }
+    }
+
+    /// <summary>
+    /// CandidateScheduleViewModel view model declares properties for scheduling partial views
+    /// </summary>
+    public class CandidateScheduleViewModel
+    {
+        public int CandidateId { get; set; }
+
+        public string FullName { get; set; }
     }
 }

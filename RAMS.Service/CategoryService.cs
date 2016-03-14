@@ -43,7 +43,7 @@ namespace RAMS.Service
         /// <returns>All the categories</returns>
         public IEnumerable<Category> GetAllCategories()
         {
-            return this.CategoryRepository.GetAll();
+            return this.CategoryRepository.GetAllCategories();
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace RAMS.Service
         /// <returns>A category with matching id</returns>
         public Category GetOneCategoryById(int id)
         {
-            return this.CategoryRepository.GetById(id);
+            return this.CategoryRepository.GetOneByCategoryId(id);
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace RAMS.Service
         /// <returns>A category for specific position</returns>
         public Category GetOneCategoryByPositionId(int id)
         {
-            var position = this.PositionRepository.GetById(id);
+            var position = this.PositionRepository.GetOneByPositionId(id);
 
             if (position != null)
             {

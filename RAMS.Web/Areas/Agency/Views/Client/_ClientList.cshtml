@@ -15,7 +15,7 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr class="cursor-pointer" data-toggle="modal" data-target="#client-details-modal" data-client-id="@item.ClientId">
+                    <tr class="cursor-pointer" data-toggle="modal" data-target="#client-details-modal" data-client-id="@item.ClientId" data-client-name="@item.FullName">
                         <td>@item.ClientIdForDisplay</td>
                         <td>@item.FullName</td>
                         <td>@item.Company</td>

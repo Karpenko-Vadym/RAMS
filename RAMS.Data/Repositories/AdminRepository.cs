@@ -18,13 +18,32 @@ namespace RAMS.Data.Repositories
 
         #region Getters
         /// <summary>
+        /// Get first admin with matching admin id
+        /// </summary>
+        /// <param name="id">Id to match with admins' data</param>
+        /// <returns>First admin with matching id</returns>
+        public Admin GetOneByAdminId(int id)
+        {
+            return this.GetContext.Admins.Include("Notifications").FirstOrDefault(a => a.AdminId == id);
+        }
+
+        /// <summary>
+        /// Get all admins
+        /// </summary>
+        /// <returns>All admins</returns>
+        public IEnumerable<Admin> GetAllAdmins()
+        {
+            return this.GetContext.Admins.Include("Notifications");
+        }
+
+        /// <summary>
         /// Get first admin with matching user name
         /// </summary>
         /// <param name="userName">User name to match with admins' data</param>
         /// <returns>First admin with matching user name</returns>
         public Admin GetOneByUserName(string userName)
         {
-            return this.GetContext.Admins.Where(a => a.UserName == userName).FirstOrDefault();
+            return this.GetContext.Admins.Include("Notifications").FirstOrDefault(a => a.UserName == userName);
         }
 
         /// <summary>
@@ -35,7 +54,7 @@ namespace RAMS.Data.Repositories
         /// 
         public IEnumerable<Admin> GetManyByUserType(UserType userType)
         {
-            return this.GetContext.Admins.Where(a => a.UserType == userType).ToList();
+            return this.GetContext.Admins.Include("Notifications").Where(a => a.UserType == userType).ToList();
         }
 
         /// <summary>
@@ -45,7 +64,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple admins with matching user status</returns>
         public IEnumerable<Admin> GetManyByUserStatus(UserStatus userStatus)
         {
-            return this.GetContext.Admins.Where(a => a.UserStatus == userStatus).ToList();
+            return this.GetContext.Admins.Include("Notifications").Where(a => a.UserStatus == userStatus).ToList();
         }
 
         /// <summary>
@@ -55,7 +74,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple admins with matching role</returns>
         public IEnumerable<Admin> GetManyByRole(Role role)
         {
-            return this.GetContext.Admins.Where(a => a.Role == role).ToList();
+            return this.GetContext.Admins.Include("Notifications").Where(a => a.Role == role).ToList();
         }
 
         /// <summary>
@@ -65,7 +84,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple admins with matching first name</returns>
         public IEnumerable<Admin> GetManyByFirstName(string firstName)
         {
-            return this.GetContext.Admins.Where(a => a.FirstName == firstName).ToList();
+            return this.GetContext.Admins.Include("Notifications").Where(a => a.FirstName == firstName).ToList();
         }
 
         /// <summary>
@@ -75,7 +94,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple clients with matching last name</returns>
         public IEnumerable<Admin> GetManyByLastName(string lastName)
         {
-            return this.GetContext.Admins.Where(a => a.LastName == lastName).ToList();
+            return this.GetContext.Admins.Include("Notifications").Where(a => a.LastName == lastName).ToList();
         }
 
         /// <summary>
@@ -85,7 +104,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple admins with matching job title</returns>
         public IEnumerable<Admin> GetManyByJobTitle(string jobTitle)
         {
-            return this.GetContext.Admins.Where(a => a.JobTitle == jobTitle).ToList();
+            return this.GetContext.Admins.Include("Notifications").Where(a => a.JobTitle == jobTitle).ToList();
         }
 
         /// <summary>
@@ -95,7 +114,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple admins with matching company name</returns>
         public IEnumerable<Admin> GetManyByCompanyName(string companyName)
         {
-            return this.GetContext.Admins.Where(a => a.Company == companyName).ToList();
+            return this.GetContext.Admins.Include("Notifications").Where(a => a.Company == companyName).ToList();
         }
 
         /// <summary>
@@ -105,7 +124,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple admins with matching phone number</returns>
         public IEnumerable<Admin> GetManyByPhoneNumber(string phoneNumber)
         {
-            return this.GetContext.Admins.Where(a => a.PhoneNumber == phoneNumber).ToList();
+            return this.GetContext.Admins.Include("Notifications").Where(a => a.PhoneNumber == phoneNumber).ToList();
         }
 
         /// <summary>
@@ -115,7 +134,7 @@ namespace RAMS.Data.Repositories
         /// <returns>First admin with matching email</returns>
         public Admin GetOneByEmail(string email)
         {
-            return this.GetContext.Admins.Where(a => a.Email == email).FirstOrDefault();
+            return this.GetContext.Admins.Include("Notifications").FirstOrDefault(a => a.Email == email);
         }
 
         /// <summary>
@@ -125,7 +144,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple admins with matching partial email</returns>
         public IEnumerable<Admin> GetManyByEmail(string email)
         {
-            return this.GetContext.Admins.Where(a => a.Email.ToLower().Trim().Contains(email.ToLower().Trim())).ToList();
+            return this.GetContext.Admins.Include("Notifications").Where(a => a.Email.ToLower().Trim().Contains(email.ToLower().Trim())).ToList();
         }
 
         /// <summary>
@@ -135,9 +154,9 @@ namespace RAMS.Data.Repositories
         /// <returns>First admin with matching notification id</returns>
         public Admin GetOneByNotificationId(int id)
         {
-            var notification = this.GetContext.Notifications.Where(n => n.NotificationId == id).FirstOrDefault() ?? new Notification();
+            var notification = this.GetContext.Notifications.FirstOrDefault(n => n.NotificationId == id) ?? new Notification();
 
-            return this.GetContext.Admins.Where(a => a.AdminId == notification.AdminId).FirstOrDefault();
+            return this.GetContext.Admins.Include("Notifications").FirstOrDefault(a => a.AdminId == notification.AdminId);
         }
 
         /// <summary>
@@ -147,7 +166,7 @@ namespace RAMS.Data.Repositories
         /// <returns>First admin with matching notification</returns>
         public Admin GetOneByNotification(Notification notification)
         {
-            return this.GetContext.Admins.Where(a => a.AdminId == notification.AdminId).FirstOrDefault();
+            return this.GetContext.Admins.Include("Notifications").FirstOrDefault(a => a.AdminId == notification.AdminId);
         }
         #endregion
     }

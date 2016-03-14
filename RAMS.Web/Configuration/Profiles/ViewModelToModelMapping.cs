@@ -53,6 +53,12 @@ namespace RAMS.Web.Configuration
             Mapper.CreateMap<NotificationAddViewModel, Notification>();
 
             /***** END OF NOTIFICATION MAPPING *****/
+            /***** CATEGORY MAPPING *****/
+
+            Mapper.CreateMap<CategoryAddViewModel, Category>();
+            Mapper.CreateMap<CategoryEditViewModel, Category>();
+
+            /***** END OF CATEGORY MAPPING *****/
         }
     }
 }

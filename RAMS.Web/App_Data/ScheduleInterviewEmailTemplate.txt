@@ -1,0 +1,9 @@
+﻿Dear %name%,
+
+Your interview has been scheduled for %datetime% with %interviewer%.
+
+Please confirm your attendance by emailing your interviewer at %email%.
+
+Thank you!
+
+RAMS Administration

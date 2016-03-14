@@ -274,8 +274,6 @@ namespace RAMS.Web.Areas.Agency.Controllers
 
                             if (notification.Status != NotificationStatus.Read) // If status did not change
                             {
-                                stringBuilder.Clear();
-
                                 stringBuilder.Append("<div class='text-center'><h4><strong>Notification status could NOT be changed at this time.</strong></h4></div>");
 
                                 stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Response is successfull, but notification status of returned model is not equal to READ. Please try again in a moment.</div>");
@@ -284,8 +282,6 @@ namespace RAMS.Web.Areas.Agency.Controllers
 
                                 return PartialView("_Confirmation", new ConfirmationViewModel(stringBuilder.ToString()));
                             }
-
-                            stringBuilder.Clear();
 
                             stringBuilder.Append("<div class='text-center'><h4><strong>Notification status has been changed successfully.</strong></h4></div>");
 
@@ -309,8 +305,6 @@ namespace RAMS.Web.Areas.Agency.Controllers
 
                             if (notification.Status != NotificationStatus.Unread) // If status did not change
                             {
-                                stringBuilder.Clear();
-
                                 stringBuilder.Append("<div class='text-center'><h4><strong>Notification status could NOT be changed at this time.</strong></h4></div>");
 
                                 stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Response is successfull, but notification status of returned model is not equal to READ. Please try again in a moment.</div>");
@@ -319,8 +313,6 @@ namespace RAMS.Web.Areas.Agency.Controllers
 
                                 return PartialView("_Confirmation", new ConfirmationViewModel(stringBuilder.ToString()));
                             }
-
-                            stringBuilder.Clear();
 
                             stringBuilder.Append("<div class='text-center'><h4><strong>Notification status has been changed successfully.</strong></h4></div>");
 
@@ -340,8 +332,6 @@ namespace RAMS.Web.Areas.Agency.Controllers
                     // Log exception
                     ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
 
-                    stringBuilder.Clear();
-
                     stringBuilder.Append("<div class='text-center'><h4><strong>Notification status could NOT be changed at this time.</strong></h4></div>");
 
                     stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Response is UNSUCCESSFUL. Please try again in a moment.</div>");
@@ -353,8 +343,6 @@ namespace RAMS.Web.Areas.Agency.Controllers
             }
 
             // If model is null or notification status is not equal to Read nor Unread, notify the user
-            stringBuilder.Clear();
-
             stringBuilder.Append("<div class='text-center'><h4><strong>Notification status could NOT be changed at this time.</strong></h4></div>");
 
             stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Model could not be validated at this time. Please try again in a moment.</div>");
@@ -362,6 +350,28 @@ namespace RAMS.Web.Areas.Agency.Controllers
             stringBuilder.Append("<div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> If you encounter this issue again in the future, please contact Technical Support with exact steps to reproduce this issue.</div></div>");
 
             return PartialView("_Confirmation", new ConfirmationViewModel(stringBuilder.ToString()));
+        }
+
+        /// <summary>
+        /// PersonalSchedule action method retrieves all the interviews for current user and displays the schedule for the week in _PersonalSchedule partial view
+        /// </summary>
+        /// <param name="displayDate">Schedule is displayed for the week of this date</param>
+        /// <returns>_PersonalSchedule partial view with the schedule for the week</returns>
+        [HttpGet]
+        public async Task<PartialViewResult> PersonalSchedule(string displayDate)
+        {
+            var interviewScheduleViewModel = new InterviewScheduleViewModel(displayDate);
+
+            var response = await this.GetHttpClient().GetAsync(String.Format("Interview?username={0}", User.Identity.Name));
+
+            if (response.IsSuccessStatusCode)
+            {
+                interviewScheduleViewModel.Interviews.AddRange(Mapper.Map<List<Interview>, List<InterviewListViewModel>>(await response.Content.ReadAsAsync<List<Interview>>()));
+
+                return PartialView("_PersonalSchedule", interviewScheduleViewModel);
+            }
+
+            return PartialView("_PersonalSchedule");
         }
     }
 }

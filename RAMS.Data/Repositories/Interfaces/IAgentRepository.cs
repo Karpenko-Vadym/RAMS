@@ -14,6 +14,10 @@ namespace RAMS.Data.Repositories
     /// </summary>
     public interface IAgentRepository : IRepository<Agent> 
     {
+        Agent GetOneByAgentId(int id);
+
+        IEnumerable<Agent> GetAllAgents();
+
         Agent GetOneByUserName(string userName);
 
         IEnumerable<Agent> GetManyByUserType(UserType userType);

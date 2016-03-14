@@ -16,7 +16,7 @@
                 @foreach (var item in Model)
                 {
                     <tr class="cursor-pointer" data-toggle="modal" data-target="#edit-department-modal" data-department-id="@item.DepartmentId" data-department-name="@item.Name">
-                        <td>@item.DepartmentId</td>
+                        <td>@item.DepartmentIdForDisplay</td>
                         <td>@item.Name</td>
                         <td>@item.NumOfAgents</td>
                         <td>

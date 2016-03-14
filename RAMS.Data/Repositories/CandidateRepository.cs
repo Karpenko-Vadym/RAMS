@@ -18,13 +18,32 @@ namespace RAMS.Data.Repositories
 
         #region Getters
         /// <summary>
+        /// Get first candidate with matching candidate id
+        /// </summary>
+        /// <param name="id">Id to match with candidates' data</param>
+        /// <returns>First candidate with matching id</returns>
+        public Candidate GetOneByCandidateId(int id)
+        {
+            return this.GetContext.Candidates.Include("Position").Include("Interviews").FirstOrDefault(c => c.CandidateId == id);
+        }
+
+        /// <summary>
+        /// Get all candidates
+        /// </summary>
+        /// <returns>All candidates</returns>
+        public IEnumerable<Candidate> GetAllCandidates()
+        {
+            return this.GetContext.Candidates.Include("Position").Include("Interviews");
+        }
+
+        /// <summary>
         /// Get first candidate with matching first name
         /// </summary>
         /// <param name="firstName">First name for comparing to context candidates' first names</param>
         /// <returns>First canditate with matching first name</returns>
         public Candidate GetOneByFirstName(string firstName)
         {
-            return this.GetContext.Candidates.Where(c => c.FirstName == firstName).FirstOrDefault();
+            return this.GetContext.Candidates.Include("Position").Include("Interviews").FirstOrDefault(c => c.FirstName == firstName);
         }
 
         /// <summary>
@@ -34,7 +53,7 @@ namespace RAMS.Data.Repositories
         /// <returns>First canditate with matching last name</returns>
         public Candidate GetOneByLastName(string lastName)
         {
-            return this.GetContext.Candidates.Where(c => c.LastName == lastName).FirstOrDefault();
+            return this.GetContext.Candidates.Include("Position").Include("Interviews").FirstOrDefault(c => c.LastName == lastName);
         }
 
         /// <summary>
@@ -44,7 +63,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple canditates with matching email address</returns>
         public IEnumerable<Candidate> GetManyByEmail(string email)
         {
-            return this.GetContext.Candidates.Where(c => c.Email == email).ToList();
+            return this.GetContext.Candidates.Include("Position").Include("Interviews").Where(c => c.Email == email).ToList();
         }
 
         /// <summary>
@@ -54,7 +73,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple candidates with matching email address</returns>
         public IEnumerable<Candidate> GetManyByPartialEmail(string email)
         {
-            return this.GetContext.Candidates.Where(c => c.Email.ToLower().Trim().Contains(email.ToLower().Trim())).ToList();
+            return this.GetContext.Candidates.Include("Position").Include("Interviews").Where(c => c.Email.ToLower().Trim().Contains(email.ToLower().Trim())).ToList();
         }
 
         /// <summary>
@@ -64,7 +83,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple candidates with matching country</returns>
         public IEnumerable<Candidate> GetManyByCountry(string country)
         {
-            return this.GetContext.Candidates.Where(c => c.Country.ToLower().Trim().Contains(country.ToLower().Trim())).ToList();
+            return this.GetContext.Candidates.Include("Position").Include("Interviews").Where(c => c.Country.ToLower().Trim().Contains(country.ToLower().Trim())).ToList();
         }
 
         /// <summary>
@@ -74,7 +93,7 @@ namespace RAMS.Data.Repositories
         /// <returns>First candidate with matching phone number</returns>
         public Candidate GetOneByPhoneNumber(string phoneNumber)
         {
-            return this.GetContext.Candidates.Where(c => this.ToDigits(c.PhoneNumber.Trim()) == this.ToDigits(phoneNumber.Trim())).FirstOrDefault();
+            return this.GetContext.Candidates.Include("Position").Include("Interviews").FirstOrDefault(c => this.ToDigits(c.PhoneNumber.Trim()) == this.ToDigits(phoneNumber.Trim()));
         }
 
         /// <summary>
@@ -84,7 +103,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple candidates with their score higher than acceptance score provided as a parameter</returns>
         public IEnumerable<Candidate> GetManyByScore(int score)
         {
-            return this.GetContext.Candidates.Where(c => c.Score >= score).ToList();
+            return this.GetContext.Candidates.Include("Position").Include("Interviews").Where(c => c.Score >= score).ToList();
         }
 
         /// <summary>
@@ -94,7 +113,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple candidates with their status matching the status provided as a parameter</returns>
         public IEnumerable<Candidate> GetManyByStatus(CandidateStatus status)
         {
-            return this.GetContext.Candidates.Where(c => c.Status == status).ToList();
+            return this.GetContext.Candidates.Include("Position").Include("Interviews").Where(c => c.Status == status).ToList();
         }
 
         /// <summary>
@@ -104,7 +123,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple candidates with their position matching the position provided as a parameter</returns>
         public IEnumerable<Candidate> GetManyByPosition(Position position)
         {
-            return this.GetContext.Candidates.Where(c => c.PositionId == position.PositionId).ToList();
+            return this.GetContext.Candidates.Include("Position").Include("Interviews").Where(c => c.PositionId == position.PositionId).ToList();
         }
 
         /// <summary>
@@ -114,7 +133,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple candidates with their position matching the position id of which provided as a parameter</returns>
         public IEnumerable<Candidate> GetManyByPositionId(int id)
         {
-            return this.GetContext.Candidates.Where(c => c.PositionId == id).ToList();
+            return this.GetContext.Candidates.Include("Position").Include("Interviews").Where(c => c.PositionId == id).ToList();
         }
 
         /// <summary>
@@ -124,7 +143,7 @@ namespace RAMS.Data.Repositories
         /// <returns>First candidate with his interview matching the interview provided as a parameter</returns>
         public Candidate GetOneByInterview(Interview interview)
         {
-            return this.GetContext.Candidates.Where(c => c.CandidateId == interview.CandidateId).FirstOrDefault();
+            return this.GetContext.Candidates.Include("Position").Include("Interviews").FirstOrDefault(c => c.CandidateId == interview.CandidateId);
         }
 
         /// <summary>
@@ -134,9 +153,9 @@ namespace RAMS.Data.Repositories
         /// <returns>First candidate with his interview matching the interview id of which provided as a parameter</returns>
         public Candidate GetOneByInterviewId(int id)
         {
-            var interview = this.GetContext.Interviews.Where(i => i.InterviewId == id).FirstOrDefault();
+            var interview = this.GetContext.Interviews.FirstOrDefault(i => i.InterviewId == id);
 
-            return this.GetContext.Candidates.Where(c => c.CandidateId == interview.CandidateId).FirstOrDefault();
+            return this.GetContext.Candidates.Include("Position").Include("Interviews").FirstOrDefault(c => c.CandidateId == interview.CandidateId);
         }
         #endregion
 

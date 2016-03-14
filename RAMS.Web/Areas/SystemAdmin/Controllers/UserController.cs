@@ -264,6 +264,8 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
             if (ModelState.IsValid)
             {
+                var stringBuilder = new StringBuilder();
+
                 var success = true;
 
                 // If model is valid (All mandatory fields are entered), attempt to create a new user with information from the model
@@ -396,6 +398,15 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                                 ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
                             }
 
+                            var notification = Mapper.Map<NotificationAddViewModel, Notification>(new NotificationAddViewModel("New Agent Confirmation", String.Format("Agent '{0} {1}' ({2}) has been successfully registered.", agent.FirstName, agent.LastName, agent.AgentId.ToString("AG00000"))));
+
+                            response = await this.GetHttpClient().PostAsJsonAsync(String.Format("Notification?adminUsername={0}", User.Identity.Name), notification); // Attempt to persist notification to the data context
+
+                            if (!response.IsSuccessStatusCode)
+                            {
+                                throw new NotificationAddException(String.Format("Notification could NOT be added. Status Code: {1}", response.StatusCode));
+                            }
+
                             var agentAddEditConfirmationViewModel = Mapper.Map<Agent, AgentAddEditConfirmationViewModel>(agent);
 
                             return PartialView("_RegisterAgentConfirmation", agentAddEditConfirmationViewModel);
@@ -427,8 +438,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                     // Log exception
                     ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
 
-                    var stringBuilder = new StringBuilder();
-
                     stringBuilder.Append("<div class='text-center'><h4><strong>User could NOT be registered.</strong></h4></div>");
 
                     stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to register a user. Please review an exception log for more details about the exception.</div></div>");
@@ -443,8 +452,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                     ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
 
                     success = false;
-
-                    var stringBuilder = new StringBuilder();
 
                     stringBuilder.Append("<div class='text-center'><h4><strong>Claim could NOT be assigned to the user.</strong></h4></div>");
 
@@ -461,8 +468,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                     success = false;
 
-                    var stringBuilder = new StringBuilder();
-
                     stringBuilder.Append("<div class='text-center'><h4><strong>Employee could NOT be registered.</strong></h4></div>");
 
                     stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to register an employee. Please review an exception log for more details about the exception.</div></div>");
@@ -470,6 +475,21 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                     var userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString());
 
                     return PartialView("_Error", userConfirmationViewModel);  
+                }
+                catch (NotificationAddException ex)
+                {
+                    // Log exception
+                    ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+
+                    stringBuilder.Append("<div class='text-center'><h4><strong>Failed to create new notification.</strong></h4></div>");
+
+                    stringBuilder.Append(String.Format("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been thrown while attempting to create new notification.</div>"));
+
+                    stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> Please review an exception log for more information about the exception.</div></div>");
+
+                    var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+
+                    return PartialView("_Error", confirmationViewModel);
                 }
                 finally
                 {
@@ -563,6 +583,8 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
             if (ModelState.IsValid)
             {
+                var stringBuilder = new StringBuilder();
+
                 var success = true;
 
                 // If model is valid (All mandatory fields are entered), attempt to create a new user with information from the model
@@ -696,6 +718,15 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                                 ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
                             }
 
+                            var notification = Mapper.Map<NotificationAddViewModel, Notification>(new NotificationAddViewModel("New Client Confirmation", String.Format("Client '{0} {1}' ({2}) has been successfully registered.", client.FirstName, client.LastName, client.ClientId.ToString("CL00000"))));
+
+                            response = await this.GetHttpClient().PostAsJsonAsync(String.Format("Notification?adminUsername={0}", User.Identity.Name), notification); // Attempt to persist notification to the data context
+
+                            if (!response.IsSuccessStatusCode)
+                            {
+                                throw new NotificationAddException(String.Format("Notification could NOT be added. Status Code: {1}", response.StatusCode));
+                            }
+
                             var clientAddEditConfirmationViewModel = Mapper.Map<Client, ClientAddEditConfirmationViewModel>(client);
 
                             return PartialView("_RegisterClientConfirmation", clientAddEditConfirmationViewModel);
@@ -727,8 +758,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                     // Log exception
                     ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
 
-                    var stringBuilder = new StringBuilder();
-
                     stringBuilder.Append("<div class='text-center'><h4><strong>User could NOT be registered.</strong></h4></div>");
 
                     stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to register a user. Please review an exception log for more details about the exception.</div></div>");
@@ -743,8 +772,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                     ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
 
                     success = false;
-
-                    var stringBuilder = new StringBuilder();
 
                     stringBuilder.Append("<div class='text-center'><h4><strong>Claim could NOT be assigned to the user.</strong></h4></div>");
 
@@ -761,8 +788,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                     success = false;
 
-                    var stringBuilder = new StringBuilder();
-
                     stringBuilder.Append("<div class='text-center'><h4><strong>Employee could NOT be registered.</strong></h4></div>");
 
                     stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to register an employee. Please review an exception log for more details about the exception.</div></div>");
@@ -770,6 +795,21 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                     var userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString());
 
                     return PartialView("_Error", userConfirmationViewModel); 
+                }
+                catch (NotificationAddException ex)
+                {
+                    // Log exception
+                    ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+
+                    stringBuilder.Append("<div class='text-center'><h4><strong>Failed to create new notification.</strong></h4></div>");
+
+                    stringBuilder.Append(String.Format("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been thrown while attempting to create new notification.</div>"));
+
+                    stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> Please review an exception log for more information about the exception.</div></div>");
+
+                    var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+
+                    return PartialView("_Error", confirmationViewModel);
                 }
                 finally
                 {
@@ -852,6 +892,8 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
             if (ModelState.IsValid)
             {
+                var stringBuilder = new StringBuilder();
+
                 var success = true;
 
                 // If model is valid (All mandatory fields are entered), attempt to create a new user with information from the model
@@ -983,6 +1025,15 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                                 ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
                             }
 
+                            var notification = Mapper.Map<NotificationAddViewModel, Notification>(new NotificationAddViewModel("New Admin Confirmation", String.Format("Admin '{0} {1}' ({2}) has been successfully registered.", admin.FirstName, admin.LastName, admin.AdminId.ToString("AD00000"))));
+
+                            response = await this.GetHttpClient().PostAsJsonAsync(String.Format("Notification?adminUsername={0}", User.Identity.Name), notification); // Attempt to persist notification to the data context
+
+                            if (!response.IsSuccessStatusCode)
+                            {
+                                throw new NotificationAddException(String.Format("Notification could NOT be added. Status Code: {1}", response.StatusCode));
+                            }
+
                             var adminAddEditConfirmationViewModel = Mapper.Map<Admin, AdminAddEditConfirmationViewModel>(admin);
 
                             return PartialView("_RegisterAdminConfirmation", adminAddEditConfirmationViewModel);
@@ -1014,8 +1065,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                     // Log exception
                     ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
 
-                    var stringBuilder = new StringBuilder();
-
                     stringBuilder.Append("<div class='text-center'><h4><strong>User could NOT be registered.</strong></h4></div>");
 
                     stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to register a user. Please review an exception log for more details about the exception.</div></div>");
@@ -1030,8 +1079,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                     ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
 
                     success = false;
-
-                    var stringBuilder = new StringBuilder();
 
                     stringBuilder.Append("<div class='text-center'><h4><strong>Claim could NOT be assigned to the user.</strong></h4></div>");
 
@@ -1048,8 +1095,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                     success = false;
 
-                    var stringBuilder = new StringBuilder();
-
                     stringBuilder.Append("<div class='text-center'><h4><strong>Employee could NOT be registered.</strong></h4></div>");
 
                     stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to register an employee. Please review an exception log for more details about the exception.</div></div>");
@@ -1057,6 +1102,21 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                     var userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString());
 
                     return PartialView("_Error", userConfirmationViewModel); 
+                }
+                catch (NotificationAddException ex)
+                {
+                    // Log exception
+                    ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+
+                    stringBuilder.Append("<div class='text-center'><h4><strong>Failed to create new notification.</strong></h4></div>");
+
+                    stringBuilder.Append(String.Format("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been thrown while attempting to create new notification.</div>"));
+
+                    stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> Please review an exception log for more information about the exception.</div></div>");
+
+                    var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+
+                    return PartialView("_Error", confirmationViewModel);
                 }
                 finally
                 {
@@ -1252,6 +1312,8 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
             if (ModelState.IsValid)
             {
+                var stringBuilder = new StringBuilder();
+
                 try
                 {
                     // Attempt to update an email and a user name
@@ -1380,6 +1442,15 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                                     ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
                                 }
 
+                                var notification = Mapper.Map<NotificationAddViewModel, Notification>(new NotificationAddViewModel("Agent Update Confirmation", String.Format("Agent '{0} {1}' ({2}) has been successfully updated.", agent.FirstName, agent.LastName, agent.AgentId.ToString("AG00000"))));
+
+                                response = await this.GetHttpClient().PostAsJsonAsync(String.Format("Notification?adminUsername={0}", User.Identity.Name), notification); // Attempt to persist notification to the data context
+
+                                if (!response.IsSuccessStatusCode)
+                                {
+                                    throw new NotificationAddException(String.Format("Notification could NOT be added. Status Code: {1}", response.StatusCode));
+                                }
+
                                 var agentAddEditConfirmationViewModel = Mapper.Map<Agent, AgentAddEditConfirmationViewModel>(agent);
 
                                 return PartialView("_EditAgentConfirmation", agentAddEditConfirmationViewModel);
@@ -1414,8 +1485,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                     // Log exception
                     ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
 
-                    var stringBuilder = new StringBuilder();
-
                     stringBuilder.Append("<div class='text-center'><h4><strong>User could NOT be updated.</strong></h4></div>");
 
                     stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to update a user profile. Please review an exception log for more details about the exception.</div></div>");
@@ -1428,8 +1497,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                 {
                     // Log exception
                     ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
-
-                    var stringBuilder = new StringBuilder();
 
                     stringBuilder.Append("<div class='text-center'><h4><strong>Claim could NOT be assigned to the user.</strong></h4></div>");
 
@@ -1444,8 +1511,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                     // Log exception
                     ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
 
-                    var stringBuilder = new StringBuilder();
-
                     stringBuilder.Append("<div class='text-center'><h4><strong>Employee could NOT be updated.</strong></h4></div>");
 
                     stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to update an employee profile. Please review an exception log for more details about the exception.</div></div>");
@@ -1453,6 +1518,21 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                     var userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString());
 
                     return PartialView("_Error", userConfirmationViewModel);
+                }
+                catch (NotificationAddException ex)
+                {
+                    // Log exception
+                    ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+
+                    stringBuilder.Append("<div class='text-center'><h4><strong>Failed to create new notification.</strong></h4></div>");
+
+                    stringBuilder.Append(String.Format("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been thrown while attempting to create new notification.</div>"));
+
+                    stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> Please review an exception log for more information about the exception.</div></div>");
+
+                    var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+
+                    return PartialView("_Error", confirmationViewModel);
                 }
             }
 
@@ -1500,6 +1580,8 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
             if (ModelState.IsValid)
             {
+                var stringBuilder = new StringBuilder();
+
                 try
                 {
                     // Attempt to update an email and a user name
@@ -1588,6 +1670,15 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                                     ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
                                 }
 
+                                var notification = Mapper.Map<NotificationAddViewModel, Notification>(new NotificationAddViewModel("Client Update Confirmation", String.Format("Client '{0} {1}' ({2}) has been successfully updated.", client.FirstName, client.LastName, client.ClientId.ToString("CL00000"))));
+
+                                response = await this.GetHttpClient().PostAsJsonAsync(String.Format("Notification?adminUsername={0}", User.Identity.Name), notification); // Attempt to persist notification to the data context
+
+                                if (!response.IsSuccessStatusCode)
+                                {
+                                    throw new NotificationAddException(String.Format("Notification could NOT be added. Status Code: {1}", response.StatusCode));
+                                }
+
                                 var clientAddEditConfirmationViewModel = Mapper.Map<Client, ClientAddEditConfirmationViewModel>(client);
 
                                 return PartialView("_EditClientConfirmation", clientAddEditConfirmationViewModel);
@@ -1622,8 +1713,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                     // Log exception
                     ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
 
-                    var stringBuilder = new StringBuilder();
-
                     stringBuilder.Append("<div class='text-center'><h4><strong>User could NOT be updated.</strong></h4></div>");
 
                     stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to update a user profile. Please review an exception log for more details about the exception.</div></div>");
@@ -1636,8 +1725,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                 {
                     // Log exception
                     ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
-
-                    var stringBuilder = new StringBuilder();
 
                     stringBuilder.Append("<div class='text-center'><h4><strong>Claim could NOT be assigned to the user.</strong></h4></div>");
 
@@ -1652,8 +1739,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                     // Log exception
                     ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
 
-                    var stringBuilder = new StringBuilder();
-
                     stringBuilder.Append("<div class='text-center'><h4><strong>Employee could NOT be updated.</strong></h4></div>");
 
                     stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to update an employee profile. Please review an exception log for more details about the exception.</div></div>");
@@ -1661,6 +1746,21 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                     var userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString());
 
                     return PartialView("_Error", userConfirmationViewModel);
+                }
+                catch (NotificationAddException ex)
+                {
+                    // Log exception
+                    ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+
+                    stringBuilder.Append("<div class='text-center'><h4><strong>Failed to create new notification.</strong></h4></div>");
+
+                    stringBuilder.Append(String.Format("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been thrown while attempting to create new notification.</div>"));
+
+                    stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> Please review an exception log for more information about the exception.</div></div>");
+
+                    var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+
+                    return PartialView("_Error", confirmationViewModel);
                 }
             }
 
@@ -1708,6 +1808,8 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
             if (ModelState.IsValid)
             {
+                var stringBuilder = new StringBuilder();
+
                 try
                 {
                     // Attempt to update an email and a user name
@@ -1831,6 +1933,15 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                                     ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
                                 }
 
+                                var notification = Mapper.Map<NotificationAddViewModel, Notification>(new NotificationAddViewModel("Admin Update Confirmation", String.Format("Admin '{0} {1}' ({2}) has been successfully updated.", admin.FirstName, admin.LastName, admin.AdminId.ToString("AD00000"))));
+
+                                response = await this.GetHttpClient().PostAsJsonAsync(String.Format("Notification?adminUsername={0}", User.Identity.Name), notification); // Attempt to persist notification to the data context
+
+                                if (!response.IsSuccessStatusCode)
+                                {
+                                    throw new NotificationAddException(String.Format("Notification could NOT be added. Status Code: {1}", response.StatusCode));
+                                }
+
                                 var adminAddEditConfirmationViewModel = Mapper.Map<Admin, AdminAddEditConfirmationViewModel>(admin);
 
                                 return PartialView("_EditAdminConfirmation", adminAddEditConfirmationViewModel);
@@ -1865,8 +1976,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                     // Log exception
                     ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
 
-                    var stringBuilder = new StringBuilder();
-
                     stringBuilder.Append("<div class='text-center'><h4><strong>User could NOT be updated.</strong></h4></div>");
 
                     stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to update a user profile. Please review an exception log for more details about the exception.</div></div>");
@@ -1879,8 +1988,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                 {
                     // Log exception
                     ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
-
-                    var stringBuilder = new StringBuilder();
 
                     stringBuilder.Append("<div class='text-center'><h4><strong>Claim could NOT be assigned to the user.</strong></h4></div>");
 
@@ -1895,8 +2002,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                     // Log exception
                     ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
 
-                    var stringBuilder = new StringBuilder();
-
                     stringBuilder.Append("<div class='text-center'><h4><strong>Employee could NOT be updated.</strong></h4></div>");
 
                     stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to update an employee profile. Please review an exception log for more details about the exception.</div></div>");
@@ -1904,6 +2009,21 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                     var userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString());
 
                     return PartialView("_Error", userConfirmationViewModel);
+                }
+                catch (NotificationAddException ex)
+                {
+                    // Log exception
+                    ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+
+                    stringBuilder.Append("<div class='text-center'><h4><strong>Failed to create new notification.</strong></h4></div>");
+
+                    stringBuilder.Append(String.Format("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been thrown while attempting to create new notification.</div>"));
+
+                    stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> Please review an exception log for more information about the exception.</div></div>");
+
+                    var confirmationViewModel = new ConfirmationViewModel(stringBuilder.ToString());
+
+                    return PartialView("_Error", confirmationViewModel);
                 }
             }
 
@@ -1946,8 +2066,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                 // If password is invalid format, display _FailureConfirmation partial view with following error message "Passwords must have at least one non letter or digit character, least one lowercase ('a'-'z'), least one uppercase ('A'-'Z')."
                 if (!Utilities.RegexMatch(this.PasswordRegex, model.Password))
                 {
-                    stringBuilder.Clear();
-
                     stringBuilder.Append("<div class='text-center'><h4><strong>Password could NOT be reset.</strong></h4></div>");
 
                     stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Passwords must have at least one non letter or digit character, least one lowercase ('a'-'z'), least one uppercase ('A'-'Z').</div>");
@@ -2027,7 +2145,14 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                             ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
                         }
 
-                        stringBuilder.Clear();
+                        var notification = Mapper.Map<NotificationAddViewModel, Notification>(new NotificationAddViewModel("Password Reset Confirmation", String.Format("Password has been successfully reset for user '{0}'.", model.UserName)));
+
+                        var response = await this.GetHttpClient().PostAsJsonAsync(String.Format("Notification?adminUsername={0}", User.Identity.Name), notification); // Attempt to persist notification to the data context
+
+                        if (!response.IsSuccessStatusCode)
+                        {
+                            throw new NotificationAddException(String.Format("Notification could NOT be added. Status Code: {1}", response.StatusCode));
+                        }
 
                         stringBuilder.Append("<div class='text-center'><h4><strong>Success!</strong></h4></div>");
 
@@ -2044,8 +2169,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                         // Log exception
                         ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
 
-                        stringBuilder.Clear();
-
                         stringBuilder.Append("<div class='text-center'><h4><strong>Password could NOT be reset.</strong></h4></div>");
 
                         stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to reset a user password. Please review an exception log for more details about the exception.</div></div>");
@@ -2054,10 +2177,21 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                         return PartialView("_FailureConfirmation", userConfirmationViewModel); 
                     }
+                    catch (NotificationAddException ex)
+                    {
+                        // Log exception
+                        ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+
+                        stringBuilder.Append("<div class='text-center'><h4><strong>Failed to create new notification.</strong></h4></div>");
+
+                        stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to reset a user password. Please review an exception log for more details about the exception.</div></div>");
+
+                        userConfirmationViewModel = new UserConfirmationViewModel(stringBuilder.ToString(), model.UserName, model.UserType);
+
+                        return PartialView("_FailureConfirmation", userConfirmationViewModel);
+                    }
                 }
             }
-
-            stringBuilder.Clear();
 
             stringBuilder.Append("<div class='text-center'><h4><strong>Password could NOT be reset.</strong></h4></div>");
 
@@ -2097,12 +2231,14 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
         {
             var stringBuilder = new StringBuilder();
 
+            var response = new HttpResponseMessage();
+
             try
             {
                 if (model.UserType == UserType.Agent.ToString())
                 {
                     // Attempt to block an employee
-                    var response = await this.GetHttpClient().PutAsync(String.Format("Agent?userName={0}&block={1}", model.UserName, true), null);
+                    response = await this.GetHttpClient().PutAsync(String.Format("Agent?userName={0}&block={1}", model.UserName, true), null);
 
                     if (response.IsSuccessStatusCode)
                     {
@@ -2110,8 +2246,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                         if (agent.UserStatus != UserStatus.Blocked)
                         {
-                            stringBuilder.Clear();
-
                             stringBuilder.Append("<div class='text-center'><h4><strong>User could NOT be blocked at this time.</strong></h4></div>");
 
                             stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Response is successfull, but user status of returned model is not equal to BLOCKED. Please try again in a moment.</div>");
@@ -2168,8 +2302,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                     }
                     else
                     {
-                        stringBuilder.Clear();
-
                         stringBuilder.Append("<div class='text-center'><h4><strong>User could NOT be blocked at this time.</strong></h4></div>");
 
                         stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Response is UNSUCCESSFUL. Please try again in a moment.</div>");
@@ -2184,7 +2316,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                 else if (model.UserType == UserType.Client.ToString())
                 {
                     // Attempt to block an employee
-                    var response = await this.GetHttpClient().PutAsync(String.Format("Client?userName={0}&block={1}", model.UserName, true), null);
+                    response = await this.GetHttpClient().PutAsync(String.Format("Client?userName={0}&block={1}", model.UserName, true), null);
 
                     if (response.IsSuccessStatusCode)
                     {
@@ -2192,8 +2324,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                         if (client.UserStatus != UserStatus.Blocked)
                         {
-                            stringBuilder.Clear();
-
                             stringBuilder.Append("<div class='text-center'><h4><strong>User could NOT be blocked at this time.</strong></h4></div>");
 
                             stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Response is successfull, but user status of returned model is not equal to BLOCKED. Please try again in a moment.</div>");
@@ -2249,8 +2379,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                     }
                     else
                     {
-                        stringBuilder.Clear();
-
                         stringBuilder.Append("<div class='text-center'><h4><strong>User could NOT be blocked at this time.</strong></h4></div>");
 
                         stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Response is UNSUCCESSFUL. Please try again in a moment.</div>");
@@ -2265,7 +2393,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                 else if (model.UserType == UserType.Admin.ToString())
                 {
                     // Attempt to block an employee
-                    var response = await this.GetHttpClient().PutAsync(String.Format("Admin?userName={0}&block={1}", model.UserName, true), null);
+                    response = await this.GetHttpClient().PutAsync(String.Format("Admin?userName={0}&block={1}", model.UserName, true), null);
 
                     if (response.IsSuccessStatusCode)
                     {
@@ -2273,8 +2401,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                         if (admin.UserStatus != UserStatus.Blocked)
                         {
-                            stringBuilder.Clear();
-
                             stringBuilder.Append("<div class='text-center'><h4><strong>User could NOT be blocked at this time.</strong></h4></div>");
 
                             stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Response is successfull, but user status of returned model is not equal to BLOCKED. Please try again in a moment.</div>");
@@ -2330,8 +2456,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                     }
                     else
                     {
-                        stringBuilder.Clear();
-
                         stringBuilder.Append("<div class='text-center'><h4><strong>User could NOT be blocked at this time.</strong></h4></div>");
 
                         stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Response is UNSUCCESSFUL. Please try again in a moment.</div>");
@@ -2343,13 +2467,20 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                         return PartialView("_FailureConfirmation", model);
                     }
                 }
+
+                var notification = Mapper.Map<NotificationAddViewModel, Notification>(new NotificationAddViewModel("User Block Confirmation", String.Format("User '{0}' has been blocked successfully.", model.UserName)));
+
+                response = await this.GetHttpClient().PostAsJsonAsync(String.Format("Notification?adminUsername={0}", User.Identity.Name), notification); // Attempt to persist notification to the data context
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new NotificationAddException(String.Format("Notification could NOT be added. Status Code: {1}", response.StatusCode));
+                }
             }
             catch (ClaimsAssignmentException ex)
             {
                 // Log exception
                 ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
-
-                stringBuilder.Clear();
 
                 stringBuilder.Append("<div class='text-center'><h4><strong>Claim could NOT be assigned to the user.</strong></h4></div>");
 
@@ -2359,8 +2490,19 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                 return PartialView("_FailureConfirmation", model);
             }
+            catch (NotificationAddException ex)
+            {
+                // Log exception
+                ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
 
-            stringBuilder.Clear();
+                stringBuilder.Append("<div class='text-center'><h4><strong>Failed to create new notification.</strong></h4></div>");
+
+                stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to reset a user password. Please review an exception log for more details about the exception.</div></div>");
+
+                model.Message = stringBuilder.ToString();
+
+                return PartialView("_FailureConfirmation", model);
+            }
 
             stringBuilder.Append("<div class='text-center'><h4><strong>User has been blocked successfully.</strong></h4></div>");
 
@@ -2404,12 +2546,14 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
         {
             var stringBuilder = new StringBuilder();
 
+            var response = new HttpResponseMessage();
+
             try 
             {
                 if (model.UserType == UserType.Agent.ToString())
                 {
                     // Attempt to unblock an employee
-                    var response = await this.GetHttpClient().PutAsync(String.Format("Agent?userName={0}&block={1}", model.UserName, false), null);
+                    response = await this.GetHttpClient().PutAsync(String.Format("Agent?userName={0}&block={1}", model.UserName, false), null);
 
                     if (response.IsSuccessStatusCode)
                     {
@@ -2417,8 +2561,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                         if (agent.UserStatus != UserStatus.Active)
                         {
-                            stringBuilder.Clear();
-
                             stringBuilder.Append("<div class='text-center'><h4><strong>User could NOT be unblocked at this time.</strong></h4></div>");
 
                             stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Response is successfull, but user status of returned model is not equal to ACTIVE. Please try again in a moment.</div>");
@@ -2474,8 +2616,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                     }
                     else
                     {
-                        stringBuilder.Clear();
-
                         stringBuilder.Append("<div class='text-center'><h4><strong>User could NOT be unblocked at this time.</strong></h4></div>");
 
                         stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Response is UNSUCCESSFUL. Please try again in a moment.</div>");
@@ -2490,7 +2630,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                 else if (model.UserType == UserType.Client.ToString())
                 {
                     // Attempt to unblock an employee
-                    var response = await this.GetHttpClient().PutAsync(String.Format("Client?userName={0}&block={1}", model.UserName, false), null);
+                    response = await this.GetHttpClient().PutAsync(String.Format("Client?userName={0}&block={1}", model.UserName, false), null);
 
                     if (response.IsSuccessStatusCode)
                     {
@@ -2498,8 +2638,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                         if (client.UserStatus != UserStatus.Active)
                         {
-                            stringBuilder.Clear();
-
                             stringBuilder.Append("<div class='text-center'><h4><strong>User could NOT be unblocked at this time.</strong></h4></div>");
 
                             stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Response is successfull, but user status of returned model is not equal to ACTIVE. Please try again in a moment.</div>");
@@ -2555,8 +2693,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                     }
                     else
                     {
-                        stringBuilder.Clear();
-
                         stringBuilder.Append("<div class='text-center'><h4><strong>User could NOT be unblocked at this time.</strong></h4></div>");
 
                         stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Response is UNSUCCESSFUL. Please try again in a moment.</div>");
@@ -2571,7 +2707,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                 else if (model.UserType == UserType.Admin.ToString())
                 {
                     // Attempt to unblock an employee
-                    var response = await this.GetHttpClient().PutAsync(String.Format("Admin?userName={0}&block={1}", model.UserName, false), null);
+                    response = await this.GetHttpClient().PutAsync(String.Format("Admin?userName={0}&block={1}", model.UserName, false), null);
 
                     if (response.IsSuccessStatusCode)
                     {
@@ -2579,8 +2715,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                         if (admin.UserStatus != UserStatus.Active)
                         {
-                            stringBuilder.Clear();
-
                             stringBuilder.Append("<div class='text-center'><h4><strong>User could NOT be unblocked at this time.</strong></h4></div>");
 
                             stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Response is successfull, but user status of returned model is not equal to ACTIVE. Please try again in a moment.</div>");
@@ -2636,8 +2770,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                     }
                     else
                     {
-                        stringBuilder.Clear();
-
                         stringBuilder.Append("<div class='text-center'><h4><strong>User could NOT be unblocked at this time.</strong></h4></div>");
 
                         stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Response is UNSUCCESSFUL. Please try again in a moment.</div>");
@@ -2649,18 +2781,42 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                         return PartialView("_FailureConfirmation", model);
                     }
                 }
+
+                var notification = Mapper.Map<NotificationAddViewModel, Notification>(new NotificationAddViewModel("User Block Confirmation", String.Format("User '{0}' has been unblocked successfully.", model.UserName)));
+
+                response = await this.GetHttpClient().PostAsJsonAsync(String.Format("Notification?adminUsername={0}", User.Identity.Name), notification); // Attempt to persist notification to the data context
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new NotificationAddException(String.Format("Notification could NOT be added. Status Code: {1}", response.StatusCode));
+                }
             }
             catch (ClaimsAssignmentException ex)
             {
                 // Log exception
                 ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
 
-                ModelState.AddModelError("ConfirmationMessage", String.Format("UserStatus claim could not be updated for user {0}. User is still BLOCKED! Please see exception logs for more details.", model.UserName));
+                stringBuilder.Append(String.Format("<div class='text-center'><h4><strong>UserStatus claim could not be updated for user {0}. User is still BLOCKED!</strong></h4></div>", model.UserName));
+
+                stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to reset a user password. Please review an exception log for more details about the exception.</div></div>");
+
+                model.Message = stringBuilder.ToString();
 
                 return PartialView("_FailureConfirmation", model);
             }
+            catch (NotificationAddException ex)
+            {
+                // Log exception
+                ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
 
-            stringBuilder.Clear();
+                stringBuilder.Append("<div class='text-center'><h4><strong>Failed to create new notification.</strong></h4></div>");
+
+                stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to reset a user password. Please review an exception log for more details about the exception.</div></div>");
+
+                model.Message = stringBuilder.ToString();
+
+                return PartialView("_FailureConfirmation", model);
+            }
 
             stringBuilder.Append("<div class='text-center'><h4><strong>User has been unblocked successfully.</strong></h4></div>");
 
@@ -2822,7 +2978,14 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                         if (agent.UserStatus != UserStatus.Deleted)
                         {
-                            stringBuilder.Clear();
+                            var notification = Mapper.Map<NotificationAddViewModel, Notification>(new NotificationAddViewModel("User Delete Confirmation", String.Format("User '{0}' has been deleted successfully.", model.UserName)));
+
+                            response = await this.GetHttpClient().PostAsJsonAsync(String.Format("Notification?adminUsername={0}", User.Identity.Name), notification); // Attempt to persist notification to the data context
+
+                            if (!response.IsSuccessStatusCode)
+                            {
+                                throw new NotificationAddException(String.Format("Notification could NOT be added. Status Code: {1}", response.StatusCode));
+                            }
 
                             stringBuilder.Append("<div class='text-center'><h4><strong>User could NOT be feleted at this time.</strong></h4></div>");
 
@@ -2836,8 +2999,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                         }
                         else
                         {
-                            stringBuilder.Clear();
-
                             stringBuilder.Append("<div class='text-center'><h4><strong>User has been deleted successfully.</strong></h4></div>");
 
                             stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>This is logical delete, which means that user is still be present in the database, but flagged as deleted.</div>");
@@ -2855,8 +3016,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                     }
                     else
                     {
-                        stringBuilder.Clear();
-
                         stringBuilder.Append("<div class='text-center'><h4><strong>User could NOT be deleted at this time.</strong></h4></div>");
 
                         stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Response is UNSUCCESSFUL. Please try again in a moment.</div>");
@@ -2887,8 +3046,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                         if (client.UserStatus != UserStatus.Deleted)
                         {
-                            stringBuilder.Clear();
-
                             stringBuilder.Append("<div class='text-center'><h4><strong>User could NOT be feleted at this time.</strong></h4></div>");
 
                             stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Response is successfull, but user status of returned model is not equal to DELETED. Please try again in a moment.</div>");
@@ -2901,7 +3058,14 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                         }
                         else
                         {
-                            stringBuilder.Clear();
+                            var notification = Mapper.Map<NotificationAddViewModel, Notification>(new NotificationAddViewModel("User Delete Confirmation", String.Format("User '{0}' has been deleted successfully.", model.UserName)));
+
+                            response = await this.GetHttpClient().PostAsJsonAsync(String.Format("Notification?adminUsername={0}", User.Identity.Name), notification); // Attempt to persist notification to the data context
+
+                            if (!response.IsSuccessStatusCode)
+                            {
+                                throw new NotificationAddException(String.Format("Notification could NOT be added. Status Code: {1}", response.StatusCode));
+                            }
 
                             stringBuilder.Append("<div class='text-center'><h4><strong>User has been deleted successfully.</strong></h4></div>");
 
@@ -2920,8 +3084,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                     }
                     else
                     {
-                        stringBuilder.Clear();
-
                         stringBuilder.Append("<div class='text-center'><h4><strong>User could NOT be deleted at this time.</strong></h4></div>");
 
                         stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Response is UNSUCCESSFUL. Please try again in a moment.</div>");
@@ -2952,8 +3114,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
                         if (admin.UserStatus != UserStatus.Deleted)
                         {
-                            stringBuilder.Clear();
-
                             stringBuilder.Append("<div class='text-center'><h4><strong>User could NOT be feleted at this time.</strong></h4></div>");
 
                             stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Response is successfull, but user status of returned model is not equal to DELETED. Please try again in a moment.</div>");
@@ -2966,7 +3126,14 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                         }
                         else
                         {
-                            stringBuilder.Clear();
+                            var notification = Mapper.Map<NotificationAddViewModel, Notification>(new NotificationAddViewModel("User Delete Confirmation", String.Format("User '{0}' has been deleted successfully.", model.UserName)));
+
+                            response = await this.GetHttpClient().PostAsJsonAsync(String.Format("Notification?adminUsername={0}", User.Identity.Name), notification); // Attempt to persist notification to the data context
+
+                            if (!response.IsSuccessStatusCode)
+                            {
+                                throw new NotificationAddException(String.Format("Notification could NOT be added. Status Code: {1}", response.StatusCode));
+                            }
 
                             stringBuilder.Append("<div class='text-center'><h4><strong>User has been deleted successfully.</strong></h4></div>");
 
@@ -2985,8 +3152,6 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                     }
                     else
                     {
-                        stringBuilder.Clear();
-
                         stringBuilder.Append("<div class='text-center'><h4><strong>User could NOT be deleted at this time.</strong></h4></div>");
 
                         stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Response is UNSUCCESSFUL. Please try again in a moment.</div>");
@@ -3004,7 +3169,11 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                 // Log exception
                 ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
 
-                ModelState.AddModelError("ConfirmationMessage", String.Format("There has been a problem with assigning user claims. Please see exception logs for more details.", model.UserName));
+                stringBuilder.Append("<div class='text-center'><h4><strong>There has been a problem with assigning user claims.</strong></h4></div>");
+
+                stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to reset a user password. Please review an exception log for more details about the exception.</div></div>");
+
+                model.Message = stringBuilder.ToString();
 
                 return PartialView("_FailureConfirmation", model);
             }
@@ -3013,12 +3182,27 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                 // Log exception
                 ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
 
-                ModelState.AddModelError("ConfirmationMessage", String.Format("User could not be deleted at this time. Please see exception logs for more details.", model.UserName));
+                stringBuilder.Append("<div class='text-center'><h4><strong>User could not be deleted at this time.</strong></h4></div>");
+
+                stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to reset a user password. Please review an exception log for more details about the exception.</div></div>");
+
+                model.Message = stringBuilder.ToString();
 
                 return PartialView("_FailureConfirmation", model);
             }
+            catch (NotificationAddException ex)
+            {
+                // Log exception
+                ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
 
-            stringBuilder.Clear();
+                stringBuilder.Append("<div class='text-center'><h4><strong>Failed to create new notification.</strong></h4></div>");
+
+                stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>An exception has been caught while attempting to reset a user password. Please review an exception log for more details about the exception.</div></div>");
+
+                model.Message = stringBuilder.ToString();
+
+                return PartialView("_FailureConfirmation", model);
+            }
 
             stringBuilder.Append("<div class='text-center'><h4><strong>Could NOT determine the user.</strong></h4></div>");
 

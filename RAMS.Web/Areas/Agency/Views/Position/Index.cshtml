@@ -14,7 +14,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" onclick="$('#edit-position-modal').modal('hide');">&times;</button>
-                <h4 class="modal-title text-center">Edit Position</h4>
+                <h4 id="edit-position-report-modal-title" class="modal-title text-center">Edit Position</h4>
             </div>
             <div class="modal-body">
                 <div id="edit-position-message-modal-body-div"></div> 
@@ -38,7 +38,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" onclick="$('#edit-candidate-modal').modal('hide');">&times;</button>
-                <h4 class="modal-title text-center">Candidate Details</h4>
+                <h4 id="edit-candidate-report-modal-title" class="modal-title text-center">Candidate Details</h4>
             </div>
             <div class="modal-body">
                 <div class="well well-lg bottom-margin-0">
@@ -64,12 +64,7 @@
                 <h4 class="modal-title text-center">Schedule Interview</h4>
             </div>
             <div class="modal-body">
-                <div class="well well-lg bottom-margin-0">
-                    <div id="schedule-interview-modal-body-div"></div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" onclick="$('#schedule-interview-modal').modal('hide');">Close</button>
+                <div id="schedule-interview-modal-body-div"></div>
             </div>
         </div>
         <!-- END OF MODAL CONTENT-->

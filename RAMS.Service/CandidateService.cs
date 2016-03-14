@@ -49,7 +49,7 @@ namespace RAMS.Service
         /// <returns>All the candidates</returns>
         public IEnumerable<Candidate> GetAllCandidates()
         {
-            return this.CandidateRepository.GetAll();
+            return this.CandidateRepository.GetAllCandidates();
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace RAMS.Service
         /// <returns>A candidate with matching id</returns>
         public Candidate GetOneCandidateById(int id)
         {
-            return this.CandidateRepository.GetById(id);
+            return this.CandidateRepository.GetOneByCandidateId(id);
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace RAMS.Service
         /// <returns>Multiple candidates with specific position</returns>
         public IEnumerable<Candidate> GetManyCandidatesByPositionId(int id)
         {
-            var position = this.PositionRepository.GetById(id);
+            var position = this.PositionRepository.GetOneByPositionId(id);
 
             if (position != null)
             {
@@ -86,7 +86,7 @@ namespace RAMS.Service
         /// <returns>A candidate with specific interview</returns>
         public Candidate GetOneCandidateByInterviewId(int id)
         {
-            var interview = this.InterviewRepository.GetById(id);
+            var interview = this.InterviewRepository.GetOneByInterviewId(id);
 
             if (interview != null)
             {

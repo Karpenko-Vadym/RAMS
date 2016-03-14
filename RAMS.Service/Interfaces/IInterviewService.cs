@@ -20,6 +20,8 @@ namespace RAMS.Service
 
         IEnumerable<Interview> GetManyInterviewsByAgentId(int id);
 
+        IEnumerable<Interview> GetManyInterviewsByAgentUsername(string username);
+
         IEnumerable<Interview> GetManyInterviewsByDate(DateTime date);
 
         void CreateInterview(Interview interview);

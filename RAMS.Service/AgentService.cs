@@ -59,7 +59,7 @@ namespace RAMS.Service
         /// <returns>All the agents</returns>
         public IEnumerable<Agent> GetAllAgents()
         {
-            return this.AgentRepository.GetAll();
+            return this.AgentRepository.GetAllAgents();
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace RAMS.Service
         /// <returns>An agent with matching id</returns>
         public Agent GetOneAgentById(int id)
         {
-            return this.AgentRepository.GetById(id);
+            return this.AgentRepository.GetOneByAgentId(id);
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace RAMS.Service
         /// <returns>An agent with specific position</returns>
         public Agent GetOneAgentByPositionId(int id)
         {
-            var position = this.PositionRepository.GetById(id);
+            var position = this.PositionRepository.GetOneByPositionId(id);
 
             if (position != null)
             {
@@ -146,7 +146,7 @@ namespace RAMS.Service
         /// <returns>An agent with specific notification</returns>
         public Agent GetOneAgentByNotificationId(int id)
         {
-            var notification = this.NotificationRepository.GetById(id);
+            var notification = this.NotificationRepository.GetOneByNotificationId(id);
 
             if (notification != null)
             {
@@ -163,7 +163,7 @@ namespace RAMS.Service
         /// <returns>Multiple agents with specific department</returns>
         public IEnumerable<Agent> GetManyAgentsByDepartmentId(int id)
         {
-            var department = this.DepartmentRepository.GetById(id);
+            var department = this.DepartmentRepository.GetOneByDepartmentId(id);
 
             if (department != null)
             {
@@ -180,7 +180,7 @@ namespace RAMS.Service
         /// <returns>An agent with specific interview</returns>
         public Agent GetOneAgentByInterviewId(int id)
         {
-            var interview = this.InterviewRepository.GetById(id);
+            var interview = this.InterviewRepository.GetOneByInterviewId(id);
 
             if (interview != null)
             {

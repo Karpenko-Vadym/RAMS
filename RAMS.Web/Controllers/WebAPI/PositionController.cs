@@ -20,14 +20,17 @@ namespace RAMS.Web.Controllers.WebAPI
     public class PositionController : ApiController
     {
         private readonly IPositionService PositionService;
+        private readonly IAgentService AgentService;
 
         /// <summary>
         /// Controller that sets position service in order to access context resources
         /// </summary>
         /// <param name="positionService">Parameter for setting position service</param>
-        public PositionController(IPositionService positionService)
+        /// <param name="agentService">Parameter for setting agent service</param>
+        public PositionController(IPositionService positionService, IAgentService agentService)
         {
             this.PositionService = positionService;
+            this.AgentService = agentService;
         }
 
         /// <summary>
@@ -333,6 +336,8 @@ namespace RAMS.Web.Controllers.WebAPI
 
                         return Conflict();
                     }
+
+                    position.Agent = this.AgentService.GetOneAgentById((int)position.AgentId);
 
                     return Ok(position);
                 }

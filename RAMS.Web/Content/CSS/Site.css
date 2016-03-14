@@ -1,5 +1,5 @@
 ﻿body {
-    min-width: 600px;
+    min-width: 700px;
 }
 
 .vertical-padding-24
@@ -92,7 +92,7 @@ div.modal .modal-content
 
 div.container.body-content
 {
-    min-width: 700px;
+    min-width: 800px;
 }
 
 td.cell-btn
@@ -109,13 +109,25 @@ input.horizontal-align-center
 
 
 
-#assign-position-agent-list-table input[type="radio"] 
+#assign-position-agent-list-table input[type="radio"], .element-size-150
 {
     -moz-transform: scale(1.5);
     -ms-transform: scale(1.5);
     -o-transform: scale(1.5);
     -webkit-transform: scale(1.5) !important;
     transform: scale(1.5) !important;
+}
+
+.margin-left-10
+{
+    margin-left: 10px;
+}
+
+#schedule-table td, #schedule-table th
+{
+    padding-top: 1px;
+    padding-bottom: 1px;
+    line-height: 23px;
 }
 
 div.print-container

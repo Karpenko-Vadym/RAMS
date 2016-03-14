@@ -1,6 +1,12 @@
 ﻿@model string
 
 <!-- PROFILE INDEX VIEW -->
+<button type="button" class="btn btn-info pull-right" data-toggle="modal" data-target="#personal-schedule-modal" data-date-time="@DateTime.Now.ToString("dd/MM/yyyy")">View Personal Schedule</button>
+
+<div class="clearfix"></div>
+
+<div class="vertical-padding-24"></div>
+
 <div class="well well-lg bottom-margin-0 background-white">
 
     @if (!String.IsNullOrEmpty(Model))
@@ -87,6 +93,27 @@
     </div>
 </div>
 <!-- END OF CHANGE NOTIFICATION STATUS MODAL -->
+
+<!-- PERSONAL SCHEDULE MODAL -->
+<div id="personal-schedule-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- MODAL CONTENT -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" onclick="$('#personal-schedule-modal').modal('hide');">&times;</button>
+                <h4 class="modal-title text-center">Schedule</h4>
+            </div>
+            <div class="modal-body">
+                <div id="personal-schedule-modal-body-div"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" onclick="$('#personal-schedule-modal').modal('hide');">Close</button>
+            </div>
+        </div>
+        <!-- END OF MODAL CONTENT-->
+    </div>
+</div>
+<!-- END OF PERSONAL SCHEDULE MODAL -->
 
 <script type="text/javascript">$(function () { LoadAction("profile-details-div", "@Url.Action("ProfileDetails", "Profile", new { Area = "Agency" })"); LoadAction("notification-list-div", "@Url.Action("GetNotificationList", "Profile", new { Area = "Agency" })"); AgencyModalControls(); });</script>
 <!-- END OF PROFILE INDEX VIEW -->

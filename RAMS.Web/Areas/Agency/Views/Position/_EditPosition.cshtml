@@ -34,17 +34,17 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.Candidates)
+                @foreach (var item in Model.Candidates.Where(c => c.Score >= Model.AcceptanceScore))
                 {
                     <tr class="cursor-pointer" >
-                        <td data-toggle="modal" data-target="#edit-candidate-modal" data-candidate-id="@item.CandidateId" data-position-status="@Model.Status">@item.CandidateIdDisplay</td>
-                        <td data-toggle="modal" data-target="#edit-candidate-modal" data-candidate-id="@item.CandidateId" data-position-status="@Model.Status">@item.FullName</td>
-                        <td data-toggle="modal" data-target="#edit-candidate-modal" data-candidate-id="@item.CandidateId" data-position-status="@Model.Status">@item.Score</td>
-                        <td data-toggle="modal" data-target="#edit-candidate-modal" data-candidate-id="@item.CandidateId" data-position-status="@Model.Status">@item.Status</td>
+                        <td data-toggle="modal" data-target="#edit-candidate-modal" data-candidate-id="@item.CandidateId" data-candidate-name="@item.FullName" data-position-status="@Model.Status">@item.CandidateIdDisplay</td>
+                        <td data-toggle="modal" data-target="#edit-candidate-modal" data-candidate-id="@item.CandidateId" data-candidate-name="@item.FullName" data-position-status="@Model.Status">@item.FullName</td>
+                        <td data-toggle="modal" data-target="#edit-candidate-modal" data-candidate-id="@item.CandidateId" data-candidate-name="@item.FullName" data-position-status="@Model.Status">@item.Score</td>
+                        <td data-toggle="modal" data-target="#edit-candidate-modal" data-candidate-id="@item.CandidateId" data-candidate-name="@item.FullName" data-position-status="@Model.Status">@item.Status</td>
 
-                        @if(Model.Status != RAMS.Enums.PositionStatus.Closed)
-                        { 
-                            <td class="cell-btn"><input type="button" class="btn btn-info btn-block" value="Schedule" data-toggle="modal" data-target="#schedule-interview-modal" data-candidate-id="@item.CandidateId" /></td>
+                        @if (Model.Status != RAMS.Enums.PositionStatus.Closed)
+                        {
+                            <td class="cell-btn"><input type="button" class="btn btn-info btn-block" value='@(item.Selected ? "Re-Schedule" : "Schedule")' data-toggle="modal" data-target="#schedule-interview-modal" data-candidate-id="@item.CandidateId" data-date-time="@DateTime.Now.ToString("dd/MM/yyyy")" data-selected="@item.Selected" /></td>
                         }
                     </tr> 
                 }

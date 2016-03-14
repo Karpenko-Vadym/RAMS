@@ -1,5 +1,6 @@
 ﻿using RAMS.Data.Infrastructure;
 using RAMS.Enums;
+using RAMS.Helpers;
 using RAMS.Models;
 using System;
 using System.Collections.Generic;
@@ -18,13 +19,32 @@ namespace RAMS.Data.Repositories
 
         #region Getters
         /// <summary>
+        /// Get first agent with matching agent id
+        /// </summary>
+        /// <param name="id">Id to match with agents' data</param>
+        /// <returns>First agent with matching id</returns>
+        public Agent GetOneByAgentId(int id)
+        {
+            return this.GetContext.Agents.Include("Department").Include("Positions").Include("Interviews").Include("Notifications").Include("Interviews.Candidate").Include("Interviews.Interviewer").FirstOrDefault(a => a.AgentId == id);
+        }
+
+        /// <summary>
+        /// Get all agents
+        /// </summary>
+        /// <returns>All agents</returns>
+        public IEnumerable<Agent> GetAllAgents()
+        {
+            return this.GetContext.Agents.Include("Department").Include("Positions").Include("Interviews").Include("Notifications");
+        }
+
+        /// <summary>
         /// Get first agent with matching user name
         /// </summary>
         /// <param name="userName">User name of the agent</param>
         /// <returns>First agent with matching user name</returns>
         public Agent GetOneByUserName(string userName)
         {
-            return this.GetContext.Agents.Where(a => a.UserName == userName).FirstOrDefault();
+            return this.GetContext.Agents.Include("Department").Include("Positions").Include("Positions.Candidates").Include("Positions.Category").Include("Interviews").Include("Notifications").Include("Interviews.Candidate").Include("Interviews.Interviewer").FirstOrDefault(a => a.UserName == userName);
         }
 
         /// <summary>
@@ -34,7 +54,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple agents with matching user tpe</returns>
         public IEnumerable<Agent> GetManyByUserType(UserType userType)
         {
-            return this.GetContext.Agents.Where(a => a.UserType == userType).ToList();
+            return this.GetContext.Agents.Include("Department").Include("Positions").Include("Interviews").Include("Notifications").Where(a => a.UserType == userType).ToList();
         }
 
         /// <summary>
@@ -44,7 +64,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple agents with matching user status</returns>
         public IEnumerable<Agent> GetManyByUserStatus(UserStatus userStatus)
         {
-            return this.GetContext.Agents.Where(a => a.UserStatus == userStatus).ToList();
+            return this.GetContext.Agents.Include("Department").Include("Positions").Include("Interviews").Include("Notifications").Where(a => a.UserStatus == userStatus).ToList();
         }
 
         /// <summary>
@@ -54,7 +74,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple agents with matching role</returns>
         public IEnumerable<Agent> GetManyByRole(Role role)
         {
-            return this.GetContext.Agents.Where(a => a.Role == role).ToList();
+            return this.GetContext.Agents.Include("Department").Include("Positions").Include("Interviews").Include("Notifications").Where(a => a.Role == role).ToList();
         }
 
         /// <summary>
@@ -64,7 +84,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple agents with matching first name</returns>
         public IEnumerable<Agent> GetManyByFirstName(string firstName)
         {
-            return this.GetContext.Agents.Where(a => a.FirstName == firstName).ToList();
+            return this.GetContext.Agents.Include("Department").Include("Positions").Include("Interviews").Include("Notifications").Where(a => a.FirstName == firstName).ToList();
         }
 
         /// <summary>
@@ -74,7 +94,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple agents with matching last name</returns>
         public IEnumerable<Agent> GetManyByLastName(string lastName)
         {
-            return this.GetContext.Agents.Where(a => a.LastName == lastName).ToList();
+            return this.GetContext.Agents.Include("Department").Include("Positions").Include("Interviews").Include("Notifications").Where(a => a.LastName == lastName).ToList();
         }
 
         /// <summary>
@@ -84,7 +104,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple agents with matching job title</returns>
         public IEnumerable<Agent> GetManyByJobTitle(string jobTitle)
         {
-            return this.GetContext.Agents.Where(a => a.JobTitle == jobTitle).ToList();
+            return this.GetContext.Agents.Include("Department").Include("Positions").Include("Interviews").Include("Notifications").Where(a => a.JobTitle == jobTitle).ToList();
         }
 
         /// <summary>
@@ -94,7 +114,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple agents with matching company name</returns>
         public IEnumerable<Agent> GetManyByCompanyName(string companyName)
         {
-            return this.GetContext.Agents.Where(a => a.Company == companyName).ToList();
+            return this.GetContext.Agents.Include("Department").Include("Positions").Include("Interviews").Include("Notifications").Where(a => a.Company == companyName).ToList();
         }
 
         /// <summary>
@@ -104,7 +124,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple agents with matching phone number</returns>
         public IEnumerable<Agent> GetManyByPhoneNumber(string phoneNumber)
         {
-            return this.GetContext.Agents.Where(a => a.PhoneNumber == phoneNumber).ToList();
+            return this.GetContext.Agents.Include("Department").Include("Positions").Include("Interviews").Include("Notifications").Where(a => a.PhoneNumber == phoneNumber).ToList();
         }
 
         /// <summary>
@@ -114,7 +134,7 @@ namespace RAMS.Data.Repositories
         /// <returns>First agent with matching email</returns>
         public Agent GetOneByEmail(string email)
         {
-            return this.GetContext.Agents.Where(a => a.Email == email).FirstOrDefault();
+            return this.GetContext.Agents.Include("Department").Include("Positions").Include("Interviews").Include("Notifications").FirstOrDefault(a => a.Email == email);
         }
 
         /// <summary>
@@ -124,7 +144,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple agents with matching partial email</returns>
         public IEnumerable<Agent> GetManyByEmail(string email)
         {
-            return this.GetContext.Agents.Where(a => a.Email.ToLower().Trim().Contains(email.ToLower().Trim())).ToList();
+            return this.GetContext.Agents.Include("Department").Include("Positions").Include("Interviews").Include("Notifications").Where(a => a.Email.ToLower().Trim().Contains(email.ToLower().Trim())).ToList();
         }
 
         /// <summary>
@@ -134,7 +154,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple agents with matching department id</returns>
         public IEnumerable<Agent> GetManyByDepartmentId(int id)
         {
-            return this.GetContext.Agents.Where(a => a.DepartmentId == id).ToList();
+            return this.GetContext.Agents.Include("Department").Include("Positions").Include("Interviews").Include("Notifications").Where(a => a.DepartmentId == id).ToList();
         }
 
         /// <summary>
@@ -144,7 +164,7 @@ namespace RAMS.Data.Repositories
         /// <returns>Multiple agents with mathing department</returns>
         public IEnumerable<Agent> GetManyByDepartment(Department department)
         {
-            return this.GetContext.Agents.Where(a => a.DepartmentId == department.DepartmentId).ToList();
+            return this.GetContext.Agents.Include("Department").Include("Positions").Include("Interviews").Include("Notifications").Where(a => a.DepartmentId == department.DepartmentId).ToList();
         }
 
         /// <summary>
@@ -154,9 +174,9 @@ namespace RAMS.Data.Repositories
         /// <returns>First agent with matching position id</returns>
         public Agent GetOneByPositionId(int id)
         {
-            var position = this.GetContext.Positions.Where(p => p.PositionId == id).FirstOrDefault() ?? new Position();
+            var position = this.GetContext.Positions.FirstOrDefault(p => p.PositionId == id) ?? new Position();
 
-            return this.GetContext.Agents.Where(a => a.AgentId == position.AgentId).FirstOrDefault();
+            return this.GetContext.Agents.Include("Department").Include("Positions").Include("Interviews").Include("Notifications").FirstOrDefault(a => a.AgentId == position.AgentId);
         }
 
         /// <summary>
@@ -166,7 +186,7 @@ namespace RAMS.Data.Repositories
         /// <returns>First agent with matching position</returns>
         public Agent GetOneByPosition(Position position)
         {
-            return this.GetContext.Agents.Where(a => a.AgentId == position.AgentId).FirstOrDefault();
+            return this.GetContext.Agents.Include("Department").Include("Positions").Include("Interviews").Include("Notifications").FirstOrDefault(a => a.AgentId == position.AgentId);
         }
 
         /// <summary>
@@ -176,9 +196,9 @@ namespace RAMS.Data.Repositories
         /// <returns>First agent with matching notification id</returns>
         public Agent GetOneByNotificationId(int id)
         {
-            var notification = this.GetContext.Notifications.Where(n => n.NotificationId == id).FirstOrDefault() ?? new Notification();
+            var notification = this.GetContext.Notifications.FirstOrDefault(n => n.NotificationId == id) ?? new Notification();
 
-            return this.GetContext.Agents.Where(a => a.AgentId == notification.AgentId).FirstOrDefault();
+            return this.GetContext.Agents.Include("Department").Include("Positions").Include("Interviews").Include("Notifications").FirstOrDefault(a => a.AgentId == notification.AgentId);
         }
 
         /// <summary>
@@ -188,7 +208,7 @@ namespace RAMS.Data.Repositories
         /// <returns>First agent with matching notification</returns>
         public Agent GetOneByNotification(Notification notification)
         {
-            return this.GetContext.Agents.Where(a => a.AgentId == notification.AgentId).FirstOrDefault();
+            return this.GetContext.Agents.Include("Department").Include("Positions").Include("Interviews").Include("Notifications").FirstOrDefault(a => a.AgentId == notification.AgentId);
         }
 
         /// <summary>
@@ -198,7 +218,7 @@ namespace RAMS.Data.Repositories
         /// <returns>First agent with matching agent status</returns>
         public IEnumerable<Agent> GetManyByAgentStatus(AgentStatus status)
         {
-            return this.GetContext.Agents.Where(a => a.AgentStatus == status).ToList();
+            return this.GetContext.Agents.Include("Department").Include("Positions").Include("Interviews").Include("Notifications").Where(a => a.AgentStatus == status).ToList();
         }
         #endregion
     }

@@ -31,7 +31,7 @@
                 <tbody>
                     @foreach (var item in Model.Candidates.Where(c => c.Status == RAMS.Enums.CandidateStatus.Recommended || c.Status == RAMS.Enums.CandidateStatus.Interviewed))
                     {
-                        <tr class="cursor-pointer" data-toggle="modal" data-target="#candidate-report-modal" data-candidate-id="@item.CandidateId">
+                        <tr class="cursor-pointer" data-toggle="modal" data-target="#candidate-report-modal" data-candidate-id="@item.CandidateId" data-candidate-name="@item.FullName">
                             <td>@item.CandidateIdDisplay</td>
                             <td>@item.FullName</td>
                             <td>@item.Score</td>

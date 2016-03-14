@@ -177,6 +177,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\PasswordResetEmailTemplate.txt" />
+    <Content Include="App_Data\ScheduleInterviewEmailTemplate.txt" />
     <Content Include="App_Data\UserPasswordResetEmailTemplate.txt" />
     <Content Include="App_Data\UserRegistrationEmailTemplate.txt" />
     <Content Include="App_Data\UserUpdateEmailTemplate.txt" />
@@ -633,6 +634,7 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Areas\Print\Controllers\HomeController.cs" />
     <Compile Include="Areas\Print\PrintAreaRegistration.cs" />
+    <Compile Include="Areas\SystemAdmin\Controllers\CategoryController.cs" />
     <Compile Include="Areas\SystemAdmin\Controllers\DepartmentController.cs" />
     <Compile Include="Areas\SystemAdmin\Controllers\HomeController.cs" />
     <Compile Include="Areas\SystemAdmin\Controllers\ProfileController.cs" />
@@ -756,6 +758,15 @@
     <Content Include="Areas\Customer\Views\Report\_PositionList.cshtml" />
     <Content Include="Areas\Customer\Views\Report\_PositionStatusReport.cshtml" />
     <Content Include="Areas\Customer\Views\Report\Index.cshtml" />
+    <Content Include="Areas\Agency\Views\Position\_ScheduleInterview.cshtml" />
+    <Content Include="Areas\Agency\Views\Profile\_PersonalSchedule.cshtml" />
+    <Content Include="Areas\SystemAdmin\Views\Category\Index.cshtml" />
+    <Content Include="Areas\SystemAdmin\Views\Category\_CategoryList.cshtml" />
+    <Content Include="Areas\SystemAdmin\Views\Category\_EditCategory.cshtml" />
+    <Content Include="Areas\SystemAdmin\Views\Category\_EditCategoryConfirmation.cshtml" />
+    <Content Include="Areas\SystemAdmin\Views\Category\_Error.cshtml" />
+    <Content Include="Areas\SystemAdmin\Views\Category\_NewCategory.cshtml" />
+    <Content Include="Areas\SystemAdmin\Views\Category\_NewCategoryConfirmation.cshtml" />
     <None Include="Content\JS\jquery-2.1.4.intellisense.js" />
     <Content Include="Views\Identity\Account\FailedLogin.cshtml" />
     <None Include="Web.Debug.config">

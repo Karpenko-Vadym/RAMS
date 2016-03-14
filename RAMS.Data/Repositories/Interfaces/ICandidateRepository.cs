@@ -14,6 +14,10 @@ namespace RAMS.Data.Repositories
     /// </summary>
     public interface ICandidateRepository : IRepository<Candidate> 
     {
+        Candidate GetOneByCandidateId(int id);
+
+        IEnumerable<Candidate> GetAllCandidates();
+
         Candidate GetOneByFirstName(string firstName);
 
         Candidate GetOneByLastName(string lastName);

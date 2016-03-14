@@ -13,6 +13,10 @@ namespace RAMS.Data.Repositories
     /// </summary>
     public interface IDepartmentRepository : IRepository<Department> 
     {
+        Department GetOneByDepartmentId(int id);
+
+        IEnumerable<Department> GetAllDepartments();
+
         Department GetOneByName(string name);
 
         Department GetOneByAgentId(int id);

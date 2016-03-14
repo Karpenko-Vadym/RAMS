@@ -76,8 +76,18 @@
                     </div>
                 </div>
 
-                @if(Model.PositionStatus != "Closed")
+                @if (Model.PositionStatus != "Closed")
                 {
+                    if (Model.Status == RAMS.Enums.CandidateStatus.Pending)
+                    {
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.IsInterviewed, htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-7" style="padding-top: 4px;">
+                                @Html.CheckBoxFor(model => model.IsInterviewed, new { @class = "checkbox element-size-150" })
+                            </div>
+                        </div>
+                    }
+
                     <div class="form-group bottom-margin-0">
                         <div class="col-md-offset-3 col-lg-offset-3 col-md-6 col-lg-6">
                             <input type="submit" value="Update Feedback" class="btn btn-danger btn-block" />

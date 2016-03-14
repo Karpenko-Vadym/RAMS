@@ -48,7 +48,7 @@ namespace RAMS.Service.Interfaces
         /// <returns>All the departments</returns>
         public IEnumerable<Department> GetAllDepartments()
         {
-            return this.DepartmentRepository.GetAll();
+            return this.DepartmentRepository.GetAllDepartments();
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace RAMS.Service.Interfaces
         /// <returns>Department with matching id</returns>
         public Department GetOneDepartmentById(int id)
         {
-            return this.DepartmentRepository.GetById(id);
+            return this.DepartmentRepository.GetOneByDepartmentId(id);
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace RAMS.Service.Interfaces
         /// <returns>Department of specific agent</returns>
         public Department GetOneDepartmentByAgentId(int id)
         {
-            var agent = this.AgentRepository.GetById(id);
+            var agent = this.AgentRepository.GetOneByAgentId(id);
 
             if (agent != null)
             {

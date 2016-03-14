@@ -14,6 +14,10 @@ namespace RAMS.Data.Repositories
     /// </summary>
     public interface IPositionRepository : IRepository<Position>
     {
+        Position GetOneByPositionId(int id);
+
+        IEnumerable<Position> GetAllPositions();
+
         IEnumerable<Position> GetManyByClientId(int id);
 
         IEnumerable<Position> GetManyByClient(Client client);

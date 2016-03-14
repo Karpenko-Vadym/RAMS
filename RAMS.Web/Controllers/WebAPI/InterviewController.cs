@@ -19,14 +19,20 @@ namespace RAMS.Web.Controllers.WebAPI
     public class InterviewController : ApiController
     {
         private readonly IInterviewService InterviewService;
+        private readonly IAgentService AgentService;
+        private readonly ICandidateService CandidateService;
 
         /// <summary>
         /// Controller that sets interview service in order to access context resources
         /// </summary>
         /// <param name="interviewService">Parameter for setting interview service</param>
-        public InterviewController(IInterviewService interviewService)
+        /// <param name="agentService">Parameter for setting agent service</param>
+        /// <param name="candidateService">Parameter for setting candidate service</param>
+        public InterviewController(IInterviewService interviewService, IAgentService agentService, ICandidateService candidateService)
         {
             this.InterviewService = interviewService;
+            this.AgentService = agentService;
+            this.CandidateService = candidateService;
         }
 
         /// <summary>
@@ -38,6 +44,46 @@ namespace RAMS.Web.Controllers.WebAPI
         public IHttpActionResult GetAllInterviews()
         {
             var interviews = this.InterviewService.GetAllInterviews();
+
+            interviews.ToList().ForEach(i => { i.Interviewer.Interviews = null; i.Candidate.Interviews = null; });
+
+            if (!Utilities.IsEmpty(interviews))
+            {
+                return Ok(interviews);
+            }
+
+            return NotFound();
+        }
+
+        /// <summary>
+        /// Get the list of many interviews for specific agent
+        /// </summary>
+        /// <param name="agentId">Id of the agent whos interviews are being fetched</param>
+        /// <returns>The list of many interviews for specific agent</returns>
+        [HttpGet]
+        [ResponseType(typeof(IEnumerable<Interview>))]
+        public IHttpActionResult GetManyInterviewsByAgentId(int agentId)
+        {
+            var interviews = this.InterviewService.GetManyInterviewsByAgentId(agentId);
+
+            if (!Utilities.IsEmpty(interviews))
+            {
+                return Ok(interviews);
+            }
+
+            return NotFound();
+        }
+
+        /// <summary>
+        /// Get the list of many interviews for specific agent by username
+        /// </summary>
+        /// <param name="username">Username of the agent whos interviews are being fetched</param>
+        /// <returns>The list of many interviews for specific agent by username</returns>
+        [HttpGet]
+        [ResponseType(typeof(IEnumerable<Interview>))]
+        public IHttpActionResult GetManyInterviewsByAgentId(string username)
+        {
+            var interviews = this.InterviewService.GetManyInterviewsByAgentUsername(username);
 
             if (!Utilities.IsEmpty(interviews))
             {
@@ -99,6 +145,69 @@ namespace RAMS.Web.Controllers.WebAPI
             }
 
             return BadRequest(ModelState);
+        }
+
+        /// <summary>
+        /// Create new interview from parameters
+        /// </summary>
+        /// <param name="candidateId">Setter for CandidateId</param>
+        /// <param name="selectedDate">Setter for InterviewDate</param>
+        /// <param name="agentUserName">Setter for InterviewerId</param>
+        /// <param name="selected">Flag that indicates whether candidate has interviews</param>
+        /// <returns>The Uri of newly created interview</returns>
+        [HttpPost]
+        [ResponseType(typeof(Interview))]
+        public IHttpActionResult CreateInterview(int candidateId, string selectedDate, string agentUserName, bool selected)
+        {
+            if (candidateId > 0 && !String.IsNullOrEmpty(selectedDate) && !String.IsNullOrEmpty(agentUserName))
+            {
+                if(selected)
+                {
+                    var interviews = this.InterviewService.GetManyInterviewsByCandidateId(candidateId);
+
+                    if(!Utilities.IsEmpty(interviews))
+                    {
+                        foreach(var item in interviews.ToList())
+                        {
+                            this.DeleteInterview(item.InterviewId);
+                        }
+                    }   
+                }
+
+                var interview = new Interview();
+
+                interview.CandidateId = candidateId;
+                interview.InterviewDate = Convert.ToDateTime(selectedDate);
+                interview.InterviewerId = this.AgentService.GetOneAgentByUserName(agentUserName).AgentId;
+
+                this.InterviewService.CreateInterview(interview);
+
+                var candidate = this.CandidateService.GetOneCandidateById(candidateId);
+
+                candidate.Status = Enums.CandidateStatus.Pending;
+
+                this.CandidateService.UpdateCandidate(candidate);
+
+                try
+                {
+                    this.InterviewService.SaveChanges();
+                    this.CandidateService.SaveChanges();
+                }
+                catch (DbUpdateException ex)
+                {
+                    // Log exception
+                    ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+
+                    return Conflict();
+                }
+
+                interview.Candidate = this.CandidateService.GetOneCandidateById(candidateId);
+
+                return CreatedAtRoute("DefaultApi", new { id = interview.InterviewId }, interview);
+
+            }
+
+            return BadRequest();
         }
 
         /// <summary>

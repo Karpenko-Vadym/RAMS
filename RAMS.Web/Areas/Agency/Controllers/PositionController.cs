@@ -937,7 +937,7 @@ namespace RAMS.Web.Areas.Agency.Controllers
         /// <summary>
         /// GetResume method attempts to fetch candidates resume and return it as s file
         /// </summary>
-        /// <param name="candidateId">Id of the candidate whos resume is being fetched</param>
+        /// <param name="resumeId">Id of the candidate whos resume is being fetched</param>
         /// <returns>Resume as a file</returns>
         [HttpGet]
         public async Task<FileResult> GetResume(string resumeId)

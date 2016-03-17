@@ -183,6 +183,7 @@ namespace RAMS.Web.Controllers.WebAPI
         /// </summary>
         /// <param name="candidateId">If of the candidate to be updated</param>
         /// <param name="feedback">Feedback to be updated</param>
+        /// <param name="isInterviewed">Flag to determine whether candidate was interviewd</param>
         /// <returns>HttpResponseMessage with status code dependning on the outcome of this method</returns>
         [HttpPut]
         [ResponseType(typeof(Candidate))]

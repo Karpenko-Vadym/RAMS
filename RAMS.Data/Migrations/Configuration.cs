@@ -472,6 +472,7 @@ namespace RAMS.Data.Migrations
                     PositionId = positionRepository.GetManyByStatus(PositionStatus.New).FirstOrDefault().PositionId,
                     PostalCode = "M2R 7T3",
                     Status = CandidateStatus.New,
+                    Score = 78
                 }
             };
         }

@@ -31,7 +31,7 @@
                     <dt>@Html.LabelFor(model => model.Description)</dt>
                     <dd>@Html.Raw(Model.Description)</dd>
                     <dt>@Html.LabelFor(model => model.ExpiryDate)</dt>
-                    @if (Model.ExpiryDate < DateTime.Now)
+                    @if (Model.ExpiryDate < DateTime.UtcNow)
                     { 
                         <dd><span class="label label-danger">@Model.ExpiryDate.ToString("dd/MM/yyyy")</span></dd>
                     }

@@ -42,7 +42,7 @@ namespace RAMS.Data.Repositories
         /// <returns>First category with matching name</returns>
         public Category GetOneByName(string name)
         {
-            return this.GetContext.Categories.Include("Positions").FirstOrDefault(c => c.Name == name);
+            return this.GetContext.Categories.Include("Positions").Include("Positions.Client").FirstOrDefault(c => c.Name == name);
         }
 
         /// <summary>

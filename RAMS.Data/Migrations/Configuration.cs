@@ -58,62 +58,65 @@ namespace RAMS.Data.Migrations
                 var userStore = new UserStore<ApplicationUser>(applicationDbContext);
                 
                 var userManager = new UserManager<ApplicationUser>(userStore);
-                
-                var users = GetUserss();
 
-                foreach (var user in users)
+                if (userManager.FindByName("john.doe") == null)
                 {
-                    userManager.Create(user, "123RAMSApp!");
+                    var users = GetUserss();
 
-                    // Add user claims for each user
-                    if(user.UserName == "john.doe")
+                    foreach (var user in users)
                     {
-                        userManager.AddClaim(user.Id, new Claim("FullName", "John Doe"));
-                        userManager.AddClaim(user.Id, new Claim("Role", "Employee"));
-                        userManager.AddClaim(user.Id, new Claim("UserType", "Agent"));
-                        userManager.AddClaim(user.Id, new Claim("UserStatus", "Active"));
-                    }
-                    else if(user.UserName == "james.smith")
-                    {
-                        userManager.AddClaim(user.Id, new Claim("FullName", "James Smith"));
-                        userManager.AddClaim(user.Id, new Claim("Role", "Employee"));
-                        userManager.AddClaim(user.Id, new Claim("UserType", "Agent"));
-                        userManager.AddClaim(user.Id, new Claim("UserStatus", "Active"));
-                    }
-                    else if(user.UserName == "mary.watson")
-                    {
-                        userManager.AddClaim(user.Id, new Claim("FullName", "Mary Watson"));
-                        userManager.AddClaim(user.Id, new Claim("Role", "Employee"));
-                        userManager.AddClaim(user.Id, new Claim("UserType", "Agent"));
-                        userManager.AddClaim(user.Id, new Claim("UserStatus", "Active"));
-                    }
-                    else if(user.UserName == "tommy.jordan")
-                    {
-                        userManager.AddClaim(user.Id, new Claim("FullName", "Tommy Jordan"));
-                        userManager.AddClaim(user.Id, new Claim("Role", "Employee"));
-                        userManager.AddClaim(user.Id, new Claim("UserType", "Admin"));
-                        userManager.AddClaim(user.Id, new Claim("UserStatus", "Active"));
-                    }
-                    else if(user.UserName == "kathy.doe")
-                    {
-                        userManager.AddClaim(user.Id, new Claim("FullName", "Kathy Doe"));
-                        userManager.AddClaim(user.Id, new Claim("Role", "Employee"));
-                        userManager.AddClaim(user.Id, new Claim("UserType", "Admin"));
-                        userManager.AddClaim(user.Id, new Claim("UserStatus", "Active"));
-                    }
-                    else if(user.UserName == "jimmy.thomson")
-                    {
-                        userManager.AddClaim(user.Id, new Claim("FullName", "Jimmy Thomson"));
-                        userManager.AddClaim(user.Id, new Claim("Role", "Employee"));
-                        userManager.AddClaim(user.Id, new Claim("UserType", "Client"));
-                        userManager.AddClaim(user.Id, new Claim("UserStatus", "Active"));
-                    }
-                    else if(user.UserName == "nancy.clinton")
-                    {
-                        userManager.AddClaim(user.Id, new Claim("FullName", "Nancy Clinton"));
-                        userManager.AddClaim(user.Id, new Claim("Role", "Employee"));
-                        userManager.AddClaim(user.Id, new Claim("UserType", "Client"));
-                        userManager.AddClaim(user.Id, new Claim("UserStatus", "Active"));
+                        userManager.Create(user, "123RAMSApp!");
+
+                        // Add user claims for each user
+                        if (user.UserName == "john.doe")
+                        {
+                            userManager.AddClaim(user.Id, new Claim("FullName", "John Doe"));
+                            userManager.AddClaim(user.Id, new Claim("Role", "Employee"));
+                            userManager.AddClaim(user.Id, new Claim("UserType", "Agent"));
+                            userManager.AddClaim(user.Id, new Claim("UserStatus", "Active"));
+                        }
+                        else if (user.UserName == "james.smith")
+                        {
+                            userManager.AddClaim(user.Id, new Claim("FullName", "James Smith"));
+                            userManager.AddClaim(user.Id, new Claim("Role", "Employee"));
+                            userManager.AddClaim(user.Id, new Claim("UserType", "Agent"));
+                            userManager.AddClaim(user.Id, new Claim("UserStatus", "Active"));
+                        }
+                        else if (user.UserName == "mary.watson")
+                        {
+                            userManager.AddClaim(user.Id, new Claim("FullName", "Mary Watson"));
+                            userManager.AddClaim(user.Id, new Claim("Role", "Employee"));
+                            userManager.AddClaim(user.Id, new Claim("UserType", "Agent"));
+                            userManager.AddClaim(user.Id, new Claim("UserStatus", "Active"));
+                        }
+                        else if (user.UserName == "tommy.jordan")
+                        {
+                            userManager.AddClaim(user.Id, new Claim("FullName", "Tommy Jordan"));
+                            userManager.AddClaim(user.Id, new Claim("Role", "Employee"));
+                            userManager.AddClaim(user.Id, new Claim("UserType", "Admin"));
+                            userManager.AddClaim(user.Id, new Claim("UserStatus", "Active"));
+                        }
+                        else if (user.UserName == "kathy.doe")
+                        {
+                            userManager.AddClaim(user.Id, new Claim("FullName", "Kathy Doe"));
+                            userManager.AddClaim(user.Id, new Claim("Role", "Employee"));
+                            userManager.AddClaim(user.Id, new Claim("UserType", "Admin"));
+                            userManager.AddClaim(user.Id, new Claim("UserStatus", "Active"));
+                        }
+                        else if (user.UserName == "jimmy.thomson")
+                        {
+                            userManager.AddClaim(user.Id, new Claim("FullName", "Jimmy Thomson"));
+                            userManager.AddClaim(user.Id, new Claim("Role", "Employee"));
+                            userManager.AddClaim(user.Id, new Claim("UserType", "Client"));
+                            userManager.AddClaim(user.Id, new Claim("UserStatus", "Active"));
+                        }
+                        else if (user.UserName == "nancy.clinton")
+                        {
+                            userManager.AddClaim(user.Id, new Claim("FullName", "Nancy Clinton"));
+                            userManager.AddClaim(user.Id, new Claim("Role", "Employee"));
+                            userManager.AddClaim(user.Id, new Claim("UserType", "Client"));
+                            userManager.AddClaim(user.Id, new Claim("UserStatus", "Active"));
+                        }
                     }
                 }
             }
@@ -201,7 +204,9 @@ namespace RAMS.Data.Migrations
         {
             return new List<Department>
             {
-                new Department { Name = "Human Resources" }
+                new Department { Name = "Human Resources" },
+                new Department { Name = "Marketing" },
+                new Department { Name = "Research & Development" }
             };
         }
 
@@ -223,7 +228,7 @@ namespace RAMS.Data.Migrations
                     DepartmentId = departmentRepository.GetAll().FirstOrDefault().DepartmentId,
                     JobTitle = "Relations Manager",
                     PhoneNumber = "416 123 4567",
-                    Role = Role.Employee,
+                    Role = Role.Manager,
                     UserName = "john.doe",
                     UserType = UserType.Agent,
                     UserStatus = UserStatus.Active,
@@ -346,6 +351,42 @@ namespace RAMS.Data.Migrations
                 new Category
                 {
                     Name = "Software Development"
+                },
+                new Category
+                {
+                    Name = "Banking & Finance"
+                },
+                new Category
+                {
+                    Name = "Customer Service"
+                },
+                new Category
+                {
+                    Name = "Engineering"
+                },
+                new Category
+                {
+                    Name = "Government"
+                },
+                new Category
+                {
+                    Name = "Health Care"
+                },
+                new Category
+                {
+                    Name = "Information Technology"
+                },
+                new Category
+                {
+                    Name = "Sales & Marketing"
+                },
+                new Category
+                {
+                    Name = "Science & Biotech"
+                },
+                new Category
+                {
+                    Name = "Transportation"
                 }
             };
         }
@@ -361,19 +402,53 @@ namespace RAMS.Data.Migrations
                 new Position
                 {
                     AcceptanceScore = 50,
-                    AssetSkills = "C#, C++, Java",
-                    CategoryId = categoryRepository.GetAll().FirstOrDefault().CategoryId,
-                    ClientId = clientRepository.GetAll().FirstOrDefault().ClientId,
-                    AgentId = agentRepository.GetAll().FirstOrDefault().AgentId,
+                    AssetSkills = "C#; C++; Java",
+                    CategoryId = categoryRepository.GetOneByName("Information Technology").CategoryId,
+                    ClientId = clientRepository.GetOneByUserName("jimmy.thomson").ClientId,
+                    AgentId = agentRepository.GetOneByUserName("james.smith").AgentId,
                     CompanyDetails = "Our company has been on the market for many years and proven to have high quality standards.",
-                    DateCreated = DateTime.Now,
+                    DateCreated = DateTime.UtcNow,
                     Description = "The Technical Support Specialist’s primary mission is to provide customers with in-service support.",
-                    ExpiryDate = DateTime.Now.AddYears(1),
+                    ExpiryDate = DateTime.UtcNow.AddYears(1),
                     Location = "Toronto",
                     PeopleNeeded = 8,
-                    Qualifications = "Advanced knowledge of ORACLE Database, SQL, JavaScript",
+                    Qualifications = "ORACLE Database; SQL; JavaScript",
                     Status = PositionStatus.New,
                     Title = "Technical Support Specialist"
+                },
+                new Position
+                {
+                    AcceptanceScore = 60,
+                    AssetSkills = "Word; Excel; Visio",
+                    CategoryId = categoryRepository.GetOneByName("Customer Service").CategoryId,
+                    ClientId = clientRepository.GetOneByUserName("nancy.clinton").ClientId,
+                    AgentId = agentRepository.GetOneByUserName("john.doe").AgentId,
+                    CompanyDetails = "ABC Development, provides end-to-end application solutions that address the big data challenges of mission-critical business functions.",
+                    DateCreated = DateTime.UtcNow,
+                    Description = "Write and/or edit technical documents, including business proposals, reports, user manuals, and other project deliverables",
+                    ExpiryDate = DateTime.UtcNow.AddYears(1),
+                    Location = "Mississauga",
+                    PeopleNeeded = 3,
+                    Qualifications = "Epic; McKesson; EHR",
+                    Status = PositionStatus.New,
+                    Title = "Technical Writer"
+                },
+                new Position
+                {
+                    AcceptanceScore = 10,
+                    AssetSkills = "Class A CDL; Class A Commercial Driver's License",
+                    CategoryId = categoryRepository.GetOneByName("Transportation").CategoryId,
+                    ClientId = clientRepository.GetOneByUserName("jimmy.thomson").ClientId,
+                    AgentId = agentRepository.GetOneByUserName("mary.watson").AgentId,
+                    CompanyDetails = "Our company has been on the market for many years and proven to have high quality standards.",
+                    DateCreated = DateTime.UtcNow,
+                    Description = "The Technical Support Specialist’s primary mission is to provide customers with in-service support.",
+                    ExpiryDate = DateTime.UtcNow.AddYears(1),
+                    Location = "Montreal",
+                    PeopleNeeded = 5,
+                    Qualifications = "Class B CDL; Class B Commercial Driver's License",
+                    Status = PositionStatus.New,
+                    Title = "Commercial Truck Driver"
                 }
             };
         }
@@ -394,8 +469,7 @@ namespace RAMS.Data.Migrations
                     FirstName = "Danny",
                     LastName = "Goldman",
                     PhoneNumber = "(416) 738-7762",
-                    PositionId = positionRepository.GetAll().FirstOrDefault().PositionId,
-                    Position = positionRepository.GetAll().FirstOrDefault(),
+                    PositionId = positionRepository.GetManyByStatus(PositionStatus.New).FirstOrDefault().PositionId,
                     PostalCode = "M2R 7T3",
                     Status = CandidateStatus.New,
                 }
@@ -412,7 +486,7 @@ namespace RAMS.Data.Migrations
             {
                 new Interview
                 {
-                    InterviewDate = DateTime.Now.AddMonths(3),
+                    InterviewDate = DateTime.UtcNow.AddMonths(3),
                     CandidateId = candidateRepository.GetAll().FirstOrDefault().CandidateId,
                     InterviewerId = agentRepository.GetAll().FirstOrDefault().AgentId,
                     Status = InterviewStatus.Scheduled
@@ -430,25 +504,57 @@ namespace RAMS.Data.Migrations
             {
                 new Notification
                 {
-                    AgentId = agentRepository.GetAll().FirstOrDefault().AgentId,
-                    DateCreated = DateTime.Now,
-                    Details = "Your account has been created on " + DateTime.Now.ToString(),
+                    AgentId = agentRepository.GetOneByUserName("john.doe").AgentId,
+                    DateCreated = DateTime.UtcNow,
+                    Details = "Your account has been created on " + DateTime.UtcNow.ToString(),
                     Status = NotificationStatus.Unread,
                     Title = "Welcome to RAMS!"
                 },
                 new Notification
                 {
-                    ClientId = clientRepository.GetAll().FirstOrDefault().ClientId,
-                    DateCreated = DateTime.Now,
-                    Details = "Your account has been created on " + DateTime.Now.ToString(),
+                    AgentId = agentRepository.GetOneByUserName("james.smith").AgentId,
+                    DateCreated = DateTime.UtcNow,
+                    Details = "Your account has been created on " + DateTime.UtcNow.ToString(),
                     Status = NotificationStatus.Unread,
                     Title = "Welcome to RAMS!"
                 },
                 new Notification
                 {
-                    AdminId = adminRepository.GetAll().FirstOrDefault().AdminId,
-                    DateCreated = DateTime.Now,
-                    Details = "Your account has been created on " + DateTime.Now.ToString(),
+                    AgentId = agentRepository.GetOneByUserName("mary.watson").AgentId,
+                    DateCreated = DateTime.UtcNow,
+                    Details = "Your account has been created on " + DateTime.UtcNow.ToString(),
+                    Status = NotificationStatus.Unread,
+                    Title = "Welcome to RAMS!"
+                },
+                new Notification
+                {
+                    ClientId = clientRepository.GetOneByUserName("jimmy.thomson").ClientId,
+                    DateCreated = DateTime.UtcNow,
+                    Details = "Your account has been created on " + DateTime.UtcNow.ToString(),
+                    Status = NotificationStatus.Unread,
+                    Title = "Welcome to RAMS!"
+                },
+                new Notification
+                {
+                    ClientId = clientRepository.GetOneByUserName("nancy.clinton").ClientId,
+                    DateCreated = DateTime.UtcNow,
+                    Details = "Your account has been created on " + DateTime.UtcNow.ToString(),
+                    Status = NotificationStatus.Unread,
+                    Title = "Welcome to RAMS!"
+                },
+                new Notification
+                {
+                    AdminId = adminRepository.GetOneByUserName("tommy.jordan").AdminId,
+                    DateCreated = DateTime.UtcNow,
+                    Details = "Your account has been created on " + DateTime.UtcNow.ToString(),
+                    Status = NotificationStatus.Unread,
+                    Title = "Welcome to RAMS!"
+                },
+                new Notification
+                {
+                    AdminId = adminRepository.GetOneByUserName("kathy.doe").AdminId,
+                    DateCreated = DateTime.UtcNow,
+                    Details = "Your account has been created on " + DateTime.UtcNow.ToString(),
                     Status = NotificationStatus.Unread,
                     Title = "Welcome to RAMS!"
                 }

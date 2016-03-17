@@ -44,7 +44,7 @@
 
                         @if (Model.Status != RAMS.Enums.PositionStatus.Closed)
                         {
-                            <td class="cell-btn"><input type="button" class="btn btn-info btn-block" value='@(item.Selected ? "Re-Schedule" : "Schedule")' data-toggle="modal" data-target="#schedule-interview-modal" data-candidate-id="@item.CandidateId" data-date-time="@DateTime.Now.ToString("dd/MM/yyyy")" data-selected="@item.Selected" /></td>
+                            <td class="cell-btn"><input type="button" class="btn btn-info btn-block" value='@(item.Selected ? "Re-Schedule" : "Schedule")' data-toggle="modal" data-target="#schedule-interview-modal" data-candidate-id="@item.CandidateId" data-date-time="@DateTime.UtcNow.ToString("dd/MM/yyyy")" data-selected="@item.Selected" /></td>
                         }
                     </tr> 
                 }

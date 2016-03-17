@@ -107,6 +107,10 @@ input.horizontal-align-center
     margin: 0 auto;
 }
 
+.btn-tiny
+{
+    padding: 0 10px;
+}
 
 
 #assign-position-agent-list-table input[type="radio"], .element-size-150

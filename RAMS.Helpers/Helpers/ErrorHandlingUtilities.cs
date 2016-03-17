@@ -28,11 +28,11 @@ namespace RAMS.Helpers
 
             if (String.IsNullOrEmpty(controller) || String.IsNullOrEmpty(action))
             {
-                stringBuilder.Append("Logged on: " + DateTime.Now + Environment.NewLine);
+                stringBuilder.Append("Logged on: " + DateTime.UtcNow + Environment.NewLine);
             }
             else
             {
-                stringBuilder.Append("Logged on: " + DateTime.Now + Environment.NewLine + "Controller: " + controller + Environment.NewLine + "Action: " + action + Environment.NewLine);
+                stringBuilder.Append("Logged on: " + DateTime.UtcNow + Environment.NewLine + "Controller: " + controller + Environment.NewLine + "Action: " + action + Environment.NewLine);
             }
 
             stringBuilder.Append(exception + Environment.NewLine);

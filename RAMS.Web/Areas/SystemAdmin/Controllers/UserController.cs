@@ -375,7 +375,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                                 Email.EmailService.SendEmail("atomix0x@gmail.com", "Your account has been created.", message); // Send login credentials to newly created user via email
 
                                 // Create notification
-                                response = await this.GetHttpClient().PostAsJsonAsync("Notification", new Notification() { AgentId = agent.AgentId, Status = NotificationStatus.Unread, Title = "Welcome to RAMS!", Details = "Your user account was successfully created on: " + DateTime.Now, DateCreated = DateTime.Now });
+                                response = await this.GetHttpClient().PostAsJsonAsync("Notification", new Notification() { AgentId = agent.AgentId, Status = NotificationStatus.Unread, Title = "Welcome to RAMS!", Details = "Your user account was successfully created on: " + DateTime.UtcNow, DateCreated = DateTime.Now });
 
                                 if (!response.IsSuccessStatusCode)
                                 {
@@ -695,7 +695,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                                 Email.EmailService.SendEmail("atomix0x@gmail.com", "Your account has been created.", message); // Send login credentials to newly created user via email
 
                                 // Create notification
-                                response = await this.GetHttpClient().PostAsJsonAsync("Notification", new Notification() { ClientId = client.ClientId, Status = NotificationStatus.Unread, Title = "Welcome to RAMS!", Details = "Your user account was successfully created on: " + DateTime.Now, DateCreated = DateTime.Now });
+                                response = await this.GetHttpClient().PostAsJsonAsync("Notification", new Notification() { ClientId = client.ClientId, Status = NotificationStatus.Unread, Title = "Welcome to RAMS!", Details = "Your user account was successfully created on: " + DateTime.UtcNow, DateCreated = DateTime.Now });
 
                                 if (!response.IsSuccessStatusCode)
                                 {
@@ -1002,7 +1002,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
                                 Email.EmailService.SendEmail("atomix0x@gmail.com", "Your account has been created.", message); // Send login credentials to newly created user via email
 
                                 // Create notification
-                                response = await this.GetHttpClient().PostAsJsonAsync("Notification", new Notification() { AdminId = admin.AdminId, Status = NotificationStatus.Unread, Title = "Welcome to RAMS!", Details = "Your user account was successfully created on: " + DateTime.Now, DateCreated = DateTime.Now });
+                                response = await this.GetHttpClient().PostAsJsonAsync("Notification", new Notification() { AdminId = admin.AdminId, Status = NotificationStatus.Unread, Title = "Welcome to RAMS!", Details = "Your user account was successfully created on: " + DateTime.UtcNow, DateCreated = DateTime.Now });
 
                                 if (!response.IsSuccessStatusCode)
                                 {

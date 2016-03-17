@@ -10,6 +10,9 @@
         OnFailure = "OnAjaxFailure",
         OnComplete = "OnAjaxComplete"
     };
+
+    HttpContext.Current.Session[String.Format("{0}_resume_request", User.Identity.Name)] = (DateTime.UtcNow.Second * 10) * (DateTime.UtcNow.Second * 10);
+
 }
 
 @if (Model != null)
@@ -53,8 +56,10 @@
                     <dd>@Model.Score</dd>
                     <dt>@Html.LabelFor(model => model.Status)</dt>
                     <dd>@Model.Status</dd>
+                    <dt>@Html.Label("Resume")</dt>
+                    <dd><a class="btn btn-tiny btn-info" target="_blank" href="@Url.Action("GetResume", "Position", new { resumeId = RAMS.Helpers.Utilities.ConvertIntToBase64String(Model.CandidateId + Int32.Parse(HttpContext.Current.Session[String.Format("{0}_resume_request", User.Identity.Name)].ToString())) })">Download</a></dd>
                 </dl>
-                
+
                 @if(Model.PositionStatus != "Closed")
                 {
                     <div class="clearfix"></div>

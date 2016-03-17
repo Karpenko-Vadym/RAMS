@@ -29,13 +29,13 @@
                 </div>
 
                 <div class="btn-group" role="group">
-                    @if (Convert.ToDateTime(Model.DisplayDate).ToString("dd/MM/yyyy") == DateTime.Now.ToString("dd/MM/yyyy"))
+                    @if (Convert.ToDateTime(Model.DisplayDate).ToString("dd/MM/yyyy") == DateTime.UtcNow.ToString("dd/MM/yyyy"))
                     {
                         <input type="button" class="btn btn-danger" disabled value="Current Week" />
                     }
                     else
                     {
-                        <input type="button" class="btn btn-danger" onclick="LoadAction('schedule-interview-modal-body-div', '@Url.Action("ScheduleInterview", "Position", new { candidateId = Model.CandidateId, displayDate = DateTime.Now.ToString("dd/MM/yyyy"), selected = Model.Selected, Area = "Agency" })');" value="Current Week" />
+                        <input type="button" class="btn btn-danger" onclick="LoadAction('schedule-interview-modal-body-div', '@Url.Action("ScheduleInterview", "Position", new { candidateId = Model.CandidateId, displayDate = DateTime.UtcNow.ToString("dd/MM/yyyy"), selected = Model.Selected, Area = "Agency" })');" value="Current Week" />
                     }
                 </div>
                 <div class="btn-group" role="group">
@@ -49,7 +49,7 @@
                     @for (int increment = (((((int)Convert.ToDateTime(Model.DisplayDate).DayOfWeek == 0) ? 7 : (int)Convert.ToDateTime(Model.DisplayDate).DayOfWeek) - 1) * -1); increment <= (7 - (((int)Convert.ToDateTime(Model.DisplayDate).DayOfWeek == 0) ? 7 : (int)Convert.ToDateTime(Model.DisplayDate).DayOfWeek)); increment++)
                     {
                         <div class="col-md-4">
-                            <h4 class='text-center @((Convert.ToDateTime(Model.DisplayDate).AddDays(increment).ToString("dd/MM/yyyy") == DateTime.Now.ToString("dd/MM/yyyy")) ? "text-warning" : "")'>@Convert.ToDateTime(Model.DisplayDate).AddDays(increment).DayOfWeek @Convert.ToDateTime(Model.DisplayDate).AddDays(increment).ToString("dd/MM/yyyy")</h4>
+                            <h4 class='text-center @((Convert.ToDateTime(Model.DisplayDate).AddDays(increment).ToString("dd/MM/yyyy") == DateTime.UtcNow.ToString("dd/MM/yyyy")) ? "text-warning" : "")'>@Convert.ToDateTime(Model.DisplayDate).AddDays(increment).DayOfWeek @Convert.ToDateTime(Model.DisplayDate).AddDays(increment).ToString("dd/MM/yyyy")</h4>
                             <table id="schedule-table" class="table table-hover table-bordered bottom-margin-0" cellspacing="0">
                                 <thead>
                                     <tr class="active">

@@ -83,7 +83,7 @@ namespace RAMS.ViewModels
         {
             this.Status = NotificationStatus.Unread;
 
-            this.DateCreated = DateTime.Now;
+            this.DateCreated = DateTime.UtcNow;
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace RAMS.ViewModels
 
             this.Status = NotificationStatus.Unread;
 
-            this.DateCreated = DateTime.Now;
+            this.DateCreated = DateTime.UtcNow;
         }
     }
 }

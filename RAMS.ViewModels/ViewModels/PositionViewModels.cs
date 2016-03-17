@@ -101,7 +101,7 @@ namespace RAMS.ViewModels
 
             this.Status = PositionStatus.New;
 
-            this.ExpiryDate = DateTime.Now;
+            this.ExpiryDate = DateTime.UtcNow;
         }
     }
 

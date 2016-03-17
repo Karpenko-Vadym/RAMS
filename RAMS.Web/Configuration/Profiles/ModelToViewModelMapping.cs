@@ -98,7 +98,8 @@ namespace RAMS.Web.Configuration
             Mapper.CreateMap<Candidate, CandidateEditConfirmationViewModel>().ForMember(c => c.CandidateIdDisplay, map => map.MapFrom(model => model.CandidateId.ToString("CAN00000")));
             Mapper.CreateMap<Candidate, CandidateReportDetailsViewModel>().ForMember(c => c.CandidateIdDisplay, map => map.MapFrom(model => model.CandidateId.ToString("CAN00000"))).ForMember(c => c.Selected, map => map.MapFrom(model => (model.Interviews.Count() > 0)));
             Mapper.CreateMap<Candidate, CandidateScheduleViewModel>().ForMember(c => c.FullName, map => map.MapFrom(model => String.Format("{0} {1}", model.FirstName, model.LastName)));
-
+            Mapper.CreateMap<Candidate, CandidateResumeDownloadViewModel>();
+            
             /***** END OF CANDIDATE MAPPING *****/
             /***** INTERVIEW MAPPING *****/
 

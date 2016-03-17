@@ -148,7 +148,7 @@ namespace RAMS.Web.Areas.Customer.Controllers
         [ValidateAntiForgeryToken]
         public async Task<PartialViewResult> NewPosition(PositionAddViewModel model)
         {
-            model.DateCreated = DateTime.Now;
+            model.DateCreated = DateTime.UtcNow;
 
             var response = new HttpResponseMessage();
 

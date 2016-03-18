@@ -491,6 +491,7 @@
     <Content Include="Content\CSS\jquery-ui.css" />
     <Content Include="Content\CSS\jquery-ui.min.css" />
     <Content Include="Content\Fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\Images\body-client-background.jpg" />
     <Content Include="Content\JS\bootstrap.js" />
     <Content Include="Content\JS\bootstrap.min.js" />
     <Content Include="Content\JS\dataTables.bootstrap.js" />

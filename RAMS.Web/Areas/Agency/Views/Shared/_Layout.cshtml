@@ -26,7 +26,7 @@
 
     <!-- END OF RENDER SCRIPTS -->
 </head>
-<body>
+<body class="body-agent">
 
     <!-- TOP NAVBAR -->
     <nav class="navbar navbar-default">
@@ -71,7 +71,7 @@
 
     <div class="container body-content">
 
-        <div class="well well-lg">
+        <div class="well well-lg well-outer">
             @RenderBody()
         </div>
 
@@ -128,7 +128,7 @@
 
         <hr />
         <footer>
-            <span class="pull-left text-center">&copy; @DateTime.UtcNow.Year - Recruiting Agency Management System</span>
+            <span class="pull-left text-center footer-text">&copy; @DateTime.UtcNow.Year - Recruiting Agency Management System</span>
             @Html.ActionLink("RAMS API Info", "Index", "Help", new { area = "HelpPage" }, new { @class = "badge pull-right" })
             <div class="clearfix"></div>
             <div class="vertical-padding-24"></div>

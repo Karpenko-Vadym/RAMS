@@ -367,11 +367,9 @@ namespace RAMS.Web.Areas.Agency.Controllers
             if (response.IsSuccessStatusCode)
             {
                 interviewScheduleViewModel.Interviews.AddRange(Mapper.Map<List<Interview>, List<InterviewListViewModel>>(await response.Content.ReadAsAsync<List<Interview>>()));
-
-                return PartialView("_PersonalSchedule", interviewScheduleViewModel);
             }
 
-            return PartialView("_PersonalSchedule");
+            return PartialView("_PersonalSchedule", interviewScheduleViewModel);
         }
     }
 }

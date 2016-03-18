@@ -534,12 +534,12 @@ namespace RAMS.Web.Controllers
 
             if (!String.IsNullOrEmpty(model.Password))
             {
-                // If password has less than 6 characters, display _Error partial view with following error message "Passwords must be at least 6 character long."
+                // If password has less than 6 characters, display _Error partial view with following error message "Passwords must be at least 6 character long and up to 100 characters long."
                 if (model.Password.Length < 6)
                 {
                     stringBuilder.Append("<div class='text-center'><h4><strong>Password could NOT be changed.</strong></h4></div>");
 
-                    stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Passwords must be at least 6 character long.</div>");
+                    stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Passwords must be at least 6 character long and up to 100 characters long.</div>");
 
                     stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Please try again using valid password pattern.</div></div>");
 

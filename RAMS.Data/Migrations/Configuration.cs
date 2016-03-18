@@ -71,7 +71,7 @@ namespace RAMS.Data.Migrations
                         if (user.UserName == "john.doe")
                         {
                             userManager.AddClaim(user.Id, new Claim("FullName", "John Doe"));
-                            userManager.AddClaim(user.Id, new Claim("Role", "Employee"));
+                            userManager.AddClaim(user.Id, new Claim("Role", "Manager"));
                             userManager.AddClaim(user.Id, new Claim("UserType", "Agent"));
                             userManager.AddClaim(user.Id, new Claim("UserStatus", "Active"));
                         }

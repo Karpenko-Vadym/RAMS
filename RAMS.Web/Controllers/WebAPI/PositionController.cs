@@ -247,6 +247,11 @@ namespace RAMS.Web.Controllers.WebAPI
 
                     position.Status = (PositionStatus)status;
 
+                    if ((PositionStatus)status == PositionStatus.Closed)
+                    {
+                        position.CloseDate = DateTime.Now;
+                    }
+
                     this.PositionService.UpdatePosition(position);
 
                     try

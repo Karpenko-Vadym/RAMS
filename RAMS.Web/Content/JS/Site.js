@@ -222,6 +222,10 @@ function SystemAdminModalControls()
 
     $("#edit-category-modal").on("hidden.bs.modal", function (e) { $("#edit-category-modal-title").text("Edit Category"); $("#edit-category-modal-body-div").empty(); });
     
+    $("#admin-position-details-modal").on("show.bs.modal", function (e) { $("#admin-position-details-modal-title").text("Position Details - " + $(e.relatedTarget).data("position-title")); LoadAction("admin-position-details-modal-body-div", "/RAMS/SystemAdmin/Position/PositionDetails?positionId=" + $(e.relatedTarget).data("position-id")); });
+
+    $("#admin-position-details-modal").on("hidden.bs.modal", function (e) { $("#admin-position-closure-confirmation-modal-body-div").empty(); $("#admin-position-details-message-modal-body-div").empty(); });
+
 }
 /******** END OF SYSTEM ADMIN MODAL CONTROLS ********/
 

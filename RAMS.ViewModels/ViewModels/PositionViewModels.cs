@@ -541,6 +541,9 @@ namespace RAMS.ViewModels
         [Display(Name = "Id")]
         public string PositionIdForDisplay { get; set; }
 
+        [Display(Name = "Close Date")]
+        public DateTime? CloseDate { get; set; }
+
         [Display(Name = "Total Applicants")]
         public int TotalCandidates { get; set; }
 
@@ -568,6 +571,9 @@ namespace RAMS.ViewModels
 
         [Display(Name = "Expiry Date")]
         public DateTime ExpiryDate { get; set; }
+
+        [Display(Name = "Close Date")]
+        public DateTime? CloseDate { get; set; }
 
         [Display(Name = "Title")]
         public string Title { get; set; }

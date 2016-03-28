@@ -1,6 +1,10 @@
 ﻿@model RAMS.ViewModels.UserEditProfileViewModel
 <!-- EDIT USER PROFILE PARTIAL -->
+@using System.Security.Claims;
+
 @{
+    
+
     AjaxOptions ajaxOptions = new AjaxOptions
     {
         UpdateTargetId = "edit-user-profile-modal-body-div",
@@ -10,6 +14,8 @@
         OnComplete = "OnAjaxComplete",
         HttpMethod = "POST"
     };
+
+    var identity = User.Identity as ClaimsIdentity;
 }
 
 @if (Model != null)
@@ -51,7 +57,29 @@
                         @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
                     </div>
                 </div>
+                @if (identity.HasClaim("FullName", "superuser"))
+                {
+                    @Html.HiddenFor(model => model.FirstName)
+                    @Html.HiddenFor(model => model.LastName)
 
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-7">
+                            <h5>@Html.DisplayFor(model => model.FirstName)</h5>
+                            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-7">
+                            <h5>@Html.DisplayFor(model => model.LastName)</h5>
+                            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                }
+                else
+                {
                 <div class="form-group">
                     @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-7">
@@ -67,7 +95,7 @@
                         @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
                     </div>
                 </div>
-
+                }
                 <div class="form-group">
                     @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-7">

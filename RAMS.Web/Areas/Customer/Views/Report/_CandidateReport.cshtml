@@ -15,9 +15,16 @@
             <dt>@Html.LabelFor(model => model.FirstName)</dt>
             <dd>@Model.FirstName</dd>
             <dt>@Html.LabelFor(model => model.LastName)</dt>
-            <dd>@Html.Raw(Model.LastName)</dd>
+            <dd>@Model.LastName</dd>
             <dt>@Html.LabelFor(model => model.PhoneNumber)</dt>
-            <dd>@Html.Raw(Model.PhoneNumber)</dd>
+            @if (String.IsNullOrEmpty(Model.PhoneNumber))
+            {
+                <dd>Not Available</dd>
+            }
+            else
+            {
+                <dd>@Model.PhoneNumber</dd>
+            }
             <dt>@Html.LabelFor(model => model.Email)</dt>
             <dd>@Model.Email</dd>
             <dt>@Html.LabelFor(model => model.Country)</dt>

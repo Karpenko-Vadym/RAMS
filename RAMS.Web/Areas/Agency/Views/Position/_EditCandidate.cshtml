@@ -47,7 +47,14 @@
                     <dt>@Html.LabelFor(model => model.Email)</dt>
                     <dd>@Model.Email</dd>
                     <dt>@Html.LabelFor(model => model.PhoneNumber)</dt>
-                    <dd>@Model.PhoneNumber</dd>
+                    @if (String.IsNullOrEmpty(Model.PhoneNumber))
+                    {
+                        <dd>Not Available</dd>
+                    }
+                    else
+                    { 
+                        <dd>@Model.PhoneNumber</dd>
+                    }
                     <dt>@Html.LabelFor(model => model.Country)</dt>
                     <dd>@Model.Country</dd>
                     <dt>@Html.LabelFor(model => model.PostalCode)</dt>

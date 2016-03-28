@@ -67,6 +67,11 @@
             {
                 <dd><span class="label label-success">@Model.ExpiryDate.ToString("dd/MM/yyyy")</span></dd>
             }
+            @if (Model.CloseDate != null)
+            {
+                <dt>@Html.LabelFor(model => model.CloseDate)</dt>
+                <dd>@(((DateTime)Model.CloseDate).ToString("dd/MM/yyyy"))</dd>
+            }
             <dt>@Html.LabelFor(model => model.Location)</dt>
             <dd>@Model.Location</dd>
             <dt>@Html.LabelFor(model => model.Status)</dt>

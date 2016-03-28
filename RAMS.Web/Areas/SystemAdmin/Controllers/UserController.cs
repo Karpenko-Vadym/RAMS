@@ -132,7 +132,7 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
             if (response.IsSuccessStatusCode)
             {
-                users.AddRange(Mapper.Map<List<Admin>, List<UserListViewModel>>(await response.Content.ReadAsAsync<List<Admin>>()));
+                users.AddRange((Mapper.Map<List<Admin>, List<UserListViewModel>>(await response.Content.ReadAsAsync<List<Admin>>())).Where(a => a.UserName != "superuser"));
             }
 
             return PartialView("_UserList", users); // TODO - Do not display deleted users (logical) in the list

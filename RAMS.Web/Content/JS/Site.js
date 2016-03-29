@@ -64,13 +64,13 @@ function GenerateRandomString(stringLength, allowedCharacters, regexString)
 }
 
 // LoadDataTable method loads DataTable for the table with provided id
-function LoadDataTable(id, lengthMenuArray, order)
+function LoadDataTable(id, lengthMenuArray, order, sorting)
 {
     lengthMenuArray = (typeof lengthMenuArray === "undefined") ? [[10, 15, 20, 25], [10, 15, 20, 25]] : lengthMenuArray;
 
     order = (typeof order === "undefined") ? [[0, "asc"]] : order;
 
-    $("#" + id).DataTable({ "lengthMenu" : lengthMenuArray, "order" : order });
+    $("#" + id).DataTable({ "lengthMenu": lengthMenuArray, "order": order, "aoColumnDefs": [{ "bSortable": false, "aTargets": sorting }] });
 }
 
 // LoadAction method loads an action method into a div with provided id
@@ -96,7 +96,8 @@ function ShowHidePassword()
         {
             $(".password").attr("type", "text");
         }
-        else {
+        else
+        {
             $(".password").attr("type", "password");
         }
     });
@@ -134,6 +135,35 @@ function DisableInput(divId)
     $("#" + divId + " :input").attr("disabled", true);
 }
 
+function DisableDeleteButton()
+{
+    var selection = $(".delete-position-selector");
+
+    selection.change(function () {
+        $("#delete-position-button").prop("disabled", selection.filter(":checked").length < 1);
+    });
+
+    selection.change();
+}
+
+function ToggleCheckboxes()
+{
+    var selection = $(".delete-position-selector");
+
+    if ($("#delete-position-select-all").val() == "Select All")
+    {
+        selection.filter(":visible").prop("checked", true);
+
+        $("#delete-position-select-all").val("Unselect All");
+    }
+    else
+    {
+        selection.filter(":visible").prop("checked", false);
+
+        $("#delete-position-select-all").val("Select All");
+    }
+    DisableDeleteButton();
+}
 /************* END OF GENERAL FUNCTIONS *************/
 
 /*************** GENERAL MODAL CONTROLS *************/
@@ -226,6 +256,9 @@ function SystemAdminModalControls()
 
     $("#admin-position-details-modal").on("hidden.bs.modal", function (e) { $("#admin-position-closure-confirmation-modal-body-div").empty(); $("#admin-position-details-message-modal-body-div").empty(); });
 
+    $("#delete-position-modal").on("show.bs.modal", function (e) { LoadAction("delete-position-modal-body-div", "/RAMS/SystemAdmin/Position/PositionDeleteConfirmation"); });
+
+    $("#delete-position-modal").on("hidden.bs.modal", function (e) { $("#delete-position-modal-body-div").empty(); });
 }
 /******** END OF SYSTEM ADMIN MODAL CONTROLS ********/
 

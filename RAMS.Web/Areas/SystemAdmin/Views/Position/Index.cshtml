@@ -1,12 +1,11 @@
 ﻿<!-- POSITION INDEX VIEW -->
-<button type="button" class="btn btn-info pull-right" onclick="LoadAction('position-list-div', '@Url.Action("PositionList", "Position", new { Area = "SystemAdmin" })' );">Refresh List</button>
-
+<button type="button" class="btn btn-info pull-right" onclick="LoadAction('position-list-div', '@Url.Action("PositionDelete", "Position", new { Area = "SystemAdmin" })' );">Refresh List</button>
 <div class="clearfix"></div>
-
 <div class="vertical-padding-24"></div>
-
-<div id="position-list-div"></div>
-
+<div class="well well-lg bottom-margin-0 background-white">
+    <div id="position-delete-message-div"></div>
+    <div id="position-list-div"></div>
+</div>
 <!-- POSITION DETAILS MODAL -->
 <div id="admin-position-details-modal" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg">
@@ -31,6 +30,23 @@
 </div>
 <!-- END OF POSITION DETAILS MODAL -->
 
+<!-- DELETE POSITION MODAL -->
+<div id="delete-position-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- MODAL CONTENT -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" onclick="$('#delete-position-modal').modal('hide');">&times;</button>
+                <h4 class="modal-title text-center">Delete Confirmation</h4>
+            </div>
+            <div class="modal-body">
+                <div id="delete-position-modal-body-div"></div>
+            </div>
+        </div>
+        <!-- END OF MODAL CONTENT-->
+    </div>
+</div>
+<!-- END OF DELETE POSITION MODAL -->
 
-<script type="text/javascript">$(function () { LoadAction("position-list-div", "@Url.Action("PositionList", "Position", new { Area = "SystemAdmin" })"); SystemAdminModalControls(); });</script>
+<script type="text/javascript">$(function () { LoadAction("position-list-div", "@Url.Action("PositionDelete", "Position", new { Area = "SystemAdmin" })"); SystemAdminModalControls(); });</script>
 <!-- END OF POSITION INDEX VIEW -->

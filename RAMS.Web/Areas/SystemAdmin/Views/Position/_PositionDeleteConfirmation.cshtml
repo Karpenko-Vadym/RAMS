@@ -1,0 +1,18 @@
+﻿<!-- DELETE POSITION CONFIRMATION PARTIAL -->
+    <div class="well well-lg bottom-margin-0">
+        <div class="alert alert-warning bottom-margin-0" role="alert">
+            <p>Are you sure that you want to <strong>DELETE</strong> selected positions?</p>
+            <p><strong>NOTE: </strong>This action <strong>CANNOT</strong> be undone.</p>
+        </div>
+    </div>
+    <div class="vertical-padding-24"></div>
+    <div class="form-group bottom-margin-0">
+        <div class="col-md-offset-0 col-lg-offset-0 col-md-3 col-lg-3">
+            <input type="button" value="Delete Position" class="btn btn-danger btn-block" onclick="$('#delete-position-modal').modal('hide'); $('#position-delete-form').submit();" />
+        </div>
+        <div class="col-md-offset-6 col-lg-offset-6 col-md-3 col-lg-3">
+            <input type="button" value="Cancel" class="btn btn-info btn-block" onclick="$('#delete-position-modal').modal('hide');" />
+        </div>
+    </div>
+    <div class="clearfix"></div>
+<!-- END OF DELETE POSITION CONFIRMATION PARTIAL -->

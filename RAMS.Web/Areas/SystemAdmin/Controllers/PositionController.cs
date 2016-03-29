@@ -52,26 +52,46 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
             return RedirectToAction("Index", "Home", new { Area = "" });
         }
 
-        #region Position List
+        #region Position Delete
         /// <summary>
-        /// PositionList action method gets the list of all the positions and passes it to _PositionList partial view
+        /// PositionDelete action method gets the list of all the positions and passes it to _PositionDelete partial view
         /// </summary>
-        /// <returns>_PositionList partial view with the list of all the positions</returns>
+        /// <param name="months">Number of months after position has been closed</param>
+        /// <returns>_PositionDelete partial view with the list of all the positions</returns>
         [HttpGet]
-        public async Task<PartialViewResult> PositionList()
+        public async Task<PartialViewResult> PositionDelete(int months = 0)
         {
-            var positions = new List<PositionListViewModel>();
 
-            var response = await this.GetHttpClient().GetAsync("Position");
+            var positionListForDeleteViewModel = new PositionListForDeleteViewModel(months);
 
-            if (response.IsSuccessStatusCode)
+                var response = await this.GetHttpClient().GetAsync("Position");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    positionListForDeleteViewModel.Positions.AddRange(Mapper.Map<List<Position>, List<PositionListViewModel>>((await response.Content.ReadAsAsync<List<Position>>())).Where(p => p.CloseDate > DateTime.Now.AddMonths(months) && p.Status == PositionStatus.Closed));
+
+                    return PartialView("_PositionDelete", positionListForDeleteViewModel);
+                }
+            
+
+            return PartialView("_PositionDelete");
+        }
+
+        [HttpPost]
+        public async Task<PartialViewResult> PositionDelete(int[] selectedIds)
+        {
+            if(selectedIds != null)
             {
-                positions.AddRange(Mapper.Map<List<Position>, List<PositionListViewModel>>(await response.Content.ReadAsAsync<List<Position>>()));
-
-                return PartialView("_PositionList", positions);
+                return PartialView("_SuccessConfirmation");
             }
 
-            return PartialView("_PositionList");
+            return PartialView("_SelectionFailureConfirmation");
+        }
+
+
+        public PartialViewResult PositionDeleteConfirmation()
+        {
+            return PartialView("_PositionDeleteConfirmation");
         }
         #endregion
        

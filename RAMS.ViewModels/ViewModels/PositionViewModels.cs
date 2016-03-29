@@ -25,6 +25,9 @@ namespace RAMS.ViewModels
         [Display(Name = "Expiry Date")]
         public DateTime ExpiryDate { get; set; }
 
+        [Display(Name = "Close Date")]
+        public DateTime CloseDate { get; set; }
+
         [Display(Name = "Title")]
         public string Title { get; set; }
 
@@ -622,5 +625,80 @@ namespace RAMS.ViewModels
         {
             this.Candidates = new List<CandidateReportDetailsViewModel>();
         }
+    }
+
+    /// <summary>
+    /// PositionListForDeleteViewModel view model declares properties for _PositionList partial view in SystemAdmin area
+    /// </summary>
+    public class PositionListForDeleteViewModel
+    {
+        public int NumMonths { get; set; }
+
+        public int[] SelectedIds { get; set; }
+
+        public List<PositionListViewModel> Positions { get; set; }
+
+        public List<SelectListItem> SelectList { get; set; }
+
+        public PositionListForDeleteViewModel()
+        {
+            this.Positions = new List<PositionListViewModel>();
+        }
+
+        public PositionListForDeleteViewModel(int months)
+        {
+            this.NumMonths = months;
+
+            this.Positions = new List<PositionListViewModel>();
+
+            this.SelectList = new List<SelectListItem>()
+            {
+                new SelectListItem()
+                {
+                    Text = "Today", Value = "0", Selected = (this.NumMonths == 0)
+                },
+                new SelectListItem()
+                {
+                    Text = "6 Month Old", Value = "6", Selected = (this.NumMonths == 6)
+                },
+                new SelectListItem()
+                {
+                    Text = "1 Year Old", Value = "12", Selected = (this.NumMonths == 12)
+                },
+                new SelectListItem()
+                {
+                    Text = "1 Year & 6 Month Old", Value = "18", Selected = (this.NumMonths == 18)
+                },
+                new SelectListItem()
+                {
+                    Text = "2 Years Old", Value = "24", Selected = (this.NumMonths == 24)
+                },
+                new SelectListItem()
+                {
+                    Text = "2 Years & 6 Month Old", Value = "30", Selected = (this.NumMonths == 30)
+                },
+                new SelectListItem()
+                {
+                    Text = "3 Years Old", Value = "36", Selected = (this.NumMonths == 36)
+                },
+                new SelectListItem()
+                {
+                    Text = "3 Years & 6 Month Old", Value = "42", Selected = (this.NumMonths == 42)
+                },
+                new SelectListItem()
+                {
+                    Text = "4 Years Old", Value = "48", Selected = (this.NumMonths == 48)
+                },
+                new SelectListItem()
+                {
+                    Text = "4 Years & 6 Month Old", Value = "54", Selected = (this.NumMonths == 54)
+                },
+                new SelectListItem()
+                {
+                    Text = "5 Years Old", Value = "60", Selected = (this.NumMonths == 60)
+                }
+            };
+        }
+    
     }
 }

@@ -100,6 +100,7 @@ namespace RAMS.Data
             modelBuilder.Configurations.Add(new InterviewConfiguration());
             modelBuilder.Configurations.Add(new NotificationConfiguration());
             modelBuilder.Configurations.Add(new PositionConfiguration());
+            modelBuilder.Configurations.Add(new ArchiveConfiguration());
 
             /* Set up table relations */
 

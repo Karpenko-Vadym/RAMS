@@ -1,4 +1,5 @@
-﻿using RAMS.Enums;
+﻿using AutoMapper;
+using RAMS.Enums;
 using RAMS.Helpers;
 using RAMS.Models;
 using RAMS.Service;
@@ -21,16 +22,25 @@ namespace RAMS.Web.Controllers.WebAPI
     {
         private readonly IPositionService PositionService;
         private readonly IAgentService AgentService;
+        private readonly ICandidateService CandidateService;
+        private readonly IInterviewService InterviewService;
+        private readonly IArchiveService ArchiveService;
 
         /// <summary>
         /// Controller that sets position service in order to access context resources
         /// </summary>
         /// <param name="positionService">Parameter for setting position service</param>
         /// <param name="agentService">Parameter for setting agent service</param>
-        public PositionController(IPositionService positionService, IAgentService agentService)
+        /// <param name="candidateService">Parameter for setting candidate service</param>
+        /// <param name="interviewService">Parameter for setting interview service</param>
+        /// <param name="archiveService">Parameter for setting archive service</param>
+        public PositionController(IPositionService positionService, IAgentService agentService, ICandidateService candidateService, IInterviewService interviewService, IArchiveService archiveService)
         {
             this.PositionService = positionService;
             this.AgentService = agentService;
+            this.CandidateService = candidateService;
+            this.InterviewService = interviewService;
+            this.ArchiveService = archiveService;
         }
 
         /// <summary>
@@ -346,6 +356,71 @@ namespace RAMS.Web.Controllers.WebAPI
 
                     return Ok(position);
                 }
+            }
+
+            return NotFound();
+        }
+
+        /// <summary>
+        /// Delete existing position and its dependants
+        /// </summary>
+        /// <param name="positionIds">Ids of the positions to be deleted</param>
+        /// <returns>HttpResponseMessage with status code dependning on the outcome of this method</returns>
+        [HttpDelete]
+        [ResponseType(typeof(Position))]
+        public IHttpActionResult DeletePosition([FromUri]Int32[] positionIds)
+        {
+            if (positionIds.Length > 0)
+            {
+                try
+                {
+                    for(int i = 0; i < positionIds.Length; i++)
+                    {
+                        var position = this.PositionService.GetOnePositionById(positionIds[i]);
+
+                        if(position != null)
+                        {
+                            this.ArchiveService.CreateArchivePosition(Mapper.Map<Position, Archive>(position));
+
+                            if(!Utilities.IsEmpty(position.Candidates))
+                            {
+                                foreach (var candidate in position.Candidates.ToList())
+                                {
+                                    if (!Utilities.IsEmpty(candidate.Interviews))
+                                    {
+                                        foreach (var interview in candidate.Interviews.ToList())
+                                        {
+                                            this.InterviewService.DeleteInterview(interview);
+
+                                            this.InterviewService.SaveChanges();
+                                        
+                                        }
+                                    }
+
+                                    this.CandidateService.DeleteCandidate(candidate);
+
+                                    this.CandidateService.SaveChanges();
+                                }
+                            }
+
+                            this.PositionService.DeletePosition(position);
+                            
+                        }
+                    }
+
+                    this.PositionService.SaveChanges();
+                    this.ArchiveService.SaveChanges();
+                }
+                catch (DbUpdateException ex)
+                {
+                    // Log exception
+                    ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+
+                    return Conflict();
+                }
+
+                return Ok();
+                
             }
 
             return NotFound();

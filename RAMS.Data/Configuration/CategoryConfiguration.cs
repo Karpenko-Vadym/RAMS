@@ -18,7 +18,7 @@ namespace RAMS.Data.Configuration
         /// </summary>
         public CategoryConfiguration()
         {
-            ToTable("Categorys"); // Select which table will be associated with Category class
+            ToTable("Categories"); // Select which table will be associated with Category class
 
             /* Define configuration for each field (Only for fields that need to be configured) separately */
 

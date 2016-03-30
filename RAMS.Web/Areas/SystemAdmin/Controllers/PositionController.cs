@@ -64,31 +64,53 @@ namespace RAMS.Web.Areas.SystemAdmin.Controllers
 
             var positionListForDeleteViewModel = new PositionListForDeleteViewModel(months);
 
-                var response = await this.GetHttpClient().GetAsync("Position");
+            var response = await this.GetHttpClient().GetAsync("Position");
 
-                if (response.IsSuccessStatusCode)
-                {
-                    positionListForDeleteViewModel.Positions.AddRange(Mapper.Map<List<Position>, List<PositionListViewModel>>((await response.Content.ReadAsAsync<List<Position>>())).Where(p => p.CloseDate > DateTime.Now.AddMonths(months) && p.Status == PositionStatus.Closed));
+            if (response.IsSuccessStatusCode)
+            {
+                positionListForDeleteViewModel.Positions.AddRange(Mapper.Map<List<Position>, List<PositionListViewModel>>((await response.Content.ReadAsAsync<List<Position>>())).Where(p => p.CloseDate < DateTime.Now.AddMonths(months * (-1)) && p.Status == PositionStatus.Closed));
 
-                    return PartialView("_PositionDelete", positionListForDeleteViewModel);
-                }
+                return PartialView("_PositionDelete", positionListForDeleteViewModel);
+            }
             
 
             return PartialView("_PositionDelete");
         }
 
+        /// <summary>
+        /// PositionDelete action method attempts to archive and delete selected Positions
+        /// </summary>
+        /// <param name="selectedIds">Ids of the Positions to be archived/deleted</param>
+        /// <returns>_SuccessConfirmation partial view upon success, _SelectionFailureConfirmation or _FailureConfirmation otherwise</returns>
         [HttpPost]
         public async Task<PartialViewResult> PositionDelete(int[] selectedIds)
         {
             if(selectedIds != null)
             {
-                return PartialView("_SuccessConfirmation");
+                string url = String.Format("Position?positionIds={0}", selectedIds[0]);
+
+                for(int i = 1; i < selectedIds.Length; i++)
+                {
+                    url = String.Format("{0}&positionIds={1}", url, selectedIds[i]);
+                }
+
+                var response = await this.GetHttpClient().DeleteAsync(url);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return PartialView("_SuccessConfirmation");
+                }
+
+                return PartialView("_FailureConfirmation");
             }
 
             return PartialView("_SelectionFailureConfirmation");
         }
 
-
+        /// <summary>
+        /// PositionDeleteConfirmation action method is a getter for _PositionDeleteConfirmation partial view
+        /// </summary>
+        /// <returns>_PositionDeleteConfirmation partial view</returns>
         public PartialViewResult PositionDeleteConfirmation()
         {
             return PartialView("_PositionDeleteConfirmation");

@@ -66,6 +66,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Interview.cs" />
     <Compile Include="Models\Notification.cs" />
+    <Compile Include="Models\Archive.cs" />
     <Compile Include="Models\Position.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

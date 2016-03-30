@@ -137,31 +137,34 @@ function DisableInput(divId)
 
 function DisableDeleteButton()
 {
-    var selection = $(".delete-position-selector");
+    $("#delete-position-button").prop("disabled", true);
 
-    selection.change(function () {
-        $("#delete-position-button").prop("disabled", selection.filter(":checked").length < 1);
+    $(".delete-position-selector").change(function () {
+        $("#delete-position-button").prop("disabled", $(".delete-position-selector").filter(":visible").filter(":checked").length < 1);
+    });
+    
+    $("#position-list-div").bind("DOMSubtreeModified", function () {
+        $("#delete-position-button").prop("disabled", $(".delete-position-selector").filter(":visible").filter(":checked").length < 1);
     });
 
-    selection.change();
+    $(".delete-position-selector").change();
 }
 
 function ToggleCheckboxes()
 {
-    var selection = $(".delete-position-selector");
-
     if ($("#delete-position-select-all").val() == "Select All")
     {
-        selection.filter(":visible").prop("checked", true);
+        $(".delete-position-selector").prop("checked", true);
 
         $("#delete-position-select-all").val("Unselect All");
     }
     else
     {
-        selection.filter(":visible").prop("checked", false);
+        $(".delete-position-selector").prop("checked", false);
 
         $("#delete-position-select-all").val("Select All");
     }
+
     DisableDeleteButton();
 }
 /************* END OF GENERAL FUNCTIONS *************/

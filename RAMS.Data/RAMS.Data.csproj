@@ -62,6 +62,7 @@
     <Compile Include="Configuration\AgentConfiguration.cs" />
     <Compile Include="Configuration\InterviewConfiguration.cs" />
     <Compile Include="Configuration\NotificationConfiguration.cs" />
+    <Compile Include="Configuration\ArchiveConfiguration.cs" />
     <Compile Include="Configuration\PositionConfiguration.cs" />
     <Compile Include="DataContext.cs" />
     <Compile Include="Infrastructure\DataFactory.cs" />
@@ -71,9 +72,9 @@
     <Compile Include="Infrastructure\Interfaces\IUnitOfWork.cs" />
     <Compile Include="Infrastructure\RepositoryBase.cs" />
     <Compile Include="Infrastructure\UnitOfWork.cs" />
-    <Compile Include="Migrations\201603281459134_InitialDatabase.cs" />
-    <Compile Include="Migrations\201603281459134_InitialDatabase.Designer.cs">
-      <DependentUpon>201603281459134_InitialDatabase.cs</DependentUpon>
+    <Compile Include="Migrations\201603300706529_InitialDatabase.cs" />
+    <Compile Include="Migrations\201603300706529_InitialDatabase.Designer.cs">
+      <DependentUpon>201603300706529_InitialDatabase.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs">
       <SubType>Code</SubType>
@@ -93,9 +94,11 @@
     <Compile Include="Repositories\Interfaces\IDepartmentRepository.cs" />
     <Compile Include="Repositories\Interfaces\IInterviewRepository.cs" />
     <Compile Include="Repositories\Interfaces\INotificationRepository.cs" />
+    <Compile Include="Repositories\Interfaces\IArchiveRepository.cs" />
     <Compile Include="Repositories\InterviewRepository.cs" />
     <Compile Include="Repositories\Interfaces\IPositionRepository.cs" />
     <Compile Include="Repositories\NotificationRepository.cs" />
+    <Compile Include="Repositories\ArchiveRepository.cs" />
     <Compile Include="Repositories\PositionRepository.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -113,8 +116,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201603281459134_InitialDatabase.resx">
-      <DependentUpon>201603281459134_InitialDatabase.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201603300706529_InitialDatabase.resx">
+      <DependentUpon>201603300706529_InitialDatabase.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

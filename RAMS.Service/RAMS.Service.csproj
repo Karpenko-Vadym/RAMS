@@ -57,9 +57,11 @@
     <Compile Include="Interfaces\IDepartmentService.cs" />
     <Compile Include="Interfaces\IInterviewService.cs" />
     <Compile Include="Interfaces\INotificationService.cs" />
+    <Compile Include="Interfaces\IArchiveService.cs" />
     <Compile Include="Interfaces\IPositionService.cs" />
     <Compile Include="NotificationService.cs" />
     <Compile Include="InterviewService.cs" />
+    <Compile Include="ArchiveService.cs" />
     <Compile Include="PositionService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

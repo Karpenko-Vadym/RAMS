@@ -187,6 +187,32 @@ namespace RAMS.Data.Migrations
                 .Index(t => t.UserName, unique: true)
                 .Index(t => t.Email, unique: true);
             
+            CreateTable(
+                "dbo.Archive",
+                c => new
+                    {
+                        ArchiveId = c.Int(nullable: false, identity: true),
+                        DateCreated = c.DateTime(nullable: false),
+                        ExpiryDate = c.DateTime(nullable: false),
+                        CloseDate = c.DateTime(),
+                        Title = c.String(nullable: false, maxLength: 100),
+                        Description = c.String(nullable: false, maxLength: 2000),
+                        CompanyDetails = c.String(nullable: false, maxLength: 1000),
+                        Location = c.String(nullable: false, maxLength: 200),
+                        Qualifications = c.String(nullable: false),
+                        AssetSkills = c.String(),
+                        CategoryName = c.String(),
+                        ClientName = c.String(),
+                        AgentName = c.String(),
+                        PeopleNeeded = c.Int(nullable: false),
+                        AcceptanceScore = c.Int(nullable: false),
+                        TotalApplicants = c.Int(nullable: false),
+                        InterviewedApplicants = c.Int(nullable: false),
+                        Status = c.Int(nullable: false),
+                        Timestamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
+                    })
+                .PrimaryKey(t => t.ArchiveId);
+            
         }
         
         public override void Down()
@@ -217,6 +243,7 @@ namespace RAMS.Data.Migrations
             DropIndex("dbo.Notifications", new[] { "AgentId" });
             DropIndex("dbo.Admins", new[] { "Email" });
             DropIndex("dbo.Admins", new[] { "UserName" });
+            DropTable("dbo.Archive");
             DropTable("dbo.Clients");
             DropTable("dbo.Categories");
             DropTable("dbo.Positions");

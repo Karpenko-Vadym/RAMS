@@ -54,7 +54,14 @@
 
     <div class="vertical-padding-24"></div>
 
-    <script type="text/javascript">$(function () { LoadDataTable("candidate-list-table", [[10, 15, 20, 25], [10, 15, 20, 25]], [[2, "desc"]], [4]); });</script>
+    if (Model.Status != RAMS.Enums.PositionStatus.Closed)
+    {
+        <script type="text/javascript">$(function () { LoadDataTable("candidate-list-table", [[10, 15, 20, 25], [10, 15, 20, 25]], [[2, "desc"]], [4]); });</script>
+    }
+    else
+    {
+        <script type="text/javascript">$(function () { LoadDataTable("candidate-list-table", [[10, 15, 20, 25], [10, 15, 20, 25]], [[2, "desc"]]); });</script>
+    }
 }
 
 @if (Model != null)

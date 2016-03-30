@@ -644,6 +644,7 @@
     <Compile Include="Areas\SystemAdmin\SystemAdminAreaRegistration.cs" />
     <Compile Include="Configuration\AutofacConfiguration.cs" />
     <Compile Include="Configuration\AutoMapperConfiguration.cs" />
+    <Compile Include="Configuration\Profiles\ModelToModelMapping.cs" />
     <Compile Include="Configuration\Profiles\ModelToViewModelMapping.cs" />
     <Compile Include="Configuration\Profiles\ViewModelToModelMapping.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -775,6 +776,7 @@
     <Content Include="Areas\SystemAdmin\Views\Position\_PositionDeleteConfirmation.cshtml" />
     <Content Include="Areas\SystemAdmin\Views\Position\_SuccessConfirmation.cshtml" />
     <Content Include="Areas\SystemAdmin\Views\Position\_SelectionFailureConfirmation.cshtml" />
+    <Content Include="Areas\SystemAdmin\Views\Position\_FailureConfirmation.cshtml" />
     <None Include="Content\JS\jquery-2.1.4.intellisense.js" />
     <Content Include="Views\Identity\Account\FailedLogin.cshtml" />
     <None Include="Web.Debug.config">

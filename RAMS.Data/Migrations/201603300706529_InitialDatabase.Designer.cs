@@ -13,7 +13,7 @@ namespace RAMS.Data.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201603281459134_InitialDatabase"; }
+            get { return "201603300706529_InitialDatabase"; }
         }
         
         string IMigrationMetadata.Source

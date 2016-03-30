@@ -10,6 +10,8 @@
         OnComplete = "OnAjaxComplete"
     };
 }
+@if(Model != null)
+{ 
 <div class="row">
     <div class="form-group">
         @Html.Label("Age of the position since it was closed", htmlAttributes: new { @class = "control-label col-md-5" })
@@ -22,7 +24,7 @@
     </div>
 </div>
 <div class="vertical-padding-24"></div>
-@if (!RAMS.Helpers.Utilities.IsEmpty(Model.Positions))
+if (!RAMS.Helpers.Utilities.IsEmpty(Model.Positions))
 {
     using (Ajax.BeginForm("PositionDelete", "Position", new { Area = "SystemAdmin" }, ajaxOptions, new { id = "position-delete-form" }))
     {
@@ -80,6 +82,13 @@
 else
 {
     <div class="alert alert-warning bottom-margin-0" role="alert">
+        <span>Oh no! <br /> There is no data available.</span>
+    </div>
+}
+}
+else
+{
+    <div class="alert alert-danger bottom-margin-0" role="alert">
         <span>Oh no! <br /> There is no data available.</span>
     </div>
 }

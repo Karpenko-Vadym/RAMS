@@ -113,7 +113,7 @@ namespace RAMS.Data.Migrations
                         Email = c.String(nullable: false, maxLength: 300),
                         Country = c.String(nullable: false, maxLength: 100),
                         PostalCode = c.String(nullable: false, maxLength: 10),
-                        PhoneNumber = c.String(nullable: false, maxLength: 20),
+                        PhoneNumber = c.String(maxLength: 20),
                         Feedback = c.String(maxLength: 1000),
                         FileName = c.String(),
                         MediaType = c.String(),
@@ -136,6 +136,7 @@ namespace RAMS.Data.Migrations
                         CategoryId = c.Int(nullable: false),
                         DateCreated = c.DateTime(nullable: false),
                         ExpiryDate = c.DateTime(nullable: false),
+                        CloseDate = c.DateTime(),
                         Title = c.String(nullable: false, maxLength: 100),
                         Description = c.String(nullable: false, maxLength: 2000),
                         CompanyDetails = c.String(nullable: false, maxLength: 1000),
@@ -186,6 +187,55 @@ namespace RAMS.Data.Migrations
                 .Index(t => t.UserName, unique: true)
                 .Index(t => t.Email, unique: true);
             
+            CreateTable(
+                "dbo.CandidateArchive",
+                c => new
+                    {
+                        CandidateArchiveId = c.Int(nullable: false, identity: true),
+                        PositionId = c.Int(nullable: false),
+                        FirstName = c.String(nullable: false, maxLength: 200),
+                        LastName = c.String(nullable: false, maxLength: 200),
+                        Email = c.String(nullable: false, maxLength: 300),
+                        Country = c.String(nullable: false, maxLength: 100),
+                        PostalCode = c.String(nullable: false, maxLength: 10),
+                        PhoneNumber = c.String(maxLength: 20),
+                        Feedback = c.String(maxLength: 1000),
+                        FileName = c.String(),
+                        MediaType = c.String(),
+                        FileContent = c.Binary(),
+                        Score = c.Int(),
+                        Status = c.Int(nullable: false),
+                        Timestamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
+                    })
+                .PrimaryKey(t => t.CandidateArchiveId);
+            
+            CreateTable(
+                "dbo.PositionArchive",
+                c => new
+                    {
+                        PositionArchiveId = c.Int(nullable: false, identity: true),
+                        PositionId = c.Int(nullable: false),
+                        DateCreated = c.DateTime(nullable: false),
+                        ExpiryDate = c.DateTime(nullable: false),
+                        CloseDate = c.DateTime(),
+                        Title = c.String(nullable: false, maxLength: 100),
+                        Description = c.String(nullable: false, maxLength: 2000),
+                        CompanyDetails = c.String(nullable: false, maxLength: 1000),
+                        Location = c.String(nullable: false, maxLength: 200),
+                        Qualifications = c.String(nullable: false),
+                        AssetSkills = c.String(),
+                        CategoryName = c.String(),
+                        ClientName = c.String(),
+                        AgentName = c.String(),
+                        PeopleNeeded = c.Int(nullable: false),
+                        AcceptanceScore = c.Int(nullable: false),
+                        TotalApplicants = c.Int(nullable: false),
+                        InterviewedApplicants = c.Int(nullable: false),
+                        Status = c.Int(nullable: false),
+                        Timestamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
+                    })
+                .PrimaryKey(t => t.PositionArchiveId);
+            
         }
         
         public override void Down()
@@ -216,6 +266,8 @@ namespace RAMS.Data.Migrations
             DropIndex("dbo.Notifications", new[] { "AgentId" });
             DropIndex("dbo.Admins", new[] { "Email" });
             DropIndex("dbo.Admins", new[] { "UserName" });
+            DropTable("dbo.PositionArchive");
+            DropTable("dbo.CandidateArchive");
             DropTable("dbo.Clients");
             DropTable("dbo.Categories");
             DropTable("dbo.Positions");

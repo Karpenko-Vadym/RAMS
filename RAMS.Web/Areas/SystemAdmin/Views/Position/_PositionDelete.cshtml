@@ -1,0 +1,96 @@
+﻿@model RAMS.ViewModels.PositionListForDeleteViewModel
+<!-- POSITION LIST PARTIAL -->
+@{
+    AjaxOptions ajaxOptions = new AjaxOptions
+    {
+        UpdateTargetId = "position-delete-message-div",
+        OnBegin = "OnAjaxBegin",
+        OnSuccess = "OnAjaxSuccess",
+        OnFailure = "OnAjaxFailure",
+        OnComplete = "OnAjaxComplete"
+    };
+}
+@if(Model != null)
+{ 
+<div class="row">
+    <div class="form-group">
+        @Html.Label("Age of the position since it was closed", htmlAttributes: new { @class = "control-label col-md-5" })
+        <div class="col-md-5 col-sm-8 col-xs-8">
+            @Html.DropDownListFor(model => model.SelectedIds, Model.SelectList, new { @class = "form-control", onchange = "LoadAction('position-list-div', '" + @Url.Action("PositionDelete", "Position", new { Area = "SystemAdmin" }) + "?months=' + this.value );" })
+        </div>
+        <div class="col-md-2 col-sm-4 col-xs-4">
+            <input id="delete-position-select-all" type="button" class="btn btn-info btn-block" value="Select All" onclick="ToggleCheckboxes()" />
+        </div>
+    </div>
+</div>
+<div class="vertical-padding-24"></div>
+if (!RAMS.Helpers.Utilities.IsEmpty(Model.Positions))
+{
+    using (Ajax.BeginForm("PositionDelete", "Position", new { Area = "SystemAdmin" }, ajaxOptions, new { id = "position-delete-form" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.NumMonths)
+        <table id="position-list-table" class="table table-striped table-bordered table-hover bottom-margin-0" cellspacing="0">
+            <thead>
+                <tr class="active">
+                    <th>Id</th>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>Category</th>
+                    <th>Date Created</th>
+                    <th>Date Closed</th>
+                    <th>Select</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Positions)
+                {
+                    <tr class="cursor-pointer">
+                        <td data-toggle="modal" data-target="#admin-position-details-modal" data-position-id="@item.PositionId" data-position-title="@item.Title">@item.PositionIdForDisplay</td>
+                        <td data-toggle="modal" data-target="#admin-position-details-modal" data-position-id="@item.PositionId" data-position-title="@item.Title">@item.Title</td>
+                        @if (item.ExpiryDate < DateTime.UtcNow && item.Status != RAMS.Enums.PositionStatus.Closed)
+                        {
+                            <td class="text-center" data-toggle="modal" data-target="#admin-position-details-modal" data-position-id="@item.PositionId" data-position-title="@item.Title"><span class="label label-danger">@item.Status</span></td>
+                        }
+                        else if (item.Status == RAMS.Enums.PositionStatus.Closed)
+                        {
+                            <td class="text-center" data-toggle="modal" data-target="#admin-position-details-modal" data-position-id="@item.PositionId" data-position-title="@item.Title"><span class="label label-default">@item.Status</span></td>
+                        }
+                        else
+                        {
+                            <td class="text-center" data-toggle="modal" data-target="#admin-position-details-modal" data-position-id="@item.PositionId" data-position-title="@item.Title"><span class="label label-success">@item.Status</span></td>
+                        }
+                        <td data-toggle="modal" data-target="#admin-position-details-modal" data-position-id="@item.PositionId" data-position-title="@item.Title">@item.CategoryName</td>
+                        <td data-toggle="modal" data-target="#admin-position-details-modal" data-position-id="@item.PositionId" data-position-title="@item.Title">@item.DateCreated.ToString("dd/MM/yyyy")</td>
+                        <td data-toggle="modal" data-target="#admin-position-details-modal" data-position-id="@item.PositionId" data-position-title="@item.Title"><span class="hidden">@item.CloseDate.ToString("yyyyMMddhhmmss")</span>@item.CloseDate.ToString("dd/MM/yyyy")</td>
+
+                        <td class="cell-btn">
+                            <input id="SelectedIds" type="checkbox" class="element-size-150 horizontal-align-center delete-position-selector" name="SelectedIds" value="@item.PositionId">
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="vertical-padding-24"></div>     
+        <div class="col-md-offset-3 col-lg-offset-3 col-md-6 col-lg-6">
+            <input id="delete-position-button" type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#delete-position-modal" value="Delete" />            
+        </div>            
+        <div class="clearfix"></div>
+        <script type="text/javascript">$(function () { LoadDataTable("position-list-table", [[10, 25, 50, 100], [10, 25, 50, 100]], [[5, "asc"]], [6]); }); DisableDeleteButton();</script>
+    }
+}
+else
+{
+    <div class="alert alert-warning bottom-margin-0" role="alert">
+        <span>Oh no! <br /> There is no data available.</span>
+    </div>
+}
+}
+else
+{
+    <div class="alert alert-danger bottom-margin-0" role="alert">
+        <span>Oh no! <br /> There is no data available.</span>
+    </div>
+}
+<!-- END OF POSITION LIST PARTIAL -->
+

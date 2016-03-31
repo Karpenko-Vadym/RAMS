@@ -63,6 +63,7 @@ namespace RAMS.ViewModels
         [Required]
         [AllowHtml]
         [Display(Name = "Feedback")]
+        [StringLength(1000, ErrorMessage = "The {0} value cannot exceed 1000 characters.")]
         public string Feedback { get; set; }
 
         public string FileName { get; set; }
@@ -175,5 +176,17 @@ namespace RAMS.ViewModels
         public int CandidateId { get; set; }
 
         public string FullName { get; set; }
+    }
+
+    /// <summary>
+    /// CandidateResumeDownloadViewModel view model declares properties for downloading resume
+    /// </summary>
+    public class CandidateResumeDownloadViewModel
+    {
+        public string FileName { get; set; }
+
+        public string MediaType { get; set; }
+
+        public byte[] FileContent { get; set; }
     }
 }

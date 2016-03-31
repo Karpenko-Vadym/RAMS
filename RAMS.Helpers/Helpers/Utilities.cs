@@ -72,6 +72,10 @@ namespace RAMS.Helpers
             {
                 return urlHelper.Content(String.Format("~/Content/ProfilePictures/{0}.gif", userName));
             }
+            else if (File.Exists(htmlHelper.ViewContext.HttpContext.Server.MapPath("~/Content/ProfilePictures/NoImage.jpg")))
+            {
+                return urlHelper.Content("~/Content/ProfilePictures/NoImage.jpg");
+            }
 
             return String.Empty;
         }

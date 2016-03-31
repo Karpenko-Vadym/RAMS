@@ -17,6 +17,7 @@ using RAMS.Models;
 using RAMS.Web.Controllers;
 using RAMS.Helpers;
 using RAMS.Enums;
+using System.Net.Mime;
 
 namespace RAMS.Web.Areas.Customer.Controllers
 {
@@ -148,7 +149,7 @@ namespace RAMS.Web.Areas.Customer.Controllers
         [ValidateAntiForgeryToken]
         public async Task<PartialViewResult> NewPosition(PositionAddViewModel model)
         {
-            model.DateCreated = DateTime.Now;
+            model.DateCreated = DateTime.UtcNow;
 
             var response = new HttpResponseMessage();
 
@@ -187,6 +188,11 @@ namespace RAMS.Web.Areas.Customer.Controllers
             else if (model.ClientId == 0)
             {
                 ModelState.AddModelError(String.Empty, "Client could not be determined. Please try again in a moment");
+            }
+
+            if (model.ExpiryDate < DateTime.Now)
+            {
+                ModelState.AddModelError("ExpiryDate", "The Expiry Date field cannot be set to the current or past date.");
             }
 
             if(model.PeopleNeeded < 1) 
@@ -373,5 +379,30 @@ namespace RAMS.Web.Areas.Customer.Controllers
             return PartialView("_FailureConfirmation", positionResultViewModel);
         }
         #endregion
+
+        /// <summary>
+        /// GetResume method attempts to fetch candidates resume and return it as s file
+        /// </summary>
+        /// <param name="resumeId">Id of the candidate whos resume is being fetched</param>
+        /// <returns>Resume as a file</returns>
+        [HttpGet]
+        public async Task<FileResult> GetResume(string resumeId)
+        {
+            var response = await this.GetHttpClient().GetAsync(String.Format("Candidate?Id={0}", (RAMS.Helpers.Utilities.ConvertBase64StringToInt(resumeId) - Int32.Parse(Session[String.Format("{0}_resume_request", User.Identity.Name)].ToString()))));
+
+            if (response.IsSuccessStatusCode)
+            {
+                var candidateResumeDownloadViewModel = await response.Content.ReadAsAsync<CandidateResumeDownloadViewModel>();
+
+                if (candidateResumeDownloadViewModel.FileContent != null)
+                {
+                    Response.AppendHeader("Content-Disposition", new ContentDisposition { FileName = candidateResumeDownloadViewModel.FileName, Inline = true }.ToString());
+
+                    return File(candidateResumeDownloadViewModel.FileContent, candidateResumeDownloadViewModel.MediaType);
+                }
+            }
+
+            return null;
+        }
     }
 }

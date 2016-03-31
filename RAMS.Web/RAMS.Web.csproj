@@ -491,6 +491,7 @@
     <Content Include="Content\CSS\jquery-ui.css" />
     <Content Include="Content\CSS\jquery-ui.min.css" />
     <Content Include="Content\Fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\Images\body-client-background.jpg" />
     <Content Include="Content\JS\bootstrap.js" />
     <Content Include="Content\JS\bootstrap.min.js" />
     <Content Include="Content\JS\dataTables.bootstrap.js" />
@@ -637,11 +638,13 @@
     <Compile Include="Areas\SystemAdmin\Controllers\CategoryController.cs" />
     <Compile Include="Areas\SystemAdmin\Controllers\DepartmentController.cs" />
     <Compile Include="Areas\SystemAdmin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\SystemAdmin\Controllers\PositionController.cs" />
     <Compile Include="Areas\SystemAdmin\Controllers\ProfileController.cs" />
     <Compile Include="Areas\SystemAdmin\Controllers\UserController.cs" />
     <Compile Include="Areas\SystemAdmin\SystemAdminAreaRegistration.cs" />
     <Compile Include="Configuration\AutofacConfiguration.cs" />
     <Compile Include="Configuration\AutoMapperConfiguration.cs" />
+    <Compile Include="Configuration\Profiles\ModelToModelMapping.cs" />
     <Compile Include="Configuration\Profiles\ModelToViewModelMapping.cs" />
     <Compile Include="Configuration\Profiles\ViewModelToModelMapping.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -767,6 +770,13 @@
     <Content Include="Areas\SystemAdmin\Views\Category\_Error.cshtml" />
     <Content Include="Areas\SystemAdmin\Views\Category\_NewCategory.cshtml" />
     <Content Include="Areas\SystemAdmin\Views\Category\_NewCategoryConfirmation.cshtml" />
+    <Content Include="Areas\SystemAdmin\Views\Position\_PositionDelete.cshtml" />
+    <Content Include="Areas\SystemAdmin\Views\Position\Index.cshtml" />
+    <Content Include="Areas\SystemAdmin\Views\Position\_PositionDetails.cshtml" />
+    <Content Include="Areas\SystemAdmin\Views\Position\_PositionDeleteConfirmation.cshtml" />
+    <Content Include="Areas\SystemAdmin\Views\Position\_SuccessConfirmation.cshtml" />
+    <Content Include="Areas\SystemAdmin\Views\Position\_SelectionFailureConfirmation.cshtml" />
+    <Content Include="Areas\SystemAdmin\Views\Position\_FailureConfirmation.cshtml" />
     <None Include="Content\JS\jquery-2.1.4.intellisense.js" />
     <Content Include="Views\Identity\Account\FailedLogin.cshtml" />
     <None Include="Web.Debug.config">

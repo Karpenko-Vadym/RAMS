@@ -41,6 +41,10 @@ namespace RAMS.Data
 
         public DbSet<Position> Positions { get; set; } // Database setter and getter for Position class
 
+        public DbSet<PositionArchive> PositionArchive { get; set; } // Database setter and getter for PositionArchive class
+
+        public DbSet<CandidateArchive> CandidateArchive { get; set; } // Database setter and getter for CandidateArchive class
+
         /// <summary>
         /// Commit method allows to commit changes to database (Without commit, changes will NOT be persisted to database)
         /// </summary>
@@ -100,6 +104,8 @@ namespace RAMS.Data
             modelBuilder.Configurations.Add(new InterviewConfiguration());
             modelBuilder.Configurations.Add(new NotificationConfiguration());
             modelBuilder.Configurations.Add(new PositionConfiguration());
+            modelBuilder.Configurations.Add(new PositionArchiveConfiguration());
+            modelBuilder.Configurations.Add(new CandidateArchiveConfiguration());
 
             /* Set up table relations */
 
@@ -110,7 +116,7 @@ namespace RAMS.Data
 
             modelBuilder.Entity<Department>().HasMany(d => d.Agents).WithRequired(a => a.Department).HasForeignKey(d => d.DepartmentId).WillCascadeOnDelete(true);
 
-            modelBuilder.Entity<Interview>().HasRequired(i => i.Interviewer).WithMany(a => a.Interviews).HasForeignKey(i => i.InterviewerId).WillCascadeOnDelete(true); ;
+            modelBuilder.Entity<Interview>().HasRequired(i => i.Interviewer).WithMany(a => a.Interviews).HasForeignKey(i => i.InterviewerId).WillCascadeOnDelete(true);
 
             modelBuilder.Entity<Notification>().HasOptional(n => n.Client).WithMany(c => c.Notifications).HasForeignKey(n => n.ClientId).WillCascadeOnDelete(true);
             modelBuilder.Entity<Notification>().HasOptional(n => n.Agent).WithMany(a => a.Notifications).HasForeignKey(n => n.AgentId).WillCascadeOnDelete(true);

@@ -25,6 +25,9 @@ namespace RAMS.ViewModels
         [Display(Name = "Expiry Date")]
         public DateTime ExpiryDate { get; set; }
 
+        [Display(Name = "Close Date")]
+        public DateTime CloseDate { get; set; }
+
         [Display(Name = "Title")]
         public string Title { get; set; }
 
@@ -61,34 +64,42 @@ namespace RAMS.ViewModels
 
         [Required]
         [Display(Name = "Title")]
+        [StringLength(100, ErrorMessage = "The {0} value cannot exceed 100 characters.")]
         public string Title { get; set; }
 
         [Required]
         [AllowHtml]
         [Display(Name = "Description")]
+        [StringLength(2000, ErrorMessage = "The {0} value cannot exceed 2000 characters.")]
         public string Description { get; set; }
 
         [Required]
         [AllowHtml]
         [Display(Name = "Company Details")]
+        [StringLength(1000, ErrorMessage = "The {0} value cannot exceed 1000 characters.")]
         public string CompanyDetails { get; set; } 
 
         [Required]
         [Display(Name = "Location")]
+        [StringLength(200, ErrorMessage = "The {0} value cannot exceed 200 characters.")]
         public string Location { get; set; }
 
         [Required]
         [Display(Name = "Qualifications")]
+        [StringLength(200, ErrorMessage = "The {0} value cannot exceed 200 characters.")]
         public string Qualifications { get; set; } 
 
         [Display(Name = "Asset Skills")]
+        [StringLength(200, ErrorMessage = "The {0} value cannot exceed 200 characters.")]
         public string AssetSkills { get; set; } 
 
         [Required]
         [Display(Name = "People Needed")]
+        [Range(1, 999)]
         public int PeopleNeeded { get; set; } 
 
         [Display(Name = "Acceptance Score")]
+        [Range(1, 100)]
         public int AcceptanceScore { get; set; }
 
         public PositionStatus Status { get; set; }
@@ -101,7 +112,7 @@ namespace RAMS.ViewModels
 
             this.Status = PositionStatus.New;
 
-            this.ExpiryDate = DateTime.Now;
+            this.ExpiryDate = DateTime.UtcNow.AddDays(1);
         }
     }
 
@@ -275,35 +286,43 @@ namespace RAMS.ViewModels
 
         [Required]
         [Display(Name = "Title")]
+        [StringLength(100, ErrorMessage = "The {0} value cannot exceed 100 characters.")]
         public string Title { get; set; }
 
         [Required]
         [AllowHtml]
         [Display(Name = "Description")]
+        [StringLength(2000, ErrorMessage = "The {0} value cannot exceed 2000 characters.")]
         public string Description { get; set; }
 
         [Required]
         [AllowHtml]
         [Display(Name = "Company Details")]
+        [StringLength(1000, ErrorMessage = "The {0} value cannot exceed 1000 characters.")]
         public string CompanyDetails { get; set; } 
 
         [Required]
         [Display(Name = "Location")]
+        [StringLength(200, ErrorMessage = "The {0} value cannot exceed 200 characters.")]
         public string Location { get; set; }
 
         [Required]
         [Display(Name = "Qualifications")]
+        [StringLength(200, ErrorMessage = "The {0} value cannot exceed 200 characters.")]
         public string Qualifications { get; set; } 
 
         [Display(Name = "Asset Skills")]
+        [StringLength(200, ErrorMessage = "The {0} value cannot exceed 200 characters.")]
         public string AssetSkills { get; set; } 
 
         [Required]
         [Display(Name = "People Needed")]
+        [Range(1, 999)]
         public int PeopleNeeded { get; set; }
 
         [Required]
         [Display(Name = "Acceptance Score")]
+        [Range(1, 100)]
         public int AcceptanceScore { get; set; }
 
         public byte[] Timestamp { get; set; }
@@ -541,6 +560,9 @@ namespace RAMS.ViewModels
         [Display(Name = "Id")]
         public string PositionIdForDisplay { get; set; }
 
+        [Display(Name = "Close Date")]
+        public DateTime? CloseDate { get; set; }
+
         [Display(Name = "Total Applicants")]
         public int TotalCandidates { get; set; }
 
@@ -568,6 +590,9 @@ namespace RAMS.ViewModels
 
         [Display(Name = "Expiry Date")]
         public DateTime ExpiryDate { get; set; }
+
+        [Display(Name = "Close Date")]
+        public DateTime? CloseDate { get; set; }
 
         [Display(Name = "Title")]
         public string Title { get; set; }
@@ -616,5 +641,80 @@ namespace RAMS.ViewModels
         {
             this.Candidates = new List<CandidateReportDetailsViewModel>();
         }
+    }
+
+    /// <summary>
+    /// PositionListForDeleteViewModel view model declares properties for _PositionList partial view in SystemAdmin area
+    /// </summary>
+    public class PositionListForDeleteViewModel
+    {
+        public int NumMonths { get; set; }
+
+        public int[] SelectedIds { get; set; }
+
+        public List<PositionListViewModel> Positions { get; set; }
+
+        public List<SelectListItem> SelectList { get; set; }
+
+        public PositionListForDeleteViewModel()
+        {
+            this.Positions = new List<PositionListViewModel>();
+        }
+
+        public PositionListForDeleteViewModel(int months)
+        {
+            this.NumMonths = months;
+
+            this.Positions = new List<PositionListViewModel>();
+
+            this.SelectList = new List<SelectListItem>()
+            {
+                new SelectListItem()
+                {
+                    Text = "Today", Value = "0", Selected = (this.NumMonths == 0)
+                },
+                new SelectListItem()
+                {
+                    Text = "6 Month Old", Value = "6", Selected = (this.NumMonths == 6)
+                },
+                new SelectListItem()
+                {
+                    Text = "1 Year Old", Value = "12", Selected = (this.NumMonths == 12)
+                },
+                new SelectListItem()
+                {
+                    Text = "1 Year & 6 Month Old", Value = "18", Selected = (this.NumMonths == 18)
+                },
+                new SelectListItem()
+                {
+                    Text = "2 Years Old", Value = "24", Selected = (this.NumMonths == 24)
+                },
+                new SelectListItem()
+                {
+                    Text = "2 Years & 6 Month Old", Value = "30", Selected = (this.NumMonths == 30)
+                },
+                new SelectListItem()
+                {
+                    Text = "3 Years Old", Value = "36", Selected = (this.NumMonths == 36)
+                },
+                new SelectListItem()
+                {
+                    Text = "3 Years & 6 Month Old", Value = "42", Selected = (this.NumMonths == 42)
+                },
+                new SelectListItem()
+                {
+                    Text = "4 Years Old", Value = "48", Selected = (this.NumMonths == 48)
+                },
+                new SelectListItem()
+                {
+                    Text = "4 Years & 6 Month Old", Value = "54", Selected = (this.NumMonths == 54)
+                },
+                new SelectListItem()
+                {
+                    Text = "5 Years Old", Value = "60", Selected = (this.NumMonths == 60)
+                }
+            };
+        }
+    
     }
 }

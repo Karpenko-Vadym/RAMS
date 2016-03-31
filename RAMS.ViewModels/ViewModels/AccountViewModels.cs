@@ -12,11 +12,13 @@ namespace RAMS.Web.Identity
     {
         [Required]
         [Display(Name = "User Name")]
+        [StringLength(100, ErrorMessage = "The {0} value cannot exceed 100 characters.")]
         public string UserName { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
+        [StringLength(100, ErrorMessage = "The {0} value cannot exceed 100 characters.")]
         public string Password { get; set; }
     }
 
@@ -27,11 +29,13 @@ namespace RAMS.Web.Identity
     {
         [Required]
         [Display(Name = "User Name")]
+        [StringLength(100, ErrorMessage = "The {0} value cannot exceed 100 characters.")]
         public string UserName { get; set; }
 
         [Required]
         [DataType(DataType.EmailAddress)]
         [Display(Name = "Email")]
+        [StringLength(300, ErrorMessage = "The {0} value cannot exceed 300 characters.")]
         public string Email { get; set; }
     }
 }
@@ -45,6 +49,7 @@ namespace RAMS.ViewModels
     {
         [Required]
         [Display(Name = "User Name")]
+        [StringLength(100, ErrorMessage = "The {0} value cannot exceed 100 characters.")]
         public string UserName { get; set; } // User name is the connection between Employee class and User class (Must be unique)
 
         [Required]
@@ -61,32 +66,38 @@ namespace RAMS.ViewModels
 
         [Required]
         [Display(Name = "First Name")]
+        [StringLength(200, ErrorMessage = "The {0} value cannot exceed 200 characters.")]
         public string FirstName { get; set; }
 
         [Required]
         [Display(Name = "Last Name")]
+        [StringLength(200, ErrorMessage = "The {0} value cannot exceed 200 characters.")]
         public string LastName { get; set; }
 
         [Required]
         [Display(Name = "Job Title")]
+        [StringLength(100, ErrorMessage = "The {0} value cannot exceed 100 characters.")]
         public string JobTitle { get; set; }
 
         [Required]
         [Display(Name = "Company Name")]
+        [StringLength(200, ErrorMessage = "The {0} value cannot exceed 200 characters.")]
         public string Company { get; set; }
 
         [Required]
         [EmailAddress]
+        [StringLength(300, ErrorMessage = "The {0} value cannot exceed 300 characters.")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
         [Required]
         [Phone]
         [Display(Name = "Phone Number")]
+        [StringLength(20, ErrorMessage = "The {0} value cannot exceed 20 characters.")]
         public string PhoneNumber { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long and up to 100 characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
@@ -224,6 +235,7 @@ namespace RAMS.ViewModels
 
         [Required]
         [Display(Name = "User Name")]
+        [StringLength(100, ErrorMessage = "The {0} value cannot exceed 100 characters.")]
         public string UserName { get; set; } // User name is the connection between Employee class and User class (Must be unique)
 
         [Required]
@@ -244,10 +256,12 @@ namespace RAMS.ViewModels
 
         [Required]
         [Display(Name = "First Name")]
+        [StringLength(200, ErrorMessage = "The {0} value cannot exceed 200 characters.")]
         public string FirstName { get; set; }
 
         [Required]
         [Display(Name = "Last Name")]
+        [StringLength(200, ErrorMessage = "The {0} value cannot exceed 200 characters.")]
         public string LastName { get; set; }
 
         [Required]
@@ -256,10 +270,12 @@ namespace RAMS.ViewModels
 
         [Required]
         [Display(Name = "Job Title")]
+        [StringLength(100, ErrorMessage = "The {0} value cannot exceed 100 characters.")]
         public string JobTitle { get; set; }
 
         [Required]
         [Display(Name = "Company Name")]
+        [StringLength(200, ErrorMessage = "The {0} value cannot exceed 200 characters.")]
         public string Company { get; set; }
 
         [Required]
@@ -269,11 +285,13 @@ namespace RAMS.ViewModels
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
+        [StringLength(300, ErrorMessage = "The {0} value cannot exceed 300 characters.")]
         public string Email { get; set; }
 
         [Required]
         [Phone]
         [Display(Name = "Phone Number")]
+        [StringLength(20, ErrorMessage = "The {0} value cannot exceed 20 characters.")]
         public string PhoneNumber { get; set; }
 
         public byte[] Timestamp { get; set; }
@@ -347,7 +365,7 @@ namespace RAMS.ViewModels
         public string FirstName { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long and up to 100 characters long.", MinimumLength = 6)]
         [RegularExpression("^(?=.*[a-z])(?=.*[A-Z])(?=.*[1234567890])(?=.*[!@#$%^&*()_+=-]).+$", ErrorMessage = "Invalid Password format.")]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
@@ -588,6 +606,7 @@ namespace RAMS.ViewModels
 
         [Required]
         [Display(Name = "User Name")]
+        [StringLength(100, ErrorMessage = "The {0} value cannot exceed 100 characters.")]
         public string UserName { get; set; }
 
         [Required]
@@ -607,10 +626,12 @@ namespace RAMS.ViewModels
 
         [Required]
         [Display(Name = "First Name")]
+        [StringLength(200, ErrorMessage = "The {0} value cannot exceed 200 characters.")]
         public string FirstName { get; set; }
 
         [Required]
         [Display(Name = "Last Name")]
+        [StringLength(200, ErrorMessage = "The {0} value cannot exceed 200 characters.")]
         public string LastName { get; set; }
 
         [Required]
@@ -620,6 +641,7 @@ namespace RAMS.ViewModels
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
+        [StringLength(300, ErrorMessage = "The {0} value cannot exceed 300 characters.")]
         public string Email { get; set; }
 
         [Required]
@@ -628,14 +650,17 @@ namespace RAMS.ViewModels
 
         [Required]
         [Display(Name = "Job Title")]
+        [StringLength(100, ErrorMessage = "The {0} value cannot exceed 100 characters.")]
         public string JobTitle { get; set; }
 
         [Required]
         [Display(Name = "Company Name")]
+        [StringLength(200, ErrorMessage = "The {0} value cannot exceed 200 characters.")]
         public string Company { get; set; }
 
         [Required]
         [Display(Name = "Phone Number")]
+        [StringLength(20, ErrorMessage = "The {0} value cannot exceed 20 characters.")]
         public string PhoneNumber { get; set; }
 
         [Display(Name = "Department Id")]
@@ -682,13 +707,13 @@ namespace RAMS.ViewModels
         public string UserType { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long and up to 100 characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Current Password")]
         public string CurrentPassword { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long and up to 100 characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "New Password")]
         public string Password { get; set; }

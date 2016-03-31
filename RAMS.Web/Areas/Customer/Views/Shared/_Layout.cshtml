@@ -22,7 +22,7 @@
     
     <!-- END OF RENDER SCRIPTS -->
 </head>
-<body>
+<body class="body-client">
     <!-- TOP NAVBAR -->
     <nav class="navbar navbar-default">
         <div class="container-fluid">
@@ -33,7 +33,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">RAMS</a>
+                <a class="navbar-brand" href="@string.Format("{0}://{1}", Request.Url.Scheme, Request.Url.Authority)">RAMS</a>
             </div>
             <div class="collapse navbar-collapse" id="rams-navbar-collapse">
                 <ul class="nav navbar-nav">
@@ -55,7 +55,7 @@
     </nav>
     <!-- END OF TOP NAVBAR -->
     <div class="container body-content">
-        <div class="well well-lg">
+        <div class="well well-lg well-outer">
             @RenderBody()
         </div>
 
@@ -112,7 +112,7 @@
 
         <hr />
         <footer>
-            <span class="pull-left text-center">&copy; @DateTime.Now.Year - Recruiting Agency Management System</span>
+            <span class="pull-left text-center footer-text">&copy; @DateTime.UtcNow.Year - Recruiting Agency Management System</span>
             @Html.ActionLink("RAMS API Info", "Index", "Help", new { area = "HelpPage" }, new { @class = "badge pull-right" })
             <div class="clearfix"></div>
             <div class="vertical-padding-24"></div>

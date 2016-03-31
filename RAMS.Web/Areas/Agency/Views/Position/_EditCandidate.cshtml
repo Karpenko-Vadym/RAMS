@@ -10,6 +10,9 @@
         OnFailure = "OnAjaxFailure",
         OnComplete = "OnAjaxComplete"
     };
+
+    HttpContext.Current.Session[String.Format("{0}_resume_request", User.Identity.Name)] = (DateTime.UtcNow.Second * 10) * (DateTime.UtcNow.Second * 10);
+
 }
 
 @if (Model != null)
@@ -44,7 +47,14 @@
                     <dt>@Html.LabelFor(model => model.Email)</dt>
                     <dd>@Model.Email</dd>
                     <dt>@Html.LabelFor(model => model.PhoneNumber)</dt>
-                    <dd>@Model.PhoneNumber</dd>
+                    @if (String.IsNullOrEmpty(Model.PhoneNumber))
+                    {
+                        <dd>Not Available</dd>
+                    }
+                    else
+                    { 
+                        <dd>@Model.PhoneNumber</dd>
+                    }
                     <dt>@Html.LabelFor(model => model.Country)</dt>
                     <dd>@Model.Country</dd>
                     <dt>@Html.LabelFor(model => model.PostalCode)</dt>
@@ -53,8 +63,13 @@
                     <dd>@Model.Score</dd>
                     <dt>@Html.LabelFor(model => model.Status)</dt>
                     <dd>@Model.Status</dd>
+                    @if(Model.FileContent != null && Model.FileContent.Length > 0)
+                    { 
+                        <dt>@Html.Label("Resume")</dt>
+                        <dd><a class="btn btn-tiny btn-info" target="_blank" href="@Url.Action("GetResume", "Position", new { resumeId = RAMS.Helpers.Utilities.ConvertIntToBase64String(Model.CandidateId + Int32.Parse(HttpContext.Current.Session[String.Format("{0}_resume_request", User.Identity.Name)].ToString())) })">Download</a></dd>
+                    }
                 </dl>
-                
+
                 @if(Model.PositionStatus != "Closed")
                 {
                     <div class="clearfix"></div>
@@ -67,7 +82,7 @@
                         </div>
                     </div>
                 }
-                
+
                 <div id="feedback-textarea" class="form-group required">
                     @Html.LabelFor(model => model.Feedback, htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-7">
@@ -103,7 +118,7 @@
         <script type="text/javascript">$(function () { DisableInput("feedback-textarea"); });</script>
     }
     
-    <script type="text/javascript">$(function () { CKEDITOR.replace('Feedback'); });</script>
+    <script type="text/javascript"> $(function () { CKEDITOR.replace('Feedback'); CKEditorInit(CKEDITOR.instances.Feedback, 800); });</script>
 }
 else
 {

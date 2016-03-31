@@ -45,21 +45,25 @@
   <ItemGroup>
     <Compile Include="AdminService.cs" />
     <Compile Include="AgentService.cs" />
+    <Compile Include="CandidateArchiveService.cs" />
     <Compile Include="CandidateService.cs" />
     <Compile Include="CategoryService.cs" />
     <Compile Include="DepartmentService.cs" />
     <Compile Include="ClientService.cs" />
     <Compile Include="Interfaces\IAdminService.cs" />
     <Compile Include="Interfaces\IAgentService.cs" />
+    <Compile Include="Interfaces\ICandidateArchiveService.cs" />
     <Compile Include="Interfaces\ICandidateService.cs" />
     <Compile Include="Interfaces\ICategoryService.cs" />
     <Compile Include="Interfaces\IClientService.cs" />
     <Compile Include="Interfaces\IDepartmentService.cs" />
     <Compile Include="Interfaces\IInterviewService.cs" />
     <Compile Include="Interfaces\INotificationService.cs" />
+    <Compile Include="Interfaces\IPositionArchiveService.cs" />
     <Compile Include="Interfaces\IPositionService.cs" />
     <Compile Include="NotificationService.cs" />
     <Compile Include="InterviewService.cs" />
+    <Compile Include="PositionArchiveService.cs" />
     <Compile Include="PositionService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

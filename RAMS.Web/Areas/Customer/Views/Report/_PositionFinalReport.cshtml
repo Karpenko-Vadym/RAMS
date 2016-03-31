@@ -3,7 +3,7 @@
 <!-- POSITION FINAL REPORT PARTIAL -->
 
 @{
-    HttpContext.Current.Session[User.Identity.Name] = (DateTime.Now.Second * 10) * (DateTime.Now.Second * 10);
+    HttpContext.Current.Session[User.Identity.Name] = (DateTime.UtcNow.Second * 10) * (DateTime.UtcNow.Second * 10);
 }
 
 @if (Model != null)
@@ -59,13 +59,18 @@
             <dt>@Html.LabelFor(model => model.DateCreated)</dt>
             <dd>@Model.DateCreated.ToString("dd/MM/yyyy")</dd>
             <dt>@Html.LabelFor(model => model.ExpiryDate)</dt>
-            @if (Model.ExpiryDate < DateTime.Now)
+            @if (Model.ExpiryDate < DateTime.UtcNow)
             {
                 <dd><span class="label label-danger">@Model.ExpiryDate.ToString("dd/MM/yyyy")</span></dd>
             }
             else
             {
                 <dd><span class="label label-success">@Model.ExpiryDate.ToString("dd/MM/yyyy")</span></dd>
+            }
+            @if (Model.CloseDate != null)
+            {
+                <dt>@Html.LabelFor(model => model.CloseDate)</dt>
+                <dd>@(((DateTime)Model.CloseDate).ToString("dd/MM/yyyy"))</dd>
             }
             <dt>@Html.LabelFor(model => model.Location)</dt>
             <dd>@Model.Location</dd>

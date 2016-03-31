@@ -80,6 +80,13 @@
                     <td>@Html.LabelFor(model => model.ExpiryDate)</td>
                     <td>@Model.ExpiryDate.ToString("dd/MM/yyyy")</td>
                 </tr>
+                @if(Model.CloseDate != null)
+                { 
+                    <tr>
+                        <td>@Html.LabelFor(model => model.CloseDate)</td>
+                        <td>@(((DateTime)Model.CloseDate).ToString("dd/MM/yyyy"))</td>
+                    </tr>
+                }
                 <tr>
                     <td>@Html.LabelFor(model => model.Location)</td>
                     <td>@Model.Location</td>
@@ -163,11 +170,18 @@
                         </tr>
                         <tr>
                             <td>@Html.LabelFor(model => item.LastName)</td>
-                            <td>@Html.Raw(item.LastName)</td>
+                            <td>@item.LastName</td>
                         </tr>
                         <tr>
                             <td>@Html.LabelFor(model => item.PhoneNumber)</td>
-                            <td>@Html.Raw(item.PhoneNumber)</td>
+                            @if (String.IsNullOrEmpty(item.PhoneNumber))
+                            {
+                                <td>Not Available</td>
+                            }
+                            else
+                            {
+                                <td>@item.PhoneNumber</td>
+                            }
                         </tr>
                         <tr>
                             <td>@Html.LabelFor(model => item.Email)</td>

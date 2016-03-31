@@ -38,7 +38,7 @@ namespace RAMS.ViewModels
     public class DepartmentAddViewModel
     {
         [Required]
-        [StringLength(150, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 3)]
+        [StringLength(150, ErrorMessage = "The {0} must be at least {2} and maximum 150 characters long.", MinimumLength = 3)]
         [Display(Name = "Department Name")]
         public string Name { get; set; }
     }

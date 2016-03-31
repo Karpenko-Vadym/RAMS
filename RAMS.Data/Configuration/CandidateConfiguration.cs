@@ -34,7 +34,7 @@ namespace RAMS.Data.Configuration
 
             Property(c => c.PostalCode).IsRequired().HasMaxLength(10);
 
-            Property(c => c.PhoneNumber).IsRequired().HasMaxLength(20);
+            Property(c => c.PhoneNumber).IsOptional().HasMaxLength(20);
 
             Property(c => c.Feedback).IsOptional().HasMaxLength(1000);
 

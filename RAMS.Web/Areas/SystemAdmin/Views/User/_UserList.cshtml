@@ -17,14 +17,18 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr class="cursor-pointer" data-toggle="modal" data-target="#edit-user-modal" data-user-name="@item.UserName" data-user-type="@item.UserType">
-                        <td>@item.UserId</td>
-                        <td>@item.UserName</td>
-                        <td>@item.FullName</td>
-                        <td>@item.Role</td>
-                        <td>@item.UserType</td>
-                        <td>@item.UserStatus</td>
-                    </tr>
+                    
+                    if(item.UserStatus != RAMS.Enums.UserStatus.Deleted)
+                    { 
+                        <tr class="cursor-pointer" data-toggle="modal" data-target="#edit-user-modal" data-user-name="@item.UserName" data-user-type="@item.UserType">
+                            <td>@item.UserId</td>
+                            <td>@item.UserName</td>
+                            <td>@item.FullName</td>
+                            <td>@item.Role</td>
+                            <td>@item.UserType</td>
+                            <td>@item.UserStatus</td>
+                        </tr>
+                    }
                 }
             </tbody>
         </table>

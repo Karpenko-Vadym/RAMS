@@ -30,6 +30,8 @@ namespace RAMS.Data.Configuration
 
             Property(p => p.Location).IsRequired().HasMaxLength(200);
 
+            Property(p => p.CloseDate).IsOptional();
+
             Property(p => p.Qualifications).IsRequired();
 
             Property(p => p.PeopleNeeded).IsRequired();

@@ -4,9 +4,11 @@ using RAMS.Service;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -67,6 +69,38 @@ namespace RAMS.Web.Controllers.WebAPI
             }
 
             return NotFound();
+        }
+
+        /// <summary>
+        /// Get candidates resume as file by candidate id
+        /// </summary>
+        /// <param name="candidateId">Id of the candidate whos resume is being fetched</param>
+        /// <returns>Resume as a file</returns>
+        [HttpGet]
+        [ResponseType(typeof(Candidate))]
+        public HttpResponseMessage GetCandidateResumeById(int candidateId)
+        {
+            var result = new HttpResponseMessage(HttpStatusCode.NotFound);
+
+            if (candidateId > 0)
+            {
+                var candidate = this.CandidateService.GetOneCandidateById(candidateId);
+
+                if (candidate != null)
+                {
+                    result.StatusCode = HttpStatusCode.OK;
+
+                    result.Content = new StreamContent(new MemoryStream(candidate.FileContent));
+
+                    result.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(candidate.MediaType);
+
+                    result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment"){ FileName = candidate.FileName };
+                    
+                    return result;
+                }
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -149,6 +183,7 @@ namespace RAMS.Web.Controllers.WebAPI
         /// </summary>
         /// <param name="candidateId">If of the candidate to be updated</param>
         /// <param name="feedback">Feedback to be updated</param>
+        /// <param name="isInterviewed">Flag to determine whether candidate was interviewd</param>
         /// <returns>HttpResponseMessage with status code dependning on the outcome of this method</returns>
         [HttpPut]
         [ResponseType(typeof(Candidate))]

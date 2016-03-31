@@ -2,6 +2,10 @@
 
 <!-- CANDIDATE REPORT PARTIAL -->
 
+@{
+    HttpContext.Current.Session[String.Format("{0}_resume_request", User.Identity.Name)] = (DateTime.UtcNow.Second * 10) * (DateTime.UtcNow.Second * 10);
+}
+
 @if (Model != null)
 {
     <div class="well well-lg bottom-margin-0 background-white">
@@ -11,9 +15,16 @@
             <dt>@Html.LabelFor(model => model.FirstName)</dt>
             <dd>@Model.FirstName</dd>
             <dt>@Html.LabelFor(model => model.LastName)</dt>
-            <dd>@Html.Raw(Model.LastName)</dd>
+            <dd>@Model.LastName</dd>
             <dt>@Html.LabelFor(model => model.PhoneNumber)</dt>
-            <dd>@Html.Raw(Model.PhoneNumber)</dd>
+            @if (String.IsNullOrEmpty(Model.PhoneNumber))
+            {
+                <dd>Not Available</dd>
+            }
+            else
+            {
+                <dd>@Model.PhoneNumber</dd>
+            }
             <dt>@Html.LabelFor(model => model.Email)</dt>
             <dd>@Model.Email</dd>
             <dt>@Html.LabelFor(model => model.Country)</dt>
@@ -22,6 +33,11 @@
             <dd>@Model.PostalCode</dd>
             <dt>@Html.LabelFor(model => model.Score)</dt>
             <dd>@Model.Score</dd>
+            @if (Model.FileContent != null && Model.FileContent.Length > 0)
+            {
+                <dt>@Html.Label("Resume")</dt>
+                <dd><a class="btn btn-tiny btn-info" target="_blank" href="@Url.Action("GetResume", "Position", new { resumeId = RAMS.Helpers.Utilities.ConvertIntToBase64String(Model.CandidateId + Int32.Parse(HttpContext.Current.Session[String.Format("{0}_resume_request", User.Identity.Name)].ToString())) })">Download</a></dd>
+            }
             <dt>@Html.LabelFor(model => model.Feedback)</dt>
             <dd><div class='alert alert-warning bottom-margin-0' role='alert'>@Html.Raw((String.IsNullOrEmpty(Model.Feedback) ? "Not Specified" : Model.Feedback))</div></dd>
         </dl>

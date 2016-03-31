@@ -16,7 +16,7 @@ namespace RAMS.Web.Configuration
         /// </summary>
         public static void Configure()
         {
-            Mapper.Initialize(m => { m.AddProfile<ModelToViewModelMapping>(); m.AddProfile<ViewModelToModelMapping>(); });
+            Mapper.Initialize(m => { m.AddProfile<ModelToViewModelMapping>(); m.AddProfile<ViewModelToModelMapping>(); m.AddProfile<ModelToModelMapping>(); });
         }
     }
 }

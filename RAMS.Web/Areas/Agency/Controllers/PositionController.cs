@@ -193,6 +193,11 @@ namespace RAMS.Web.Areas.Agency.Controllers
                 ModelState.AddModelError(String.Empty, "Client could not be determined. Please try again in a moment");
             }
 
+            if (model.ExpiryDate < DateTime.Now)
+            {
+                ModelState.AddModelError("ExpiryDate", "The Expiry Date field cannot be set to the current or past date.");
+            }
+
             if (model.PeopleNeeded < 1)
             {
                 ModelState.AddModelError("PeopleNeeded", "The People Needed field is required and should be greater than 0.");

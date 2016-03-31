@@ -9,11 +9,12 @@ using System.Threading.Tasks;
 namespace RAMS.Service
 {
     /// <summary>
-    /// IArchiveService interface declares the Archive specific service operations
+    /// ICandidateArchiveService interface declares the CandidateArchive specific service operations
     /// </summary>
-    public interface IArchiveService
+    public interface ICandidateArchiveService
     {
-        void CreateArchivePosition(Archive archive);
+
+        void CreateCandidateArchive(CandidateArchive candidateArchive);
 
         void SaveChanges();
     }

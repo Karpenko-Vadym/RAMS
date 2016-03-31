@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Enums\Enums.cs" />
     <Compile Include="Models\BaseEntity.cs" />
+    <Compile Include="Models\CandidateArchive.cs" />
     <Compile Include="Models\Candidate.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Department.cs" />
@@ -66,7 +67,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Interview.cs" />
     <Compile Include="Models\Notification.cs" />
-    <Compile Include="Models\Archive.cs" />
+    <Compile Include="Models\PositionArchive.cs" />
     <Compile Include="Models\Position.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

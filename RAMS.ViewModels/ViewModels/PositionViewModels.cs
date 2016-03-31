@@ -64,34 +64,42 @@ namespace RAMS.ViewModels
 
         [Required]
         [Display(Name = "Title")]
+        [StringLength(100, ErrorMessage = "The {0} value cannot exceed 100 characters.")]
         public string Title { get; set; }
 
         [Required]
         [AllowHtml]
         [Display(Name = "Description")]
+        [StringLength(2000, ErrorMessage = "The {0} value cannot exceed 2000 characters.")]
         public string Description { get; set; }
 
         [Required]
         [AllowHtml]
         [Display(Name = "Company Details")]
+        [StringLength(1000, ErrorMessage = "The {0} value cannot exceed 1000 characters.")]
         public string CompanyDetails { get; set; } 
 
         [Required]
         [Display(Name = "Location")]
+        [StringLength(200, ErrorMessage = "The {0} value cannot exceed 200 characters.")]
         public string Location { get; set; }
 
         [Required]
         [Display(Name = "Qualifications")]
+        [StringLength(200, ErrorMessage = "The {0} value cannot exceed 200 characters.")]
         public string Qualifications { get; set; } 
 
         [Display(Name = "Asset Skills")]
+        [StringLength(200, ErrorMessage = "The {0} value cannot exceed 200 characters.")]
         public string AssetSkills { get; set; } 
 
         [Required]
         [Display(Name = "People Needed")]
+        [Range(1, 999)]
         public int PeopleNeeded { get; set; } 
 
         [Display(Name = "Acceptance Score")]
+        [Range(1, 100)]
         public int AcceptanceScore { get; set; }
 
         public PositionStatus Status { get; set; }
@@ -104,7 +112,7 @@ namespace RAMS.ViewModels
 
             this.Status = PositionStatus.New;
 
-            this.ExpiryDate = DateTime.UtcNow;
+            this.ExpiryDate = DateTime.UtcNow.AddDays(1);
         }
     }
 
@@ -278,35 +286,43 @@ namespace RAMS.ViewModels
 
         [Required]
         [Display(Name = "Title")]
+        [StringLength(100, ErrorMessage = "The {0} value cannot exceed 100 characters.")]
         public string Title { get; set; }
 
         [Required]
         [AllowHtml]
         [Display(Name = "Description")]
+        [StringLength(2000, ErrorMessage = "The {0} value cannot exceed 2000 characters.")]
         public string Description { get; set; }
 
         [Required]
         [AllowHtml]
         [Display(Name = "Company Details")]
+        [StringLength(1000, ErrorMessage = "The {0} value cannot exceed 1000 characters.")]
         public string CompanyDetails { get; set; } 
 
         [Required]
         [Display(Name = "Location")]
+        [StringLength(200, ErrorMessage = "The {0} value cannot exceed 200 characters.")]
         public string Location { get; set; }
 
         [Required]
         [Display(Name = "Qualifications")]
+        [StringLength(200, ErrorMessage = "The {0} value cannot exceed 200 characters.")]
         public string Qualifications { get; set; } 
 
         [Display(Name = "Asset Skills")]
+        [StringLength(200, ErrorMessage = "The {0} value cannot exceed 200 characters.")]
         public string AssetSkills { get; set; } 
 
         [Required]
         [Display(Name = "People Needed")]
+        [Range(1, 999)]
         public int PeopleNeeded { get; set; }
 
         [Required]
         [Display(Name = "Acceptance Score")]
+        [Range(1, 100)]
         public int AcceptanceScore { get; set; }
 
         public byte[] Timestamp { get; set; }

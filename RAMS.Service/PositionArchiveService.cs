@@ -12,33 +12,33 @@ using System.Threading.Tasks;
 namespace RAMS.Service
 {
     /// <summary>
-    /// ArchiveService implements Archive specific services
+    /// PositionArchiveService implements PositionArchive specific services
     /// </summary>
-    public class ArchiveService : IArchiveService
+    public class PositionArchiveService : IPositionArchiveService
     {
-        private readonly IArchiveRepository ArchiveRepository;
+        private readonly IPositionArchiveRepository PositionArchiveRepository;
 
         private readonly IUnitOfWork UnitOfWork;
 
         /// <summary>
         /// Constructor that sets required repositories and unit of work for this service
         /// </summary>
-        /// <param name="archiveRepository">Parameter for setting ArchiveRepository</param>
+        /// <param name="positionArchiveRepository">Parameter for setting PositionArchiveRepository</param>
         /// <param name="unitOfWork">Parameter for setting UnitOfWork</param>
-        public ArchiveService(IArchiveRepository archiveRepository, IUnitOfWork unitOfWork)
+        public PositionArchiveService(IPositionArchiveRepository positionArchiveRepository, IUnitOfWork unitOfWork)
         {
-            this.ArchiveRepository = archiveRepository;
+            this.PositionArchiveRepository = positionArchiveRepository;
 
             this.UnitOfWork = unitOfWork;
         }
 
         /// <summary>
-        /// Create new archive
+        /// Create new position archive
         /// </summary>
-        /// <param name="archive">Archive to be created</param>
-        public void CreateArchivePosition(Archive archive)
+        /// <param name="positionArchive">PositionArchive to be created</param>
+        public void CreateArchivePosition(PositionArchive positionArchive)
         {
-            this.ArchiveRepository.Add(archive);
+            this.PositionArchiveRepository.Add(positionArchive);
         }
 
         /// <summary>

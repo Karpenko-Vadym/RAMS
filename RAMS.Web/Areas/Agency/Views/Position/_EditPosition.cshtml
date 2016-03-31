@@ -113,7 +113,7 @@ else
             <div class="form-group required">
                 @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-7">
-                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", maxLength = 100 } })
                     @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -145,7 +145,7 @@ else
             <div class="form-group required">
                 @Html.LabelFor(model => model.Location, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-7">
-                    @Html.EditorFor(model => model.Location, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.Location, new { htmlAttributes = new { @class = "form-control", maxLength = 200 } })
                     @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -153,7 +153,7 @@ else
             <div class="form-group required">
                 @Html.LabelFor(model => model.PeopleNeeded, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-7">
-                    @Html.EditorFor(model => model.PeopleNeeded, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.PeopleNeeded, new { htmlAttributes = new { @class = "form-control", oninput = "AdjustNumberField(this, 1, 999)", onkeypress = "return isNumberKey(event)" } })
                     @Html.ValidationMessageFor(model => model.PeopleNeeded, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -161,7 +161,7 @@ else
             <div class="form-group required">
                 @Html.LabelFor(model => model.AcceptanceScore, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-7">
-                    @Html.EditorFor(model => model.AcceptanceScore, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.AcceptanceScore, new { htmlAttributes = new { @class = "form-control", oninput = "AdjustNumberField(this, 1, 100)", onkeypress = "return isNumberKey(event)" } })
                     @Html.ValidationMessageFor(model => model.AcceptanceScore, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -187,7 +187,7 @@ else
             <div class="form-group required">
                 @Html.LabelFor(model => model.Qualifications, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-7">
-                    @Html.EditorFor(model => model.Qualifications, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.Qualifications, new { htmlAttributes = new { @class = "form-control", maxLength = 200 } })
                     @Html.ValidationMessageFor(model => model.Qualifications, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -195,7 +195,7 @@ else
             <div class="form-group">
                 @Html.LabelFor(model => model.AssetSkills, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-7">
-                    @Html.EditorFor(model => model.AssetSkills, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.AssetSkills, new { htmlAttributes = new { @class = "form-control", maxLength = 200 } })
                     @Html.ValidationMessageFor(model => model.AssetSkills, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -212,7 +212,7 @@ else
     }
 </div>
 
-<script type="text/javascript">$(function () { DisableEmptyOptions(); $(".datepicker-field").datepicker({ dateFormat: "dd/mm/yy", onSelect: function (dateText, inst) { $(this).attr('value', dateText); } }); CKEDITOR.replace('Description'); CKEDITOR.replace('CompanyDetails'); });</script>
+<script type="text/javascript">$(function () { DisableEmptyOptions(); $(".datepicker-field").datepicker({ dateFormat: "dd/mm/yy", minDate: 1, onSelect: function (dateText, inst) { $(this).attr('value', dateText); } }); CKEDITOR.replace('Description'); CKEditorInit(CKEDITOR.instances.Description, 1600); CKEDITOR.replace('CompanyDetails'); CKEditorInit(CKEDITOR.instances.CompanyDetails, 800); });</script>
 }
 else
 {

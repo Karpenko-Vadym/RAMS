@@ -127,9 +127,8 @@ function ProfilePictureUpload()
 function setDatepicker()
 {
     $(".datepicker-field").datepicker();
-
-    
 }
+
 function DisableInput(divId)
 {
     $("#" + divId + " :input").attr("disabled", true);
@@ -167,6 +166,81 @@ function ToggleCheckboxes()
 
     DisableDeleteButton();
 }
+
+function CKEditorInit(CKEditorInstance, maxLength)
+{
+    var locked;
+
+    var editor = CKEditorInstance;
+
+    editor.on('key', function (event){ charHandler({ value: event.editor.getData() }, maxLength); }, editor.element.$);
+        
+    editor.on('key', function (event) {
+
+        var currentLength = editor.getData().length;
+
+        if (currentLength >= maxLength)
+        {
+            if (!locked)
+            {
+                editor.fire('saveSnapshot'), locked = 1;
+
+                event.cancel();
+            }
+            else
+            {
+                setTimeout(function () { if (editor.getData().length > maxLength) { editor.execCommand('undo'); } else { locked = 0; } }, 0);
+            }
+        }
+    });
+
+    function charHandler(editorInstance, maxLen)
+    {
+        if (editorInstance.value.length > maxLen)
+        {
+            editorInstance.value = editorInstance.value.substring(0, maxLen);
+        }
+        
+    }
+}
+
+
+
+function AdjustNumberField(fieldObject, minRange, maxRange)
+{
+    if(fieldObject.value > maxRange)
+    {
+        fieldObject.value = maxRange;
+
+    }
+    else if (fieldObject.value < minRange)
+    {
+        fieldObject.value = minRange;
+ 
+    }
+}
+
+function isNumberKey(evt)
+{
+    var charCode;
+
+    if (evt.which)
+    {
+        charCode = evt.which
+    }
+    else
+    {
+        charCode = event.keyCode
+    }
+
+    if (charCode > 31 && (charCode < 48 || charCode > 57))
+    {
+        return false;
+    }
+
+    return true;
+}
+
 /************* END OF GENERAL FUNCTIONS *************/
 
 /*************** GENERAL MODAL CONTROLS *************/
@@ -174,7 +248,7 @@ function GeneralModalControls()
 {
     $("#edit-profile-modal").on("show.bs.modal", function (e) { LoadAction("edit-user-profile-modal-body-div", "/RAMS/Account/EditUserProfile"); });
 
-    $("#change-password-modal").on("show.bs.modal", function (e) { LoadAction("password-change-div", "/RAMS/Account/ChangePassword?userName=" + $(e.relatedTarget).data("user-name") + "&userType=" + $(e.relatedTarget).data("user-type")); });
+    $("#change-password-modal").on("show.bs.modal", function (e) { LoadAction("password-change-div", "/RAMS/Account/ChangePassword?userName=" + encodeURIComponent($(e.relatedTarget).data("user-name")) + "&userType=" + $(e.relatedTarget).data("user-type")); });
 
     $("#edit-profile-modal").on("hidden.bs.modal", function (e) { $("#edit-user-profile-modal-body-div").empty(); $("#edit-user-profile-message-modal-body-div").empty(); });
 
@@ -190,11 +264,11 @@ function SystemAdminModalControls()
 
     $("#new-user-modal").on("hidden.bs.modal", function (e) { $("#new-user-modal-body-div").empty(); });
 
-    $("#edit-user-modal").on("show.bs.modal", function (e) { $("#edit-user-modal-title").text("Edit User - " + $(e.relatedTarget).data("user-name")); LoadAction("edit-user-modal-body-div", "/RAMS/SystemAdmin/User/EditUser?userName=" + $(e.relatedTarget).data("user-name") + "&userType=" + $(e.relatedTarget).data("user-type")); $("#edit-user-message-modal-body-div").empty(); });
+    $("#edit-user-modal").on("show.bs.modal", function (e) { $("#edit-user-modal-title").text("Edit User - " + $(e.relatedTarget).data("user-name")); LoadAction("edit-user-modal-body-div", "/RAMS/SystemAdmin/User/EditUser?userName=" + encodeURIComponent($(e.relatedTarget).data("user-name")) + "&userType=" + $(e.relatedTarget).data("user-type")); $("#edit-user-message-modal-body-div").empty(); });
 
     $("#edit-user-modal").on("hidden.bs.modal", function (e) { $("#edit-user-modal-title").text("Edit User"); $("#edit-user-modal-body-div").empty(); });
 
-    $("#reset-password-modal").on("show.bs.modal", function (e) { LoadAction("password-reset-div", "/RAMS/SystemAdmin/User/ResetPassword?userName=" + $(e.relatedTarget).data("user-name") + "&userType=" + $(e.relatedTarget).data("user-type") + "&email=" + $(e.relatedTarget).data("email") + "&firstName=" + $(e.relatedTarget).data("firstName")); });
+    $("#reset-password-modal").on("show.bs.modal", function (e) { LoadAction("password-reset-div", "/RAMS/SystemAdmin/User/ResetPassword?userName=" + encodeURIComponent($(e.relatedTarget).data("user-name")) + "&userType=" + $(e.relatedTarget).data("user-type") + "&email=" + $(e.relatedTarget).data("email") + "&firstName=" + encodeURIComponent($(e.relatedTarget).data("firstName"))); });
 
     $("#reset-password-modal").on("hidden.bs.modal", function (e) { $("#password-reset-div").empty(); });
 
@@ -204,18 +278,18 @@ function SystemAdminModalControls()
         {
             $("#block-delete-user-modal-title").text("Block User - " + $(e.relatedTarget).data("user-name"));
 
-            LoadAction("block-delete-user-div", "/RAMS/SystemAdmin/User/BlockUser?userName=" + $(e.relatedTarget).data("user-name") + "&userType=" + $(e.relatedTarget).data("user-type"));
+            LoadAction("block-delete-user-div", "/RAMS/SystemAdmin/User/BlockUser?userName=" + encodeURIComponent($(e.relatedTarget).data("user-name")) + "&userType=" + $(e.relatedTarget).data("user-type"));
         }
         else if ($(e.relatedTarget).data("action") == "delete")
         {
             $("#block-delete-user-modal-title").text("Delete User - " + $(e.relatedTarget).data("user-name"));
 
-            LoadAction("block-delete-user-div", "/RAMS/SystemAdmin/User/DeleteUser?userName=" + $(e.relatedTarget).data("user-name") + "&userType=" + $(e.relatedTarget).data("user-type"));
+            LoadAction("block-delete-user-div", "/RAMS/SystemAdmin/User/DeleteUser?userName=" + encodeURIComponent($(e.relatedTarget).data("user-name")) + "&userType=" + $(e.relatedTarget).data("user-type"));
         }
         else if ($(e.relatedTarget).data("action") == "unblock") {
             $("#block-delete-user-modal-title").text("Unblock User - " + $(e.relatedTarget).data("user-name"));
 
-            LoadAction("block-delete-user-div", "/RAMS/SystemAdmin/User/UnblockUser?userName=" + $(e.relatedTarget).data("user-name") + "&userType=" + $(e.relatedTarget).data("user-type"));
+            LoadAction("block-delete-user-div", "/RAMS/SystemAdmin/User/UnblockUser?userName=" + encodeURIComponent($(e.relatedTarget).data("user-name")) + "&userType=" + $(e.relatedTarget).data("user-type"));
         }
     });
 
@@ -296,7 +370,7 @@ function CustomerModalControls()
 
     $("#position-details-modal").on("hidden.bs.modal", function (e) { $("#position-closure-confirmation-modal-body-div").empty(); $("#position-details-message-modal-body-div").empty(); });
 
-    $("#position-closure-confirmation-modal").on("show.bs.modal", function (e) { LoadAction("position-closure-confirmation-modal-body-div", "/RAMS/Customer/Position/PositionClosure?agentId=" + $(e.relatedTarget).data("agent-id") + "&agentName=" + encodeURIComponent($(e.relatedTarget).data("agent-name")) + "&positionId=" + $(e.relatedTarget).data("position-id") + "&positionTitle=" + encodeURIComponent($(e.relatedTarget).data("position-title")) + "&clientUserName=" + $(e.relatedTarget).data("client-user-name") + "&clientFullName=" + encodeURIComponent($(e.relatedTarget).data("client-full-name"))); });
+    $("#position-closure-confirmation-modal").on("show.bs.modal", function (e) { LoadAction("position-closure-confirmation-modal-body-div", "/RAMS/Customer/Position/PositionClosure?agentId=" + $(e.relatedTarget).data("agent-id") + "&agentName=" + encodeURIComponent($(e.relatedTarget).data("agent-name")) + "&positionId=" + $(e.relatedTarget).data("position-id") + "&positionTitle=" + encodeURIComponent($(e.relatedTarget).data("position-title")) + "&clientUserName=" + encodeURIComponent($(e.relatedTarget).data("client-user-name")) + "&clientFullName=" + encodeURIComponent($(e.relatedTarget).data("client-full-name"))); });
 
     $("#position-status-report-modal").on("show.bs.modal", function (e) { $("#position-status-report-modal-title").text("Status Report - " + $(e.relatedTarget).data("position-title")); LoadAction("position-status-report-modal-body-div", "/RAMS/Customer/Report/PositionStatusReport?positionId=" + $(e.relatedTarget).data("position-id")); });
 
@@ -388,7 +462,7 @@ function AgencyModalControls()
 /************** SYSTEM ADMIN FUNCTIONS **************/
 function RefreshUserEditForm(userName, userType)
 {
-    LoadAction("edit-user-modal-body-div", "/RAMS/SystemAdmin/User/EditUser?userName=" + userName + "&userType=" + userType);
+    LoadAction("edit-user-modal-body-div", "/RAMS/SystemAdmin/User/EditUser?userName=" + encodeURIComponent(userName) + "&userType=" + userType);
 }
 
 

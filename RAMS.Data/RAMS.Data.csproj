@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\AdminConfiguration.cs" />
+    <Compile Include="Configuration\CandidateArchiveConfiguration.cs" />
     <Compile Include="Configuration\CandidateConfiguration.cs" />
     <Compile Include="Configuration\CategoryConfiguration.cs" />
     <Compile Include="Configuration\ClientConfiguration.cs" />
@@ -62,7 +63,7 @@
     <Compile Include="Configuration\AgentConfiguration.cs" />
     <Compile Include="Configuration\InterviewConfiguration.cs" />
     <Compile Include="Configuration\NotificationConfiguration.cs" />
-    <Compile Include="Configuration\ArchiveConfiguration.cs" />
+    <Compile Include="Configuration\PositionArchiveConfiguration.cs" />
     <Compile Include="Configuration\PositionConfiguration.cs" />
     <Compile Include="DataContext.cs" />
     <Compile Include="Infrastructure\DataFactory.cs" />
@@ -72,15 +73,16 @@
     <Compile Include="Infrastructure\Interfaces\IUnitOfWork.cs" />
     <Compile Include="Infrastructure\RepositoryBase.cs" />
     <Compile Include="Infrastructure\UnitOfWork.cs" />
-    <Compile Include="Migrations\201603300706529_InitialDatabase.cs" />
-    <Compile Include="Migrations\201603300706529_InitialDatabase.Designer.cs">
-      <DependentUpon>201603300706529_InitialDatabase.cs</DependentUpon>
+    <Compile Include="Migrations\201603302301320_InitialDatabase.cs" />
+    <Compile Include="Migrations\201603302301320_InitialDatabase.Designer.cs">
+      <DependentUpon>201603302301320_InitialDatabase.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AgentRepository.cs" />
+    <Compile Include="Repositories\CandidateArchiveRepository.cs" />
     <Compile Include="Repositories\CandidateRepository.cs" />
     <Compile Include="Repositories\CategoryRepository.cs" />
     <Compile Include="Repositories\AdminRepository.cs" />
@@ -88,17 +90,18 @@
     <Compile Include="Repositories\DepartmentRepository.cs" />
     <Compile Include="Repositories\Interfaces\IAdminRepository.cs" />
     <Compile Include="Repositories\Interfaces\IAgentRepository.cs" />
+    <Compile Include="Repositories\Interfaces\ICandidateArchiveRepository.cs" />
     <Compile Include="Repositories\Interfaces\ICandidateRepository.cs" />
     <Compile Include="Repositories\Interfaces\ICategoryRepository.cs" />
     <Compile Include="Repositories\Interfaces\IClientRepository.cs" />
     <Compile Include="Repositories\Interfaces\IDepartmentRepository.cs" />
     <Compile Include="Repositories\Interfaces\IInterviewRepository.cs" />
     <Compile Include="Repositories\Interfaces\INotificationRepository.cs" />
-    <Compile Include="Repositories\Interfaces\IArchiveRepository.cs" />
+    <Compile Include="Repositories\Interfaces\IPositionArchiveRepository.cs" />
     <Compile Include="Repositories\InterviewRepository.cs" />
     <Compile Include="Repositories\Interfaces\IPositionRepository.cs" />
     <Compile Include="Repositories\NotificationRepository.cs" />
-    <Compile Include="Repositories\ArchiveRepository.cs" />
+    <Compile Include="Repositories\PositionArchiveRepository.cs" />
     <Compile Include="Repositories\PositionRepository.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -116,8 +119,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201603300706529_InitialDatabase.resx">
-      <DependentUpon>201603300706529_InitialDatabase.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201603302301320_InitialDatabase.resx">
+      <DependentUpon>201603302301320_InitialDatabase.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

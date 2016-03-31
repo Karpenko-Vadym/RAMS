@@ -89,7 +89,7 @@ select option:disabled
     cursor: pointer;
 }
 
-#ui-datepicker-div a.ui-state-default
+#ui-datepicker-div a.ui-state-default, #ui-datepicker-div span.ui-state-default
 {
     border-radius: 50%;
     text-align: center;

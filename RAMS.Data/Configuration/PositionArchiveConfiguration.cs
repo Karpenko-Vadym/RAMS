@@ -11,14 +11,14 @@ namespace RAMS.Data.Configuration
     /// <summary>
     /// Database attributes configuration for Position class
     /// </summary>
-    public class ArchiveConfiguration : EntityTypeConfiguration<Archive>
+    public class PositionArchiveConfiguration : EntityTypeConfiguration<PositionArchive>
     {
         /// <summary>
         /// Default constructor that defines all the configurations
         /// </summary>
-        public ArchiveConfiguration()
+        public PositionArchiveConfiguration()
         {
-            ToTable("Archive"); // Select which table will be associated with Archive class
+            ToTable("PositionArchive"); // Select which table will be associated with PositionArchive class
 
             /* Define configuration for each field (Only for fields that need to be configured) separately */
 

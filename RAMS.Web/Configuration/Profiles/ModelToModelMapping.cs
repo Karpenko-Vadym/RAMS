@@ -22,8 +22,9 @@ namespace RAMS.Web.Configuration
         {         
             /***** ARCHIVE MAPPING *****/
 
-            Mapper.CreateMap<Position, Archive>().ForMember(a => a.ArchiveId, map => map.MapFrom(model => model.PositionId)).ForMember(a => a.CategoryName, map => map.MapFrom(model => model.Category.Name)).ForMember(a => a.ClientName, map => map.MapFrom(model => String.Format("{0} {1}", model.Client.FirstName, model.Client.LastName))).ForMember(a => a.AgentName, map => map.MapFrom(model => String.Format("{0} {1}", model.Agent.FirstName, model.Agent.LastName))).ForMember(a => a.InterviewedApplicants, map => map.MapFrom(model => model.Candidates.Where(c => c.Status == Enums.CandidateStatus.Interviewed).Count())).ForMember(a => a.TotalApplicants, map => map.MapFrom(model => model.Candidates.Count()));
-            
+            Mapper.CreateMap<Position, PositionArchive>().ForMember(a => a.CategoryName, map => map.MapFrom(model => model.Category.Name)).ForMember(a => a.ClientName, map => map.MapFrom(model => String.Format("{0} {1}", model.Client.FirstName, model.Client.LastName))).ForMember(a => a.AgentName, map => map.MapFrom(model => String.Format("{0} {1}", model.Agent.FirstName, model.Agent.LastName))).ForMember(a => a.InterviewedApplicants, map => map.MapFrom(model => model.Candidates.Where(c => c.Status == Enums.CandidateStatus.Interviewed).Count())).ForMember(a => a.TotalApplicants, map => map.MapFrom(model => model.Candidates.Count()));
+            Mapper.CreateMap<Candidate, CandidateArchive>();
+
             /***** END OF ARCHIVE MAPPING *****/
         }
     }

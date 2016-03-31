@@ -82,7 +82,7 @@
                         </div>
                     </div>
                 }
-                
+
                 <div id="feedback-textarea" class="form-group required">
                     @Html.LabelFor(model => model.Feedback, htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-7">
@@ -118,7 +118,7 @@
         <script type="text/javascript">$(function () { DisableInput("feedback-textarea"); });</script>
     }
     
-    <script type="text/javascript">$(function () { CKEDITOR.replace('Feedback'); });</script>
+    <script type="text/javascript"> $(function () { CKEDITOR.replace('Feedback'); CKEditorInit(CKEDITOR.instances.Feedback, 800); });</script>
 }
 else
 {

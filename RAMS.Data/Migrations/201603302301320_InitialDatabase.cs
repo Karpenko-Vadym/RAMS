@@ -188,10 +188,33 @@ namespace RAMS.Data.Migrations
                 .Index(t => t.Email, unique: true);
             
             CreateTable(
-                "dbo.Archive",
+                "dbo.CandidateArchive",
                 c => new
                     {
-                        ArchiveId = c.Int(nullable: false, identity: true),
+                        CandidateArchiveId = c.Int(nullable: false, identity: true),
+                        PositionId = c.Int(nullable: false),
+                        FirstName = c.String(nullable: false, maxLength: 200),
+                        LastName = c.String(nullable: false, maxLength: 200),
+                        Email = c.String(nullable: false, maxLength: 300),
+                        Country = c.String(nullable: false, maxLength: 100),
+                        PostalCode = c.String(nullable: false, maxLength: 10),
+                        PhoneNumber = c.String(maxLength: 20),
+                        Feedback = c.String(maxLength: 1000),
+                        FileName = c.String(),
+                        MediaType = c.String(),
+                        FileContent = c.Binary(),
+                        Score = c.Int(),
+                        Status = c.Int(nullable: false),
+                        Timestamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
+                    })
+                .PrimaryKey(t => t.CandidateArchiveId);
+            
+            CreateTable(
+                "dbo.PositionArchive",
+                c => new
+                    {
+                        PositionArchiveId = c.Int(nullable: false, identity: true),
+                        PositionId = c.Int(nullable: false),
                         DateCreated = c.DateTime(nullable: false),
                         ExpiryDate = c.DateTime(nullable: false),
                         CloseDate = c.DateTime(),
@@ -211,7 +234,7 @@ namespace RAMS.Data.Migrations
                         Status = c.Int(nullable: false),
                         Timestamp = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
                     })
-                .PrimaryKey(t => t.ArchiveId);
+                .PrimaryKey(t => t.PositionArchiveId);
             
         }
         
@@ -243,7 +266,8 @@ namespace RAMS.Data.Migrations
             DropIndex("dbo.Notifications", new[] { "AgentId" });
             DropIndex("dbo.Admins", new[] { "Email" });
             DropIndex("dbo.Admins", new[] { "UserName" });
-            DropTable("dbo.Archive");
+            DropTable("dbo.PositionArchive");
+            DropTable("dbo.CandidateArchive");
             DropTable("dbo.Clients");
             DropTable("dbo.Categories");
             DropTable("dbo.Positions");

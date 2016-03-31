@@ -63,6 +63,7 @@ namespace RAMS.ViewModels
         [Required]
         [AllowHtml]
         [Display(Name = "Feedback")]
+        [StringLength(1000, ErrorMessage = "The {0} value cannot exceed 1000 characters.")]
         public string Feedback { get; set; }
 
         public string FileName { get; set; }

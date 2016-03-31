@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace RAMS.Data.Repositories
 {
     /// <summary>
-    /// IArchiveRepository interface declares the Archive specific repository operations
+    /// ICandidateArchiveRepository interface declares the CandidateArchive specific repository operations
     /// </summary>
-    public interface IArchiveRepository : IRepository<Archive> { }
+    public interface ICandidateArchiveRepository : IRepository<CandidateArchive> { }
 }

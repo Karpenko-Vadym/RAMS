@@ -24,7 +24,8 @@ namespace RAMS.Web.Controllers.WebAPI
         private readonly IAgentService AgentService;
         private readonly ICandidateService CandidateService;
         private readonly IInterviewService InterviewService;
-        private readonly IArchiveService ArchiveService;
+        private readonly IPositionArchiveService PositionArchiveService;
+        private readonly ICandidateArchiveService CandidateArchiveService;
 
         /// <summary>
         /// Controller that sets position service in order to access context resources
@@ -34,13 +35,15 @@ namespace RAMS.Web.Controllers.WebAPI
         /// <param name="candidateService">Parameter for setting candidate service</param>
         /// <param name="interviewService">Parameter for setting interview service</param>
         /// <param name="archiveService">Parameter for setting archive service</param>
-        public PositionController(IPositionService positionService, IAgentService agentService, ICandidateService candidateService, IInterviewService interviewService, IArchiveService archiveService)
+        /// <param name="candidateArchiveService">Parameter for setting candidate archive service</param>
+        public PositionController(IPositionService positionService, IAgentService agentService, ICandidateService candidateService, IInterviewService interviewService, IPositionArchiveService positionArchiveService, ICandidateArchiveService candidateArchiveService)
         {
             this.PositionService = positionService;
             this.AgentService = agentService;
             this.CandidateService = candidateService;
             this.InterviewService = interviewService;
-            this.ArchiveService = archiveService;
+            this.PositionArchiveService = positionArchiveService;
+            this.CandidateArchiveService = candidateArchiveService;
         }
 
         /// <summary>
@@ -380,12 +383,15 @@ namespace RAMS.Web.Controllers.WebAPI
 
                         if(position != null)
                         {
-                            this.ArchiveService.CreateArchivePosition(Mapper.Map<Position, Archive>(position));
+                            this.PositionArchiveService.CreateArchivePosition(Mapper.Map<Position, PositionArchive>(position));
 
                             if(!Utilities.IsEmpty(position.Candidates))
                             {
                                 foreach (var candidate in position.Candidates.ToList())
                                 {
+                                    this.CandidateArchiveService.CreateCandidateArchive(Mapper.Map<Candidate, CandidateArchive>(candidate));
+
+
                                     if (!Utilities.IsEmpty(candidate.Interviews))
                                     {
                                         foreach (var interview in candidate.Interviews.ToList())
@@ -399,7 +405,7 @@ namespace RAMS.Web.Controllers.WebAPI
 
                                     this.CandidateService.DeleteCandidate(candidate);
 
-                                    this.CandidateService.SaveChanges();
+                                    
                                 }
                             }
 
@@ -409,7 +415,9 @@ namespace RAMS.Web.Controllers.WebAPI
                     }
 
                     this.PositionService.SaveChanges();
-                    this.ArchiveService.SaveChanges();
+                    this.CandidateService.SaveChanges();
+                    this.PositionArchiveService.SaveChanges();
+                    this.CandidateArchiveService.SaveChanges();
                 }
                 catch (DbUpdateException ex)
                 {

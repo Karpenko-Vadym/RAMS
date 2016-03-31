@@ -7,11 +7,13 @@ using System.Web;
 namespace RAMS.Models
 {
     /// <summary>
-    /// Archive represent archived job posting
+    /// PositionArchive represent archived job posting
     /// </summary>
-    public class Archive : BaseEntity
+    public class PositionArchive : BaseEntity
     {
-        public int ArchiveId { get; set; }
+        public int PositionArchiveId { get; set; }
+
+        public int PositionId { get; set; }
 
         public DateTime DateCreated { get; set; }
 

@@ -16,7 +16,7 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr class="cursor-pointer" data-toggle="modal" data-target="#change-notification-status-modal" data-notification-id="@item.NotificationId" data-notification-title="@item.Title" data-notification-status="@((item.Status == RAMS.Enums.NotificationStatus.Read) ? RAMS.Enums.NotificationStatus.Unread : RAMS.Enums.NotificationStatus.Read)">
+                <tr class="cursor-pointer" data-toggle="modal" data-backdrop="static" data-target="#change-notification-status-modal" data-notification-id="@item.NotificationId" data-notification-title="@item.Title" data-notification-status="@((item.Status == RAMS.Enums.NotificationStatus.Read) ? RAMS.Enums.NotificationStatus.Unread : RAMS.Enums.NotificationStatus.Read)">
                     <td>@item.Title</td>
                     <td>@item.Details</td>
                     <td class="text-center"><span class="label @((item.Status == RAMS.Enums.NotificationStatus.Read) ? "label-success" : "label-danger")">@item.Status</span></td>

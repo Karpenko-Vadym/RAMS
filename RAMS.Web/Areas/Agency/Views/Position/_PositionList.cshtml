@@ -18,7 +18,7 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr class="cursor-pointer" data-toggle="modal" data-target="#edit-position-modal" data-position-id="@item.PositionId" data-position-title="@item.Title">
+                    <tr class="cursor-pointer" data-toggle="modal" data-backdrop="static" data-target="#edit-position-modal" data-position-id="@item.PositionId" data-position-title="@item.Title">
                         <td>@item.PositionIdForDisplay</td>
                         <td>@item.Title</td>
                         @if (item.ExpiryDate < DateTime.UtcNow && item.Status != RAMS.Enums.PositionStatus.Closed)
@@ -57,7 +57,7 @@ else
 {
     <div class="well well-lg bottom-margin-0 background-white">
         <div class="alert alert-danger bottom-margin-0" role="alert">
-            <span>Oh no! <br /> There is no data available.</span>
+            <span>Positions data is not available.</span>
         </div>
     </div>
 }

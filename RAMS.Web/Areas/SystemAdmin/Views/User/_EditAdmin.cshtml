@@ -16,25 +16,25 @@
 {
     <div class="btn-group btn-group-justified" role="group">
         <div class="btn-group" role="group">
-            <input type="button" class="btn btn-info" data-user-name="@Model.UserName" data-user-type="@Model.UserType" data-email="@Model.Email" data-first-name="@Model.FirstName" data-toggle="modal" data-target="#reset-password-modal" value="Reset Password" />
+            <input type="button" class="btn btn-info" data-user-name="@Model.UserName" data-user-type="@Model.UserType" data-email="@Model.Email" data-first-name="@Model.FirstName" data-toggle="modal" data-backdrop="static" data-target="#reset-password-modal" value="Reset Password" />
         </div>
         @if (@Model.UserStatus == RAMS.Enums.UserStatus.Blocked)
         {
             <script type="text/javascript">$(function () { DisableEditForm(); });</script>
 
             <div class="btn-group" role="group">
-                <input id="unblock-user-button" type="button" class="btn btn-danger" data-user-name="@Model.UserName" data-user-type="@Model.UserType" data-action="unblock" data-toggle="modal" data-target="#block-delete-user-modal" value="Unblock User" />
+                <input id="unblock-user-button" type="button" class="btn btn-danger" data-user-name="@Model.UserName" data-user-type="@Model.UserType" data-action="unblock" data-toggle="modal" data-backdrop="static" data-target="#block-delete-user-modal" value="Unblock User" />
             </div>
         }
         else
         {
             <div class="btn-group" role="group">
-                <input type="button" class="btn btn-danger" data-user-name="@Model.UserName" data-user-type="@Model.UserType" data-action="block" data-toggle="modal" data-target="#block-delete-user-modal" value="Block User" />
+                <input type="button" class="btn btn-danger" data-user-name="@Model.UserName" data-user-type="@Model.UserType" data-action="block" data-toggle="modal" data-backdrop="static" data-target="#block-delete-user-modal" value="Block User" />
             </div>
         }
 
         <div class="btn-group" role="group">
-            <input type="button" class="btn btn-danger" data-user-name="@Model.UserName" data-user-type="@Model.UserType" data-action="delete" data-toggle="modal" data-target="#block-delete-user-modal" value="Delete User" />
+            <input type="button" class="btn btn-danger" data-user-name="@Model.UserName" data-user-type="@Model.UserType" data-action="delete" data-toggle="modal" data-backdrop="static" data-target="#block-delete-user-modal" value="Delete User" />
         </div>
     </div>
 

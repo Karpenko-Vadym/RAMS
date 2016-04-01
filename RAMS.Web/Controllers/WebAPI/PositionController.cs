@@ -34,7 +34,7 @@ namespace RAMS.Web.Controllers.WebAPI
         /// <param name="agentService">Parameter for setting agent service</param>
         /// <param name="candidateService">Parameter for setting candidate service</param>
         /// <param name="interviewService">Parameter for setting interview service</param>
-        /// <param name="archiveService">Parameter for setting archive service</param>
+        /// <param name="positionArchiveService">Parameter for setting position archive service</param>
         /// <param name="candidateArchiveService">Parameter for setting candidate archive service</param>
         public PositionController(IPositionService positionService, IAgentService agentService, ICandidateService candidateService, IInterviewService interviewService, IPositionArchiveService positionArchiveService, ICandidateArchiveService candidateArchiveService)
         {

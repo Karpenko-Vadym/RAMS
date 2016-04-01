@@ -29,7 +29,7 @@ function OnAjaxComplete(request, status) // Status represents the status of the 
     
 }
 
-
+// Following snippet allows to display loading indicator on Ajax calls
 $(document).ajaxStart(function () { $.isLoading({ text: "Loading" }); }).ajaxStop(function () { $.isLoading("hide"); });
 
 // Generate random strings with provided string length and allowed characters (If allowed characters are not provided default characters are used)
@@ -124,16 +124,19 @@ function ProfilePictureUpload()
     });
 }
 
+// setDatepicker method sets a datepicker to the field with "datepicker-field" class
 function setDatepicker()
 {
     $(".datepicker-field").datepicker();
 }
 
+// DisableInput method disables input fields for specified div
 function DisableInput(divId)
 {
     $("#" + divId + " :input").attr("disabled", true);
 }
 
+// DisableDeleteButton method disables delete button when none of the checkboxes are selected (Only for superuser)
 function DisableDeleteButton()
 {
     $("#delete-position-button").prop("disabled", true);
@@ -149,6 +152,7 @@ function DisableDeleteButton()
     $(".delete-position-selector").change();
 }
 
+// ToggleCheckboxes method toggles all check boxes on or off
 function ToggleCheckboxes()
 {
     if ($("#delete-position-select-all").val() == "Select All")
@@ -167,6 +171,7 @@ function ToggleCheckboxes()
     DisableDeleteButton();
 }
 
+// CKEditorInit method allows to restrict the input length for CKEditor
 function CKEditorInit(CKEditorInstance, maxLength)
 {
     var locked;
@@ -204,8 +209,7 @@ function CKEditorInit(CKEditorInstance, maxLength)
     }
 }
 
-
-
+// AdjustNumberField method allows to only input specified range into number input field
 function AdjustNumberField(fieldObject, minRange, maxRange)
 {
     if(fieldObject.value > maxRange)
@@ -220,6 +224,7 @@ function AdjustNumberField(fieldObject, minRange, maxRange)
     }
 }
 
+// isNumberKey method allows only numeric values to be entered into the input field
 function isNumberKey(evt)
 {
     var charCode;
@@ -383,6 +388,11 @@ function CustomerModalControls()
     $("#candidate-report-modal").on("show.bs.modal", function (e) { $("#candidate-report-modal-title").text("Candidate Report - " + $(e.relatedTarget).data("candidate-name")); LoadAction("candidate-report-modal-body-div", "/RAMS/Customer/Report/CandidateReport?candidateId=" + $(e.relatedTarget).data("candidate-id")); });
 
     $("#candidate-report-modal").on("hidden.bs.modal", function (e) { $("#candidate-report-modal-body-div").empty(); });
+
+    $("#suspend-position-modal").on("show.bs.modal", function (e) { LoadAction("suspend-position-modal-body-div", "/RAMS/Customer/Position/SuspendPosition?positionId=" + $(e.relatedTarget).data("position-id") + "&positionTitle=" + encodeURIComponent($(e.relatedTarget).data("position-title"))); });
+
+    $("#suspend-position-modal").on("hidden.bs.modal", function (e) { $("#suspend-position-modal-body-div").empty(); });
+
 }
 
 /********** END OF CUSTOMER MODAL CONTROLS **********/
@@ -419,6 +429,10 @@ function AgencyModalControls()
     $("#approve-position-modal").on("show.bs.modal", function (e) { LoadAction("approve-position-modal-body-div", "/RAMS/Agency/Position/ApprovePosition?positionId=" + $(e.relatedTarget).data("position-id") + "&positionTitle=" + encodeURIComponent($(e.relatedTarget).data("position-title"))); });
 
     $("#approve-position-modal").on("hidden.bs.modal", function (e) { $("#approve-position-modal-body-div").empty(); });
+
+    $("#unsuspend-position-modal").on("show.bs.modal", function (e) { LoadAction("unsuspend-position-modal-body-div", "/RAMS/Agency/Position/UnsuspendPosition?positionId=" + $(e.relatedTarget).data("position-id") + "&positionTitle=" + encodeURIComponent($(e.relatedTarget).data("position-title"))); });
+
+    $("#unsuspend-position-modal").on("hidden.bs.modal", function (e) { $("#unsuspend-position-modal-body-div").empty(); });
 
     $("#close-position-modal").on("show.bs.modal", function (e) { LoadAction("close-position-modal-body-div", "/RAMS/Agency/Position/ClosePosition?positionId=" + $(e.relatedTarget).data("position-id") + "&positionTitle=" + encodeURIComponent($(e.relatedTarget).data("position-title"))); });
 
@@ -487,6 +501,13 @@ function CheckTableRadioButton(obj)
 
 /********** END OF AGENCY FUNCTIONS ***********/
 
+
+/************** CLIENT FUNCTIONS **************/
+function RefreshPositionDetails(positionId) {
+    LoadAction("position-details-modal-body-div", "/RAMS/Customer/Position/PositionDetails?positionId=" + positionId);
+}
+
+/********** END OF CLIENT FUNCTIONS ***********/
 
 /****************** MODAL UTILITIES *****************/
 // Fixes the issue with modal overflow in cases with multiple modals on one screen

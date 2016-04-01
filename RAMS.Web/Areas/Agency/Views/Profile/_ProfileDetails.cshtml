@@ -21,17 +21,17 @@
 
             @if (String.IsNullOrEmpty(profilePictureUrl))
             {
-                <input type="button" class="btn btn-info btn-block" data-action="upload" data-toggle="modal" data-target="#upload-change-profile-picture-modal" value="Upload Picture" />
+                <input type="button" class="btn btn-info btn-block" data-action="upload" data-toggle="modal" data-backdrop="static" data-target="#upload-change-profile-picture-modal" value="Upload Picture" />
             }
             else
             {
                 <div class="btn-group btn-group-justified" role="group">
                     <div class="btn-group" role="group">
-                        <input type="button" class="btn btn-info" data-action="change" data-toggle="modal" data-target="#upload-change-profile-picture-modal" value="Change" />
+                        <input type="button" class="btn btn-info" data-action="change" data-toggle="modal" data-backdrop="static" data-target="#upload-change-profile-picture-modal" value="Change" />
                     </div>
 
                     <div class="btn-group" role="group">
-                        <input type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-profile-picture-modal" value="Delete" />
+                        <input type="button" class="btn btn-danger" data-toggle="modal" data-backdrop="static" data-target="#delete-profile-picture-modal" value="Delete" />
                     </div>
                 </div>
             }

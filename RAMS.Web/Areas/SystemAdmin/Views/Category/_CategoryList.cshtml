@@ -14,7 +14,7 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr class="cursor-pointer" data-toggle="modal" data-target="#edit-category-modal" data-category-id="@item.CategoryId" data-category-name="@item.Name">
+                    <tr class="cursor-pointer" data-toggle="modal" data-backdrop="static" data-target="#edit-category-modal" data-category-id="@item.CategoryId" data-category-name="@item.Name">
                         <td>@item.CategoryIdForDisplay</td>
                         <td>@item.Name</td>
                         <td>@item.NumOfPositions</td>
@@ -30,7 +30,7 @@ else
 {
     <div class="well well-lg bottom-margin-0 background-white">
         <div class="alert alert-danger bottom-margin-0" role="alert">
-            <span>Oh no! <br /> There is no data available.</span>
+            <span>Category data is not available.</span>
         </div>
     </div>
 }

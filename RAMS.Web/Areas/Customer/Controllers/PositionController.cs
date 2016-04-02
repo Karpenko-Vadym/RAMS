@@ -323,9 +323,7 @@ namespace RAMS.Web.Areas.Customer.Controllers
                         {
                             stringBuilder.Append("<div class='text-center'><h4><strong>Position has been suspended successfully!</strong></h4></div>");
 
-                            stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Position is no longer available on the job portal.</div>");
-
-                            stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> Details of this position can be modified at anytime, unless position is closed.</div></div>");
+                            stringBuilder.Append("<div class='text-center'><strong>NOTE:</strong> Position is no longer available on the job portal.</div>");
 
                             positionResultViewModel.Message = stringBuilder.ToString();
 

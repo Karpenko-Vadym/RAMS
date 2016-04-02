@@ -71,7 +71,7 @@
     {
         <div class="btn-group btn-group-justified" role="group">
 
-            @if (Model.Status == RAMS.Enums.PositionStatus.New)
+            @if (Model.Status == RAMS.Enums.PositionStatus.New && Model.Status != RAMS.Enums.PositionStatus.Suspended)
             {
                 <div class="btn-group" role="group">
                     <input type="button" class="btn btn-info" data-toggle="modal" data-backdrop="static" data-target="#approve-position-modal" data-position-id="@Model.PositionId" data-position-title="@Model.Title" value="Approve Position" />
@@ -79,9 +79,12 @@
             }
             else if (Model.Status == RAMS.Enums.PositionStatus.Suspended)
             {
-                <div class="btn-group" role="group">
-                    <input type="button" class="btn btn-info" data-toggle="modal" data-backdrop="static" data-target="#unsuspend-position-modal" data-position-id="@Model.PositionId" data-position-title="@Model.Title" value="Un-Suspend Position" />
-                </div>
+                if (identity.HasClaim("Role", "Manager"))
+                {
+                    <div class="btn-group" role="group">
+                        <input type="button" class="btn btn-info" data-toggle="modal" data-backdrop="static" data-target="#unsuspend-position-modal" data-position-id="@Model.PositionId" data-position-title="@Model.Title" value="Un-Suspend Position" />
+                    </div>
+                }
             }
             
             <div class="btn-group" role="group">
@@ -91,7 +94,7 @@
             @if (identity.HasClaim("Role", "Manager"))
             {
                 <div class="btn-group" role="group">
-                    <input type="button" class="btn btn-info" data-toggle="modal" data-backdrop="static" data-target="#assign-position-modal" data-position-id="@Model.PositionId" data-agent-id="@((Model.AgentId == null) ? 0 : Model.AgentId)" data-position-title="@Model.Title" value="@((Model.AgentId != null && Model.AgentId > 0) ? "Re-Assign" : "Assign")" />
+                    <input type="button" class="btn btn-info" data-toggle="modal" data-backdrop="static" data-target="#assign-position-modal" data-position-id="@Model.PositionId" data-agent-id="@((Model.AgentId == null) ? 0 : Model.AgentId)" data-position-title="@Model.Title" value="@((Model.AgentId != null && Model.AgentId > 0) ? "Re-Assign Position" : "Assign Position")" />
                 </div>
             }
         </div>
@@ -116,6 +119,16 @@
 
             <div class="form-horizontal">
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                @if (Model.Status == RAMS.Enums.PositionStatus.Suspended)
+                {
+                    <div class='alert alert-danger bottom-margin-0' role='alert'>
+                        <div class='text-center'><strong>Position has been suspended by Client.</strong></div>
+                    </div>
+                    
+                    <div class=" vertical-padding-24"></div>
+                }
+
                 <div class="form-group required">
                     @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-7">

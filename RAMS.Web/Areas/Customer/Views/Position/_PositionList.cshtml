@@ -23,15 +23,19 @@
                         <td>@item.Title</td>
                         @if (item.ExpiryDate < DateTime.UtcNow && item.Status != RAMS.Enums.PositionStatus.Closed)
                         {
-                            <td class="text-center"><span class="label label-danger">@item.Status</span></td>
+                            <td class="text-center"><span class="hidden">@((int)item.Status)</span><span class="label label-danger">@item.Status</span></td>
+                        }
+                        else if (item.Status == RAMS.Enums.PositionStatus.Suspended)
+                        {
+                            <td class="text-center"><span class="hidden">@((int)item.Status)</span><span class="hidden">@((int)item.Status)</span><span class="label label-warning">@item.Status</span></td>
                         }
                         else if (item.Status == RAMS.Enums.PositionStatus.Closed)
                         {
-                            <td class="text-center"><span class="label label-default">@item.Status</span></td>
+                            <td class="text-center"><span class="hidden">@((int)item.Status)</span><span class="label label-default">@item.Status</span></td>
                         }
                         else
                         {
-                            <td class="text-center"><span class="label label-success">@item.Status</span></td>
+                            <td class="text-center"><span class="hidden">@((int)item.Status)</span><span class="label label-success">@item.Status</span></td>
                         }
                         <td>@item.CategoryName</td>
                         <td>@item.DateCreated.ToString("dd/MM/yyyy")</td>
@@ -51,7 +55,7 @@
         </table>
     </div>
 
-    <script type="text/javascript">$(function () { LoadDataTable("position-list-table") });</script>
+    <script type="text/javascript">$(function () { LoadDataTable("position-list-table", [[10, 15, 20, 25], [10, 15, 20, 25]], [[2, "asc"]]) });</script>
 }
 else
 {

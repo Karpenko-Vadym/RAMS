@@ -115,6 +115,7 @@
             @Html.HiddenFor(model => model.DateCreated)
             @Html.HiddenFor(model => model.Status)
             @Html.HiddenFor(model => model.ClientId)
+            @Html.HiddenFor(model => model.AgentId)
             @Html.HiddenFor(model => model.Timestamp)
 
             <div class="form-horizontal">
@@ -123,7 +124,7 @@
                 @if (Model.Status == RAMS.Enums.PositionStatus.Suspended)
                 {
                     <div class='alert alert-danger bottom-margin-0' role='alert'>
-                        <div class='text-center'><strong>Position has been suspended by Client.</strong></div>
+                        <div class='text-center'><strong>Position has been suspended by client.</strong></div>
                     </div>
                     
                     <div class=" vertical-padding-24"></div>

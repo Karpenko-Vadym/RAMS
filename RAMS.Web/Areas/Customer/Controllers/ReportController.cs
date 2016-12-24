@@ -54,9 +54,7 @@ namespace RAMS.Web.Areas.Customer.Controllers
         {
             var positions = new List<PositionListForReportViewModel>();
 
-            var response = new HttpResponseMessage();
-
-            response = await this.GetHttpClient().GetAsync("Position");
+            var response = await this.GetHttpClient().GetAsync(String.Format("Position?clientName={0}", User.Identity.Name));
 
             if (response.IsSuccessStatusCode)
             {

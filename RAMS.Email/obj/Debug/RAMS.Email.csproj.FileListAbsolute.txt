@@ -9,3 +9,11 @@ C:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Email\bin\RAMS.Email.pdb
 C:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Email\obj\Debug\RAMS.Email.dll
 C:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Email\obj\Debug\RAMS.Email.pdb
 C:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Email\obj\Debug\RAMS.Email.csprojResolveAssemblyReference.cache
+C:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Email\bin\RAMS.Email.dll.config
+C:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Email\bin\RAMS.Email.dll
+C:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Email\bin\RAMS.Email.pdb
+C:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Email\bin\RAMS.Helpers.dll
+C:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Email\bin\RAMS.Helpers.pdb
+C:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Email\obj\Debug\RAMS.Email.csprojResolveAssemblyReference.cache
+C:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Email\obj\Debug\RAMS.Email.dll
+C:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Email\obj\Debug\RAMS.Email.pdb

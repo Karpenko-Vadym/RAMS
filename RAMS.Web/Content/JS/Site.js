@@ -499,6 +499,11 @@ function CheckTableRadioButton(obj)
     $(obj).find("td input:radio").prop("checked", true);
 }
 
+function EnableButton(buttonId)
+{
+    $("#" + buttonId).prop("disabled", false);
+}
+
 /********** END OF AGENCY FUNCTIONS ***********/
 
 

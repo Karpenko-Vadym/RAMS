@@ -21,6 +21,9 @@ namespace RAMS.Data
         public DataContext() : base("RAMSConnection") // Pass the name of the connection to the base (DbContext) class
         {
             this.Configuration.LazyLoadingEnabled = false;
+
+            this.Configuration.ProxyCreationEnabled = false;
+
         } 
 
         public DbSet<Candidate> Candidates { get; set; } // Database setter and getter for Candidate class

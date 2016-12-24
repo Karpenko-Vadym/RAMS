@@ -22,13 +22,17 @@ namespace RAMS.Web.Controllers.WebAPI
     {
         private readonly ICandidateService CandidateService;
 
+        private readonly IInterviewService InterviewService;
+
         /// <summary>
         /// Controller that sets candidate service in order to access context resources
         /// </summary>
         /// <param name="candidateService">Parameter for setting candidate service</param>
-        public CandidateController(ICandidateService candidateService)
+        /// <param name="interviewService">Parameter for setting interview service</param>
+        public CandidateController(ICandidateService candidateService, IInterviewService interviewService)
         {
             this.CandidateService = candidateService;
+            this.InterviewService = interviewService;
         }
 
         /// <summary>
@@ -195,16 +199,18 @@ namespace RAMS.Web.Controllers.WebAPI
 
                 if (candidate != null)
                 {
-                    if (feedback == candidate.Feedback)
+                    if (feedback != candidate.Feedback)
                     {
-                        return Ok(candidate);
+                        candidate.Feedback = feedback;
                     }
-
-                    candidate.Feedback = feedback;
 
                     if(isInterviewed)
                     {
                         candidate.Status = Enums.CandidateStatus.Interviewed;
+                        
+                        var interview = this.InterviewService.GetOneInterviewById(candidate.Interviews.FirstOrDefault().InterviewId);
+
+                        interview.Status = Enums.InterviewStatus.Complete;
                     }
 
                     this.CandidateService.UpdateCandidate(candidate);
@@ -212,6 +218,7 @@ namespace RAMS.Web.Controllers.WebAPI
                     try
                     {
                         this.CandidateService.SaveChanges();
+                        this.InterviewService.SaveChanges();
                     }
                     catch (DbUpdateConcurrencyException ex)
                     {

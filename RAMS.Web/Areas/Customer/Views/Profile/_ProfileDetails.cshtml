@@ -19,7 +19,7 @@
 
             <div class="vertical-padding-24"></div>
 
-            @if (String.IsNullOrEmpty(profilePictureUrl))
+            @if (String.IsNullOrEmpty(profilePictureUrl) || profilePictureUrl.Contains("NoImage.jpg"))
             {
                 <input type="button" class="btn btn-info btn-block" data-action="upload" data-toggle="modal" data-backdrop="static" data-target="#upload-change-profile-picture-modal" value="Upload Picture" />
             }

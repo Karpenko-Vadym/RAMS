@@ -179,6 +179,7 @@ namespace RAMS.Web.Controllers.WebAPI
                 interview.CandidateId = candidateId;
                 interview.InterviewDate = Convert.ToDateTime(selectedDate);
                 interview.InterviewerId = this.AgentService.GetOneAgentByUserName(agentUserName).AgentId;
+                interview.Status = Enums.InterviewStatus.Scheduled;
 
                 this.InterviewService.CreateInterview(interview);
 

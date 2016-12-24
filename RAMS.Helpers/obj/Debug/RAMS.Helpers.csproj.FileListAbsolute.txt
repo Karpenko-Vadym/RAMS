@@ -17,3 +17,8 @@ C:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Helpers\bin\Debug\RAMS.H
 C:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Helpers\obj\Debug\RAMS.Helpers.dll
 C:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Helpers\obj\Debug\RAMS.Helpers.pdb
 C:\Users\at0mic\Desktop\School\PRJ666\Project\RAMS\RAMS.Helpers\obj\Debug\RAMS.Helpers.csprojResolveAssemblyReference.cache
+C:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Helpers\bin\Debug\RAMS.Helpers.dll
+C:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Helpers\bin\Debug\RAMS.Helpers.pdb
+C:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Helpers\obj\Debug\RAMS.Helpers.dll
+C:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Helpers\obj\Debug\RAMS.Helpers.pdb
+C:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Helpers\obj\Debug\RAMS.Helpers.csprojResolveAssemblyReference.cache

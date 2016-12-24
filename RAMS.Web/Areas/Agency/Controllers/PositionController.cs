@@ -326,7 +326,9 @@ namespace RAMS.Web.Areas.Agency.Controllers
 
                 try
                 {
-                    response = await this.GetHttpClient().PutAsync(String.Format("Candidate?candidateId={0}&feedback={1}&isInterviewed={2}", model.CandidateId, model.Feedback, model.IsInterviewed), null); // Attempt to update the feedback
+                    var url = String.Format("Candidate?candidateId={0}&feedback={1}&isInterviewed={2}", model.CandidateId, Server.UrlEncode(model.Feedback), model.IsInterviewed);
+
+                    response = await this.GetHttpClient().PutAsync(url, null); // Attempt to update the feedback
 
                     if (response.IsSuccessStatusCode)
                     {
@@ -768,7 +770,7 @@ namespace RAMS.Web.Areas.Agency.Controllers
 
             if (response.IsSuccessStatusCode)
             {
-                positionAssignViewModel.Agents.AddRange(Mapper.Map<List<Agent>, List<AgentAssignPositionViewModel>>(await response.Content.ReadAsAsync<List<Agent>>()));
+                positionAssignViewModel.Agents.AddRange(Mapper.Map<List<Agent>, List<AgentAssignPositionViewModel>>((await response.Content.ReadAsAsync<List<Agent>>()).Where(a => a.UserStatus == UserStatus.Active).ToList()));
 
                 return PartialView("_AssignPosition", positionAssignViewModel);
             }
@@ -951,7 +953,7 @@ namespace RAMS.Web.Areas.Agency.Controllers
                     {
                         var interview = await response.Content.ReadAsAsync<Interview>();
 
-                        var notification = Mapper.Map<NotificationAddViewModel, Notification>(new NotificationAddViewModel("Interview Scheduling Confirmation", String.Format("Interview with '{0}' ({1}) has been successfully scheduled on {2}.", String.Format("{0} {1}", interview.Candidate.FirstName, interview.Candidate.LastName), interview.Candidate.CandidateId.ToString("CAN00000"), String.Format("{0} at {1}", interview.InterviewDate.ToString("dddd, MMMM dd, yyyy"), interview.InterviewDate.ToString("hh:mm tt"))), interview.Interviewer.AgentId));
+                        var notification = Mapper.Map<NotificationAddViewModel, Notification>(new NotificationAddViewModel("Interview Scheduling Confirmation", String.Format("Interview with '{0}' ({1}) has been successfully scheduled on {2}.", String.Format("{0} {1}", interview.Candidate.FirstName, interview.Candidate.LastName), interview.Candidate.CandidateId.ToString("CAN00000"), String.Format("{0} at {1}", interview.InterviewDate.ToString("dddd, MMMM dd, yyyy", new CultureInfo("en-US")), interview.InterviewDate.ToString("hh:mm tt"))), interview.Interviewer.AgentId));
 
                         response = await this.GetHttpClient().PostAsJsonAsync("Notification", notification); // Attempt to persist notification to the data context
 
@@ -965,7 +967,7 @@ namespace RAMS.Web.Areas.Agency.Controllers
 
                         var message = System.IO.File.ReadAllText(template);
 
-                        message = message.Replace("%name%", interview.Candidate.FirstName).Replace("%datetime%", String.Format("{0} at {1}", interview.InterviewDate.ToString("dddd, MMMM dd, yyyy"), interview.InterviewDate.ToString("hh:mm tt"))).Replace("%interviewer%", String.Format("{0} {1}", interview.Interviewer.FirstName, interview.Interviewer.LastName)).Replace("%email%", interview.Interviewer.Email);
+                        message = message.Replace("%name%", interview.Candidate.FirstName).Replace("%datetime%", String.Format("{0} at {1}", interview.InterviewDate.ToString("dddd, MMMM dd, yyyy", new CultureInfo("en-US")), interview.InterviewDate.ToString("hh:mm tt"))).Replace("%interviewer%", String.Format("{0} {1}", interview.Interviewer.FirstName, interview.Interviewer.LastName)).Replace("%email%", interview.Interviewer.Email);
 
                         // TODO - Change "atomix0x@gmail.com" to the email address of the applicant
                         Email.EmailService.SendEmail("atomix0x@gmail.com", "Your interview has been scheduled.", message); // Send interview confirmation via email

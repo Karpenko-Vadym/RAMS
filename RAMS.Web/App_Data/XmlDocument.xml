@@ -196,9 +196,24 @@
             <param name="positionTitle">Title of the position to be approved</param>
             <returns>_ApprovePosition partial view with prompt of confirmation to approve the position</returns>
         </member>
-        <member name="M:RAMS.Web.Areas.Agency.Controllers.PositionController.ApprovePosition(RAMS.ViewModels.PositionApprovalViewModel)">
+        <member name="M:RAMS.Web.Areas.Agency.Controllers.PositionController.ApprovePosition(RAMS.ViewModels.PositionApprovalSuspendUnsuspentionViewModel)">
             <summary>
             ApprovePosition action method attempts to update position status to approved
+            </summary>
+            <param name="model">Position information required to update position status</param>
+            <returns>_SuccessConfirmation partial view if position status has been updated successfully, _FailureConfirmation partial view otherwise</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Agency.Controllers.PositionController.UnsuspendPosition(System.Int32,System.String)">
+            <summary>
+            UnsuspendPosition action method displays confirmation for position unsuspention in _UnsuspendPosition partial view
+            </summary>
+            <param name="positionId">Id of the position to be unsuspended</param>
+            <param name="positionTitle">Title of the position to be unsuspended</param>
+            <returns>_UnsuspendPosition partial view with prompt of confirmation to unsuspend the position</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Agency.Controllers.PositionController.UnsuspendPosition(RAMS.ViewModels.PositionApprovalSuspendUnsuspentionViewModel)">
+            <summary>
+            UnsuspendPosition action method attempts to update position status to approved (From suspended)
             </summary>
             <param name="model">Position information required to update position status</param>
             <returns>_SuccessConfirmation partial view if position status has been updated successfully, _FailureConfirmation partial view otherwise</returns>
@@ -233,6 +248,29 @@
             </summary>
             <param name="model">Position information required to assign an agent to the position</param>
             <returns>_SuccessConfirmation partial view if an agent has been successfully assigned to the position, _FailureConfirmation partial view otherwise</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Agency.Controllers.PositionController.ScheduleInterview(System.Int32,System.String,System.Boolean)">
+            <summary>
+            ScheduleInterview action method retrieves all the interviews for current user and displays the schedule for the week in _ScheduleInterview partial view
+            </summary>
+            <param name="candidateId">Id of the candidate for whom the interview is being scheduled</param>
+            <param name="displayDate">Schedule is displayed for the week of this date</param>
+            <param name="selected">Indicates whether Candidate has previously scheduled interview</param>
+            <returns>_ScheduleInterview partial view with the schedule for the week</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Agency.Controllers.PositionController.ScheduleInterview(RAMS.ViewModels.InterviewScheduleViewModel)">
+            <summary>
+            ScheduleInterview action method attempts to persist the interview
+            </summary>
+            <param name="model">Data required to persist the interview</param>
+            <returns>_SuccessConfirmation partial view if an interview has been successfully persisted, _FailureConfirmation partial view otherwise</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Agency.Controllers.PositionController.GetResume(System.String)">
+            <summary>
+            GetResume method attempts to fetch candidates resume and return it as s file
+            </summary>
+            <param name="resumeId">Id of the candidate whos resume is being fetched</param>
+            <returns>Resume as a file</returns>
         </member>
         <member name="T:RAMS.Web.Areas.Agency.Controllers.ProfileController">
             <summary>
@@ -294,6 +332,13 @@
             <param name="model">NotificationChangeStatusViewModel view model with information required for updating notification status</param>
             <returns>_Confirmation partial view with success message or failure message depending on the outcome of this method</returns>
         </member>
+        <member name="M:RAMS.Web.Areas.Agency.Controllers.ProfileController.PersonalSchedule(System.String)">
+            <summary>
+            PersonalSchedule action method retrieves all the interviews for current user and displays the schedule for the week in _PersonalSchedule partial view
+            </summary>
+            <param name="displayDate">Schedule is displayed for the week of this date</param>
+            <returns>_PersonalSchedule partial view with the schedule for the week</returns>
+        </member>
         <member name="T:RAMS.Web.Areas.Agency.Controllers.ReportController">
             <summary>
             ReportController implements report related methods
@@ -325,6 +370,13 @@
             </summary>
             <param name="positionId">Id of the position that is being fetched</param>
             <returns>_PositionFinalReport partial view with position details</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Agency.Controllers.ReportController.CandidateReport(System.Int32)">
+            <summary>
+            CandidateReport action method gets requested candidate's details and passes it to _CandidateReport partial view
+            </summary>
+            <param name="candidateId">Id of the candidate that is being fetched</param>
+            <returns>_CandidateReport partial view with candidate details</returns>
         </member>
         <member name="T:RAMS.Web.Areas.Customer.Controllers.HomeController">
             <summary>
@@ -369,6 +421,21 @@
             <param name="model">Position information required persist position to the data context</param>
             <returns>_PositionConfirmation partial view if position has been persisted successfully, _Error partial view otherwise</returns>
         </member>
+        <member name="M:RAMS.Web.Areas.Customer.Controllers.PositionController.SuspendPosition(System.Int32,System.String)">
+            <summary>
+            SuspendPosition action method displays confirmation for position suspention in _SuspendPosition partial view
+            </summary>
+            <param name="positionId">Id of the position to be unsuspended</param>
+            <param name="positionTitle">Title of the position to be unsuspended</param>
+            <returns>_SuspendPosition partial view with prompt of confirmation to unsuspend the position</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Customer.Controllers.PositionController.SuspendPosition(RAMS.ViewModels.PositionApprovalSuspendUnsuspentionViewModel)">
+            <summary>
+            SuspendPosition action method attempts to update position status to suspended
+            </summary>
+            <param name="model">Position information required to update position status</param>
+            <returns>_SuccessConfirmation partial view if position status has been updated successfully, _FailureConfirmation partial view otherwise</returns>
+        </member>
         <member name="M:RAMS.Web.Areas.Customer.Controllers.PositionController.PositionDetails(System.Int32)">
             <summary>
             PositionDetails action method retrieves the details of the position and passes it to _PositionDetails partial view
@@ -393,6 +460,13 @@
             </summary>
             <param name="model">Information required to create notification</param>
             <returns>_SuccessConfirmation partial view if notification was created successfully, _FailureConfirmation otherwise</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Customer.Controllers.PositionController.GetResume(System.String)">
+            <summary>
+            GetResume method attempts to fetch candidates resume and return it as s file
+            </summary>
+            <param name="resumeId">Id of the candidate whos resume is being fetched</param>
+            <returns>Resume as a file</returns>
         </member>
         <member name="T:RAMS.Web.Areas.Customer.Controllers.ProfileController">
             <summary>
@@ -465,6 +539,33 @@
             User will be redirected to appropriate location depending on his/her UserType if user does not belong to this area
             </summary>
             <returns>Main view of Report controller</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Customer.Controllers.ReportController.PositionList">
+            <summary>
+            PositionList action method gets the list of all the positions and passes it to _PositionList partial view
+            </summary>
+            <returns>_PositionList partial view with the list of all the positions</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Customer.Controllers.ReportController.PositionStatusReport(System.Int32)">
+            <summary>
+            PositionStatusReport action method gets requested position's details and passes it to _PositionStatusReport partial view
+            </summary>
+            <param name="positionId">Id of the position that is being fetched</param>
+            <returns>_PositionStatusReport partial view with position details</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Customer.Controllers.ReportController.PositionFinalReport(System.Int32)">
+            <summary>
+            PositionFinalReport action method gets requested position's details and passes it to _PositionFinalReport partial view
+            </summary>
+            <param name="positionId">Id of the position that is being fetched</param>
+            <returns>_PositionFinalReport partial view with position details</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Customer.Controllers.ReportController.CandidateReport(System.Int32)">
+            <summary>
+            CandidateReport action method gets requested candidate's details and passes it to _CandidateReport partial view
+            </summary>
+            <param name="candidateId">Id of the candidate that is being fetched</param>
+            <returns>_CandidateReport partial view with candidate details</returns>
         </member>
         <member name="M:RAMS.Web.Areas.HelpPage.ApiDescriptionExtensions.GetFriendlyId(System.Web.Http.Description.ApiDescription)">
             <summary>
@@ -943,6 +1044,78 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
+        <member name="T:RAMS.Web.Areas.Print.Controllers.HomeController">
+            <summary>
+            HomeController implements print related methods
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Areas.Print.Controllers.HomeController.Index">
+            <summary>
+            Index action method will be called as soon as user navigates (Or gets redirected) to Print area by it's root URL
+            User will be redirected to appropriate location depending on his/her UserType
+            </summary>
+            <returns>Redirected to appropriate location depending on his/her UserType</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Print.Controllers.HomeController.PositionStatusReport(System.String)">
+            <summary>
+            PositionStatusReportPrint action method gets requested position's details and passes it to PositionStatusReportPrint view
+            </summary>
+            <param name="positionId">Id of the position that is being fetched</param>
+            <returns>PositionStatusReportPrint view with position details</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.Print.Controllers.HomeController.PositionFinalReport(System.String)">
+            <summary>
+            PositionFinalReportPrint action method gets requested position's details and passes it to PositionFinalReportPrint view
+            </summary>
+            <param name="positionId">Id of the position that is being fetched</param>
+            <returns>PositionFinalReportPrint view with position details</returns>
+        </member>
+        <member name="T:RAMS.Web.Areas.SystemAdmin.Controllers.CategoryController">
+            <summary>
+            CategoryController controller implements CRUD operations for categories
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.CategoryController.Index">
+            <summary>
+            Index action method will be called as soon as user navigates (Or gets redirected) to /RAMS/Category
+            This method displays the main view where all category related CRUD operations take place 
+            User will be redirected to appropriate location depending on his/her UserType if user does not belong to this area
+            </summary>
+            <returns>Main view where all category related CRUD operations take place</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.CategoryController.CategoryList">
+            <summary>
+            CategoryList method gets the list of all categories and passess it to _CategoryList partial view
+            </summary>
+            <returns>_CategoryList partial view with a list of categories as it's model</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.CategoryController.NewCategory">
+            <summary>
+            NewCategory method returns _NewCategory partial view
+            </summary>
+            <returns>_NewCategory partial view</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.CategoryController.NewCategory(RAMS.ViewModels.CategoryAddViewModel)">
+            <summary>
+            NewCategory method validates the model and attempts to persist it database if model state is valid
+            </summary>
+            <param name="model">Model containing properties required for creating new category</param>
+            <returns>If model state is not valid, re-displays _NewCategory partial view with an input form and an error message. Otherwise returns success message or error message depending on the outcome of this method</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.CategoryController.EditCategory(System.Int32)">
+            <summary>
+            EditCategory method retrieves one category by it's id and displays it's information in _EditCategory partial view
+            </summary>
+            <param name="id">Id of the category to be retrieved</param>
+            <returns>_EditCategory partial view with details of retrieved category if category information could be retrieved, otherwise an error message</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.CategoryController.EditCategory(RAMS.ViewModels.CategoryEditViewModel)">
+            <summary>
+            EditCategory method validates the model and attempts to persist it database if model state is valid
+            </summary>
+            <param name="model">Model containing properties required for editing existing category</param>
+            <returns>If model state is not valid, re-displays _EditCategory partial view with an input form and an error message. Otherwise returns success message or error message depending on the outcome of this method</returns>
+        </member>
         <member name="T:RAMS.Web.Areas.SystemAdmin.Controllers.DepartmentController">
             <summary>
             DepartmentController controller implements CRUD operations for departments
@@ -950,7 +1123,7 @@
         </member>
         <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.DepartmentController.Index">
             <summary>
-            Index action method will be called as soon as user navigates (Or gets redirected) to /RAMS/Departments
+            Index action method will be called as soon as user navigates (Or gets redirected) to /RAMS/Department
             This method displays the main view where all department related CRUD operations take place 
             User will be redirected to appropriate location depending on his/her UserType if user does not belong to this area
             </summary>
@@ -1000,6 +1173,45 @@
             User will be redirected to Index method of Profile controller if user's UserType is Admin, otherwise user will be redirected to appropriate location depending on his/her UserType
             </summary>
             <returns>Redirects to Index method of Profile controller if user's UserType is Admin, otherwise user will be redirected to appropriate location depending on his/her UserType</returns>
+        </member>
+        <member name="T:RAMS.Web.Areas.SystemAdmin.Controllers.PositionController">
+            <summary>
+            PositionController implements position related methods
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.PositionController.Index">
+            <summary>
+            Default action method that returns main view of Profile controller
+            User will be redirected to appropriate location depending on his/her UserType if user does not belong to this area
+            </summary>
+            <returns>Main view of Position controller</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.PositionController.PositionDelete(System.Int32)">
+            <summary>
+            PositionDelete action method gets the list of all the positions and passes it to _PositionDelete partial view
+            </summary>
+            <param name="months">Number of months after position has been closed</param>
+            <returns>_PositionDelete partial view with the list of all the positions</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.PositionController.PositionDelete(System.Int32[])">
+            <summary>
+            PositionDelete action method attempts to archive and delete selected Positions
+            </summary>
+            <param name="selectedIds">Ids of the Positions to be archived/deleted</param>
+            <returns>_SuccessConfirmation partial view upon success, _SelectionFailureConfirmation or _FailureConfirmation otherwise</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.PositionController.PositionDeleteConfirmation">
+            <summary>
+            PositionDeleteConfirmation action method is a getter for _PositionDeleteConfirmation partial view
+            </summary>
+            <returns>_PositionDeleteConfirmation partial view</returns>
+        </member>
+        <member name="M:RAMS.Web.Areas.SystemAdmin.Controllers.PositionController.PositionDetails(System.Int32)">
+            <summary>
+            PositionDetails action method retrieves the details of the position and passes it to _PositionDetails partial view
+            </summary>
+            <param name="positionId">Id of the position which details are being fetched</param>
+            <returns>_PositionDetails partial view with the details for the position</returns>
         </member>
         <member name="T:RAMS.Web.Areas.SystemAdmin.Controllers.ProfileController">
             <summary>
@@ -1272,6 +1484,16 @@
         <member name="M:RAMS.Web.Configuration.AutoMapperConfiguration.Configure">
             <summary>
             Configure method is called when application starts and allows to setup custom mappings for AutoMapper
+            </summary>
+        </member>
+        <member name="T:RAMS.Web.Configuration.ModelToModelMapping">
+            <summary>
+            ModelToModelMapping profile allows to configure domain model to model mapping
+            </summary>
+        </member>
+        <member name="M:RAMS.Web.Configuration.ModelToModelMapping.Configure">
+            <summary>
+            Configure method contains detailed configuration of each mapping 
             </summary>
         </member>
         <member name="T:RAMS.Web.Configuration.ModelToViewModelMapping">
@@ -1594,11 +1816,12 @@
             CandidateController is an api controller that allows to access context resources by sending http requests and responces
             </summary>
         </member>
-        <member name="M:RAMS.Web.Controllers.WebAPI.CandidateController.#ctor(RAMS.Service.ICandidateService)">
+        <member name="M:RAMS.Web.Controllers.WebAPI.CandidateController.#ctor(RAMS.Service.ICandidateService,RAMS.Service.IInterviewService)">
             <summary>
             Controller that sets candidate service in order to access context resources
             </summary>
             <param name="candidateService">Parameter for setting candidate service</param>
+            <param name="interviewService">Parameter for setting interview service</param>
         </member>
         <member name="M:RAMS.Web.Controllers.WebAPI.CandidateController.GetAllCandidates">
             <summary>
@@ -1612,6 +1835,13 @@
             </summary>
             <param name="id">Id of a candidate to be fetched</param>
             <returns>A candidate with matching id</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.CandidateController.GetCandidateResumeById(System.Int32)">
+            <summary>
+            Get candidates resume as file by candidate id
+            </summary>
+            <param name="candidateId">Id of the candidate whos resume is being fetched</param>
+            <returns>Resume as a file</returns>
         </member>
         <member name="M:RAMS.Web.Controllers.WebAPI.CandidateController.PostCandidate(RAMS.Models.Candidate)">
             <summary>
@@ -1627,12 +1857,13 @@
             <param name="candidate">Candidate to be updated</param>
             <returns>HttpResponseMessage with status code dependning on the outcome of this method</returns>
         </member>
-        <member name="M:RAMS.Web.Controllers.WebAPI.CandidateController.UpdateCandidateFeedback(System.Int32,System.String)">
+        <member name="M:RAMS.Web.Controllers.WebAPI.CandidateController.UpdateCandidateFeedback(System.Int32,System.String,System.Boolean)">
             <summary>
             Update candidate feedback
             </summary>
             <param name="candidateId">If of the candidate to be updated</param>
             <param name="feedback">Feedback to be updated</param>
+            <param name="isInterviewed">Flag to determine whether candidate was interviewd</param>
             <returns>HttpResponseMessage with status code dependning on the outcome of this method</returns>
         </member>
         <member name="M:RAMS.Web.Controllers.WebAPI.CandidateController.DeleteCandidate(System.Int32)">
@@ -1834,17 +2065,33 @@
             InterviewController is an api controller that allows to access context resources by sending http requests and responces
             </summary>
         </member>
-        <member name="M:RAMS.Web.Controllers.WebAPI.InterviewController.#ctor(RAMS.Service.IInterviewService)">
+        <member name="M:RAMS.Web.Controllers.WebAPI.InterviewController.#ctor(RAMS.Service.IInterviewService,RAMS.Service.IAgentService,RAMS.Service.ICandidateService)">
             <summary>
             Controller that sets interview service in order to access context resources
             </summary>
             <param name="interviewService">Parameter for setting interview service</param>
+            <param name="agentService">Parameter for setting agent service</param>
+            <param name="candidateService">Parameter for setting candidate service</param>
         </member>
         <member name="M:RAMS.Web.Controllers.WebAPI.InterviewController.GetAllInterviews">
             <summary>
             Get the list of all interviews
             </summary>
             <returns>The list of all interviews</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.InterviewController.GetManyInterviewsByAgentId(System.Int32)">
+            <summary>
+            Get the list of many interviews for specific agent
+            </summary>
+            <param name="agentId">Id of the agent whos interviews are being fetched</param>
+            <returns>The list of many interviews for specific agent</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.InterviewController.GetManyInterviewsByAgentId(System.String)">
+            <summary>
+            Get the list of many interviews for specific agent by username
+            </summary>
+            <param name="username">Username of the agent whos interviews are being fetched</param>
+            <returns>The list of many interviews for specific agent by username</returns>
         </member>
         <member name="M:RAMS.Web.Controllers.WebAPI.InterviewController.GetInterview(System.Int32)">
             <summary>
@@ -1858,6 +2105,16 @@
             Create new interview
             </summary>
             <param name="interview">An interview to be created</param>
+            <returns>The Uri of newly created interview</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.InterviewController.CreateInterview(System.Int32,System.String,System.String,System.Boolean)">
+            <summary>
+            Create new interview from parameters
+            </summary>
+            <param name="candidateId">Setter for CandidateId</param>
+            <param name="selectedDate">Setter for InterviewDate</param>
+            <param name="agentUserName">Setter for InterviewerId</param>
+            <param name="selected">Flag that indicates whether candidate has interviews</param>
             <returns>The Uri of newly created interview</returns>
         </member>
         <member name="M:RAMS.Web.Controllers.WebAPI.InterviewController.PutInterview(RAMS.Models.Interview)">
@@ -1936,6 +2193,22 @@
             <param name="notification">Notification to be created</param>
             <returns>The Uri of newly created notification</returns>
         </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.NotificationController.PostNotificationByAgentUsername(System.String,RAMS.Models.Notification)">
+            <summary>
+            Create new notification when username is provided instead of agent id
+            </summary>
+            <param name="agentUsername">Username of the agent to whom notification will be assigned</param>
+            <param name="notification">Notification to be created</param>
+            <returns>The Uri of newly created notification</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.NotificationController.PostNotificationByAdminUsername(System.String,RAMS.Models.Notification)">
+            <summary>
+            Create new notification when username is provided instead of admin id
+            </summary>
+            <param name="adminUsername">Username of the admin to whom notification will be assigned</param>
+            <param name="notification">Notification to be created</param>
+            <returns>The Uri of newly created notification</returns>
+        </member>
         <member name="M:RAMS.Web.Controllers.WebAPI.NotificationController.PutNotification(RAMS.Models.Notification)">
             <summary>
             Update existing notification
@@ -1970,11 +2243,16 @@
             PositionController is an api controller that allows to access context resources by sending http requests and responces
             </summary>
         </member>
-        <member name="M:RAMS.Web.Controllers.WebAPI.PositionController.#ctor(RAMS.Service.IPositionService)">
+        <member name="M:RAMS.Web.Controllers.WebAPI.PositionController.#ctor(RAMS.Service.IPositionService,RAMS.Service.IAgentService,RAMS.Service.ICandidateService,RAMS.Service.IInterviewService,RAMS.Service.IPositionArchiveService,RAMS.Service.ICandidateArchiveService)">
             <summary>
             Controller that sets position service in order to access context resources
             </summary>
             <param name="positionService">Parameter for setting position service</param>
+            <param name="agentService">Parameter for setting agent service</param>
+            <param name="candidateService">Parameter for setting candidate service</param>
+            <param name="interviewService">Parameter for setting interview service</param>
+            <param name="positionArchiveService">Parameter for setting position archive service</param>
+            <param name="candidateArchiveService">Parameter for setting candidate archive service</param>
         </member>
         <member name="M:RAMS.Web.Controllers.WebAPI.PositionController.GetAllPositions">
             <summary>
@@ -2045,6 +2323,13 @@
             </summary>
             <param name="positionId">Id of the position to which an agent to be assigned</param>
             <param name="agentId">Id of the agent to be assigned</param>
+            <returns>HttpResponseMessage with status code dependning on the outcome of this method</returns>
+        </member>
+        <member name="M:RAMS.Web.Controllers.WebAPI.PositionController.DeletePosition(System.Int32[])">
+            <summary>
+            Delete existing position and its dependants
+            </summary>
+            <param name="positionIds">Ids of the positions to be deleted</param>
             <returns>HttpResponseMessage with status code dependning on the outcome of this method</returns>
         </member>
         <member name="M:RAMS.Web.Controllers.WebAPI.PositionController.DeletePosition(System.Int32)">

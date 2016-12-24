@@ -159,7 +159,7 @@ input.horizontal-align-center
 
 .btn-tiny
 {
-    padding: 0 10px;
+    padding: 0 10px !important;
 }
 
 .btn-info
@@ -309,6 +309,12 @@ div.print-container
     width: 8in;
     padding: 30px;
     box-shadow: -60px 0px 100px -100px rgba(0,0,0,0.75), 60px 0px 100px -100px rgba(0,0,0,0.75);
+}
+
+.table.table-striped.table-bordered.table-hover td
+{
+    word-wrap:break-word;
+    word-break:break-word;
 }
 
 div.print-container table

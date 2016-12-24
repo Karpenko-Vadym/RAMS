@@ -58,6 +58,33 @@ namespace RAMS.Web.Controllers.WebAPI
 
             if (!Utilities.IsEmpty(positions))
             {
+                foreach (var position in positions)
+                {
+                    position.Category.Positions.Clear();
+
+                    if (position.Agent != null)
+                    {
+                        position.Agent.Positions.Clear();
+                    }
+
+                    position.Client.Positions.Clear();
+
+                    if (!Utilities.IsEmpty(position.Candidates))
+                    {
+                        foreach (var candidate in position.Candidates)
+                        {
+                            if (!Utilities.IsEmpty(candidate.Interviews))
+                            {
+                                foreach (var interview in candidate.Interviews)
+                                {
+                                    interview.Candidate = null;
+                                }
+                            }
+                        }
+                    }
+
+                }
+
                 return Ok(positions);
             }
 
@@ -77,6 +104,33 @@ namespace RAMS.Web.Controllers.WebAPI
 
             if (!Utilities.IsEmpty(positions))
             {
+                foreach (var position in positions)
+                {
+                    position.Category.Positions.Clear();
+
+                    if (position.Agent != null)
+                    {
+                        position.Agent.Positions.Clear();
+                    }
+
+                    position.Client.Positions.Clear();
+
+                    if (!Utilities.IsEmpty(position.Candidates))
+                    {
+                        foreach (var candidate in position.Candidates)
+                        {
+                            if (!Utilities.IsEmpty(candidate.Interviews))
+                            {
+                                foreach (var interview in candidate.Interviews)
+                                {
+                                    interview.Candidate = null;
+                                }
+                            }
+                        }
+                    }
+
+                }
+
                 return Ok(positions);
             }
 
@@ -96,6 +150,34 @@ namespace RAMS.Web.Controllers.WebAPI
 
             if (!Utilities.IsEmpty(positions))
             {
+
+                foreach (var position in positions)
+                {
+                    position.Category.Positions.Clear();
+
+                    if (position.Agent != null)
+                    {
+                        position.Agent.Positions.Clear();
+                    }
+
+                    position.Client.Positions.Clear();
+
+                    if (!Utilities.IsEmpty(position.Candidates))
+                    {
+                        foreach (var candidate in position.Candidates)
+                        {
+                            if (!Utilities.IsEmpty(candidate.Interviews))
+                            {
+                                foreach (var interview in candidate.Interviews)
+                                {
+                                    interview.Candidate = null;
+                                }
+                            }
+                        }
+                    }
+
+                }
+
                 return Ok(positions);
             }
 
@@ -134,6 +216,33 @@ namespace RAMS.Web.Controllers.WebAPI
 
             if (!Utilities.IsEmpty(positions))
             {
+                foreach (var position in positions)
+                {
+                    position.Category.Positions.Clear();
+
+                    if (position.Agent != null)
+                    {
+                        position.Agent.Positions.Clear();
+                    }
+
+                    position.Client.Positions.Clear();
+
+                    if (!Utilities.IsEmpty(position.Candidates))
+                    {
+                        foreach (var candidate in position.Candidates)
+                        {
+                            if (!Utilities.IsEmpty(candidate.Interviews))
+                            {
+                                foreach (var interview in candidate.Interviews)
+                                {
+                                    interview.Candidate = null;
+                                }
+                            }
+                        }
+                    }
+
+                }
+
                 return Ok(positions);
             }
 
@@ -155,6 +264,29 @@ namespace RAMS.Web.Controllers.WebAPI
 
                 if (position != null)
                 {
+                    position.Category.Positions.Clear();
+
+                    if (position.Agent != null)
+                    {
+                        position.Agent.Positions.Clear();
+                    }
+
+                    position.Client.Positions.Clear();
+
+                    if (!Utilities.IsEmpty(position.Candidates))
+                    {
+                        foreach (var candidate in position.Candidates)
+                        {
+                            if (!Utilities.IsEmpty(candidate.Interviews))
+                            {
+                                foreach (var interview in candidate.Interviews)
+                                {
+                                    interview.Candidate = null;
+                                }
+                            }
+                        }
+                    }
+
                     return Ok(position);
                 }
             }
@@ -377,15 +509,15 @@ namespace RAMS.Web.Controllers.WebAPI
             {
                 try
                 {
-                    for(int i = 0; i < positionIds.Length; i++)
+                    for (int i = 0; i < positionIds.Length; i++)
                     {
                         var position = this.PositionService.GetOnePositionById(positionIds[i]);
 
-                        if(position != null)
+                        if (position != null)
                         {
                             this.PositionArchiveService.CreateArchivePosition(Mapper.Map<Position, PositionArchive>(position));
 
-                            if(!Utilities.IsEmpty(position.Candidates))
+                            if (!Utilities.IsEmpty(position.Candidates))
                             {
                                 foreach (var candidate in position.Candidates.ToList())
                                 {
@@ -399,18 +531,18 @@ namespace RAMS.Web.Controllers.WebAPI
                                             this.InterviewService.DeleteInterview(interview);
 
                                             this.InterviewService.SaveChanges();
-                                        
+
                                         }
                                     }
 
                                     this.CandidateService.DeleteCandidate(candidate);
 
-                                    
+
                                 }
                             }
 
                             this.PositionService.DeletePosition(position);
-                            
+
                         }
                     }
 
@@ -428,7 +560,7 @@ namespace RAMS.Web.Controllers.WebAPI
                 }
 
                 return Ok();
-                
+
             }
 
             return NotFound();

@@ -76,3 +76,4 @@ C:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Models\bin\Debug\Microsoft.AspNet.Ide
 C:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Models\bin\Debug\Microsoft.AspNet.Identity.Owin.xml
 C:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Models\obj\Debug\RAMS.Models.dll
 C:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Models\obj\Debug\RAMS.Models.pdb
+C:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Models\obj\Debug\RAMS.Models.csprojResolveAssemblyReference.cache

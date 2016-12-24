@@ -37,7 +37,7 @@
                 {
                     <div class="col-md-4">
                         <h4 class='text-center @((convertedDate.AddDays(increment).ToString("dd/MM/yyyy") == DateTime.UtcNow.ToString("dd/MM/yyyy")) ? "text-warning" : "")'>@convertedDate.AddDays(increment).DayOfWeek @convertedDate.AddDays(increment).ToString("dd/MM/yyyy")</h4>
-                        <table id="schedule-table" class="table table-hover table-bordered bottom-margin-0" cellspacing="0">
+                        <table id="schedule-table" class="table table-hover bottom-margin-0" cellspacing="0">
                             <thead>
                                 <tr class="active">
                                     <th>Time</th>

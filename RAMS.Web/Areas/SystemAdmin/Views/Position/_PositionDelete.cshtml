@@ -46,23 +46,23 @@ if (!RAMS.Helpers.Utilities.IsEmpty(Model.Positions))
                 @foreach (var item in Model.Positions)
                 {
                     <tr class="cursor-pointer">
-                        <td data-toggle="modal" data-target="#admin-position-details-modal" data-position-id="@item.PositionId" data-position-title="@item.Title">@item.PositionIdForDisplay</td>
-                        <td data-toggle="modal" data-target="#admin-position-details-modal" data-position-id="@item.PositionId" data-position-title="@item.Title">@item.Title</td>
+                        <td data-toggle="modal" data-backdrop="static" data-target="#admin-position-details-modal" data-position-id="@item.PositionId" data-position-title="@item.Title">@item.PositionIdForDisplay</td>
+                        <td data-toggle="modal" data-backdrop="static" data-target="#admin-position-details-modal" data-position-id="@item.PositionId" data-position-title="@item.Title">@item.Title</td>
                         @if (item.ExpiryDate < DateTime.UtcNow && item.Status != RAMS.Enums.PositionStatus.Closed)
                         {
-                            <td class="text-center" data-toggle="modal" data-target="#admin-position-details-modal" data-position-id="@item.PositionId" data-position-title="@item.Title"><span class="label label-danger">@item.Status</span></td>
+                            <td class="text-center" data-toggle="modal" data-backdrop="static" data-target="#admin-position-details-modal" data-position-id="@item.PositionId" data-position-title="@item.Title"><span class="label label-danger">@item.Status</span></td>
                         }
                         else if (item.Status == RAMS.Enums.PositionStatus.Closed)
                         {
-                            <td class="text-center" data-toggle="modal" data-target="#admin-position-details-modal" data-position-id="@item.PositionId" data-position-title="@item.Title"><span class="label label-default">@item.Status</span></td>
+                            <td class="text-center" data-toggle="modal" data-backdrop="static" data-target="#admin-position-details-modal" data-position-id="@item.PositionId" data-position-title="@item.Title"><span class="label label-default">@item.Status</span></td>
                         }
                         else
                         {
-                            <td class="text-center" data-toggle="modal" data-target="#admin-position-details-modal" data-position-id="@item.PositionId" data-position-title="@item.Title"><span class="label label-success">@item.Status</span></td>
+                            <td class="text-center" data-toggle="modal" data-backdrop="static" data-target="#admin-position-details-modal" data-position-id="@item.PositionId" data-position-title="@item.Title"><span class="label label-success">@item.Status</span></td>
                         }
-                        <td data-toggle="modal" data-target="#admin-position-details-modal" data-position-id="@item.PositionId" data-position-title="@item.Title">@item.CategoryName</td>
-                        <td data-toggle="modal" data-target="#admin-position-details-modal" data-position-id="@item.PositionId" data-position-title="@item.Title">@item.DateCreated.ToString("dd/MM/yyyy")</td>
-                        <td data-toggle="modal" data-target="#admin-position-details-modal" data-position-id="@item.PositionId" data-position-title="@item.Title"><span class="hidden">@item.CloseDate.ToString("yyyyMMddhhmmss")</span>@item.CloseDate.ToString("dd/MM/yyyy")</td>
+                        <td data-toggle="modal" data-backdrop="static" data-target="#admin-position-details-modal" data-position-id="@item.PositionId" data-position-title="@item.Title">@item.CategoryName</td>
+                        <td data-toggle="modal" data-backdrop="static" data-target="#admin-position-details-modal" data-position-id="@item.PositionId" data-position-title="@item.Title">@item.DateCreated.ToString("dd/MM/yyyy")</td>
+                        <td data-toggle="modal" data-backdrop="static" data-target="#admin-position-details-modal" data-position-id="@item.PositionId" data-position-title="@item.Title"><span class="hidden">@item.CloseDate.ToString("yyyyMMddhhmmss")</span>@item.CloseDate.ToString("dd/MM/yyyy")</td>
 
                         <td class="cell-btn">
                             <input id="SelectedIds" type="checkbox" class="element-size-150 horizontal-align-center delete-position-selector" name="SelectedIds" value="@item.PositionId">
@@ -73,7 +73,7 @@ if (!RAMS.Helpers.Utilities.IsEmpty(Model.Positions))
         </table>
         <div class="vertical-padding-24"></div>     
         <div class="col-md-offset-3 col-lg-offset-3 col-md-6 col-lg-6">
-            <input id="delete-position-button" type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#delete-position-modal" value="Delete" />            
+            <input id="delete-position-button" type="button" class="btn btn-danger btn-block" data-toggle="modal" data-backdrop="static" data-target="#delete-position-modal" value="Delete" />            
         </div>            
         <div class="clearfix"></div>
         <script type="text/javascript">$(function () { LoadDataTable("position-list-table", [[10, 25, 50, 100], [10, 25, 50, 100]], [[5, "asc"]], [6]); }); DisableDeleteButton();</script>
@@ -82,14 +82,14 @@ if (!RAMS.Helpers.Utilities.IsEmpty(Model.Positions))
 else
 {
     <div class="alert alert-warning bottom-margin-0" role="alert">
-        <span>Oh no! <br /> There is no data available.</span>
+        <span>No matching data is available.</span>
     </div>
 }
 }
 else
 {
     <div class="alert alert-danger bottom-margin-0" role="alert">
-        <span>Oh no! <br /> There is no data available.</span>
+        <span>Position data is not available.</span>
     </div>
 }
 <!-- END OF POSITION LIST PARTIAL -->

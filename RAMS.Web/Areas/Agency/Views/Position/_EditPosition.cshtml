@@ -16,7 +16,7 @@
     var identity = User.Identity as ClaimsIdentity;
 }
 
-@if (!RAMS.Helpers.Utilities.IsEmpty(Model.Candidates))
+@if (!RAMS.Helpers.Utilities.IsEmpty(Model.Candidates) && Model.Candidates.Where(c => c.Score >= Model.AcceptanceScore).Count() > 0)
 {
     <div class="well well-lg bottom-margin-0 background-white">
         <table id="candidate-list-table" class="table table-striped table-bordered table-hover bottom-margin-0" cellspacing="0">
@@ -27,8 +27,8 @@
                     <th>Score</th>
                     <th>Status</th>
 
-                    @if(Model.Status != RAMS.Enums.PositionStatus.Closed)
-                    { 
+                    @if (Model.Status != RAMS.Enums.PositionStatus.Closed)
+                    {
                         <th>Action</th>
                     }
                 </tr>
@@ -36,17 +36,17 @@
             <tbody>
                 @foreach (var item in Model.Candidates.Where(c => c.Score >= Model.AcceptanceScore))
                 {
-                    <tr class="cursor-pointer" >
-                        <td data-toggle="modal" data-target="#edit-candidate-modal" data-candidate-id="@item.CandidateId" data-candidate-name="@item.FullName" data-position-status="@Model.Status">@item.CandidateIdDisplay</td>
-                        <td data-toggle="modal" data-target="#edit-candidate-modal" data-candidate-id="@item.CandidateId" data-candidate-name="@item.FullName" data-position-status="@Model.Status">@item.FullName</td>
-                        <td data-toggle="modal" data-target="#edit-candidate-modal" data-candidate-id="@item.CandidateId" data-candidate-name="@item.FullName" data-position-status="@Model.Status">@item.Score</td>
-                        <td data-toggle="modal" data-target="#edit-candidate-modal" data-candidate-id="@item.CandidateId" data-candidate-name="@item.FullName" data-position-status="@Model.Status">@item.Status</td>
+                    <tr class="cursor-pointer">
+                        <td data-toggle="modal" data-backdrop="static" data-target="#edit-candidate-modal" data-candidate-id="@item.CandidateId" data-candidate-name="@item.FullName" data-position-status="@Model.Status">@item.CandidateIdDisplay</td>
+                        <td data-toggle="modal" data-backdrop="static" data-target="#edit-candidate-modal" data-candidate-id="@item.CandidateId" data-candidate-name="@item.FullName" data-position-status="@Model.Status">@item.FullName</td>
+                        <td data-toggle="modal" data-backdrop="static" data-target="#edit-candidate-modal" data-candidate-id="@item.CandidateId" data-candidate-name="@item.FullName" data-position-status="@Model.Status">@item.Score</td>
+                        <td data-toggle="modal" data-backdrop="static" data-target="#edit-candidate-modal" data-candidate-id="@item.CandidateId" data-candidate-name="@item.FullName" data-position-status="@Model.Status">@item.Status</td>
 
                         @if (Model.Status != RAMS.Enums.PositionStatus.Closed)
                         {
-                            <td class="cell-btn"><input type="button" class="btn btn-info btn-block" value='@(item.Selected ? "Re-Schedule" : "Schedule")' data-toggle="modal" data-target="#schedule-interview-modal" data-candidate-id="@item.CandidateId" data-date-time="@DateTime.UtcNow.ToString("dd/MM/yyyy")" data-selected="@item.Selected" /></td>
+                            <td class="cell-btn"><input type="button" class="btn btn-info btn-block" value='@(item.Selected ? "Re-Schedule" : "Schedule")' data-toggle="modal" data-backdrop="static" data-target="#schedule-interview-modal" data-candidate-id="@item.CandidateId" data-date-time="@DateTime.UtcNow.ToString("dd/MM/yyyy")" data-selected="@item.Selected" /></td>
                         }
-                    </tr> 
+                    </tr>
                 }
             </tbody>
         </table>
@@ -67,162 +67,181 @@
 @if (Model != null)
 {
 
-if(Model.Status != RAMS.Enums.PositionStatus.Closed)
-{ 
-<div class="btn-group btn-group-justified" role="group">
-    
-    @if (@Model.Status == RAMS.Enums.PositionStatus.New)
+    if (Model.Status != RAMS.Enums.PositionStatus.Closed)
     {
-        <div class="btn-group" role="group">
-            <input type="button" class="btn btn-info" data-toggle="modal" data-target="#approve-position-modal" data-position-id="@Model.PositionId" data-position-title="@Model.Title" value="Approve Position" />
-        </div>
-    }
+        <div class="btn-group btn-group-justified" role="group">
 
-    <div class="btn-group" role="group">
-        <input type="button" class="btn btn-danger" data-toggle="modal" data-target="#close-position-modal" data-position-id="@Model.PositionId" data-position-title="@Model.Title" value="Close Position" />
-    </div>
-
-    @if (identity.HasClaim("Role", "Manager"))
-    {
-        <div class="btn-group" role="group">
-            <input type="button" class="btn btn-info" data-toggle="modal" data-target="#assign-position-modal" data-position-id="@Model.PositionId" data-agent-id="@((Model.AgentId == null) ? 0 : Model.AgentId)" data-position-title="@Model.Title" value="@((Model.AgentId != null && Model.AgentId > 0) ? "Re-Assign" : "Assign")" />
-        </div>
-    }
-</div>
- 
-<div class="vertical-padding-24"></div>
-}
-else
-{
-    <script type="text/javascript">$(function () { DisableInput("position-edit-form") });</script>
-} 
-
-<div id="position-edit-form" class="well well-lg bottom-margin-0 background-white">
-    @using (Ajax.BeginForm("EditPosition", "Position", new { Area = "Agency" }, ajaxOptions, new { id = "edit-position-form" }))
-    {
-        @Html.AntiForgeryToken()
-
-        @Html.HiddenFor(model => model.PositionId)
-        @Html.HiddenFor(model => model.DateCreated)
-        @Html.HiddenFor(model => model.Status)
-        @Html.HiddenFor(model => model.ClientId)
-        @Html.HiddenFor(model => model.Timestamp)
-
-        <div class="form-horizontal">
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="form-group required">
-                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-3" })
-                <div class="col-md-7">
-                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", maxLength = 100 } })
-                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            @if (Model.Status == RAMS.Enums.PositionStatus.New && Model.Status != RAMS.Enums.PositionStatus.Suspended)
+            {
+                <div class="btn-group" role="group">
+                    <input type="button" class="btn btn-info" data-toggle="modal" data-backdrop="static" data-target="#approve-position-modal" data-position-id="@Model.PositionId" data-position-title="@Model.Title" value="Approve Position" />
                 </div>
-            </div>
-
-            <div class="form-group required">
-                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-3" })
-                <div class="col-md-7">
-                    @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group required">
-                @Html.LabelFor(model => model.ExpiryDate, htmlAttributes: new { @class = "control-label col-md-3" })
-                <div class="col-md-7">
-                    @Html.TextBoxFor(model => model.ExpiryDate, "{0:dd/MM/yyyy}", new { @class = "form-control datepicker-field", @placeholder = "Please select or enter the date in following format: dd/mm/yyyy" })
-                    @Html.ValidationMessageFor(model => model.ExpiryDate, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group required">
-                @Html.LabelFor(model => model.CompanyDetails, htmlAttributes: new { @class = "control-label col-md-3" })
-                <div class="col-md-7">
-                    @Html.TextAreaFor(model => model.CompanyDetails, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.CompanyDetails, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group required">
-                @Html.LabelFor(model => model.Location, htmlAttributes: new { @class = "control-label col-md-3" })
-                <div class="col-md-7">
-                    @Html.EditorFor(model => model.Location, new { htmlAttributes = new { @class = "form-control", maxLength = 200 } })
-                    @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group required">
-                @Html.LabelFor(model => model.PeopleNeeded, htmlAttributes: new { @class = "control-label col-md-3" })
-                <div class="col-md-7">
-                    @Html.EditorFor(model => model.PeopleNeeded, new { htmlAttributes = new { @class = "form-control", oninput = "AdjustNumberField(this, 1, 999)", onkeypress = "return isNumberKey(event)" } })
-                    @Html.ValidationMessageFor(model => model.PeopleNeeded, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group required">
-                @Html.LabelFor(model => model.AcceptanceScore, htmlAttributes: new { @class = "control-label col-md-3" })
-                <div class="col-md-7">
-                    @Html.EditorFor(model => model.AcceptanceScore, new { htmlAttributes = new { @class = "form-control", oninput = "AdjustNumberField(this, 1, 100)", onkeypress = "return isNumberKey(event)" } })
-                    @Html.ValidationMessageFor(model => model.AcceptanceScore, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group required">
-                @Html.LabelFor(model => model.CategoryId, htmlAttributes: new { @class = "control-label col-md-3" })
-                <div class="col-md-7">
-                    @Html.DropDownListFor(model => model.CategoryId, Model.Categories, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <hr />
-
-            <div class="alert alert-warning">
-                <div class='row'>
-                    <div class='col-md-offset-1'>Please enter "Qualifications" and "Asset Skills" keywords that are most related to this position.</div>
-                    <div class='col-md-12'><p></p></div>
-                    <div class='col-md-offset-1'><strong>NOTE:</strong> Please use semicolon as a separator between the keywords.</div>
-                </div>
-            </div>
-
-            <div class="form-group required">
-                @Html.LabelFor(model => model.Qualifications, htmlAttributes: new { @class = "control-label col-md-3" })
-                <div class="col-md-7">
-                    @Html.EditorFor(model => model.Qualifications, new { htmlAttributes = new { @class = "form-control", maxLength = 200 } })
-                    @Html.ValidationMessageFor(model => model.Qualifications, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.AssetSkills, htmlAttributes: new { @class = "control-label col-md-3" })
-                <div class="col-md-7">
-                    @Html.EditorFor(model => model.AssetSkills, new { htmlAttributes = new { @class = "form-control", maxLength = 200 } })
-                    @Html.ValidationMessageFor(model => model.AssetSkills, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            @if(Model.Status != RAMS.Enums.PositionStatus.Closed)
-            { 
-                <div class="form-group bottom-margin-0">
-                    <div class="col-md-offset-3 col-lg-offset-3 col-md-6 col-lg-6">
-                        <input type="submit" value="Update Position Details" class="btn btn-danger btn-block" />
+            }
+            else if (Model.Status == RAMS.Enums.PositionStatus.Suspended)
+            {
+                if (identity.HasClaim("Role", "Manager"))
+                {
+                    <div class="btn-group" role="group">
+                        <input type="button" class="btn btn-info" data-toggle="modal" data-backdrop="static" data-target="#unsuspend-position-modal" data-position-id="@Model.PositionId" data-position-title="@Model.Title" value="Un-Suspend Position" />
                     </div>
+                }
+            }
+            
+            <div class="btn-group" role="group">
+                <input type="button" class="btn btn-danger" data-toggle="modal" data-backdrop="static" data-target="#close-position-modal" data-position-id="@Model.PositionId" data-position-title="@Model.Title" value="Close Position" />
+            </div>
+
+            @if (identity.HasClaim("Role", "Manager"))
+            {
+                <div class="btn-group" role="group">
+                    <input type="button" class="btn btn-info" data-toggle="modal" data-backdrop="static" data-target="#assign-position-modal" data-position-id="@Model.PositionId" data-agent-id="@((Model.AgentId == null) ? 0 : Model.AgentId)" data-position-title="@Model.Title" value="@((Model.AgentId != null && Model.AgentId > 0) ? "Re-Assign Position" : "Assign Position")" />
                 </div>
             }
         </div>
-    }
-</div>
 
-<script type="text/javascript">$(function () { DisableEmptyOptions(); $(".datepicker-field").datepicker({ dateFormat: "dd/mm/yy", minDate: 1, onSelect: function (dateText, inst) { $(this).attr('value', dateText); } }); CKEDITOR.replace('Description'); CKEditorInit(CKEDITOR.instances.Description, 1600); CKEDITOR.replace('CompanyDetails'); CKEditorInit(CKEDITOR.instances.CompanyDetails, 800); });</script>
+        <div class="vertical-padding-24"></div>
+    }
+    else
+    {
+        <script type="text/javascript">$(function () { DisableInput("position-edit-form") });</script>
+    }
+
+    <div id="position-edit-form" class="well well-lg bottom-margin-0 background-white">
+        @using (Ajax.BeginForm("EditPosition", "Position", new { Area = "Agency" }, ajaxOptions, new { id = "edit-position-form" }))
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.HiddenFor(model => model.PositionId)
+            @Html.HiddenFor(model => model.DateCreated)
+            @Html.HiddenFor(model => model.Status)
+            @Html.HiddenFor(model => model.ClientId)
+            @Html.HiddenFor(model => model.AgentId)
+            @Html.HiddenFor(model => model.Timestamp)
+
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                @if (Model.Status == RAMS.Enums.PositionStatus.Suspended)
+                {
+                    <div class='alert alert-danger bottom-margin-0' role='alert'>
+                        <div class='text-center'><strong>Position has been suspended by client.</strong></div>
+                    </div>
+                    
+                    <div class=" vertical-padding-24"></div>
+                }
+
+                <div class="form-group required">
+                    @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", maxLength = 100 } })
+                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group required">
+                    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-7">
+                        @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group required">
+                    @Html.LabelFor(model => model.ExpiryDate, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-7">
+                        @Html.TextBoxFor(model => model.ExpiryDate, "{0:dd/MM/yyyy}", new { @class = "form-control datepicker-field", @placeholder = "Please select or enter the date in following format: dd/mm/yyyy" })
+                        @Html.ValidationMessageFor(model => model.ExpiryDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group required">
+                    @Html.LabelFor(model => model.CompanyDetails, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-7">
+                        @Html.TextAreaFor(model => model.CompanyDetails, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CompanyDetails, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group required">
+                    @Html.LabelFor(model => model.Location, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.Location, new { htmlAttributes = new { @class = "form-control", maxLength = 200 } })
+                        @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group required">
+                    @Html.LabelFor(model => model.PeopleNeeded, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.PeopleNeeded, new { htmlAttributes = new { @class = "form-control", oninput = "AdjustNumberField(this, 1, 999)", onkeypress = "return isNumberKey(event)" } })
+                        @Html.ValidationMessageFor(model => model.PeopleNeeded, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group required">
+                    @Html.LabelFor(model => model.AcceptanceScore, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.AcceptanceScore, new { htmlAttributes = new { @class = "form-control", oninput = "AdjustNumberField(this, 1, 100)", onkeypress = "return isNumberKey(event)" } })
+                        @Html.ValidationMessageFor(model => model.AcceptanceScore, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group required">
+                    @Html.LabelFor(model => model.CategoryId, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-7">
+                        @Html.DropDownListFor(model => model.CategoryId, Model.Categories, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <hr />
+
+                <div class="alert alert-warning">
+                    <div class='row'>
+                        <div class='col-md-offset-1'>Please enter "Qualifications" and "Asset Skills" keywords that are most related to this position.</div>
+                        <div class='col-md-12'><p></p></div>
+                        <div class='col-md-offset-1'><strong>NOTE:</strong> Please use semicolon as a separator between the keywords.</div>
+                    </div>
+                </div>
+
+                <div class="form-group required">
+                    @Html.LabelFor(model => model.Qualifications, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.Qualifications, new { htmlAttributes = new { @class = "form-control", maxLength = 200 } })
+                        @Html.ValidationMessageFor(model => model.Qualifications, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AssetSkills, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.AssetSkills, new { htmlAttributes = new { @class = "form-control", maxLength = 200 } })
+                        @Html.ValidationMessageFor(model => model.AssetSkills, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                @if (Model.Status != RAMS.Enums.PositionStatus.Closed)
+                {
+                    <div class="form-group bottom-margin-0">
+                        <div class="col-md-offset-3 col-lg-offset-3 col-md-6 col-lg-6">
+                            <input type="submit" value="Update Position Details" class="btn btn-danger btn-block" />
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+
+    <script type="text/javascript">$(function () { DisableEmptyOptions(); $(".datepicker-field").datepicker({ dateFormat: "dd/mm/yy", minDate: 1, onSelect: function (dateText, inst) { $(this).attr('value', dateText); } }); CKEDITOR.replace('Description'); CKEditorInit(CKEDITOR.instances.Description, 1600); CKEDITOR.replace('CompanyDetails'); CKEditorInit(CKEDITOR.instances.CompanyDetails, 800); });</script>
 }
 else
 {
-<div class='alert alert-danger bottom-margin-0' role='alert'>
-    <div class='text-center'><h4><strong>Position information is not available.</strong></h4></div>
-    <div class="row">
-        <div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Position could have been physically deleted, or modified.</div>
-        <div class='col-md-offset-1 col-md-11'>Please refresh the list and try again in a moment.</div>
+    <div class='alert alert-danger bottom-margin-0' role='alert'>
+        <div class='text-center'><h4><strong>Position information is not available.</strong></h4></div>
+        <div class="row">
+            <div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Position could have been physically deleted, or modified.</div>
+            <div class='col-md-offset-1 col-md-11'>Please refresh the list and try again in a moment.</div>
+        </div>
     </div>
-</div>
 }
 <!-- END OF EDIT POSITION PARTIAL -->
-

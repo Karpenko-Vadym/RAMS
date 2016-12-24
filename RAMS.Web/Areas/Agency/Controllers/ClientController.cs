@@ -62,7 +62,7 @@ namespace RAMS.Web.Areas.Agency.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
-                    clients.AddRange(Mapper.Map<List<Client>, List<ClientListViewModel>>(await response.Content.ReadAsAsync<List<Client>>()));
+                    clients.AddRange(Mapper.Map<List<Client>, List<ClientListViewModel>>((await response.Content.ReadAsAsync<List<Client>>()).Where(c => c.UserStatus == Enums.UserStatus.Active).ToList()));
 
                     return PartialView("_ClientList", clients);
                 }

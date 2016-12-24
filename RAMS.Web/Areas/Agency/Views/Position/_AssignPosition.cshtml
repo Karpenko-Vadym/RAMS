@@ -37,7 +37,7 @@
                     <tbody>
                         @foreach (var item in Model.Agents)
                         {
-                            <tr class="cursor-pointer" onclick="CheckTableRadioButton(this);">
+                            <tr class="cursor-pointer" onclick="CheckTableRadioButton(this); EnableButton('assign-position-button');">
                                 <td>@item.AgentIdForDisplay</td>
                                 <td>@item.FullName</td>
                                 <td>@item.Positions</td>
@@ -53,7 +53,7 @@
     
         <div class="form-group bottom-margin-0">
             <div class="col-md-offset-0 col-lg-offset-0 col-md-3 col-lg-3">
-                <input type="submit" value="Assign" class="btn btn-danger btn-block" onclick="$('#assign-position-modal').modal('hide');" />
+                <input type="submit" value="Assign" id="assign-position-button" class="btn btn-danger btn-block" onclick="$('#assign-position-modal').modal('hide');" />
             </div>
 
             <div class="col-md-offset-6 col-lg-offset-6 col-md-3 col-lg-3">
@@ -63,7 +63,8 @@
 
         <div class="clearfix"></div>
 
-        <script type="text/javascript">$(function () { LoadDataTable("assign-position-agent-list-table", [[10, 15, 20, 25], [10, 15, 20, 25]], [[2, "desc"]], [3]) });</script>
+        <script type="text/javascript">$(function () { $("#assign-position-button").prop("disabled", true); LoadDataTable("assign-position-agent-list-table", [[10, 15, 20, 25], [10, 15, 20, 25]], [[2, "desc"]], [3])
+});</script>
     }
 }
 else
@@ -71,7 +72,7 @@ else
     <div class="well well-lg bottom-margin-0">
         <div class="well well-lg bottom-margin-0 background-white">
             <div class="alert alert-danger bottom-margin-0" role="alert">
-                <span>Oh no! <br /> There is no data available.</span>
+                <span>Agent data is not available.</span>
             </div>
         </div>
     </div>

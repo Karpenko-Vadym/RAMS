@@ -13,7 +13,7 @@ namespace RAMS.Enums
         New = 1,
         Assigned = 2,
         Approved = 3,
-        InProgress = 4,
+        Suspended = 4,
         Closed = 5
     }
 

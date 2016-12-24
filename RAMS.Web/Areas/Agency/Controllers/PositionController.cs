@@ -326,7 +326,9 @@ namespace RAMS.Web.Areas.Agency.Controllers
 
                 try
                 {
-                    response = await this.GetHttpClient().PutAsync(String.Format("Candidate?candidateId={0}&feedback={1}&isInterviewed={2}", model.CandidateId, model.Feedback, model.IsInterviewed), null); // Attempt to update the feedback
+                    var url = String.Format("Candidate?candidateId={0}&feedback={1}&isInterviewed={2}", model.CandidateId, Server.UrlEncode(model.Feedback), model.IsInterviewed);
+
+                    response = await this.GetHttpClient().PutAsync(url, null); // Attempt to update the feedback
 
                     if (response.IsSuccessStatusCode)
                     {
@@ -397,9 +399,9 @@ namespace RAMS.Web.Areas.Agency.Controllers
         [HttpGet]
         public PartialViewResult ApprovePosition(int positionId, string positionTitle)
         {
-            var positionApprovalViewModel = new PositionApprovalViewModel(positionId, positionTitle);
+            var positionApprovalSuspendUnsuspentionViewModel = new PositionApprovalSuspendUnsuspentionViewModel(positionId, positionTitle);
 
-            return PartialView("_ApprovePosition", positionApprovalViewModel);
+            return PartialView("_ApprovePosition", positionApprovalSuspendUnsuspentionViewModel);
         }
 
         /// <summary>
@@ -409,7 +411,7 @@ namespace RAMS.Web.Areas.Agency.Controllers
         /// <returns>_SuccessConfirmation partial view if position status has been updated successfully, _FailureConfirmation partial view otherwise</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<PartialViewResult> ApprovePosition(PositionApprovalViewModel model)
+        public async Task<PartialViewResult> ApprovePosition(PositionApprovalSuspendUnsuspentionViewModel model)
         {
             var stringBuilder = new StringBuilder();
 
@@ -513,6 +515,112 @@ namespace RAMS.Web.Areas.Agency.Controllers
             positionResultViewModel.Message = stringBuilder.ToString();
 
             return PartialView("_FailureConfirmation", positionResultViewModel); 
+        }
+        #endregion
+
+        #region Unsuspend Position
+        /// <summary>
+        /// UnsuspendPosition action method displays confirmation for position unsuspention in _UnsuspendPosition partial view
+        /// </summary>
+        /// <param name="positionId">Id of the position to be unsuspended</param>
+        /// <param name="positionTitle">Title of the position to be unsuspended</param>
+        /// <returns>_UnsuspendPosition partial view with prompt of confirmation to unsuspend the position</returns>
+        [HttpGet]
+        public PartialViewResult UnsuspendPosition(int positionId, string positionTitle)
+        {
+            var positionApprovalSuspendUnsuspentionViewModel = new PositionApprovalSuspendUnsuspentionViewModel(positionId, positionTitle);
+
+            return PartialView("_UnsuspendPosition", positionApprovalSuspendUnsuspentionViewModel);
+        }
+
+        /// <summary>
+        /// UnsuspendPosition action method attempts to update position status to approved (From suspended)
+        /// </summary>
+        /// <param name="model">Position information required to update position status</param>
+        /// <returns>_SuccessConfirmation partial view if position status has been updated successfully, _FailureConfirmation partial view otherwise</returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<PartialViewResult> UnsuspendPosition(PositionApprovalSuspendUnsuspentionViewModel model)
+        {
+            var stringBuilder = new StringBuilder();
+
+            var positionResultViewModel = new PositionResultViewModel();
+
+            if (ModelState.IsValid)
+            {
+                var response = new HttpResponseMessage();
+
+                try
+                {
+                    response = await this.GetHttpClient().PutAsync(String.Format("Position?positionId={0}&status={1}", model.PositionId, (int)PositionStatus.Approved), null); // Attempt to update the status
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var position = await response.Content.ReadAsAsync<Position>();
+
+                        if (position.Status == PositionStatus.Approved)
+                        {
+                            stringBuilder.Append("<div class='text-center'><h4><strong>Position has been un-suspended successfully!</strong></h4></div>");
+
+                            stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Position will now be available for applicants to apply.</div>");
+
+                            stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> Details of this position can be modified at anytime, unless position is closed.</div></div>");
+
+                            positionResultViewModel.Message = stringBuilder.ToString();
+
+                            positionResultViewModel.RefreshList = true;
+
+                            positionResultViewModel.RefreshEditForm = true;
+
+                            positionResultViewModel.PositionId = model.PositionId;
+
+                            return PartialView("_SuccessConfirmation", positionResultViewModel);
+                        }
+                        else
+                        {
+                            stringBuilder.Append("<div class='text-center'><h4><strong>Failed to update position details.</strong></h4></div>");
+
+                            stringBuilder.Append(String.Format("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Server returned status code '{0}', but position status was not updated. Please try again in a moment.</div>", response.StatusCode));
+
+                            stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> If you encounter this issue again in the future, please contact Technical Support with exact steps to reproduce this issue.</div></div>");
+
+                            positionResultViewModel.Message = stringBuilder.ToString();
+
+                            return PartialView("_FailureConfirmation", positionResultViewModel);
+                        }
+                    }
+                    else
+                    {
+                        // If position could not be updated, throw PositionEditException exception
+                        throw new PositionEditException("Position " + model.Title + " could not be updated. Response: " + response.StatusCode);
+                    }
+                }
+                catch (PositionEditException ex)
+                {
+                    // Log exception
+                    ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+
+                    stringBuilder.Append("<div class='text-center'><h4><strong>Failed to update position details.</strong></h4></div>");
+
+                    stringBuilder.Append(String.Format("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Server returned status code '{0}' while attempting to persist position details to the database. Please try again in a moment.</div>", response.StatusCode));
+
+                    stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> If you encounter this issue again in the future, please contact Technical Support with exact steps to reproduce this issue.</div></div>");
+
+                    positionResultViewModel.Message = stringBuilder.ToString();
+
+                    return PartialView("_FailureConfirmation", positionResultViewModel);
+                }
+            }
+
+            stringBuilder.Append("<div class='text-center'><h4><strong>Position details could NOT be retrieved at this moment.</strong></h4></div>");
+
+            stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Model state is not valid. Please try again in a moment.</div>");
+
+            stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> If you encounter this issue again in the future, please contact Technical Support with exact steps to reproduce this issue.</div></div>");
+
+            positionResultViewModel.Message = stringBuilder.ToString();
+
+            return PartialView("_FailureConfirmation", positionResultViewModel);
         }
         #endregion
 
@@ -662,7 +770,7 @@ namespace RAMS.Web.Areas.Agency.Controllers
 
             if (response.IsSuccessStatusCode)
             {
-                positionAssignViewModel.Agents.AddRange(Mapper.Map<List<Agent>, List<AgentAssignPositionViewModel>>(await response.Content.ReadAsAsync<List<Agent>>()));
+                positionAssignViewModel.Agents.AddRange(Mapper.Map<List<Agent>, List<AgentAssignPositionViewModel>>((await response.Content.ReadAsAsync<List<Agent>>()).Where(a => a.UserStatus == UserStatus.Active).ToList()));
 
                 return PartialView("_AssignPosition", positionAssignViewModel);
             }
@@ -845,7 +953,7 @@ namespace RAMS.Web.Areas.Agency.Controllers
                     {
                         var interview = await response.Content.ReadAsAsync<Interview>();
 
-                        var notification = Mapper.Map<NotificationAddViewModel, Notification>(new NotificationAddViewModel("Interview Scheduling Confirmation", String.Format("Interview with '{0}' ({1}) has been successfully scheduled on {2}.", String.Format("{0} {1}", interview.Candidate.FirstName, interview.Candidate.LastName), interview.Candidate.CandidateId.ToString("CAN00000"), String.Format("{0} at {1}", interview.InterviewDate.ToString("dddd, MMMM dd, yyyy"), interview.InterviewDate.ToString("hh:mm tt"))), interview.Interviewer.AgentId));
+                        var notification = Mapper.Map<NotificationAddViewModel, Notification>(new NotificationAddViewModel("Interview Scheduling Confirmation", String.Format("Interview with '{0}' ({1}) has been successfully scheduled on {2}.", String.Format("{0} {1}", interview.Candidate.FirstName, interview.Candidate.LastName), interview.Candidate.CandidateId.ToString("CAN00000"), String.Format("{0} at {1}", interview.InterviewDate.ToString("dddd, MMMM dd, yyyy", new CultureInfo("en-US")), interview.InterviewDate.ToString("hh:mm tt"))), interview.Interviewer.AgentId));
 
                         response = await this.GetHttpClient().PostAsJsonAsync("Notification", notification); // Attempt to persist notification to the data context
 
@@ -859,7 +967,7 @@ namespace RAMS.Web.Areas.Agency.Controllers
 
                         var message = System.IO.File.ReadAllText(template);
 
-                        message = message.Replace("%name%", interview.Candidate.FirstName).Replace("%datetime%", String.Format("{0} at {1}", interview.InterviewDate.ToString("dddd, MMMM dd, yyyy"), interview.InterviewDate.ToString("hh:mm tt"))).Replace("%interviewer%", String.Format("{0} {1}", interview.Interviewer.FirstName, interview.Interviewer.LastName)).Replace("%email%", interview.Interviewer.Email);
+                        message = message.Replace("%name%", interview.Candidate.FirstName).Replace("%datetime%", String.Format("{0} at {1}", interview.InterviewDate.ToString("dddd, MMMM dd, yyyy", new CultureInfo("en-US")), interview.InterviewDate.ToString("hh:mm tt"))).Replace("%interviewer%", String.Format("{0} {1}", interview.Interviewer.FirstName, interview.Interviewer.LastName)).Replace("%email%", interview.Interviewer.Email);
 
                         // TODO - Change "atomix0x@gmail.com" to the email address of the applicant
                         Email.EmailService.SendEmail("atomix0x@gmail.com", "Your interview has been scheduled.", message); // Send interview confirmation via email

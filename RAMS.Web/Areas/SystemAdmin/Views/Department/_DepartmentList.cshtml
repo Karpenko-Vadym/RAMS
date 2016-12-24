@@ -15,30 +15,30 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr class="cursor-pointer" data-toggle="modal" data-target="#edit-department-modal" data-department-id="@item.DepartmentId" data-department-name="@item.Name">
+                    <tr class="cursor-pointer" data-toggle="modal" data-backdrop="static" data-target="#edit-department-modal" data-department-id="@item.DepartmentId" data-department-name="@item.Name">
                         <td>@item.DepartmentIdForDisplay</td>
                         <td>@item.Name</td>
                         <td>@item.NumOfAgents</td>
                         <td>
                             @{
-                                var hasManager = false;
-                                    
-                                foreach(var agent in item.Agents)
-                                {
-                                    if(agent.Role == RAMS.Enums.Role.Manager)
-                                    {
-                                        hasManager = true;
-                                        
-                                        var managerName = agent.FirstName + " " + agent.LastName + "; ";
-                                        
-                                        @managerName
-                                    }
-                                }
-                                
-                                if(!hasManager)
-                                {
-                                    <span>None</span>
-                                }
+                    var hasManager = false;
+
+                    foreach (var agent in item.Agents)
+                    {
+                        if (agent.Role == RAMS.Enums.Role.Manager)
+                        {
+                            hasManager = true;
+
+                            var managerName = agent.FirstName + " " + agent.LastName + "; ";
+
+                            @managerName
+                        }
+                    }
+
+                    if (!hasManager)
+                    {
+                        <span>None</span>
+                    }
                             }
                         </td>
                     </tr>
@@ -53,7 +53,7 @@ else
 {
     <div class="well well-lg bottom-margin-0 background-white">
         <div class="alert alert-danger bottom-margin-0" role="alert">
-            <span>Oh no! <br /> There is no data available.</span>
+            <span>Department data is not available.</span>
         </div>
     </div>
 }

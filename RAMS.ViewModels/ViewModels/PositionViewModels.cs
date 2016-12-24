@@ -344,9 +344,9 @@ namespace RAMS.ViewModels
     }
 
     /// <summary>
-    /// PositionApprovalViewModel view model declares properties for _ApprovePosition partial view
+    /// PositionApprovalSuspendUnsuspentionViewModel view model declares properties for _ApprovePosition and _UnsuspendPosition partial views
     /// </summary>
-    public class PositionApprovalViewModel
+    public class PositionApprovalSuspendUnsuspentionViewModel
     {
         [Required]
         public int PositionId { get; set; }
@@ -355,9 +355,9 @@ namespace RAMS.ViewModels
         public string Title { get; set; }
 
         /// <summary>
-        /// Default PositionApprovalViewModel constructor
+        /// Default PositionApprovalSuspendUnsuspentionViewModel constructor
         /// </summary>
-        public PositionApprovalViewModel()
+        public PositionApprovalSuspendUnsuspentionViewModel()
         {
             this.PositionId = 0;
 
@@ -365,11 +365,11 @@ namespace RAMS.ViewModels
         }
 
         /// <summary>
-        /// PositionApprovalViewModel constructor that sets all its properties
+        /// PositionApprovalSuspendUnsuspentionViewModel constructor that sets all its properties
         /// </summary>
         /// <param name="positionId">Setter for PositionId</param>
         /// <param name="title">Setter for Title</param>
-        public PositionApprovalViewModel(int positionId, string title)
+        public PositionApprovalSuspendUnsuspentionViewModel(int positionId, string title)
         {
             this.PositionId = positionId;
 

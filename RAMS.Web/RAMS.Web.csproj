@@ -777,6 +777,9 @@
     <Content Include="Areas\SystemAdmin\Views\Position\_SuccessConfirmation.cshtml" />
     <Content Include="Areas\SystemAdmin\Views\Position\_SelectionFailureConfirmation.cshtml" />
     <Content Include="Areas\SystemAdmin\Views\Position\_FailureConfirmation.cshtml" />
+    <Content Include="Areas\Agency\Views\Position\_UnsuspendPosition.cshtml" />
+    <Content Include="Areas\Customer\Views\Position\_SuspendPosition.cshtml" />
+    <Content Include="Areas\Agency\Views\Position\_ScheduleInterview - Backup.cshtml" />
     <None Include="Content\JS\jquery-2.1.4.intellisense.js" />
     <Content Include="Views\Identity\Account\FailedLogin.cshtml" />
     <None Include="Web.Debug.config">

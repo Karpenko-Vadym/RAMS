@@ -15,7 +15,7 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr class="cursor-pointer" data-toggle="modal" data-target="#client-details-modal" data-client-id="@item.ClientId" data-client-name="@item.FullName">
+                    <tr class="cursor-pointer" data-toggle="modal" data-backdrop="static" data-target="#client-details-modal" data-client-id="@item.ClientId" data-client-name="@item.FullName">
                         <td>@item.ClientIdForDisplay</td>
                         <td>@item.FullName</td>
                         <td>@item.Company</td>
@@ -32,7 +32,7 @@ else
 {
     <div class="well well-lg bottom-margin-0 background-white">
         <div class="alert alert-danger bottom-margin-0" role="alert">
-            <span>Oh no! <br /> There is no data available.</span>
+            <span>Client data is not available.</span>
         </div>
     </div>
 }

@@ -16,7 +16,7 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr class="cursor-pointer" data-toggle="modal" data-target="#agent-details-modal" data-agent-id="@item.AgentId" data-agent-name="@item.FullName">
+                    <tr class="cursor-pointer" data-toggle="modal" data-backdrop="static" data-target="#agent-details-modal" data-agent-id="@item.AgentId" data-agent-name="@item.FullName">
                         <td>@item.AgentIdForDisplay</td>
                         <td>@item.FullName</td>
                         <td>@((item.AgentStatus == RAMS.Enums.AgentStatus.FullTime) ? "Full Time" : (item.AgentStatus == RAMS.Enums.AgentStatus.PartTime) ? "Part Time" : item.AgentStatus.ToString())</td>
@@ -34,7 +34,7 @@ else
 {
     <div class="well well-lg bottom-margin-0 background-white">
         <div class="alert alert-danger bottom-margin-0" role="alert">
-            <span>Oh no! <br /> There is no data available.</span>
+            <span>Agent data is not available.</span>
         </div>
     </div>
 }

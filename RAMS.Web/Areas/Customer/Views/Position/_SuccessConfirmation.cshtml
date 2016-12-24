@@ -1,10 +1,22 @@
-﻿<!-- SUCCESS CONFIRMATION PARTIAL -->
+﻿@model RAMS.ViewModels.PositionResultViewModel
+
+<!-- SUCCESS CONFIRMATION PARTIAL -->
+@if (Model != null)
+{
+    if (Model.RefreshList)
+    {
+        <script type="text/javascript">$(function () { LoadAction("position-list-div", "@Url.Action("PositionList", "Position", new { Area = "Customer" })"); });</script>
+    }
+
+    if (Model.RefreshEditForm)
+    {
+        <script type="text/javascript">$(function () { RefreshPositionDetails("@Model.PositionId"); });</script>
+    }
+
     <div class="alert alert-success bottom-margin-0" role="alert">
-        <div class='text-center'><h4><strong>Success!</strong></h4></div>
-        <div class="text-center">Position closure request has been submitted successfully!</div>
-        <div class="text-center"><strong>NOTE:</strong> You will be notified when position closure is complete.</div>
+        @Html.Raw(Model.Message)
     </div>
 
     <div class="vertical-padding-24"></div>
+}
 <!-- END OF SUCCESS CONFIRMATION PARTIAL -->
-

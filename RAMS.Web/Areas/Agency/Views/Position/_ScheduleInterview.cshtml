@@ -10,6 +10,8 @@
         OnFailure = "OnAjaxFailure",
         OnComplete = "OnAjaxComplete"
     };
+
+    var numDays = 1;
 }
 
 @if (Model.CandidateId > 0 && !String.IsNullOrEmpty(Model.DisplayDate))
@@ -19,12 +21,12 @@
         DateTime convertedDate;
 
         DateTime.TryParseExact(Model.DisplayDate, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out convertedDate);
-        
+
         @Html.AntiForgeryToken()
-    
+
         @Html.HiddenFor(model => model.CandidateId)
         @Html.HiddenFor(model => model.Selected)
-    
+
         <div class="well well-lg bottom-margin-0">
             <div class="btn-group btn-group-justified" role="group">
 
@@ -52,9 +54,13 @@
                 <div class="row">
                     @for (int increment = (((((int)convertedDate.DayOfWeek == 0) ? 7 : (int)convertedDate.DayOfWeek) - 1) * -1); increment <= (7 - (((int)convertedDate.DayOfWeek == 0) ? 7 : (int)convertedDate.DayOfWeek)); increment++)
                     {
-                        <div class="col-md-4">
+                        <div id="this-table-@increment" class="col-md-4">
+                            @if (convertedDate.AddDays(increment) <= DateTime.UtcNow)
+                            {
+                                <script type="text/javascript">$(function () { DisableInput("this-table-" + @increment) });</script>
+                            }
                             <h4 class='text-center @((convertedDate.AddDays(increment).ToString("dd/MM/yyyy") == DateTime.UtcNow.ToString("dd/MM/yyyy")) ? "text-warning" : "")'>@convertedDate.AddDays(increment).DayOfWeek @convertedDate.AddDays(increment).ToString("dd/MM/yyyy")</h4>
-                            <table id="schedule-table" class="table table-hover table-bordered bottom-margin-0" cellspacing="0">
+                            <table id="schedule-table" class="table table-hover bottom-margin-0" cellspacing="0">
                                 <thead>
                                     <tr class="active">
                                         <th>Time</th>
@@ -62,7 +68,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="cursor-pointer" onclick="CheckTableRadioButton(this);">
+                                    <tr class="cursor-pointer" @((convertedDate.AddDays(increment) <= DateTime.UtcNow) ? "" : "onclick=CheckTableRadioButton(this);EnableButton('update-schedule-button');")>
                                         @if (Model.Interviews.FirstOrDefault(i => i.InterviewDate == convertedDate.AddDays(increment).AddHours(9)) != null)
                                         {
                                             <td class="danger">9:00</td>
@@ -74,7 +80,7 @@
                                             <td class="success">Available<span class="pull-right margin-left-10"><input type="radio" name="SelectedDateTime" value="@convertedDate.AddDays(increment).AddHours(9)"></span></td>
                                         }
                                     </tr>
-                                    <tr class="cursor-pointer" onclick="CheckTableRadioButton(this);">
+                                    <tr class="cursor-pointer" @((convertedDate.AddDays(increment) <= DateTime.UtcNow) ? "" : "onclick=CheckTableRadioButton(this);EnableButton('update-schedule-button');")>
                                         @if (Model.Interviews.FirstOrDefault(i => i.InterviewDate == convertedDate.AddDays(increment).AddHours(10)) != null)
                                         {
                                             <td class="danger">10:00</td>
@@ -86,7 +92,7 @@
                                             <td class="success">Available<span class="pull-right margin-left-10"><input type="radio" name="SelectedDateTime" value="@convertedDate.AddDays(increment).AddHours(10)"></span></td>
                                         }
                                     </tr>
-                                    <tr class="cursor-pointer" onclick="CheckTableRadioButton(this);">
+                                    <tr class="cursor-pointer" @((convertedDate.AddDays(increment) <= DateTime.UtcNow) ? "" : "onclick=CheckTableRadioButton(this);EnableButton('update-schedule-button');")>
                                         @if (Model.Interviews.FirstOrDefault(i => i.InterviewDate == convertedDate.AddDays(increment).AddHours(11)) != null)
                                         {
                                             <td class="danger">11:00</td>
@@ -98,7 +104,7 @@
                                             <td class="success">Available<span class="pull-right margin-left-10"><input type="radio" name="SelectedDateTime" value="@convertedDate.AddDays(increment).AddHours(11)"></span></td>
                                         }
                                     </tr>
-                                    <tr class="cursor-pointer" onclick="CheckTableRadioButton(this);">
+                                    <tr class="cursor-pointer" @((convertedDate.AddDays(increment) <= DateTime.UtcNow) ? "" : "onclick=CheckTableRadioButton(this);EnableButton('update-schedule-button');")>
                                         @if (Model.Interviews.FirstOrDefault(i => i.InterviewDate == convertedDate.AddDays(increment).AddHours(12)) != null)
                                         {
                                             <td class="danger">12:00</td>
@@ -110,7 +116,7 @@
                                             <td class="success">Available<span class="pull-right margin-left-10"><input type="radio" name="SelectedDateTime" value="@convertedDate.AddDays(increment).AddHours(12)"></span></td>
                                         }
                                     </tr>
-                                    <tr class="cursor-pointer" onclick="CheckTableRadioButton(this);">
+                                    <tr class="cursor-pointer" @((convertedDate.AddDays(increment) <= DateTime.UtcNow) ? "" : "onclick=CheckTableRadioButton(this);EnableButton('update-schedule-button');")>
 
                                         @if (Model.Interviews.FirstOrDefault(i => i.InterviewDate == convertedDate.AddDays(increment).AddHours(13)) != null)
                                         {
@@ -123,7 +129,7 @@
                                             <td class="success">Available<span class="pull-right margin-left-10"><input type="radio" name="SelectedDateTime" value="@convertedDate.AddDays(increment).AddHours(13)"></span></td>
                                         }
                                     </tr>
-                                    <tr class="cursor-pointer" onclick="CheckTableRadioButton(this);">
+                                    <tr class="cursor-pointer" @((convertedDate.AddDays(increment) <= DateTime.UtcNow) ? "" : "onclick=CheckTableRadioButton(this);EnableButton('update-schedule-button');")>
                                         @if (Model.Interviews.FirstOrDefault(i => i.InterviewDate == convertedDate.AddDays(increment).AddHours(14)) != null)
                                         {
                                             <td class="danger">14:00</td>
@@ -135,7 +141,7 @@
                                             <td class="success">Available<span class="pull-right margin-left-10"><input type="radio" name="SelectedDateTime" value="@convertedDate.AddDays(increment).AddHours(14)"></span></td>
                                         }
                                     </tr>
-                                    <tr class="cursor-pointer" onclick="CheckTableRadioButton(this);">
+                                    <tr class="cursor-pointer" @((convertedDate.AddDays(increment) <= DateTime.UtcNow) ? "" : "onclick=CheckTableRadioButton(this);EnableButton('update-schedule-button');")>
                                         @if (Model.Interviews.FirstOrDefault(i => i.InterviewDate == convertedDate.AddDays(increment).AddHours(15)) != null)
                                         {
                                             <td class="danger">15:00</td>
@@ -147,7 +153,7 @@
                                             <td class="success">Available<span class="pull-right margin-left-10"><input type="radio" name="SelectedDateTime" value="@convertedDate.AddDays(increment).AddHours(15)"></span></td>
                                         }
                                     </tr>
-                                    <tr class="cursor-pointer" onclick="CheckTableRadioButton(this);">
+                                    <tr class="cursor-pointer" @((convertedDate.AddDays(increment) <= DateTime.UtcNow) ? "" : "onclick=CheckTableRadioButton(this);EnableButton('update-schedule-button');")>
                                         @if (Model.Interviews.FirstOrDefault(i => i.InterviewDate == convertedDate.AddDays(increment).AddHours(16)) != null)
                                         {
                                             <td class="danger">16:00</td>
@@ -159,7 +165,7 @@
                                             <td class="success">Available<span class="pull-right margin-left-10"><input type="radio" name="SelectedDateTime" value="@convertedDate.AddDays(increment).AddHours(16)"></span></td>
                                         }
                                     </tr>
-                                    <tr class="cursor-pointer" onclick="CheckTableRadioButton(this);">
+                                    <tr class="cursor-pointer" @((convertedDate.AddDays(increment) <= DateTime.UtcNow) ? "" : "onclick=CheckTableRadioButton(this);EnableButton('update-schedule-button');")>
                                         @if (Model.Interviews.FirstOrDefault(i => i.InterviewDate == convertedDate.AddDays(increment).AddHours(17)) != null)
                                         {
                                             <td class="danger">17:00</td>
@@ -168,12 +174,19 @@
                                         else
                                         {
                                             <td class="success">17:00</td>
-                                            <td class="success">Available<span class="pull-right margin-left-10"><input type="radio" name="SelectedDateTime" value="@convertedDate.AddDays(increment).AddHours(17)"></span></td>
+                                            <td class="success">Available<span class="pull-right margin-left-10"><input type="radio" class="update-schedule-selector" name="SelectedDateTime" value="@convertedDate.AddDays(increment).AddHours(17)"></span></td>
                                         }
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
+
+                        if (numDays == 3 || numDays == 6)
+                        {
+                            <div class="clearfix"></div>
+                        }
+
+                        numDays++;
                     }
                 </div>
             </div>
@@ -183,7 +196,7 @@
 
         <div class="form-group bottom-margin-0">
             <div class="col-md-offset-0 col-lg-offset-0 col-md-3 col-lg-3">
-                <input type="submit" value="Schedule" class="btn btn-danger btn-block" onclick="$('#schedule-interview-modal').modal('hide');" />
+                <input type="submit" value="Schedule" id="update-schedule-button" class="btn btn-danger btn-block" onclick="$('#schedule-interview-modal').modal('hide');" />
             </div>
 
             <div class="col-md-offset-6 col-lg-offset-6 col-md-3 col-lg-3">
@@ -193,18 +206,18 @@
 
         <div class="clearfix"></div>
 
-    
+        <script type="text/javascript">$(function () { $("#update-schedule-button").prop("disabled", true); });</script>
 
     }
 }
 else
 {
-<div class="well well-lg bottom-margin-0">
-    <div class="well well-lg bottom-margin-0 background-white">
-        <div class="alert alert-danger bottom-margin-0" role="alert">
-            <span>Oh no!<br />There is no data available.</span>
+    <div class="well well-lg bottom-margin-0">
+        <div class="well well-lg bottom-margin-0 background-white">
+            <div class="alert alert-danger bottom-margin-0" role="alert">
+                <span>Scheduling is not available.</span>
+            </div>
         </div>
     </div>
-</div>
 }
 <!-- END OF SCHEDULE INTERVIEW PARTIAL -->

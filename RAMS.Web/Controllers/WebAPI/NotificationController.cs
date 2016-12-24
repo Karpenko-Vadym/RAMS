@@ -53,6 +53,13 @@ namespace RAMS.Web.Controllers.WebAPI
 
             if (!Utilities.IsEmpty(notifications))
             {
+                foreach (var notification in notifications)
+                {
+                    notification.Agent = null;
+                    notification.Admin = null;
+                    notification.Client = null;
+                }
+
                 return Ok(notifications);
             }
 
@@ -74,6 +81,13 @@ namespace RAMS.Web.Controllers.WebAPI
             {
                 if (!Utilities.IsEmpty(agent.Notifications))
                 {
+                    foreach (var notification in agent.Notifications)
+                    {
+                        notification.Agent = null;
+                        notification.Admin = null;
+                        notification.Client = null;
+                    }
+
                     return Ok(agent.Notifications);
                 }
             }
@@ -96,6 +110,13 @@ namespace RAMS.Web.Controllers.WebAPI
             {
                 if (!Utilities.IsEmpty(client.Notifications))
                 {
+                    foreach (var notification in client.Notifications)
+                    {
+                        notification.Agent = null;
+                        notification.Admin = null;
+                        notification.Client = null;
+                    }
+
                     return Ok(client.Notifications);
                 }
             }
@@ -118,6 +139,13 @@ namespace RAMS.Web.Controllers.WebAPI
             {
                 if (!Utilities.IsEmpty(admin.Notifications))
                 {
+                    foreach (var notification in admin.Notifications)
+                    {
+                        notification.Agent = null;
+                        notification.Admin = null;
+                        notification.Client = null;
+                    }
+
                     return Ok(admin.Notifications);
                 }
             }
@@ -140,6 +168,10 @@ namespace RAMS.Web.Controllers.WebAPI
 
                 if (notification != null)
                 {
+                    notification.Agent = null;
+                    notification.Admin = null;
+                    notification.Client = null;
+
                     return Ok(notification);
                 }
             }
@@ -314,7 +346,7 @@ namespace RAMS.Web.Controllers.WebAPI
                 {
                     if (isReadStatus)
                     {
-                        if(notification.Status != Enums.NotificationStatus.Read)
+                        if (notification.Status != Enums.NotificationStatus.Read)
                         {
                             notification.Status = Enums.NotificationStatus.Read;
                         }
@@ -331,7 +363,7 @@ namespace RAMS.Web.Controllers.WebAPI
 
                     try
                     {
-                        this.NotificationService.SaveChanges();   
+                        this.NotificationService.SaveChanges();
                     }
                     catch (DbUpdateConcurrencyException ex)
                     {

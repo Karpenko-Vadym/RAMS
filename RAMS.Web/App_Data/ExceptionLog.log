@@ -1,0 +1,463 @@
+Logged on: 04/02/2016 10:20:20 PM
+Exception of type 'DbUpdateConcurrencyException' has been caught.
+Message: Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+********************* Stack Trace **********************
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at RAMS.Data.DataContext.Commit() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Data\DataContext.cs:line 54
+   at RAMS.Data.Infrastructure.UnitOfWork.Commit() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Data\Infrastructure\UnitOfWork.cs:line 41
+   at RAMS.Service.PositionService.SaveChanges() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Service\PositionService.cs:line 304
+   at RAMS.Web.Controllers.WebAPI.PositionController.PutPosition(Position position) in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Web\Controllers\WebAPI\PositionController.cs:line 157
+****************** End of Stack Trace ******************
+******************* Inner Exception ********************
+Exception of type 'OptimisticConcurrencyException' has been caught.
+Message: Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+********************* Stack Trace **********************
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.ValidateRowsAffected(Int64 rowsAffected, UpdateCommand source)
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.Update()
+   at System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesToStore(SaveOptions options, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction)
+   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesInternal(SaveOptions options, Boolean executeInExistingTransaction)
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+****************** End of Stack Trace ******************
+**************** End of Inner Exception ****************
+
+
+Logged on: 04/02/2016 10:21:38 PM
+Exception of type 'DbUpdateConcurrencyException' has been caught.
+Message: Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+********************* Stack Trace **********************
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at RAMS.Data.DataContext.Commit() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Data\DataContext.cs:line 54
+   at RAMS.Data.Infrastructure.UnitOfWork.Commit() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Data\Infrastructure\UnitOfWork.cs:line 41
+   at RAMS.Service.PositionService.SaveChanges() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Service\PositionService.cs:line 304
+   at RAMS.Web.Controllers.WebAPI.PositionController.PutPosition(Position position) in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Web\Controllers\WebAPI\PositionController.cs:line 157
+****************** End of Stack Trace ******************
+******************* Inner Exception ********************
+Exception of type 'OptimisticConcurrencyException' has been caught.
+Message: Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+********************* Stack Trace **********************
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.ValidateRowsAffected(Int64 rowsAffected, UpdateCommand source)
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.Update()
+   at System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesToStore(SaveOptions options, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction)
+   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesInternal(SaveOptions options, Boolean executeInExistingTransaction)
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+****************** End of Stack Trace ******************
+**************** End of Inner Exception ****************
+
+
+Logged on: 04/02/2016 10:22:37 PM
+Exception of type 'DbUpdateConcurrencyException' has been caught.
+Message: Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+********************* Stack Trace **********************
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at RAMS.Data.DataContext.Commit() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Data\DataContext.cs:line 54
+   at RAMS.Data.Infrastructure.UnitOfWork.Commit() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Data\Infrastructure\UnitOfWork.cs:line 41
+   at RAMS.Service.PositionService.SaveChanges() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Service\PositionService.cs:line 304
+   at RAMS.Web.Controllers.WebAPI.PositionController.PutPosition(Position position) in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Web\Controllers\WebAPI\PositionController.cs:line 157
+****************** End of Stack Trace ******************
+******************* Inner Exception ********************
+Exception of type 'OptimisticConcurrencyException' has been caught.
+Message: Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+********************* Stack Trace **********************
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.ValidateRowsAffected(Int64 rowsAffected, UpdateCommand source)
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.Update()
+   at System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesToStore(SaveOptions options, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction)
+   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesInternal(SaveOptions options, Boolean executeInExistingTransaction)
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+****************** End of Stack Trace ******************
+**************** End of Inner Exception ****************
+
+
+Logged on: 04/02/2016 10:22:41 PM
+Exception of type 'PositionEditException' has been caught.
+Message: Position Need one TSA could not be edited. Response: Conflict
+********************* Stack Trace **********************
+   at RAMS.Web.Areas.Agency.Controllers.PositionController.<EditPosition>d__1b.MoveNext() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Web\Areas\Agency\Controllers\PositionController.cs:line 222
+****************** End of Stack Trace ******************
+
+
+Logged on: 04/02/2016 10:24:59 PM
+Exception of type 'DbUpdateConcurrencyException' has been caught.
+Message: Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+********************* Stack Trace **********************
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at RAMS.Data.DataContext.Commit() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Data\DataContext.cs:line 54
+   at RAMS.Data.Infrastructure.UnitOfWork.Commit() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Data\Infrastructure\UnitOfWork.cs:line 41
+   at RAMS.Service.PositionService.SaveChanges() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Service\PositionService.cs:line 304
+   at RAMS.Web.Controllers.WebAPI.PositionController.PutPosition(Position position) in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Web\Controllers\WebAPI\PositionController.cs:line 157
+****************** End of Stack Trace ******************
+******************* Inner Exception ********************
+Exception of type 'OptimisticConcurrencyException' has been caught.
+Message: Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+********************* Stack Trace **********************
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.ValidateRowsAffected(Int64 rowsAffected, UpdateCommand source)
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.Update()
+   at System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesToStore(SaveOptions options, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction)
+   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesInternal(SaveOptions options, Boolean executeInExistingTransaction)
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+****************** End of Stack Trace ******************
+**************** End of Inner Exception ****************
+
+
+Logged on: 04/02/2016 10:25:06 PM
+Exception of type 'PositionEditException' has been caught.
+Message: Position Webadmin could not be edited. Response: Conflict
+********************* Stack Trace **********************
+   at RAMS.Web.Areas.Agency.Controllers.PositionController.<EditPosition>d__1b.MoveNext() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Web\Areas\Agency\Controllers\PositionController.cs:line 222
+****************** End of Stack Trace ******************
+
+
+Logged on: 04/02/2016 10:25:20 PM
+Exception of type 'DbUpdateConcurrencyException' has been caught.
+Message: Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+********************* Stack Trace **********************
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at RAMS.Data.DataContext.Commit() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Data\DataContext.cs:line 54
+   at RAMS.Data.Infrastructure.UnitOfWork.Commit() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Data\Infrastructure\UnitOfWork.cs:line 41
+   at RAMS.Service.PositionService.SaveChanges() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Service\PositionService.cs:line 304
+   at RAMS.Web.Controllers.WebAPI.PositionController.PutPosition(Position position) in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Web\Controllers\WebAPI\PositionController.cs:line 157
+****************** End of Stack Trace ******************
+******************* Inner Exception ********************
+Exception of type 'OptimisticConcurrencyException' has been caught.
+Message: Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+********************* Stack Trace **********************
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.ValidateRowsAffected(Int64 rowsAffected, UpdateCommand source)
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.Update()
+   at System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesToStore(SaveOptions options, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction)
+   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesInternal(SaveOptions options, Boolean executeInExistingTransaction)
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+****************** End of Stack Trace ******************
+**************** End of Inner Exception ****************
+
+
+Logged on: 04/02/2016 10:25:24 PM
+Exception of type 'PositionEditException' has been caught.
+Message: Position Need one TSA could not be edited. Response: Conflict
+********************* Stack Trace **********************
+   at RAMS.Web.Areas.Agency.Controllers.PositionController.<EditPosition>d__1b.MoveNext() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Web\Areas\Agency\Controllers\PositionController.cs:line 222
+****************** End of Stack Trace ******************
+
+
+Logged on: 04/02/2016 10:26:26 PM
+Exception of type 'DbUpdateConcurrencyException' has been caught.
+Message: Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+********************* Stack Trace **********************
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at RAMS.Data.DataContext.Commit() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Data\DataContext.cs:line 54
+   at RAMS.Data.Infrastructure.UnitOfWork.Commit() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Data\Infrastructure\UnitOfWork.cs:line 41
+   at RAMS.Service.PositionService.SaveChanges() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Service\PositionService.cs:line 304
+   at RAMS.Web.Controllers.WebAPI.PositionController.PutPosition(Position position) in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Web\Controllers\WebAPI\PositionController.cs:line 157
+****************** End of Stack Trace ******************
+******************* Inner Exception ********************
+Exception of type 'OptimisticConcurrencyException' has been caught.
+Message: Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+********************* Stack Trace **********************
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.ValidateRowsAffected(Int64 rowsAffected, UpdateCommand source)
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.Update()
+   at System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesToStore(SaveOptions options, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction)
+   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesInternal(SaveOptions options, Boolean executeInExistingTransaction)
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+****************** End of Stack Trace ******************
+**************** End of Inner Exception ****************
+
+
+Logged on: 04/02/2016 10:26:35 PM
+Exception of type 'PositionEditException' has been caught.
+Message: Position Need one TSA could not be edited. Response: Conflict
+********************* Stack Trace **********************
+   at RAMS.Web.Areas.Agency.Controllers.PositionController.<EditPosition>d__1b.MoveNext() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Web\Areas\Agency\Controllers\PositionController.cs:line 222
+****************** End of Stack Trace ******************
+
+
+Logged on: 04/02/2016 10:28:19 PM
+Exception of type 'DbUpdateConcurrencyException' has been caught.
+Message: Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+********************* Stack Trace **********************
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at RAMS.Data.DataContext.Commit() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Data\DataContext.cs:line 54
+   at RAMS.Data.Infrastructure.UnitOfWork.Commit() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Data\Infrastructure\UnitOfWork.cs:line 41
+   at RAMS.Service.PositionService.SaveChanges() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Service\PositionService.cs:line 304
+   at RAMS.Web.Controllers.WebAPI.PositionController.PutPosition(Position position) in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Web\Controllers\WebAPI\PositionController.cs:line 157
+****************** End of Stack Trace ******************
+******************* Inner Exception ********************
+Exception of type 'OptimisticConcurrencyException' has been caught.
+Message: Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+********************* Stack Trace **********************
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.ValidateRowsAffected(Int64 rowsAffected, UpdateCommand source)
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.Update()
+   at System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesToStore(SaveOptions options, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction)
+   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesInternal(SaveOptions options, Boolean executeInExistingTransaction)
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+****************** End of Stack Trace ******************
+**************** End of Inner Exception ****************
+
+
+Logged on: 04/02/2016 10:28:26 PM
+Exception of type 'PositionEditException' has been caught.
+Message: Position Technical Support Specialist could not be edited. Response: Conflict
+********************* Stack Trace **********************
+   at RAMS.Web.Areas.Agency.Controllers.PositionController.<EditPosition>d__1b.MoveNext() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Web\Areas\Agency\Controllers\PositionController.cs:line 222
+****************** End of Stack Trace ******************
+
+
+Logged on: 04/02/2016 10:38:39 PM
+Exception of type 'DbUpdateConcurrencyException' has been caught.
+Message: Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+********************* Stack Trace **********************
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at RAMS.Data.DataContext.Commit() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Data\DataContext.cs:line 54
+   at RAMS.Data.Infrastructure.UnitOfWork.Commit() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Data\Infrastructure\UnitOfWork.cs:line 41
+   at RAMS.Service.PositionService.SaveChanges() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Service\PositionService.cs:line 304
+   at RAMS.Web.Controllers.WebAPI.PositionController.PutPosition(Position position) in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Web\Controllers\WebAPI\PositionController.cs:line 157
+****************** End of Stack Trace ******************
+******************* Inner Exception ********************
+Exception of type 'OptimisticConcurrencyException' has been caught.
+Message: Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+********************* Stack Trace **********************
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.ValidateRowsAffected(Int64 rowsAffected, UpdateCommand source)
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.Update()
+   at System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesToStore(SaveOptions options, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction)
+   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesInternal(SaveOptions options, Boolean executeInExistingTransaction)
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+****************** End of Stack Trace ******************
+**************** End of Inner Exception ****************
+
+
+Logged on: 04/02/2016 10:38:43 PM
+Exception of type 'PositionEditException' has been caught.
+Message: Position Need one TSA could not be edited. Response: Conflict
+********************* Stack Trace **********************
+   at RAMS.Web.Areas.Agency.Controllers.PositionController.<EditPosition>d__1b.MoveNext() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Web\Areas\Agency\Controllers\PositionController.cs:line 222
+****************** End of Stack Trace ******************
+
+
+Logged on: 04/02/2016 10:40:10 PM
+Exception of type 'DbUpdateConcurrencyException' has been caught.
+Message: Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+********************* Stack Trace **********************
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at RAMS.Data.DataContext.Commit() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Data\DataContext.cs:line 54
+   at RAMS.Data.Infrastructure.UnitOfWork.Commit() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Data\Infrastructure\UnitOfWork.cs:line 41
+   at RAMS.Service.PositionService.SaveChanges() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Service\PositionService.cs:line 304
+   at RAMS.Web.Controllers.WebAPI.PositionController.PutPosition(Position position) in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Web\Controllers\WebAPI\PositionController.cs:line 157
+****************** End of Stack Trace ******************
+******************* Inner Exception ********************
+Exception of type 'OptimisticConcurrencyException' has been caught.
+Message: Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+********************* Stack Trace **********************
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.ValidateRowsAffected(Int64 rowsAffected, UpdateCommand source)
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.Update()
+   at System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesToStore(SaveOptions options, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction)
+   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesInternal(SaveOptions options, Boolean executeInExistingTransaction)
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+****************** End of Stack Trace ******************
+**************** End of Inner Exception ****************
+
+
+Logged on: 04/02/2016 10:40:12 PM
+Exception of type 'PositionEditException' has been caught.
+Message: Position Need one TSA could not be edited. Response: Conflict
+********************* Stack Trace **********************
+   at RAMS.Web.Areas.Agency.Controllers.PositionController.<EditPosition>d__1b.MoveNext() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Web\Areas\Agency\Controllers\PositionController.cs:line 222
+****************** End of Stack Trace ******************
+
+
+Logged on: 04/02/2016 10:42:44 PM
+Exception of type 'DbUpdateConcurrencyException' has been caught.
+Message: Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+********************* Stack Trace **********************
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at RAMS.Data.DataContext.Commit() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Data\DataContext.cs:line 54
+   at RAMS.Data.Infrastructure.UnitOfWork.Commit() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Data\Infrastructure\UnitOfWork.cs:line 41
+   at RAMS.Service.PositionService.SaveChanges() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Service\PositionService.cs:line 304
+   at RAMS.Web.Controllers.WebAPI.PositionController.PutPosition(Position position) in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Web\Controllers\WebAPI\PositionController.cs:line 157
+****************** End of Stack Trace ******************
+******************* Inner Exception ********************
+Exception of type 'OptimisticConcurrencyException' has been caught.
+Message: Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+********************* Stack Trace **********************
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.ValidateRowsAffected(Int64 rowsAffected, UpdateCommand source)
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.Update()
+   at System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesToStore(SaveOptions options, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction)
+   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesInternal(SaveOptions options, Boolean executeInExistingTransaction)
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+****************** End of Stack Trace ******************
+**************** End of Inner Exception ****************
+
+
+Logged on: 04/02/2016 10:42:47 PM
+Exception of type 'PositionEditException' has been caught.
+Message: Position Need one TSA could not be edited. Response: Conflict
+********************* Stack Trace **********************
+   at RAMS.Web.Areas.Agency.Controllers.PositionController.<EditPosition>d__1b.MoveNext() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Web\Areas\Agency\Controllers\PositionController.cs:line 222
+****************** End of Stack Trace ******************
+
+
+Logged on: 29/02/2016 5:03:47 PM
+Exception of type 'InterviewAddException' has been caught.
+Message: Interview could not be created. Response: InternalServerError
+********************* Stack Trace **********************
+   at RAMS.Web.Areas.Agency.Controllers.PositionController.<ScheduleInterview>d__54.MoveNext() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Web\Areas\Agency\Controllers\PositionController.cs:line 728
+****************** End of Stack Trace ******************
+
+
+Logged on: 04/03/2016 10:03:05 AM
+Exception of type 'DbUpdateException' has been caught.
+Message: An error occurred while updating the entries. See the inner exception for details.
+********************* Stack Trace **********************
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at RAMS.Data.DataContext.Commit() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Data\DataContext.cs:line 63
+   at RAMS.Data.Infrastructure.UnitOfWork.Commit() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Data\Infrastructure\UnitOfWork.cs:line 47
+   at RAMS.Service.Interfaces.NotificationService.SaveChanges() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Service\NotificationService.cs:line 188
+   at RAMS.Web.Controllers.WebAPI.NotificationController.PostNotification(Notification notification) in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Web\Controllers\WebAPI\NotificationController.cs:line 165
+****************** End of Stack Trace ******************
+******************* Inner Exception ********************
+Exception of type 'UpdateException' has been caught.
+Message: An error occurred while updating the entries. See the inner exception for details.
+********************* Stack Trace **********************
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.Update()
+   at System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesToStore(SaveOptions options, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction)
+   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesInternal(SaveOptions options, Boolean executeInExistingTransaction)
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+****************** End of Stack Trace ******************
+******************* Inner Exception ********************
+Exception of type 'SqlException' has been caught.
+Message: The INSERT statement conflicted with the FOREIGN KEY constraint "FK_dbo.Notifications_dbo.Agents_AgentId". The conflict occurred in database "RAMSData", table "dbo.Agents", column 'AgentId'.
+The statement has been terminated.
+********************* Stack Trace **********************
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.Entity.Infrastructure.Interception.InternalDispatcher`1.Dispatch[TTarget,TInterceptionContext,TResult](TTarget target, Func`3 operation, TInterceptionContext interceptionContext, Action`3 executing, Action`3 executed)
+   at System.Data.Entity.Infrastructure.Interception.DbCommandDispatcher.Reader(DbCommand command, DbCommandInterceptionContext interceptionContext)
+   at System.Data.Entity.Core.Mapping.Update.Internal.DynamicUpdateCommand.Execute(Dictionary`2 identifierValues, List`1 generatedValues)
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.Update()
+****************** End of Stack Trace ******************
+**************** End of Inner Exception ****************
+**************** End of Inner Exception ****************
+
+
+Logged on: 31/03/2016 7:17:28 AM
+System.Data.Entity.Validation.DbEntityValidationException: Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at RAMS.Data.DataContext.Commit() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Data\DataContext.cs:line 55
+Property: Details Error: The field Details must be a string or array type with a maximum length of '300'.
+
+
+Logged on: 31/03/2016 7:23:04 AM
+System.Data.Entity.Validation.DbEntityValidationException: Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at RAMS.Data.DataContext.Commit() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Data\DataContext.cs:line 55
+Property: Details Error: The field Details must be a string or array type with a maximum length of '300'.
+
+
+Logged on: 31/03/2016 7:23:42 AM
+System.Data.Entity.Validation.DbEntityValidationException: Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at RAMS.Data.DataContext.Commit() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Data\DataContext.cs:line 55
+Property: Details Error: The field Details must be a string or array type with a maximum length of '300'.
+
+
+Logged on: 31/03/2016 7:23:57 AM
+System.Data.Entity.Validation.DbEntityValidationException: Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at RAMS.Data.DataContext.Commit() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Data\DataContext.cs:line 55
+Property: Details Error: The field Details must be a string or array type with a maximum length of '300'.
+
+
+Logged on: 31/03/2016 7:27:25 AM
+System.Data.Entity.Validation.DbEntityValidationException: Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at RAMS.Data.DataContext.Commit() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Data\DataContext.cs:line 55
+Property: Details Error: The field Details must be a string or array type with a maximum length of '300'.
+
+
+Logged on: 31/03/2016 7:45:46 AM
+System.Data.Entity.Validation.DbEntityValidationException: Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at RAMS.Data.DataContext.Commit() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Data\DataContext.cs:line 55
+Property: Details Error: The field Details must be a string or array type with a maximum length of '300'.
+
+
+Logged on: 31/03/2016 7:47:44 AM
+System.Data.Entity.Validation.DbEntityValidationException: Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at RAMS.Data.DataContext.Commit() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Data\DataContext.cs:line 55
+Property: Details Error: The field Details must be a string or array type with a maximum length of '300'.
+
+
+Logged on: 31/03/2016 7:49:06 AM
+System.Data.Entity.Validation.DbEntityValidationException: Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at RAMS.Data.DataContext.Commit() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Data\DataContext.cs:line 55
+Property: Details Error: The field Details must be a string or array type with a maximum length of '300'.
+
+
+Logged on: 14/04/2016 2:35:24 AM
+Exception of type 'CandidateEditException' has been caught.
+Message: Candidate aaronsmith could not be updated. Response: InternalServerError
+********************* Stack Trace **********************
+   at RAMS.Web.Areas.Agency.Controllers.PositionController.<EditCandidate>d__2b.MoveNext() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Web\Areas\Agency\Controllers\PositionController.cs:line 351
+****************** End of Stack Trace ******************
+
+
+Logged on: 14/04/2016 2:41:33 AM
+Exception of type 'CandidateEditException' has been caught.
+Message: Candidate aaronsmith could not be updated. Response: InternalServerError
+********************* Stack Trace **********************
+   at RAMS.Web.Areas.Agency.Controllers.PositionController.<EditCandidate>d__2b.MoveNext() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Web\Areas\Agency\Controllers\PositionController.cs:line 351
+****************** End of Stack Trace ******************
+
+
+Logged on: 14/04/2016 2:42:38 AM
+Exception of type 'CandidateEditException' has been caught.
+Message: Candidate aaronsmith could not be updated. Response: InternalServerError
+********************* Stack Trace **********************
+   at RAMS.Web.Areas.Agency.Controllers.PositionController.<EditCandidate>d__2b.MoveNext() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Web\Areas\Agency\Controllers\PositionController.cs:line 351
+****************** End of Stack Trace ******************
+
+
+Logged on: 14/04/2016 2:44:23 AM
+Exception of type 'CandidateEditException' has been caught.
+Message: Candidate aaronsmith could not be updated. Response: InternalServerError
+********************* Stack Trace **********************
+   at RAMS.Web.Areas.Agency.Controllers.PositionController.<EditCandidate>d__2b.MoveNext() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Web\Areas\Agency\Controllers\PositionController.cs:line 351
+****************** End of Stack Trace ******************
+
+
+Logged on: 14/04/2016 2:46:26 AM
+Exception of type 'CandidateEditException' has been caught.
+Message: Candidate aaronsmith could not be updated. Response: InternalServerError
+********************* Stack Trace **********************
+   at RAMS.Web.Areas.Agency.Controllers.PositionController.<EditCandidate>d__2b.MoveNext() in c:\Users\at0mic\Documents\GitHub\RAMS\RAMS.Web\Areas\Agency\Controllers\PositionController.cs:line 353
+****************** End of Stack Trace ******************
+
+

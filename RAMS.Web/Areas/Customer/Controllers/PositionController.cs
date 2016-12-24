@@ -279,6 +279,110 @@ namespace RAMS.Web.Areas.Customer.Controllers
         }
         #endregion
 
+        #region Suspend Position
+        /// <summary>
+        /// SuspendPosition action method displays confirmation for position suspention in _SuspendPosition partial view
+        /// </summary>
+        /// <param name="positionId">Id of the position to be unsuspended</param>
+        /// <param name="positionTitle">Title of the position to be unsuspended</param>
+        /// <returns>_SuspendPosition partial view with prompt of confirmation to unsuspend the position</returns>
+        [HttpGet]
+        public PartialViewResult SuspendPosition(int positionId, string positionTitle)
+        {
+            var positionApprovalSuspendUnsuspentionViewModel = new PositionApprovalSuspendUnsuspentionViewModel(positionId, positionTitle);
+
+            return PartialView("_SuspendPosition", positionApprovalSuspendUnsuspentionViewModel);
+        }
+
+        /// <summary>
+        /// SuspendPosition action method attempts to update position status to suspended
+        /// </summary>
+        /// <param name="model">Position information required to update position status</param>
+        /// <returns>_SuccessConfirmation partial view if position status has been updated successfully, _FailureConfirmation partial view otherwise</returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<PartialViewResult> SuspendPosition(PositionApprovalSuspendUnsuspentionViewModel model)
+        {
+            var stringBuilder = new StringBuilder();
+
+            var positionResultViewModel = new PositionResultViewModel();
+
+            if (ModelState.IsValid)
+            {
+                var response = new HttpResponseMessage();
+
+                try
+                {
+                    response = await this.GetHttpClient().PutAsync(String.Format("Position?positionId={0}&status={1}", model.PositionId, (int)PositionStatus.Suspended), null); // Attempt to update the status
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var position = await response.Content.ReadAsAsync<Position>();
+
+                        if (position.Status == PositionStatus.Suspended)
+                        {
+                            stringBuilder.Append("<div class='text-center'><h4><strong>Position has been suspended successfully!</strong></h4></div>");
+
+                            stringBuilder.Append("<div class='text-center'><strong>NOTE:</strong> Position is no longer available on the job portal.</div>");
+
+                            positionResultViewModel.Message = stringBuilder.ToString();
+
+                            positionResultViewModel.RefreshList = true;
+
+                            positionResultViewModel.RefreshEditForm = true;
+
+                            positionResultViewModel.PositionId = model.PositionId;
+
+                            return PartialView("_SuccessConfirmation", positionResultViewModel);
+                        }
+                        else
+                        {
+                            stringBuilder.Append("<div class='text-center'><h4><strong>Failed to update position details.</strong></h4></div>");
+
+                            stringBuilder.Append(String.Format("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Server returned status code '{0}', but position status was not updated. Please try again in a moment.</div>", response.StatusCode));
+
+                            stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> If you encounter this issue again in the future, please contact Technical Support with exact steps to reproduce this issue.</div></div>");
+
+                            positionResultViewModel.Message = stringBuilder.ToString();
+
+                            return PartialView("_FailureConfirmation", positionResultViewModel);
+                        }
+                    }
+                    else
+                    {
+                        // If position could not be updated, throw PositionEditException exception
+                        throw new PositionEditException("Position " + model.Title + " could not be updated. Response: " + response.StatusCode);
+                    }
+                }
+                catch (PositionEditException ex)
+                {
+                    // Log exception
+                    ErrorHandlingUtilities.LogException(ErrorHandlingUtilities.GetExceptionDetails(ex));
+
+                    stringBuilder.Append("<div class='text-center'><h4><strong>Failed to update position details.</strong></h4></div>");
+
+                    stringBuilder.Append(String.Format("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Server returned status code '{0}' while attempting to persist position details to the database. Please try again in a moment.</div>", response.StatusCode));
+
+                    stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> If you encounter this issue again in the future, please contact Technical Support with exact steps to reproduce this issue.</div></div>");
+
+                    positionResultViewModel.Message = stringBuilder.ToString();
+
+                    return PartialView("_FailureConfirmation", positionResultViewModel);
+                }
+            }
+
+            stringBuilder.Append("<div class='text-center'><h4><strong>Position details could NOT be retrieved at this moment.</strong></h4></div>");
+
+            stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Model state is not valid. Please try again in a moment.</div>");
+
+            stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> If you encounter this issue again in the future, please contact Technical Support with exact steps to reproduce this issue.</div></div>");
+
+            positionResultViewModel.Message = stringBuilder.ToString();
+
+            return PartialView("_FailureConfirmation", positionResultViewModel);
+        }
+        #endregion
+
         /// <summary>
         /// PositionDetails action method retrieves the details of the position and passes it to _PositionDetails partial view
         /// </summary>
@@ -344,7 +448,15 @@ namespace RAMS.Web.Areas.Customer.Controllers
                     {
                         notification = await response.Content.ReadAsAsync<Notification>();
 
-                        return PartialView("_SuccessConfirmation");
+                        stringBuilder.Append("<div class='text-center'><h4><strong>Success!</strong></h4></div>");
+
+                        stringBuilder.Append("<div class='row'><div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'>Position closure request has been submitted successfully!</div>");
+
+                        stringBuilder.Append("<div class='col-md-12'><p></p></div><div class='col-md-offset-1 col-md-11'><strong>NOTE:</strong> You will be notified when position closure is complete.</div></div>");
+
+                        positionResultViewModel.Message = stringBuilder.ToString();
+
+                        return PartialView("_SuccessConfirmation", positionResultViewModel);
                     }
                     else
                     {
